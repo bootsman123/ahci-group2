@@ -1,0 +1,58 @@
+Community Core Vision v1.2.0
+For more information see:
+http://www.nuicode.com/tbeta
+http://tbeta.nuigroup.com
+
+
+Changelog
+
+    * v1.2.0 (2009-04-28)
+    * v1.1.5 (2009-01-17)
+    * v1.1.0 (2009-11-07)
+
+v1.2.0 (2009-04-28)
+
+Rename:
+
+    * Renamed tbeta to Community Core Vision
+
+Cameras:
+
+    * Full PS3 camera support on windows
+    * Support for Firefly cameras on windows
+
+Fixes:
+
+    * Background Removal on startup
+    * GPU speed slightly faster than before
+    * New calibration technique - Can now calibrate even when there are false blobs
+
+Features:
+
+    * Min/max blob tracking size sliders - Sets the minimum and maximum size blobs to look for
+    * Dynamic background subtraction 'learn speed' slider - Sets the rate dynamic background subtraction occurs
+    * Movement threshold to eliminate jittery blobs - Sets the minumum amount a blob must move to consider it as 'moving'. This helps with jitter
+    * Option to track dark or light blobs only (no more absolute background subtraction since it causes inconsistencies)
+    * Startup in mini mode
+    * Logging system - In bin\logs you can find a text log file of what happened when running the application. This should be useful in debugging errors
+
+Low Level features:
+
+    * Addon support for openframeworks - Option to not use TUIO and use directly with c++
+    * Classes rewritten to comply with openframeworks addon standards
+
+Communication
+
+    * TUIO direct to Flash sending through TCP - Can now send TUIO to flash without FLOSC (currently doesn't work on Windows Vista for unknown reason)
+    * Option to turn on/off width/height TUIO sending to comply with the TUIO 1.0 protocol
+    * Now sending correct fseq, dX, dY, and maccel TUIO values.
+
+v1.1.5 (2009-01-17)
+
+    * PS3 Test version support
+
+v1.1.0 (2009-11-07)
+
+    * Fixed TUIO sending in wrong format
+
+
