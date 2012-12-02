@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="Celianna 1" tilewidth="16" tileheight="16">
+  <image source="celiannatilea1.png" width="512" height="384"/>
+  <tile id="482">
+   <properties>
+    <property name="Water" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="769" name="Celianna 2" tilewidth="16" tileheight="16">
+  <image source="celiannatilea2.png" width="512" height="384"/>
+ </tileset>
+ <layer name="Underground" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJyNlM0NwjAMhVN6bukOnFNYpMAiAVZggAJDcC0wA5vwMwiulChPT4np4ZPs2n5tnpXWpTFzoVGolZ6K6pyvEuA816zQCkufs942Ac5zrRPWwsbnVULzQOA815ywE/Y+twm9C4HzXOuFk3D2eZfxNPeOBzEIN+HucwfzAUs+o/a/fWIcdDryeXx2LIx5JqiMaJiY466DjiOfx2cv6f14ylkk6IUcdx10evLZeb23cBUWs4gVrdbEHHcddAbyuYfv+xa6Z7hrrQ/1+E5gjLtulD7U4zuBMb8r14d6fCcw5jNiLXdevhMY8/dhLXdezWf2Av3MnVfbh+YFxlP3oXmB8dR98P8hF0/dxw9m85I+
+  </data>
+ </layer>
+</map>
