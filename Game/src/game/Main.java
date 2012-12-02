@@ -20,7 +20,7 @@ public class Main
         try
         {
             AppGameContainer app = new AppGameContainer( new Game() );
-            app.setDisplayMode( 400, 400, false );
+            app.setDisplayMode( 320, 320, false );
             app.start();
         }
         catch( SlickException ex )

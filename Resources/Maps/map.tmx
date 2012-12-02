@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="Celianna 1" tilewidth="16" tileheight="16">
-  <image source="celiannatilea1.png" width="512" height="384"/>
+  <image source="../Images/celiannatilea1.png" width="512" height="384"/>
   <tile id="482">
    <properties>
     <property name="Water" value="1"/>
@@ -9,11 +9,11 @@
   </tile>
  </tileset>
  <tileset firstgid="769" name="Celianna 2" tilewidth="16" tileheight="16">
-  <image source="celiannatilea2.png" width="512" height="384"/>
+  <image source="../Images/celiannatilea2.png" width="512" height="384"/>
  </tileset>
  <layer name="Underground" width="20" height="20">
-  <data encoding="base64" compression="zlib">
-   eJyNlM0NwjAMhVN6bukOnFNYpMAiAVZggAJDcC0wA5vwMwiulChPT4np4ZPs2n5tnpXWpTFzoVGolZ6K6pyvEuA816zQCkufs942Ac5zrRPWwsbnVULzQOA815ywE/Y+twm9C4HzXOuFk3D2eZfxNPeOBzEIN+HucwfzAUs+o/a/fWIcdDryeXx2LIx5JqiMaJiY466DjiOfx2cv6f14ylkk6IUcdx10evLZeb23cBUWs4gVrdbEHHcddAbyuYfv+xa6Z7hrrQ/1+E5gjLtulD7U4zuBMb8r14d6fCcw5jNiLXdevhMY8/dhLXdezWf2Av3MnVfbh+YFxlP3oXmB8dR98P8hF0/dxw9m85I+
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA42UzQ3CMAyFU3pu6Q6cU1ikwCIBVmCAAkNwLTADm/AzCK6UKE9Pienhk+zafm2eldalMXOhUaiVnorqnK8S4DzXrNAKS5+z3jYBznOtE9bCxudVQvNA4DzXnLAT9j63Cb0LgfNc64WTcPZ5l/E0944HMQg34e5zB/MBSz6j9r99Yhx0OvJ5fHYsjHkmqIxomJjjroOOI5/HZy/p/XjKWSTohRx3HXR68tl5vbdwFRaziBWt1sQcdx10BvK5h+/7FrpnuGutD/X4TmCMu26UPtTjO4ExvyvXh3p8JzDmM2Itd16+Exjz92Etd17NZ/YC/cydV9uH5gXGU/eheYHx1H3w/yEXT93HD6hTQK9ABgAA
   </data>
  </layer>
 </map>
