@@ -29,6 +29,8 @@ public class Game extends BasicGame
     public static final int SPRITE_WIDTH = 32;
     public static final int SPRITE_HEIGHT = 32;
     
+    public static final double SPEED = 0.1f;
+    
     private TiledMap map;
     private int mapWidth;
     private int mapHeight;
@@ -87,25 +89,25 @@ public class Game extends BasicGame
         {
             this.sheepSprite = this.sheepUp;
             this.sheepSprite.update( delta );
-            this.sheepY -= delta * 0.1f;
+            this.sheepY -= delta * Game.SPEED;
         }
         else if( input.isKeyDown( Input.KEY_RIGHT ) )
         {
             this.sheepSprite = this.sheepRight;
             this.sheepSprite.update( delta );
-            this.sheepX += delta * 0.1f;
+            this.sheepX += delta * Game.SPEED;
         }
         else if( input.isKeyDown( Input.KEY_DOWN ) )
         {
             this.sheepSprite = this.sheepDown;
             this.sheepSprite.update( delta );
-            this.sheepY += delta * 0.1f;
+            this.sheepY += delta * Game.SPEED;
         }
         else if( input.isKeyDown( Input.KEY_LEFT ) )
         {
             this.sheepSprite = this.sheepLeft;
             this.sheepSprite.update( delta );
-            this.sheepX -= delta * 0.1f;
+            this.sheepX -= delta * Game.SPEED;
         }
         
         this.sheepX = Math.max( 0, Math.min( this.sheepX, this.mapWidth - Game.SPRITE_WIDTH ) );
