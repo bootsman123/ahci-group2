@@ -20,3 +20,6 @@ local.properties
 .project
 /Game/nbproject/private/
 /Game/build/
+
+# OS X shizzle.
+.DS_Store
