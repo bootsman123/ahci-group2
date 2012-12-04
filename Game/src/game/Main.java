@@ -11,9 +11,9 @@ import org.newdawn.slick.SlickException;
  */
 public class Main
 {
-
     /**
-     * @param args the command line arguments
+     * Main function.
+     * @param args Command line arguments.
      */
     public static void main( String[] args )
     {
@@ -25,7 +25,7 @@ public class Main
         }
         catch( SlickException ex )
         {
-            Logger.getLogger(Main.class.getName()).log( Level.SEVERE, null, ex );
+            Logger.getLogger( Main.class.getName() ).log( Level.SEVERE, null, ex );
         }
         
     }

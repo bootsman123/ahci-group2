@@ -23,3 +23,12 @@ local.properties
 
 # OS X shizzle.
 .DS_Store
+/HerdinatorServer/nbproject/private/
+/HerdinatorServer/HerdinatorServer-war/nbproject/private/
+/HerdinatorServer/HerdinatorServer-ejb/nbproject/private/
+/HerdinatorServer/HerdinatorServer-ejb/build/
+/HerdinatorServer/HerdinatorServer-war/build/
+/HerdinatorServer/build/
+/HerdinatorServer/HerdinatorServer-war/dist/
+/HerdinatorServer/HerdinatorServer-ejb/dist/
+/HerdinatorServer/dist/

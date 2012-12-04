@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="40" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="Celianna Tile a1" tilewidth="16" tileheight="16">
+  <image source="../Images/celiannatilea1.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="769" name="Celianna Tile a2" tilewidth="16" tileheight="16">
+  <image source="../Images/celiannatilea2.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="1537" name="Collisions" tilewidth="16" tileheight="16">
+  <image source="../Images/collisions.png" width="80" height="32"/>
+ </tileset>
+ <tileset firstgid="1547" name="Celianna Tile b" tilewidth="16" tileheight="16">
+  <image source="../Images/celiannatileb.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Ground" width="50" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3Uyw2CABQFURLXfBoRbQSxEZVGRBtRKZFJbOK+ZBazmAZOe2iajnoaqC36RxrpROfCP9GFZroW/hvd6UFL4X/SSi96F/4PfelHW+FP8Uav9CrxU7zRK71K/BRv9EqvEj/FG73Sq8RP8Uav9CrxU7zRK71K/BRv9EqvEj/FG73Sq8RP8Uav/r8D+rUab0AfAAA=
+  </data>
+ </layer>
+ <layer name="Collisions" width="50" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VsQ4AEAxAQRb//8kiYmYQKe6S7n1D05QAAAAAAGLIpQ+w37iv2bxARyw3dKzsqOMcHbH89D+aCjSf4QJAHwAA
+  </data>
+ </layer>
+ <layer name="Inanimate" width="50" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3ZSUoDQRiG4YJAIDgLniDGjbOgFzC6MXFaqHdwdhG9g1MUNO51p3ECjXvdOXsNZ0/g24sssql0o6Gqi/+Dh9r+X3dXD7RSEolE8r/Zjyp1EDU9xd9zTYcbB3rYkDjHsdmBY9lPh6QDPYpJ0KXFgT4DdBh0oIdEIpFIJJVIVUypatSgFnWoRwMaY6an859WZm1DOzrQiS50oydEPYaYNYU0hjGCUYxhPEQ9ppl1BrOYwzwWsIilAD1Mv4+uMusa1rGBTWSxhe0APUy/jx4y6xHyOMYJTnGGc00P277Tbpn1Dvd4wCOe8IwXTQ/bvtNemfUN7/jAJ77wjZ8Q7XNJaZoiSk1gUrN6piKmJ9Wnl/kyWNasnhXLe/iJd872HOlx5UgP3fmw4ZnkzdhX5liXOx82PJP8XPsm9kfQfwZ+rn0T+yPoP4Md5ttFTrPmQnC/umC+SxQ0a8GR+1Uxv5B65DNAHwAA
+  </data>
+ </layer>
+</map>
