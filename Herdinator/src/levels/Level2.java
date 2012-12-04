@@ -12,12 +12,12 @@ import org.newdawn.slick.SlickException;
  *
  * @author roland
  */
-public class Level1 extends Level {
+public class Level2 extends Level {
     
     
-    public Level1() throws SlickException{
+    public Level2() throws SlickException{
         super() ; 
-        sheeps.add(new Sheep(10,10)) ; 
+        sheeps.add(new Sheep(50,40)) ; 
         sheeps.add(new Sheep(20,20)) ; 
     }
 }

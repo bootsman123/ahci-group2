@@ -13,6 +13,5 @@ import java.awt.Point;
  */
 public class TouchPlayer extends Player{
     private Point fingerLocation ; 
-    private boolean hasFingerOnTable ;
-    
+    private boolean hasFingerOnTable ;    
 }

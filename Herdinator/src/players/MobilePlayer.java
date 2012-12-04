@@ -13,6 +13,5 @@ import java.awt.Point;
  */
 public class MobilePlayer extends Player {
     private Point locationTelephone ; 
-    private boolean hasTelephoneOnTable ; 
-    
+    private boolean hasTelephoneOnTable ;    
 }
