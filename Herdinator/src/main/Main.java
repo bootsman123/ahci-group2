@@ -1,6 +1,5 @@
 package main;
 
-import temp.Game2;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
@@ -20,8 +19,8 @@ public class Main
     {
         try
         {
-            AppGameContainer app = new AppGameContainer( new Game2() );
-            app.setDisplayMode( 320, 320, false );
+            AppGameContainer app = new AppGameContainer( new Game() );
+            app.setDisplayMode( Game.WIDTH, Game.HEIGHT, false );
             app.start();
         }
         catch( SlickException ex )
