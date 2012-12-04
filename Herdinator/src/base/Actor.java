@@ -1,4 +1,4 @@
-package actors;
+package base;
 
 import java.awt.geom.Point2D;
 

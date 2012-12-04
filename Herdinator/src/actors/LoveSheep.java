@@ -4,6 +4,8 @@
  */
 package actors;
 
+import base.Actor;
+
 /**
  *
  * @author roland

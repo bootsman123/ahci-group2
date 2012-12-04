@@ -4,6 +4,7 @@
  */
 package players;
 
+import base.Player;
 import java.awt.Point;
 
 /**

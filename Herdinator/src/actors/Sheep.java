@@ -1,5 +1,7 @@
 package actors;
 
+import base.Actor;
+
 /**
  *
  * @author bootsman
