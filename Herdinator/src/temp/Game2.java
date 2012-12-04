@@ -14,6 +14,9 @@ import org.newdawn.slick.tiled.TiledMap;
  * Awesome tutorial:
  * http://thejavablog.wordpress.com/2008/06/08/using-slick-2d-to-write-a-game/
  * 
+ * Pacman game:
+ * http://code.google.com/p/jpacman/source/browse/#svn%2Ftrunk%2Fjpacman%2Fsrc%2Fit%2Fmarte%2Fgames%2Fpacman%2Fbase
+ * 
  * Javadoc Slick:
  * http://slick.cokeandcode.com/javadoc/
  * 
