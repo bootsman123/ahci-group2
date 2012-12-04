@@ -9,6 +9,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
+import states.GameState;
 
 /**
  * Awesome tutorial:
@@ -24,6 +25,7 @@ import org.newdawn.slick.tiled.TiledMap;
  */
 public class Game2 extends BasicGame
 {
+    
     public static final String TITLE = "Sheep game";
     public static final int SPRITE_WIDTH = 32;
     public static final int SPRITE_HEIGHT = 32;
@@ -40,6 +42,7 @@ public class Game2 extends BasicGame
     private double sheepX;
     private double sheepY;
     
+      
     public Game2() throws SlickException
     {
        super( Game2.TITLE ); 
@@ -48,6 +51,8 @@ public class Game2 extends BasicGame
     @Override
     public void init( GameContainer gc ) throws SlickException
     {
+     
+        
        this.map = new TiledMap( "../Resources/Maps/map.tmx" );
        this.mapWidth = this.map.getWidth() * this.map.getTileWidth();
        this.mapHeight = this.map.getHeight() * this.map.getTileHeight();

@@ -5,11 +5,14 @@
 package levels;
 
 import base.Level;
+import org.newdawn.slick.SlickException;
 
 /**
  *
  * @author roland
  */
 public class Level1 extends Level {
-    
+    public Level1() throws SlickException{
+        super() ; 
+    }
 }

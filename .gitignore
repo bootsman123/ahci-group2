@@ -33,3 +33,4 @@ local.properties
 /HerdinatorServer/HerdinatorServer-ejb/dist/
 /HerdinatorServer/dist/
 /Herdinator/nbproject/private/
+/Herdinator/build/

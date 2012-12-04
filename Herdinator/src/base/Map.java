@@ -15,6 +15,7 @@ import org.newdawn.slick.tiled.TiledMap;
  */
 public class Map {
     private TiledMap map;
+    //@TODO: add collisionmatrix
     private int mapWidth;
     private int mapHeight;
     
@@ -24,9 +25,15 @@ public class Map {
        this.mapHeight = this.map.getHeight() * this.map.getTileHeight();
     }
     
-    public void render( GameContainer gc, Graphics graphics ) throws SlickException
+    public void render()
     {
-        this.map.render( 0, 0 );
-        
+        this.map.render( 0, 0 );   
+    }
+    
+    public boolean doesCollide(int x, int y){
+        int index = this.map.getLayerIndex("Collisions");
+        //@TODO: check if the index is -1
+        System.out.println("Collision ID: " + this.map.getTileId(x, y, index)) ; 
+        return false ;
     }
 }

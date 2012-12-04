@@ -21,31 +21,35 @@ public class GameState extends BasicGameState
     private List<Level> levels; //@TODO: load levels
     private List<Player> players; //@TODO: add list of players
     
-    public GameState()
+    public GameState() throws SlickException
     {
-        this.currentLevel = new Level1() ; 
+       // this.currentLevel = new Level1() ; 
         
     }
+    
     
     @Override
     public int getID()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+       return 1337; //@TODO: change this to a normal ID
     }
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.currentLevel = new Level1() ; 
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        throw new UnsupportedOperationException("Not supported yet.");
+         currentLevel.render() ; 
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("whoo, updatesd") ; 
+        
     }
+    
+    
     
 }
