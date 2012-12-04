@@ -2,6 +2,7 @@ package states;
 
 import base.Level;
 import base.Player;
+import java.util.ArrayList;
 import java.util.List;
 import levels.Level1;
 import levels.Level2;
@@ -23,6 +24,8 @@ import temp.Game2;
  */
 public class GameState extends BasicGameState
 {
+    public static final int ID = 1;
+    
     private Level currentLevel; 
     private List<Level> levels; //@TODO: load levels
     private List<Player> players; //@TODO: add list of players
@@ -37,22 +40,30 @@ public class GameState extends BasicGameState
     @Override
     public int getID()
     {
-       return 1337; //@TODO: change this to a normal ID
+       return GameState.ID;
     }
 
     @Override
-    public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        this.currentLevel = new Level1() ;  
+    public void init( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+        // Initialize levels.
+        this.levels = new ArrayList<Level>();
+        this.levels.add( new Level1() );
+        
+        this.currentLevel = this.levels.get( 0 );
+        this.currentLevel.init( container, game );  
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-         currentLevel.render() ;     
+    public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
+    {
+         this.currentLevel.render( container, game, g );     
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+    public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
+    {
         Input input = container.getInput();
-        currentLevel.update(input, delta);  
+        this.currentLevel.update( container, game, delta );  
     }
 }

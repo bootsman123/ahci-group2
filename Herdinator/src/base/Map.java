@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package base;
 
 import org.newdawn.slick.GameContainer;
@@ -13,34 +9,56 @@ import org.newdawn.slick.tiled.TiledMap;
  *
  * @author roland
  */
-public class Map {
+public class Map
+{
+    public static final String COLLISION_LAYER = "Collisions";
+    
     private TiledMap map;
-    //@TODO: add collisionmatrix
     private int mapWidth;
     private int mapHeight;
     
-    public Map() throws SlickException{
-       this.map = new TiledMap( "../Resources/Maps/level1.tmx" );
+    public Map( String filePath ) throws SlickException
+    {
+       this.map = new TiledMap( filePath );
        this.mapWidth = this.map.getWidth() * this.map.getTileWidth();
        this.mapHeight = this.map.getHeight() * this.map.getTileHeight();
     }
     
-    public void render()
+    public void render( GameContainer container, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );   
     }
     
-    public boolean doesCollide(int x, int y){
-        int index = this.map.getLayerIndex("Collisions");
-        //@TODO: check if the index is -1
-        System.out.println("Collision ID: " + this.map.getTileId(x, y, index)); 
-        return false ;
+    public void update( GameContainer container, int delta ) throws SlickException
+    {
+        //@TODO: Validate whether map needs an update function or not.
     }
-    public int getMapWidth(){
-        return mapWidth; 
+
+    public boolean doesCollide( int x, int y )
+    {
+        int index = this.map.getLayerIndex( Map.COLLISION_LAYER );
         
+        // Check if there is a collision layer.
+        if( index == -1 )
+        {
+            return false;
+        }
+        
+        int tileId = this.map.getTileId( x, y, index );
+        
+        //@TODO: Update further collision detection.
+        System.out.printf( "TileId( %d, %d, %d ): %d", x, y, index, tileId ); 
+        
+        return false;
     }
-    public int getMapHeight(){
-        return mapHeight; 
+    
+    public int getMapWidth()
+    {
+        return this.mapWidth; 
+    }
+    
+    public int getMapHeight()
+    {
+        return this.mapHeight; 
     }
 }
