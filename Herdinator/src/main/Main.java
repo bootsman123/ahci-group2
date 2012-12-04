@@ -1,6 +1,6 @@
 package main;
 
-import temp.Game;
+import temp.Game2;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
@@ -20,7 +20,7 @@ public class Main
     {
         try
         {
-            AppGameContainer app = new AppGameContainer( new Game() );
+            AppGameContainer app = new AppGameContainer( new Game2() );
             app.setDisplayMode( 320, 320, false );
             app.start();
         }

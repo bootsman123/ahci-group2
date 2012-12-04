@@ -19,7 +19,7 @@ import org.newdawn.slick.tiled.TiledMap;
  * 
  * @author Bas Bootsma
  */
-public class Game extends BasicGame
+public class Game2 extends BasicGame
 {
     public static final String TITLE = "Sheep game";
     public static final int SPRITE_WIDTH = 32;
@@ -37,9 +37,9 @@ public class Game extends BasicGame
     private double sheepX;
     private double sheepY;
     
-    public Game() throws SlickException
+    public Game2() throws SlickException
     {
-       super( Game.TITLE ); 
+       super( Game2.TITLE ); 
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Game extends BasicGame
        this.mapWidth = this.map.getWidth() * this.map.getTileWidth();
        this.mapHeight = this.map.getHeight() * this.map.getTileHeight();
        
-       this.sheepSpriteSheet = new SpriteSheet( "../Resources/Images/sheeps_animation.png", Game.SPRITE_WIDTH, Game.SPRITE_HEIGHT, new Color( 123, 198, 132 ) );
+       this.sheepSpriteSheet = new SpriteSheet( "../Resources/Images/sheeps_animation.png", Game2.SPRITE_WIDTH, Game2.SPRITE_HEIGHT, new Color( 123, 198, 132 ) );
        
        this.sheepUp = new Animation( false );       
        this.sheepUp.addFrame( this.sheepSpriteSheet.getSprite( 0, 3 ), 150 );
@@ -85,29 +85,29 @@ public class Game extends BasicGame
         {
             this.sheepSprite = this.sheepUp;
             this.sheepSprite.update( delta );
-            this.sheepY -= delta * Game.SPEED;
+            this.sheepY -= delta * Game2.SPEED;
         }
         else if( input.isKeyDown( Input.KEY_RIGHT ) )
         {
             this.sheepSprite = this.sheepRight;
             this.sheepSprite.update( delta );
-            this.sheepX += delta * Game.SPEED;
+            this.sheepX += delta * Game2.SPEED;
         }
         else if( input.isKeyDown( Input.KEY_DOWN ) )
         {
             this.sheepSprite = this.sheepDown;
             this.sheepSprite.update( delta );
-            this.sheepY += delta * Game.SPEED;
+            this.sheepY += delta * Game2.SPEED;
         }
         else if( input.isKeyDown( Input.KEY_LEFT ) )
         {
             this.sheepSprite = this.sheepLeft;
             this.sheepSprite.update( delta );
-            this.sheepX -= delta * Game.SPEED;
+            this.sheepX -= delta * Game2.SPEED;
         }
         
-        this.sheepX = Math.max( 0, Math.min( this.sheepX, this.mapWidth - Game.SPRITE_WIDTH ) );
-        this.sheepY = Math.max( 0, Math.min( this.sheepY, this.mapHeight - Game.SPRITE_HEIGHT ) );
+        this.sheepX = Math.max( 0, Math.min( this.sheepX, this.mapWidth - Game2.SPRITE_WIDTH ) );
+        this.sheepY = Math.max( 0, Math.min( this.sheepY, this.mapHeight - Game2.SPRITE_HEIGHT ) );
     }
 
     @Override

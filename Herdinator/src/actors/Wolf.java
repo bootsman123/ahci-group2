@@ -4,7 +4,7 @@ package actors;
  *
  * @author bootsman
  */
-public class Sheep extends Actor
+public class Wolf extends Actor
 {
     
 }
