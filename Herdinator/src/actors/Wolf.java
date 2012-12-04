@@ -6,5 +6,5 @@ package actors;
  */
 public class Wolf extends Actor
 {
-    
+ 
 }

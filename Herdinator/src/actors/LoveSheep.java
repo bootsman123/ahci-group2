@@ -8,6 +8,6 @@ package actors;
  *
  * @author roland
  */
-public class LoveSheep {
+public class LoveSheep extends Actor {
     
 }
