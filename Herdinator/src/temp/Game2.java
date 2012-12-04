@@ -42,6 +42,8 @@ public class Game2 extends BasicGame
     private double sheepX;
     private double sheepY;
     
+    
+    
       
     public Game2() throws SlickException
     {

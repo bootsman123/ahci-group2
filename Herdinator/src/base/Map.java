@@ -20,7 +20,7 @@ public class Map {
     private int mapHeight;
     
     public Map() throws SlickException{
-       this.map = new TiledMap( "../Resources/Maps/map.tmx" );
+       this.map = new TiledMap( "../Resources/Maps/level1.tmx" );
        this.mapWidth = this.map.getWidth() * this.map.getTileWidth();
        this.mapHeight = this.map.getHeight() * this.map.getTileHeight();
     }
@@ -33,7 +33,14 @@ public class Map {
     public boolean doesCollide(int x, int y){
         int index = this.map.getLayerIndex("Collisions");
         //@TODO: check if the index is -1
-        System.out.println("Collision ID: " + this.map.getTileId(x, y, index)) ; 
+        System.out.println("Collision ID: " + this.map.getTileId(x, y, index)); 
         return false ;
+    }
+    public int getMapWidth(){
+        return mapWidth; 
+        
+    }
+    public int getMapHeight(){
+        return mapHeight; 
     }
 }

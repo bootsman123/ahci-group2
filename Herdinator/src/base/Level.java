@@ -31,4 +31,8 @@ public class Level {
     public void render(){
          this.map.render();
     }
+    
+    public Map getMap(){
+        return map ; 
+    }
 }
