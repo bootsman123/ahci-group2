@@ -51,11 +51,11 @@ public class Game extends BasicGame
        
        this.sheepSpriteSheet = new SpriteSheet( "../Resources/Images/sheeps_animation.png", Game.SPRITE_WIDTH, Game.SPRITE_HEIGHT, new Color( 123, 198, 132 ) );
        
-       this.sheepUp = new Animation( false );
+       this.sheepUp = new Animation( false );       
        this.sheepUp.addFrame( this.sheepSpriteSheet.getSprite( 0, 3 ), 150 );
        this.sheepUp.addFrame( this.sheepSpriteSheet.getSprite( 1, 3 ), 150 );
        this.sheepUp.addFrame( this.sheepSpriteSheet.getSprite( 2, 3 ), 150 );
-       
+              
        this.sheepRight = new Animation( false );
        this.sheepRight.addFrame( this.sheepSpriteSheet.getSprite( 0, 2 ), 150 );
        this.sheepRight.addFrame( this.sheepSpriteSheet.getSprite( 1, 2 ), 150 );
