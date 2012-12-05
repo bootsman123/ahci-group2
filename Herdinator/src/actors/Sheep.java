@@ -14,15 +14,25 @@ import temp.Game2;
  */
 public class Sheep extends Actor
 {
+    private static final double DELTAMOVEMENT = 0.1;
+    private static final double MOVEMENTGOAL=0.2;
+    private static final double RANDOMDISTANCE=100;
     private SpriteSheet sheepSpriteSheet;
     
     private Animation sheepSprite, sheepUp, sheepRight, sheepDown, sheepLeft;
     private double sheepX;
     private double sheepY;
     
-    public Sheep(int sheepX, int sheepY) throws SlickException{
+    private double goalX;
+    private double goalY;
+    private int mapWidth;
+    private int mapHeight;
+    public Sheep(int sheepX, int sheepY, int mapWidth, int mapHeight) throws SlickException{
        this.sheepX = sheepX; 
        this.sheepY = sheepY; 
+       this.mapWidth = mapWidth;
+       this.mapHeight = mapHeight;
+       
        this.sheepSpriteSheet = new SpriteSheet( "../Resources/Images/sheeps_animation.png", Game2.SPRITE_WIDTH, Game2.SPRITE_HEIGHT, new Color( 123, 198, 132 ) );
        
        this.sheepUp = new Animation( false );       
@@ -46,7 +56,7 @@ public class Sheep extends Actor
        this.sheepLeft.addFrame( this.sheepSpriteSheet.getSprite( 2, 1 ), 150 );
        
        this.sheepSprite = this.sheepDown;
-       
+       this.determineRandomLocation();
     }
     
     public void draw(){
@@ -61,8 +71,8 @@ public class Sheep extends Actor
     
     public void moveDown(int delta){
         this.sheepSprite = this.sheepDown;
-            this.sheepSprite.update( delta );
-            this.sheepY += delta * Game2.SPEED;
+        this.sheepSprite.update( delta );
+        this.sheepY += delta * Game2.SPEED;
             
     }
     public void moveRight(int delta){
@@ -74,13 +84,45 @@ public class Sheep extends Actor
     
     public void moveLeft(int delta){
         this.sheepSprite = this.sheepLeft;
-            this.sheepSprite.update( delta );
-            this.sheepX -= delta * Game2.SPEED;
+        this.sheepSprite.update( delta );
+        this.sheepX -= delta * Game2.SPEED;
     }
 
-    public void update(int mapWidth, int mapHeight) {
+    public void moveRandom(int delta){
+        if (Math.abs(this.sheepX-this.goalX)+Math.abs(this.sheepY-this.goalY)<MOVEMENTGOAL){
+            determineRandomLocation();
+        }
+        if(Math.abs(this.sheepX-this.goalX)>(MOVEMENTGOAL/2)){
+            if(this.sheepX>this.goalX){
+                this.moveLeft(delta);
+            }
+            else{
+                this.moveRight(delta);
+            }
+        }
+        else{
+            if(this.sheepY>this.goalY){
+                this.moveUp(delta);
+            }
+            else{
+                this.moveDown(delta);
+            }
+        }
+    }
+
+    private void determineRandomLocation(){
+        System.out.println("Determining random location") ;
+        
+        this.goalX+=RANDOMDISTANCE*(Math.random()-0.5);
+        this.goalY+=RANDOMDISTANCE*(Math.random()-0.5);
+        
+        this.goalX = Math.max( 0, Math.min( this.goalX, mapWidth - Game2.SPRITE_WIDTH ) );
+        this.goalY = Math.max( 0, Math.min( this.goalY, mapHeight - Game2.SPRITE_HEIGHT ) );
+    }
+    public void update() {
         this.sheepX = Math.max( 0, Math.min( this.sheepX, mapWidth - Game2.SPRITE_WIDTH ) );
         this.sheepY = Math.max( 0, Math.min( this.sheepY, mapHeight- Game2.SPRITE_HEIGHT ) );
+        System.out.println("SheepY: " + this.sheepY + " GoalY " + this.goalY + " SheepX " + this.sheepX + " GoalX " + this.goalX);
     }
 }    
 

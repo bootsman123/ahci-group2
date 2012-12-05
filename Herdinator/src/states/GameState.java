@@ -1,21 +1,19 @@
 package states;
 
+import TUIO.TuioClient;
 import base.Level;
 import base.Player;
+import connectors.PhoneConnector;
 import java.util.List;
 import levels.Level1;
-import levels.Level2;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import temp.Game2;
+import players.MobilePlayer;
 
 /**
  *
@@ -30,7 +28,10 @@ public class GameState extends BasicGameState
     
     public GameState() throws SlickException
     {
-        
+        TuioClient client = new TuioClient() ; 
+        PhoneConnector phoneConnector = new PhoneConnector(); 
+        client.addTuioListener(phoneConnector);
+        client.connect();
     }
     
     

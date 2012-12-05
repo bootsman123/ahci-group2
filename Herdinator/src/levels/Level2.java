@@ -17,7 +17,7 @@ public class Level2 extends Level {
     
     public Level2() throws SlickException{
         super() ; 
-        sheeps.add(new Sheep(50,40)) ; 
-        sheeps.add(new Sheep(20,20)) ; 
+        sheeps.add(new Sheep(50,40, map.getMapWidth(), map.getMapHeight())) ; 
+        sheeps.add(new Sheep(20,20, map.getMapWidth(), map.getMapHeight())) ; 
     }
 }

@@ -20,7 +20,7 @@ import temp.Game2;
  * @author roland
  */
 public class Level {
-    private Map map; 
+    protected Map map; 
     protected List<Sheep> sheeps; 
     //private Sheep sheep; 
     private Dog dog; 
@@ -46,6 +46,7 @@ public class Level {
     }
 
     public void update(Input input, int delta) {
+        /*
          if( input.isKeyDown( Input.KEY_UP ) )
         {
             for (Sheep sheep : sheeps){
@@ -69,9 +70,10 @@ public class Level {
             for (Sheep sheep : sheeps){
                 sheep.moveLeft(delta); 
             }
-        }
+        }*/
        for (Sheep sheep : sheeps){
-           sheep.update(map.getMapWidth(), map.getMapHeight());; 
+           sheep.moveRandom(delta);
+           sheep.update();; 
        }
        
     }
