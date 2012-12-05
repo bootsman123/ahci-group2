@@ -7,6 +7,7 @@ import connectors.PhoneConnector;
 import java.util.ArrayList;
 import java.util.List;
 import levels.Level1;
+import levels.Level2;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -50,6 +51,7 @@ public class GameState extends BasicGameState
         // Initialize levels.
         this.levels = new ArrayList<Level>();
         this.levels.add( new Level1() );
+        this.levels.add( new Level2() );
         
         this.currentLevel = this.levels.get( 0 );
         this.currentLevel.init( container, game );  

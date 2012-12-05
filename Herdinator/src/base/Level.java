@@ -28,12 +28,12 @@ public class Level
     
     public Level() throws SlickException
     {
-
+        
     }
     
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
-        //this.map = new Map(); 
+       
         this.sheeps = new ArrayList<Sheep>();   
     }
 
@@ -53,6 +53,7 @@ public class Level
         
         for( Sheep sheep : this.getSheeps() )
         {
+            sheep.moveRandom(delta);
             sheep.update( container, delta );
         }
          
@@ -88,10 +89,7 @@ public class Level
                 sheep.moveLeft(delta); 
             }
         }*/
-       for (Sheep sheep : sheeps){
-           sheep.moveRandom(delta);
-           sheep.update();; 
-       }
+       
        
     }
      
