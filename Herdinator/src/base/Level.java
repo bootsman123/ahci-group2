@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package base;
 
 import actors.Dog;
@@ -10,40 +6,61 @@ import actors.Sheep;
 import actors.Wolf;
 import java.util.ArrayList;
 import java.util.List;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
-import temp.Game2;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
  * @author roland
  */
-public class Level {
-    protected Map map; 
+
+public class Level
+{
+    protected Map map;
+    
     protected List<Sheep> sheeps; 
-    //private Sheep sheep; 
     private Dog dog; 
     private Wolf wolf;
-    private LoveSheep lovesheep;
+    private LoveSheep loveSheep;
     
-    public Level() throws SlickException{
+    public Level() throws SlickException
+    {
 
-        this.map = new Map() ; 
-        sheeps = new ArrayList<Sheep>();
+    }
+    
+    public void init( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+        //this.map = new Map(); 
+        this.sheeps = new ArrayList<Sheep>();   
+    }
+
+    public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
+    {
+         this.map.render( container, g );
+         
+         for( Sheep sheep : this.getSheeps() )
+         {
+             sheep.render( container, g );
+         }
+    }
+
+    public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
+    {
+        this.map.update( container, delta );
         
-    }
-    
-    public void render(){
-        this.map.render();
-        for (Sheep sheep : sheeps){
-            sheep.draw() ; 
+        for( Sheep sheep : this.getSheeps() )
+        {
+            sheep.update( container, delta );
         }
+         
     }
     
-    public Map getMap(){
-        return map ; 
-    }
+    
+    
+    
 
     public void update(Input input, int delta) {
         /*
@@ -76,5 +93,16 @@ public class Level {
            sheep.update();; 
        }
        
+    }
+     
+    
+    public Map getMap()
+    {
+        return this.map; 
+    }
+    
+    public List<Sheep> getSheeps()
+    {
+        return this.sheeps;
     }
 }

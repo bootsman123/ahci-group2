@@ -3,6 +3,8 @@ package actors;
 import base.Actor;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import temp.Game2;
@@ -59,8 +61,15 @@ public class Sheep extends Actor
        this.determineRandomLocation();
     }
     
-    public void draw(){
+    public void render( GameContainer container, Graphics g ) throws SlickException
+    {
         this.sheepSprite.draw( (int)this.sheepX, (int)this.sheepY );
+    }
+    
+    public void update( GameContainer container, int delta ) throws SlickException
+    {        
+        //this.sheepX = Math.max( 0, Math.min( this.sheepX, mapWidth - Game2.SPRITE_WIDTH ) );
+        //this.sheepY = Math.max( 0, Math.min( this.sheepY, mapHeight- Game2.SPRITE_HEIGHT ) );
     }
 
     public void moveUp(int delta) {
@@ -87,6 +96,7 @@ public class Sheep extends Actor
         this.sheepSprite.update( delta );
         this.sheepX -= delta * Game2.SPEED;
     }
+
 
     public void moveRandom(int delta){
         if (Math.abs(this.sheepX-this.goalX)+Math.abs(this.sheepY-this.goalY)<MOVEMENTGOAL){
@@ -124,5 +134,6 @@ public class Sheep extends Actor
         this.sheepY = Math.max( 0, Math.min( this.sheepY, mapHeight- Game2.SPRITE_HEIGHT ) );
         System.out.println("SheepY: " + this.sheepY + " GoalY " + this.goalY + " SheepX " + this.sheepX + " GoalX " + this.goalX);
     }
+
 }    
 
