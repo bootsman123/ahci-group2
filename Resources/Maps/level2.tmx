@@ -8,6 +8,26 @@
  </tileset>
  <tileset firstgid="1537" name="Collisions" tilewidth="16" tileheight="16">
   <image source="../Images/collisions.png" width="80" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="Collision" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Goal" value="1"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="Sheep" value="1"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="Dog" value="1"/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="1547" name="Celianna Tile b" tilewidth="16" tileheight="16">
   <image source="../Images/celiannatileb.png" width="512" height="512"/>
@@ -15,9 +35,9 @@
  <tileset firstgid="2571" name="Celianna Tile c" tilewidth="16" tileheight="16">
   <image source="../Images/celiannatilec.png" width="512" height="512"/>
  </tileset>
- <layer name="Collisions" width="50" height="40">
+ <layer name="Controls" width="50" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2YSQrAIBAEzSX/f3IOwWNcUJnqSRd4k7HLFSxlP9f9NnXswcpB8VjFHjHUvF9NhWwe6tiDhT1Y/MGjd/+S7udeztEa0dhjvt9JKPt7FXuw2OFBmIfM53z2fVPwyPKeEzKOoJS1hT1YqHqo/+9UsnmoE+mxc2yvBwt7xNaOHOskZI8HbT0MB0AfAAA=
+   H4sIAAAAAAAAA+2YQQ6AIAwE1aj/f7IHQ0II0Ipod6GT9L5jKSUuS3/W8y50diEji4fEUw/pu1gxaz9QYfMIeUvVgsWsfOFhAVveEu5hSzqDrB4p7oFFzSO+f7dMId3Pkkcuf87HGvfg8dA4hLLGPd559H4Tz9AP9jmX9t8fHvG505xByWOUfY6QUQNT1hrugQWrB/v/ncBoHsi07j0NB5g7Qz80uAcW7oEFsscFFo0MRUAfAAA=
   </data>
  </layer>
  <layer name="Ground" width="50" height="40">

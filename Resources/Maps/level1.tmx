@@ -6,18 +6,38 @@
  <tileset firstgid="769" name="Celianna Tile a2" tilewidth="16" tileheight="16">
   <image source="../Images/celiannatilea2.png" width="512" height="384"/>
  </tileset>
- <tileset firstgid="1537" name="Collisions" tilewidth="16" tileheight="16">
-  <image source="../Images/collisions.png" width="80" height="32"/>
- </tileset>
- <tileset firstgid="1547" name="Celianna Tile b" tilewidth="16" tileheight="16">
+ <tileset firstgid="1537" name="Celianna Tile b" tilewidth="16" tileheight="16">
   <image source="../Images/celiannatileb.png" width="512" height="512"/>
  </tileset>
- <tileset firstgid="2571" name="Celianna Tile c" tilewidth="16" tileheight="16">
+ <tileset firstgid="2561" name="Celianna Tile c" tilewidth="16" tileheight="16">
   <image source="../Images/celiannatilec.png" width="512" height="512"/>
  </tileset>
- <layer name="Collisions" width="50" height="40">
+ <tileset firstgid="3585" name="Controls" tilewidth="16" tileheight="16">
+  <image source="../Images/controls.png" width="80" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="Collision" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Goal" value="1"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="Sheep" value="1"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="Dog" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Controls" width="50" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3VMQ7AIAgFULv0/kfuYEwnU10q4nuJkwufiJQCAK/rrgegxz9RtT70evF1H8VofXL8I0sOWCn6fOw+57P7bYccWfZ59Bo5h/cIwCnsvLweHS+/zkAfAAA=
+   H4sIAAAAAAAAA+3YwQqAIBBFUYva+v+fGyFCi5FcaDPP7oFZBTEvswlTwh8c2buDfkq9Ah5m75EtlwKAFr4TRX0Od+1GPa9H1urfyhPZrBw9c3fkbF5lPXoy1IpMMcdp9KKYw7JKDvV9/jb/FHPMnOdfnXEo/HPAh8c5G+8jAMQyahaMuA8zAiou32eG80AfAAA=
   </data>
  </layer>
  <layer name="Ground" width="50" height="40">
@@ -32,7 +52,7 @@
  </layer>
  <layer name="Extra" width="50" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3YuU8UYQDG4alIOJQb7QEbOURdsOdoALnPRqEVkVPFBqXlFhClh4YblrOHBjmUQ/4HYLmPkl8CEzYblt3ZnQnfmO9NnsAWZN93w36ZGUWRMTKhvooShnBE4BEe+953K+15QeeXsCARSXhlwh15dM5HAQpRhGIT7qilcx3q8RGf8NmEO7ro3I0e/EAvfppkxxsfRXnrc/X7JJ2tmMI0ZjCrYcd9nhONbPh6vWOd99zAJrbwD9saeohyThzznic4xRnOcaGhhzwnxIrI54T9OeAq3p4TRsb+HHAVb88JUXLbOVHGZ1Du5ucgcr6xoek/2CEjIyMjcxPRniuE+9HDT/vfiXK/oMbChkR0oVvDHlHvFybZYNWwQ94viBWR7xe05K77hV/87DPJptvuF9T+c5j3cEc/1+kDOl6r+9MjAA/wEIEIQjBCnHT0pr+aBTYs6rjjKX1iEIs4xOMZEvDcgP+ZSLpHGXDPlE7XDGTiNbKQjRzkGrAjmQ0piMYTHfe8o2sF3qMSH1CFatQY+B1OZUOaDjvUZzXNdG1BK9rQjg504rvDjhJelwryvVajPqsZpNcQhjGCUYxhHBMOnRt4/cXDHXp/rx2zRK/fWMYKVrGGP/jrpPMy1zUrHlxzGpkduu5iDzbs4wCHOHKyY48NNsF2yLiXS3febz9AHwAA
+   H4sIAAAAAAAAA+3YSTMcYQDG8bYNM4M7cRESu3vIxb5GXIKrNUEsF8vVmhDbnUvsa7hzsSR230GMECSfwb+KLmrKoGe6y9vqfap+xRzUPM+Ueau7FUXGyFitimKDHYEIQrD1qVtpTwydYxGHeCQg0YQ7cuicizzk4x0KTLijms41qMVn1KHehDt66NyLb+hDPwZMsuODRVGKLFe/z9B5FnOYxwJ+aNjxlOdEExuar3ds85472MUe9nGgoYco58Rf3vMM57jAP/zX0EOeE2JF5HPi9jnwUDw9J4zM7XPgoXh6ToiSu86JYj6Dkkd+DiKnhQ2tz2CHjIyMjMxNRHuuYLfRw6b970S5X1ATx4Z49KBXwx5R7xdm2DCrYYe8XxArIt8vaMl99wuD/Bwyyaa77hfU/otYcnPHMNfpIzpeq3vRwxs+8IUfLPBHgIuOnvRXs8yGFR13hNPnJSIQiVd4jShEG/A/E0L3UAPumVLomoo0pCMDmchCtgE73rAhCS8QpuOeUrqWoRwVqEQVPuKTgd/hZDa81WGH+qymja7t6EAnutCNL/jqtOM9rwsF+V6rUZ/VfKfXKMYwjglMYgrTTp0beN3o5g69v9fOWaXXGtaxgZ/4hU1suei8znXNhhvXnEbmkK6/cQQHjvEHJzh1seOIDQ7Bdsg8LpdWFEs/QB8AAA==
   </data>
  </layer>
 </map>
