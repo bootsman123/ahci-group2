@@ -20,14 +20,14 @@ public class Game extends StateBasedGame
     public Game() throws SlickException
     {
         super( Game.NAME );
-        this.currentState = new GameState(); 
-        this.addState(currentState);
-        this.enterState(currentState.getID());
     }
 
     @Override
     public void initStatesList( GameContainer container ) throws SlickException
     {
+        this.currentState = new GameState(); 
+        this.addState( this.currentState );
         
+        this.enterState( this.currentState.getID() );
     }
 }

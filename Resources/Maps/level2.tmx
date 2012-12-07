@@ -6,8 +6,8 @@
  <tileset firstgid="769" name="Celianna Tile a2" tilewidth="16" tileheight="16">
   <image source="../Images/celiannatilea2.png" width="512" height="384"/>
  </tileset>
- <tileset firstgid="1537" name="Collisions" tilewidth="16" tileheight="16">
-  <image source="../Images/collisions.png" width="80" height="32"/>
+ <tileset firstgid="1537" name="Controls" tilewidth="16" tileheight="16">
+  <image source="../Images/controls.png" width="80" height="32"/>
   <tile id="0">
    <properties>
     <property name="Collision" value="1"/>

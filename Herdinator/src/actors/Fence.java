@@ -1,15 +1,30 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package actors;
 
 import base.Actor;
+import base.Map;
+import java.awt.geom.Point2D;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+
 
 /**
  *
  * @author roland
  */
-public class Fence extends Actor{
-    private static final int WIDTH = 2; 
+public class Fence extends Actor
+{
+    public Fence( Map map )
+    {
+        super( map, new Point2D.Float( 0.0f, 0.0f ) );
+    }
+
+    @Override
+    public void render(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void update(GameContainer container, int delta) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
