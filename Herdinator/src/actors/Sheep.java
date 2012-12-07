@@ -29,7 +29,8 @@ public class Sheep extends Actor
     private double goalY;
     private int mapWidth;
     private int mapHeight;
-    public Sheep(int sheepX, int sheepY, int mapWidth, int mapHeight) throws SlickException{
+    public Sheep( int sheepX, int sheepY, int mapWidth, int mapHeight ) throws SlickException
+    {
        this.sheepX = sheepX; 
        this.sheepY = sheepY; 
        this.mapWidth = mapWidth;

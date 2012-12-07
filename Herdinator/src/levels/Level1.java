@@ -24,7 +24,7 @@ public class Level1 extends Level
         //@TODO: Abstract more from this.
         super.init(container, game);
         this.map = new Map( "../Resources/Maps/level1.tmx" );
-        sheeps.add(new Sheep(10,10, map.getMapWidth(), map.getMapHeight())) ; 
-        sheeps.add(new Sheep(20,20, map.getMapWidth(), map.getMapHeight())) ; 
+        this.sheeps.add( new Sheep( 10,10, map.getMapWidth(), map.getMapHeight()) ); 
+        this.sheeps.add( new Sheep( 20,20, map.getMapWidth(), map.getMapHeight()) ); 
     }
 }
