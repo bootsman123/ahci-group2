@@ -22,17 +22,17 @@
  </layer>
  <layer name="Collisions" width="50" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3VOw6AIBAFQGy8/5EtDLEiagEsy0xCRbMv2U8pAPA4zvsBtNgTRFT7stWbb/9RfK1PjjGy5ICZos/H6nP+976tkCPLPY9eY0+75wdgH25eXhdqdY8FQB8AAA==
+   H4sIAAAAAAAAA+3VMQ7AIAgFULv0/kfuYEwnU10q4nuJkwufiJQCAK/rrgegxz9RtT70evF1H8VofXL8I0sOWCn6fOw+57P7bYccWfZ59Bo5h/cIwCnsvLweHS+/zkAfAAA=
   </data>
  </layer>
  <layer name="Fences" width="50" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3VuQ2AMAyF4UjMwCiwCcciHItwLAJhPByJAhBFXBCh8H+SK7t4bmxjAAAAAPxRkRhTSk1H1cm1P5x61UP/KxrJ1UrZo/JbzuXU66T6j+6RKrJpZkNz2eYI9sgk1+aZTTMLxCBV/ATNbGix3F33r0fPfz4pbnRo7l+vnv/ccncBAADwoh1W5lErQB8AAA==
+   H4sIAAAAAAAAA+3VuQ2AMAyF4UiZgVFgE45FOBbhWIRjPBwpBSCKuIlQ+D/JlV08N7YxAAAAQBylNaaSmn019t4fL736pf8VreTqpHZfxSPneun1UsNH98gU2TSzsblsSwJ75JLrCMymmQVSkCl+gmY2tlTurvvXU+A/nxU3Ojb3r7fAf75zdwEAAIDfOAE+9Vn5QB8AAA==
   </data>
  </layer>
  <layer name="Extra" width="50" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2YN04DQRSGp7Jkt2CgJ1wAbOgJFyDTEK5ApiFcwSb2cAGb2EMHDfES0BBLPglGuLDYnV3N7htrfumTp7H2fWvvezujlI/NNGWVaoY8tEArtGXTrso83dTcAwUoQi/0OegxTM0jMApjMA4TDnrMU/MCLMISLMOKgx4lai7DNuzALuw54jGdUWom87OuUHMVjuEETuHMwCPNPrGOw8avxy3XvIN7eIBHeDKoQ0qfeOWab/AOH/AJXwZ1+D4hK5L7RG0fCErcPmEztX0gKHH7hJTU6xOz3IO5kPdBcjZx2GoADx8fHx+fv/hzBVmRtl/I5/hf5My/J22/UMChCCUoG/hI3S9UcKgaeEjeL5jkv/3CPp8HjjjV2y/o+s/hIqLHIe/pRym/q8epX+cShytLHknMvHZq77D8OyQx8/pxGIBO6LLkk+TMG8RhyJJH0MybZD0l+LnW509BM2+V9VpED5vPtY4+fwo7866ZozcR3nGSStgzsmccXgR7xD1Lb+R8A6lzRABAHwAA
+   H4sIAAAAAAAAA+2YOU7DQBSGp4qUtBCgZ7kAJNCzXICdhuUK7DQsV0hYe7hAwtpDBw3rJaBhLfkkGJEiwh5bY7+J5pc+xU3k99nyezOjlI/NNGWVaoY8tEArtGXTrso83dTcAwUoQi/0OegxTM0jMApjMA4TDnrMU/MCLMISLMOKgx4lai7DNuzALuw54jGdUWom83NdoeYqHMMJnMKZgUeafWIdh41fj1vueQf38ACP8GRQh5Q+8co93+AdPuATvgzq8H1CViT3ido+EJS4fcJmavtAUOL2CSmp1ydmeQZzIZ+D5GzisNUAHj4+Pj4+f5F2rpDPUUfO/H9S9gs6BRyKUIKygY/U/UIFh6qBh98vyIrk/YJJ/tsv7PN74IhTvf2Crv8cLiJ6HLJOP0p5rR6nfp1LHK4seSQx89qpvcPye0hi5vXjMACd0GXJJ8mZN4jDkCWPoJk3yfWU4O9anz8FzbxVrtcietj8rnX0+VPYmXfNuuYmwpozqYQ9I3vG4UWwR9yz9EbON/EsATBAHwAA
   </data>
  </layer>
 </map>
