@@ -52,7 +52,7 @@ public class Sheep extends MovableActor
         
         this.animation = this.animationDown;
         
-        this.goalPosition = new Point2D.Float();
+        this.goalPosition = new Point2D.Float( this.getX(), this.getY() );
         this.determineRandomPosition();
     }
     
@@ -104,6 +104,8 @@ public class Sheep extends MovableActor
                 this.moveDown( delta );
             }
         }
+        
+        this.animation.update( delta );
         
         //@TODO: Fugly for now.
         this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, this.getMap().getMapWidth() ) );
