@@ -3,6 +3,7 @@ package actors;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
+import java.util.Random;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -23,7 +24,7 @@ public class Sheep extends MovableActor
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
     private static final Float SPEED = 0.1f;
-    private static final Float GOAL_MOVEMENT = 0.2f;
+    private static final Float GOAL_MOVEMENT = 0.4f;
     private static final Float GOAL_DISTANCE = 100.0f;
     
     private Animation animation, animationUp, animationRight, animationDown, animationLeft;
@@ -75,36 +76,36 @@ public class Sheep extends MovableActor
         {
             this.determineRandomPosition();
         }
-        
-        // Move left or right.
-        if( Math.abs( this.getX() - this.goalPosition.x ) > Sheep.GOAL_MOVEMENT / 2 )
-        {
-            if( this.getX() > this.goalPosition.x )
+        else{
+            // Move left or right.
+            if( Math.abs( this.getX() - this.goalPosition.x ) > Sheep.GOAL_MOVEMENT / 2 )
             {
-                this.animation = this.animationLeft;
-                this.moveLeft( delta );
+                if( this.getX() > this.goalPosition.x )
+                {
+                    this.animation = this.animationLeft;
+                    this.moveLeft( delta );
+                }
+                else
+                {
+                    this.animation = this.animationRight;
+                    this.moveRight( delta );
+                }
             }
+            // Move up or down.
             else
             {
-                this.animation = this.animationRight;
-                this.moveRight( delta );
+                if( this.getY() > this.goalPosition.y )
+                {
+                    this.animation = this.animationUp;
+                    this.moveUp( delta );
+                }
+                else
+                {
+                    this.animation = this.animationLeft;
+                    this.moveDown( delta );
+                }
             }
         }
-        // Move up or down.
-        else
-        {
-            if( this.getY() > this.goalPosition.y )
-            {
-                this.animation = this.animationUp;
-                this.moveUp( delta );
-            }
-            else
-            {
-                this.animation = this.animationLeft;
-                this.moveDown( delta );
-            }
-        }
-        
         this.animation.update( delta );
         
         //@TODO: Fugly for now.
@@ -114,8 +115,9 @@ public class Sheep extends MovableActor
     
     private void determineRandomPosition()
     {
-        this.goalPosition.x += Sheep.GOAL_DISTANCE * ( Math.random() - 0.5 );
-        this.goalPosition.y += Sheep.GOAL_DISTANCE * ( Math.random() - 0.5 );
+        Random randomGenerator = new Random(); 
+        this.goalPosition.x += Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
+        this.goalPosition.y += Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
         
         //@TODO: Fugly.
         this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth() ) );
