@@ -3,7 +3,6 @@ package actors;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
-import java.util.Random;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -24,13 +23,17 @@ public class Sheep extends MovableActor
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
     private static final Float SPEED = 0.1f;
-    private static final Float GOAL_MOVEMENT = 0.4f;
+    private static final Float GOAL_MOVEMENT = 0.8f;
     private static final Float GOAL_DISTANCE = 100.0f;
+
+    private boolean hasReachedGoal ;
     
     private Animation animation, animationUp, animationRight, animationDown, animationLeft;
 
     private Point2D.Float goalPosition;
-    
+
+    private Point2D.Float loveSheepLocation;
+
     /**
      * Constructor.
      * @param position
@@ -52,6 +55,8 @@ public class Sheep extends MovableActor
         this.animationLeft = SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 1, 150 );
         
         this.animation = this.animationDown;
+
+        this.hasReachedGoal = false;
         
         this.goalPosition = new Point2D.Float( this.getX(), this.getY() );
         this.determineRandomPosition();
@@ -70,7 +75,21 @@ public class Sheep extends MovableActor
     }
     
     private void moveRandom( int delta )
-    {        
+    {
+        Map map = getMap();
+        
+        if(map.isGoalTile(this.getPosition())){
+            this.hasReachedGoal = true;
+        }
+        else{
+            if(this.hasReachedGoal){
+                do{
+                    this.determineRandomPosition();
+                }
+                while(!map.isGoalTile(this.goalPosition));
+            }
+        }
+        
         if( Math.abs( this.getX() - this.goalPosition.x ) +
             Math.abs( this.getY() - this.goalPosition.y ) < Sheep.GOAL_MOVEMENT )
         {
@@ -101,11 +120,12 @@ public class Sheep extends MovableActor
                 }
                 else
                 {
-                    this.animation = this.animationLeft;
+                    this.animation = this.animationDown;
                     this.moveDown( delta );
                 }
             }
         }
+
         this.animation.update( delta );
         
         //@TODO: Fugly for now.
@@ -115,12 +135,24 @@ public class Sheep extends MovableActor
     
     private void determineRandomPosition()
     {
-        Random randomGenerator = new Random(); 
-        this.goalPosition.x += Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
-        this.goalPosition.y += Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
-        
+       // this.goalPosition = loveSheepLocation;
+        /*
+        Random randomGenerator = new Random();
+        //do{
+            this.goalPosition.x = this.getPosition().x + Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
+            this.goalPosition.y = this.getPosition().y + Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
+
+        //}while(!this.getMap().isGoalTile(this.goalPosition));
+        */
         //@TODO: Fugly.
-        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth() ) );
-        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight() ) );
+        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-Sheep.SPRITE_SHEET_SPRITE_WIDTH ) );
+        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight()-Sheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
+    }
+
+    public void setLoveSheepLocation(Point2D.Float loveSheepLocation){
+        this.loveSheepLocation = loveSheepLocation;
+    }
+    public boolean getHasReachedGoal(){
+        return this.hasReachedGoal;
     }
 }

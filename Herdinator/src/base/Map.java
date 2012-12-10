@@ -50,8 +50,10 @@ public class Map
        this.map = new TiledMap( filePath );
        this.mapWidth = this.map.getWidth() * this.map.getTileWidth();
        this.mapHeight = this.map.getHeight() * this.map.getTileHeight();
+
        
        this.sheeps = new ArrayList<Sheep>();
+
     }
     
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
@@ -67,6 +69,8 @@ public class Map
         {
             return;
         }
+        Point2D.Float startingPoint = new Point2D.Float(0,0);
+        this.loveSheep = new LoveSheep(this, startingPoint);
         
         // Loop over all the tiles.
         for( int x = 0; x < this.map.getWidth(); x++ )
@@ -124,6 +128,7 @@ public class Map
         {
             sheep.render( g );
         }
+        loveSheep.render(g);
     }
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
@@ -135,12 +140,14 @@ public class Map
                 
         for( Sheep sheep : this.sheeps )
         {
+           // sheep.setLoveSheepLocation(loveSheep.getPosition());
             sheep.update( container, delta );
         }
+
         
         //this.dog.update( container, delta );
         //this.wolf.update( container, celta );
-        //this.loveSheep.update( container, delta );
+        this.loveSheep.update( container, delta );
     }
     
     private Pair<Integer, Integer> fromPosition( Point2D.Float position )
@@ -192,10 +199,12 @@ public class Map
      */
     public boolean isGoalTile( Point2D.Float position )
     {
+      /*
        if( !this.isValidTile( position ) )
        {
+           System.out.println("Not asking for a valid tile");
            return false;
-       }
+       }*/
        
        return this.goals.containsKey( this.fromPosition( position ) );
     }
@@ -216,5 +225,14 @@ public class Map
     public int getMapHeight()
     {
         return this.mapHeight; 
+    }
+
+    /**
+     * Function that does something with the x and y position of the mouse.
+     * @param x
+     * @param y
+     */
+    public void setMousePosition(int x, int y){
+        this.loveSheep.setPosition(new Point2D.Float(x,y));
     }
 }
