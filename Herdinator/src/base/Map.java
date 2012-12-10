@@ -140,7 +140,7 @@ public class Map
                 
         for( Sheep sheep : this.sheeps )
         {
-           // sheep.setLoveSheepLocation(loveSheep.getPosition());
+            sheep.setLoveSheepLocation(loveSheep.getPosition());
             sheep.update( container, delta );
         }
 

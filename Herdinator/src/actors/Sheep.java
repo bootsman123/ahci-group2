@@ -3,6 +3,7 @@ package actors;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
+import java.util.Random;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -80,13 +81,11 @@ public class Sheep extends MovableActor
         
         if(map.isGoalTile(this.getPosition())){
             this.hasReachedGoal = true;
+            this.goalPosition = this.getPosition();
         }
         else{
             if(this.hasReachedGoal){
-                do{
-                    this.determineRandomPosition();
-                }
-                while(!map.isGoalTile(this.goalPosition));
+               this.determineRandomPosition();
             }
         }
         
@@ -135,14 +134,20 @@ public class Sheep extends MovableActor
     
     private void determineRandomPosition()
     {
-       // this.goalPosition = loveSheepLocation;
+        if(loveSheepLocation!=null && !hasReachedGoal){
+            this.goalPosition = loveSheepLocation;
+        }
+        else{
+            /*
+            Random randomGenerator = new Random();
+            do{
+                this.goalPosition.x = this.getPosition().x + Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
+                this.goalPosition.y = this.getPosition().y + Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
+            }while(!this.getMap().isGoalTile(this.goalPosition));*/
+        }
         /*
-        Random randomGenerator = new Random();
-        //do{
-            this.goalPosition.x = this.getPosition().x + Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
-            this.goalPosition.y = this.getPosition().y + Sheep.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
-
-        //}while(!this.getMap().isGoalTile(this.goalPosition));
+        
+        
         */
         //@TODO: Fugly.
         this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-Sheep.SPRITE_SHEET_SPRITE_WIDTH ) );
