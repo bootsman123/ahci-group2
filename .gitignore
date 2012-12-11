@@ -18,11 +18,11 @@ local.properties
 # Eclipse project files
 .classpath
 .project
-/Game/nbproject/private/
-/Game/build/
 
 # OS X shizzle.
 .DS_Store
+
+# Herdinator.
 /HerdinatorServer/nbproject/private/
 /HerdinatorServer/HerdinatorServer-war/nbproject/private/
 /HerdinatorServer/HerdinatorServer-ejb/nbproject/private/
