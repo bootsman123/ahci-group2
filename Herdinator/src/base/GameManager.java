@@ -26,6 +26,11 @@ public class GameManager {
     private PhoneConnector phoneConnector;
     private GameManager(){
         this.players = new ArrayList<Player>();
+        this.players.add(new Player(0));//@TODO: add the right numbers
+        this.players.add(new Player(1));//@TODO: add the right numbers
+        this.players.add(new Player(2));//@TODO: add the right numbers
+        this.players.add(new Player(3));//@TODO: add the right numbers
+        
         TuioClient client = new TuioClient();
         this.phoneConnector = new PhoneConnector();
         client.addTuioListener( phoneConnector );
@@ -50,11 +55,9 @@ public class GameManager {
     {
         Input input = container.getInput();
         ArrayList<TuioObject> currentObjects = phoneConnector.getCurrentObjects();
-        if(currentObjects.size() > 0){
-            TuioObject firstObject = currentObjects.get(0);
-        
+        for (TuioObject tobj: currentObjects){
 //            this.currentMap.setMousePosition(input.getMouseX(), input.getMouseY());
-            this.currentMap.setMousePosition((int)(firstObject.getX()*currentMap.getMapWidth()), (int)(firstObject.getY()*currentMap.getMapHeight()));
+            this.currentMap.setMousePosition((int)(tobj.getX()*currentMap.getMapWidth()), (int)(tobj.getY()*currentMap.getMapHeight()));
         }
         this.currentMap.update( container, game, delta );  
     }

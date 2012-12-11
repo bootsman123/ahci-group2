@@ -4,14 +4,21 @@
  */
 package base;
 
+import TUIO.TuioCursor;
+
 /**
  *
  * @author roland
  */
 public class Player {
     private String name ;
+    private int fiducialID;
+    
+    public Player(int fiducialID){
+        this.fiducialID = fiducialID;
+    }
 
-    public Player(){
-        
+    public int getFiducialID(){
+        return this.fiducialID;
     }
 }
