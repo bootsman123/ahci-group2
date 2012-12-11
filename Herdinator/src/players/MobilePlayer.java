@@ -17,7 +17,7 @@ import java.awt.Point;
  */
 public class MobilePlayer extends Player implements TuioListener{
     private Point locationTelephone ; 
-    private boolean hasTelephoneOnTable ;    
+    private boolean hasTelephoneOnTable ; 
 
     @Override
     public void addTuioObject(TuioObject to) {
