@@ -1,0 +1,33 @@
+// ...
+Task_item: T1
+	Name is ....
+	Type is ....
+	
+
+
+
+
+
+Method_for_goal: place object using <object_name>, and <location>
+	
+
+
+Method_for_goal: perform object using <object_name>
+
+
+
+
+Method_for_goal: determine location
+	Step 1. Think_of "Which object to use and where to place".
+	Step 2. Store "(x, y)" under <location>.
+	
+
+
+Method_for_goal: use object using <object_name>, and <location>
+	Step 1. Accomplish_goal: determine location
+	Step 1. Accomplish_goal: place object using "whistle", ...
+	Step 2. Accomplish_goal: use object using "whistle"
+	Step 4. Return_with_goal_accomplished.
+
+	
+	

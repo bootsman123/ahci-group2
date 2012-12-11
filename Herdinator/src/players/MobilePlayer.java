@@ -13,14 +13,16 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 /**
- *
+ * Mobile Players
  * @author roland
  */
 public class MobilePlayer extends Player implements TuioListener{
     private Point locationTelephone ; 
+
     private boolean hasTelephoneOnTable ;    
     private ArrayList<TuioObject> currentObjects;
     
+
     public MobilePlayer(int id){
         super(id);
         currentObjects = new ArrayList<TuioObject>();
