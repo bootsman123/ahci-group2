@@ -57,7 +57,11 @@ public class GameManager {
         ArrayList<TuioObject> currentObjects = phoneConnector.getCurrentObjects();
         for (TuioObject tobj: currentObjects){
 //            this.currentMap.setMousePosition(input.getMouseX(), input.getMouseY());
-            this.currentMap.setMousePosition((int)(tobj.getX()*currentMap.getMapWidth()), (int)(tobj.getY()*currentMap.getMapHeight()));
+            for (Player player : players){
+                if (player.getFiducialID() == tobj.getSymbolID()){
+                    this.currentMap.setMousePosition((int)(tobj.getX()*currentMap.getMapWidth()), (int)(tobj.getY()*currentMap.getMapHeight()));
+                }
+            }
         }
         this.currentMap.update( container, game, delta );  
     }
