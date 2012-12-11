@@ -3,14 +3,12 @@ package states;
 import TUIO.TuioClient;
 import base.GameManager;
 import base.Map;
-import base.Player;
 import connectors.PhoneConnector;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -23,17 +21,13 @@ public class GameState extends BasicGameState
 {
     public static final int ID = 1;
     
-    private Map currentMap; 
+    //private Map currentMap;
     private List<Map> maps; //@TODO: load levels
     
-    GameManager currentManager;
     
     public GameState() throws SlickException
     {
-        TuioClient client = new TuioClient(); 
-        PhoneConnector phoneConnector = new PhoneConnector(); 
-        client.addTuioListener( phoneConnector );
-        client.connect();
+        
     }
     
     @Override
@@ -49,22 +43,23 @@ public class GameState extends BasicGameState
         this.maps = new ArrayList<Map>();
         this.maps.add( new Map( "../Resources/Maps/level1.tmx" ) );
         this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
-        
-        this.currentMap = this.maps.get( 0 );
-        this.currentMap.init( container, game );
 
-        this.currentManager = new GameManager(currentMap);
+        Map currentMap;
+        currentMap = this.maps.get( 0 );
+        currentMap.init( container, game );
+
+        GameManager.getInstance().setMap(currentMap);
     }
 
     @Override
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
-         this.currentMap.render( container, game, g );
+         GameManager.getInstance().getMap().render( container, game, g );
     }
 
     @Override
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
-        this.currentManager.update(container, game, delta);
+        GameManager.getInstance().update(container, game, delta);
     }
 }
