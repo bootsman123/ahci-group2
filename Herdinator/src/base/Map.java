@@ -4,7 +4,7 @@ import actors.Dog;
 import actors.LoveSheep;
 import actors.Sheep;
 import actors.Wolf;
-import com.sun.tools.javac.util.Pair;
+import util.Pair;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
