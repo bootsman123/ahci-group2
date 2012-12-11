@@ -12,7 +12,7 @@ import base.Player;
 import java.awt.Point;
 
 /**
- *
+ * Mobile Players
  * @author roland
  */
 public class MobilePlayer extends Player implements TuioListener{
