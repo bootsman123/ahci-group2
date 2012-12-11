@@ -8,24 +8,32 @@ import TUIO.TuioCursor;
 import TUIO.TuioListener;
 import TUIO.TuioObject;
 import TUIO.TuioTime;
+import java.util.ArrayList;
 
 /**
  *
  * @author roland
  */
 public class PhoneConnector implements TuioListener{
+    private ArrayList<TuioObject> currentObjects;
     
     public PhoneConnector(){
-        
+        currentObjects = new ArrayList<TuioObject>();
+    }
+
+    public ArrayList<TuioObject> getCurrentObjects(){
+        return currentObjects;
     }
     @Override
     public void addTuioCursor(TuioCursor arg0) {
-            System.out.println("Added TuioCursor: " + arg0.getCursorID()) ; 
+            System.out.println("Added TuioCursor: " + arg0.getCursorID()) ;
+
     }   
 
     @Override
     public void addTuioObject(TuioObject arg0) {
-            System.out.println("Added TuioObject: " + arg0.getSymbolID()) ; 
+            System.out.println("Added TuioObject: " + arg0.getSymbolID()) ;
+            currentObjects.add(arg0); 
     }   
 
     @Override
@@ -40,7 +48,8 @@ public class PhoneConnector implements TuioListener{
 
     @Override
     public void removeTuioObject(TuioObject arg0) {
-            System.out.println("Removed TuioObject: " + arg0.getSymbolID()) ; 
+            System.out.println("Removed TuioObject: " + arg0.getSymbolID()) ;
+            currentObjects.remove(arg0);
     }   
 
     @Override
