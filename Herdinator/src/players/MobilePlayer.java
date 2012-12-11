@@ -19,6 +19,10 @@ public class MobilePlayer extends Player implements TuioListener{
     private Point locationTelephone ; 
     private boolean hasTelephoneOnTable ;    
 
+    public MobilePlayer(int id){
+        super(id);
+    }
+    
     @Override
     public void addTuioObject(TuioObject to) {
      System.out.println("Added new object: " + to.getSymbolID());

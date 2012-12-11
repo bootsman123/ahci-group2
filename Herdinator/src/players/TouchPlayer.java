@@ -19,6 +19,9 @@ public class TouchPlayer extends Player implements TuioListener{
     private Point fingerLocation ; 
     private boolean hasFingerOnTable ;    
 
+    public TouchPlayer(int id){
+        super(id);
+    }
     @Override
     public void addTuioObject(TuioObject to) {
        
