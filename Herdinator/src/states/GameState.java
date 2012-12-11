@@ -1,6 +1,7 @@
 package states;
 
 import TUIO.TuioClient;
+import base.GameManager;
 import base.Map;
 import base.Player;
 import connectors.PhoneConnector;
@@ -24,8 +25,8 @@ public class GameState extends BasicGameState
     
     private Map currentMap; 
     private List<Map> maps; //@TODO: load levels
-    private List<Player> players; //@TODO: add list of players
     
+    GameManager currentManager;
     
     public GameState() throws SlickException
     {
@@ -50,7 +51,9 @@ public class GameState extends BasicGameState
         this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
         
         this.currentMap = this.maps.get( 0 );
-        this.currentMap.init( container, game );  
+        this.currentMap.init( container, game );
+
+        this.currentManager = new GameManager(currentMap);
     }
 
     @Override
@@ -62,8 +65,6 @@ public class GameState extends BasicGameState
     @Override
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
-        Input input = container.getInput();
-        this.currentMap.setMousePosition(input.getMouseX(), input.getMouseY());
-        this.currentMap.update( container, game, delta );  
+        this.currentManager.update(container, game, delta);
     }
 }

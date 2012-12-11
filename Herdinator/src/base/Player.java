@@ -9,5 +9,9 @@ package base;
  * @author roland
  */
 public class Player {
-    private String name ; 
+    private String name ;
+
+    public Player(){
+        
+    }
 }
