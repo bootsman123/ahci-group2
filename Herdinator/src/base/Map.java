@@ -79,8 +79,11 @@ public class Map
         Point2D.Float startingPoint = new Point2D.Float(0,0);
         Point2D.Float startingPointDog = new Point2D.Float(0,0);
         this.loveSheep = new LoveSheep(this, startingPoint);
+       //Point2D.Float startingPoint = new Point2D.Float(0,0); we need a starting point for each actor, so we can just define them in the initialisations         this.loveSheep = new LoveSheep(this, startingPoint);
+        this.wolf = new Wolf(this, new Point2D.Float(mapWidth/2,mapHeight/10));
+        this.dog = new Dog(this, new Point2D.Float(mapWidth/4,mapHeight/2));
         
-        this.wolf = new Wolf(this, startingPointDog);
+        //this.wolf = new Wolf(this, startingPointDog);
 
         
         for(Player p : GameManager.getInstance().getPlayers()){
@@ -124,14 +127,20 @@ public class Map
                 }
                 
                 // Check "Dog".                
-                String dogString = this.map.getTileProperty( tileId, "Dog", null );
+
+                /*String dogString = this.map.getTileProperty( tileId, "Dog", null ); //documenteer deze code aub ik weet niet wat hier de bedoeling van is - Thomas
                 
                 if( dogString != null )
+
+                String dog = this.map.getTileProperty( tileId, "Dog", null );//waarom een string? Ik dacht dat er gewoon 1 hond was
+                
+                if( dog != null ) //waarom dog op deze manier implementeren? Nu krijgt hij toch steeds een nieuwe positie? Of is er een hele lijst honden?
+
                 {
                     
                     this.dog = new Dog(this, this.toPosition(x, y));
                     continue;
-                }
+                }*/
             }
         }
     }
@@ -148,8 +157,12 @@ public class Map
             cookie.render(g);
         }
         loveSheep.render(g);
+
         dog.render(g);
         wolf.render(g);
+
+        wolf.render(g);
+        dog.render(g);
     }
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
@@ -159,15 +172,21 @@ public class Map
             return;
         }
                 
-        for( Sheep sheep : this.sheeps )
+        for(int i=0; i< this.sheeps.size(); i++)
         {
-            sheep.setLoveSheepLocation(loveSheep.getPosition());
-            sheep.update( container, delta );
+            sheeps.get(i).setLoveSheepLocation(loveSheep.getPosition());
+            sheeps.get(i).setWolfLocation(wolf.getPosition());
+            sheeps.get(i).setDogLocation(dog.getPosition());
+            sheeps.get(i).update( container, delta );
+            wolf.setSheepLocation(sheeps.get(i).getPosition(),i);
+            
         }
+        wolf.setDogLocation(dog.getPosition());
+        
+       
 
         
-        this.dog.update( container, delta );
-        this.wolf.update( container, delta );
+      
         
         for(Cookie cookie : cookies){
             cookie.update(container, delta);
@@ -176,6 +195,8 @@ public class Map
         //this.wolf.update( container, celta );
         this.loveSheep.updateCookieLocation(cookies);
         this.loveSheep.update( container, delta );
+        this.wolf.update( container, delta );
+        this.dog.update( container, delta );
     }
 
     void addCookie(int playerID) throws SlickException {
@@ -293,9 +314,8 @@ public class Map
      * @param x
      * @param y
      */
-    public void setMousePosition(int x, int y){
-       // this.loveSheep.setPosition(new Point2D.Float(x,y));
-    }
+
+  
 
     /**
      * Function that sets the location of the dog to a specific x and y
@@ -318,5 +338,10 @@ public class Map
                 cookie.setPosition(new Point2D.Float(x,y));
             }
         }
+    }
+    
+    public void setMousePosition(int x, int y){ //What exactly is this function supposed to do? 
+        this.loveSheep.setPosition(new Point2D.Float(x,y));
+
     }
 }

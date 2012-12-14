@@ -60,4 +60,36 @@ public abstract class MovableActor extends Actor implements Movable
     {
         this.setX( this.getX() - delta * this.getSpeed() );
     }
+    
+    public void moveTo( int delta, Point2D.Float position, Point2D.Float target ){
+        if(Math.abs(position.x-target.x) < Math.abs(position.y-target.y)){
+            if(position.x > target.x)
+                moveLeft( delta);
+            else
+                moveRight( delta );
+        }
+        else
+             if(position.y > target.y)
+                moveUp( delta);
+            else
+                moveDown( delta );  
+    }
+    
+    public void moveAwayFrom( int delta, Point2D.Float position, Point2D.Float target ){
+        if(Math.abs(position.x-target.x) < Math.abs(position.y-target.y)){
+            if(position.x > target.x)
+                moveRight( delta);
+            else
+                moveLeft( delta );
+        }
+        else
+             if(position.y > target.y)
+                moveDown( delta);
+            else
+                moveUp( delta ); 
+    }
+    
+    public double euclideanDistance(Point2D.Float a, Point2D.Float b){
+        return Math.sqrt(Math.pow((a.x - b.x),2)+Math.pow((a.x - b.x),2));
+    }
 }
