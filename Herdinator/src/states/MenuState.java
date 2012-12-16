@@ -12,10 +12,14 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MenuState extends BasicGameState
 {
+    public static final int ID = 2;
+    public MenuState(){
+        
+    }
 
     @Override
     public int getID() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return ID;
     }
 
     @Override

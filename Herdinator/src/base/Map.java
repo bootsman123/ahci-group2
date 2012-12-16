@@ -4,8 +4,8 @@ import actors.Cookie;
 import actors.Dog;
 import actors.LoveSheep;
 import actors.Sheep;
+import actors.Whistle;
 import actors.Wolf;
-import base.Player.MovableObjects;
 import util.Pair;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -79,8 +79,10 @@ public class Map
         Point2D.Float startingPoint = new Point2D.Float(0,0);
         Point2D.Float startingPointDog = new Point2D.Float(0,0);
         this.loveSheep = new LoveSheep(this, startingPoint);
-        this.dog = new Dog(this, startingPointDog);
+        
+        this.wolf = new Wolf(this, startingPointDog);
 
+        
         for(Player p : GameManager.getInstance().getPlayers()){
           Cookie cookie = new Cookie(this, startingPoint, p.getPlayerID()); //@TODO: change the ownerID
           this.cookies.add(cookie);
@@ -122,12 +124,12 @@ public class Map
                 }
                 
                 // Check "Dog".                
-                String dog = this.map.getTileProperty( tileId, "Dog", null );
+                String dogString = this.map.getTileProperty( tileId, "Dog", null );
                 
-                if( dog != null )
+                if( dogString != null )
                 {
-                    //@TODO: Implement Dog.
-                    //this.dog = new Dog( this.toPosition( x, y ) );
+                    
+                    this.dog = new Dog(this, this.toPosition(x, y));
                     continue;
                 }
             }
@@ -147,6 +149,7 @@ public class Map
         }
         loveSheep.render(g);
         dog.render(g);
+        wolf.render(g);
     }
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
@@ -164,6 +167,8 @@ public class Map
 
         
         this.dog.update( container, delta );
+        this.wolf.update( container, delta );
+        
         for(Cookie cookie : cookies){
             cookie.update(container, delta);
         }
@@ -177,6 +182,24 @@ public class Map
         Point2D.Float startingPointCookie = new Point2D.Float(0,0);
         Cookie newCookie = new Cookie(this, startingPointCookie, playerID);
         cookies.add(newCookie);
+    }
+
+    public void addObject(MovableActor newObject) {
+        if(newObject instanceof Cookie){
+            this.cookies.add((Cookie)newObject);
+        }
+        else if(newObject instanceof Whistle){
+            //this.cookies.add((Cookie)newObject);
+        }
+    }
+
+    public void removeObject(MovableActor oldObject) {
+        if(oldObject instanceof Cookie){
+            this.cookies.remove((Cookie)oldObject);
+        }
+        else if(oldObject instanceof Whistle){
+            //this.cookies.add((Cookie)newObject);
+        }
     }
 
     void removeCookie(int playerID) {

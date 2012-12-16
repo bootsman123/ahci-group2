@@ -29,9 +29,9 @@ public class GameManager {
     private GameManager(){
         this.players = new ArrayList<Player>();
         this.players.add(new MousePlayer(0));//@TODO: add the right numbers
-        //this.players.add(new MobilePlayer(1));//@TODO: add the right numbers
-        //this.players.add(new MobilePlayer(2));//@TODO: add the right numbers
-        //this.players.add(new MobilePlayer(3));//@TODO: add the right numbers
+       // this.players.add(new MobilePlayer(1));//@TODO: add the right numbers
+       //this.players.add(new MobilePlayer(2));//@TODO: add the right numbers
+       // this.players.add(new MobilePlayer(3));//@TODO: add the right numbers
         
         TuioClient client = new TuioClient();
         for(Player p : players){
@@ -76,7 +76,10 @@ public class GameManager {
                 }
             }
             else if (player instanceof MousePlayer){
-                this.currentMap.setCookiePosition(input.getMouseX(), input.getMouseY(), player.getPlayerID());
+                if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
+                    
+                    this.currentMap.setCookiePosition(input.getMouseX(), input.getMouseY(), player.getPlayerID());
+                }
             }
             else if (player instanceof TouchPlayer){
                 System.out.println("Touch player not yet supported");

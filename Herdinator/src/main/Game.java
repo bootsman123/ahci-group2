@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import states.GameState;
+import states.MenuState;
 
 /**
  *
@@ -16,7 +17,8 @@ public class Game extends StateBasedGame
     public static final int HEIGHT = 640;
     
     private GameState currentState; 
-    
+   // private MenuState mainMenu;
+
     public Game() throws SlickException
     {
         super( Game.NAME );
@@ -25,9 +27,10 @@ public class Game extends StateBasedGame
     @Override
     public void initStatesList( GameContainer container ) throws SlickException
     {
-        this.currentState = new GameState(); 
+        this.currentState = new GameState();
+       // this.mainMenu = new MenuState();
         this.addState( this.currentState );
-        
+        //this.addState( this.mainMenu );
         this.enterState( this.currentState.getID() );
     }
 }
