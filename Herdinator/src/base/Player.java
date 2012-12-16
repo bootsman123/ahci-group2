@@ -10,22 +10,22 @@ import TUIO.TuioCursor;
  *
  * @author roland
  */
-public class Player {
+public abstract class Player {
     public enum MovableObjects{Lovesheep, Cookie, Wolf, Bridge, Fence };
 
     private MovableObjects currentObject = MovableObjects.Lovesheep;
     
     private String name ;
-    private int fiducialID;
+    private int playerID;
 
     
     
-    public Player(int fiducialID){
-        this.fiducialID = fiducialID;
+    public Player(int playerID){
+        this.playerID = playerID;
 
     }
 
-    public int getFiducialID(){
-        return this.fiducialID;
+    public int getPlayerID(){
+        return this.playerID;
     }
 }

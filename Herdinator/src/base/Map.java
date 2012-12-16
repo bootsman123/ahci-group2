@@ -1,5 +1,6 @@
 package base;
 
+import actors.Cookie;
 import actors.Dog;
 import actors.LoveSheep;
 import actors.Sheep;
@@ -36,8 +37,13 @@ public class Map
     private java.util.Map<Pair<Integer, Integer>, Boolean> goals;
     
     private List<Sheep> sheeps;
+    private List<Cookie> cookies;
+    
     private Dog dog; 
     private Wolf wolf;
+
+    
+    
     private LoveSheep loveSheep;
     
     /**
@@ -53,7 +59,7 @@ public class Map
 
        
        this.sheeps = new ArrayList<Sheep>();
-
+       this.cookies = new ArrayList<Cookie>();
     }
     
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
@@ -70,7 +76,14 @@ public class Map
             return;
         }
         Point2D.Float startingPoint = new Point2D.Float(0,0);
+        Point2D.Float startingPointDog = new Point2D.Float(0,0);
         this.loveSheep = new LoveSheep(this, startingPoint);
+        this.dog = new Dog(this, startingPointDog);
+
+        for(Player p : GameManager.getInstance().getPlayers()){
+          Cookie cookie = new Cookie(this, startingPoint, p.getPlayerID()); //@TODO: change the ownerID
+          this.cookies.add(cookie);
+        }
         
         // Loop over all the tiles.
         for( int x = 0; x < this.map.getWidth(); x++ )
@@ -128,7 +141,11 @@ public class Map
         {
             sheep.render( g );
         }
+        for(Cookie cookie : cookies){
+            cookie.render(g);
+        }
         loveSheep.render(g);
+        dog.render(g);
     }
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
@@ -145,10 +162,16 @@ public class Map
         }
 
         
-        //this.dog.update( container, delta );
+        this.dog.update( container, delta );
+        for(Cookie cookie : cookies){
+            cookie.update(container, delta);
+        }
+        
         //this.wolf.update( container, celta );
+        this.loveSheep.updateCookieLocation(cookies);
         this.loveSheep.update( container, delta );
     }
+
     
     private Pair<Integer, Integer> fromPosition( Point2D.Float position )
     {
@@ -233,6 +256,29 @@ public class Map
      * @param y
      */
     public void setMousePosition(int x, int y){
-        this.loveSheep.setPosition(new Point2D.Float(x,y));
+       // this.loveSheep.setPosition(new Point2D.Float(x,y));
+    }
+
+    /**
+     * Function that sets the location of the dog to a specific x and y
+     * @param x
+     * @param y
+     */
+    //public void setDogPosition(int x, int y){
+    //    this.dog.setPosition(new Point2D.Float(x,y));
+   // }
+
+    /**
+     * Function that sets the location of the cookie
+     * @param x
+     * @param y
+     */
+    public void setCookiePosition(int x, int y, int fiducialID){
+        System.out.println("Updating the cookie to pos " + x + " " + y);
+        for(Cookie cookie : cookies){
+            if (cookie.getOwnerID() == fiducialID){
+                cookie.setPosition(new Point2D.Float(x,y));
+            }
+        }
     }
 }

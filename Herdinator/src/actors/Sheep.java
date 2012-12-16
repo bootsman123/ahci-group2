@@ -26,6 +26,7 @@ public class Sheep extends MovableActor
     private static final Float SPEED = 0.1f;
     private static final Float GOAL_MOVEMENT = 0.8f;
     private static final Float GOAL_DISTANCE = 100.0f;
+    private static final Float MAX_DISTANCE_TO_LOVE_SHEEP = 100.0f ;
 
     private boolean hasReachedGoal ;
     
@@ -89,8 +90,7 @@ public class Sheep extends MovableActor
             }
         }
         
-        if( Math.abs( this.getX() - this.goalPosition.x ) +
-            Math.abs( this.getY() - this.goalPosition.y ) < Sheep.GOAL_MOVEMENT )
+        if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) < Sheep.GOAL_MOVEMENT )
         {
             this.determineRandomPosition();
         }
@@ -123,6 +123,11 @@ public class Sheep extends MovableActor
                     this.moveDown( delta );
                 }
             }
+        }
+
+        if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) > Sheep.MAX_DISTANCE_TO_LOVE_SHEEP )
+        {
+            this.determineRandomPosition();
         }
 
         this.animation.update( delta );

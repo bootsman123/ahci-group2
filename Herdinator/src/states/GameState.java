@@ -1,9 +1,8 @@
 package states;
 
-import TUIO.TuioClient;
 import base.GameManager;
 import base.Map;
-import connectors.PhoneConnector;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +59,7 @@ public class GameState extends BasicGameState
     @Override
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
+        
         GameManager.getInstance().update(container, game, delta);
     }
 }
