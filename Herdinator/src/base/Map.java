@@ -5,6 +5,7 @@ import actors.Dog;
 import actors.LoveSheep;
 import actors.Sheep;
 import actors.Wolf;
+import base.Player.MovableObjects;
 import util.Pair;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -170,6 +171,20 @@ public class Map
         //this.wolf.update( container, celta );
         this.loveSheep.updateCookieLocation(cookies);
         this.loveSheep.update( container, delta );
+    }
+
+    void addCookie(int playerID) throws SlickException {
+        Point2D.Float startingPointCookie = new Point2D.Float(0,0);
+        Cookie newCookie = new Cookie(this, startingPointCookie, playerID);
+        cookies.add(newCookie);
+    }
+
+    void removeCookie(int playerID) {
+        for(Cookie cookie : cookies){
+            if(cookie.getOwnerID()==playerID){
+                cookies.remove(cookie);
+            }
+        }
     }
 
     

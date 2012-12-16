@@ -6,6 +6,7 @@
 package base;
 
 import TUIO.TuioClient;
+import base.Player.MovableObjects;
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.GameContainer;
@@ -86,6 +87,18 @@ public class GameManager {
         }
         
         this.currentMap.update( container, game, delta );  
+    }
+
+    public void removeObject(MovableObjects currentObject, int playerID) {
+        if(currentObject.equals(MovableObjects.Cookie)){
+            this.currentMap.removeCookie(playerID);
+        }
+    }
+
+    void addObject(MovableObjects currentObject, int playerID) throws SlickException {
+        if(currentObject.equals(MovableObjects.Cookie)){
+            this.currentMap.addCookie(playerID);
+        }
     }
 
     

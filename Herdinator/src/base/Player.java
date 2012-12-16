@@ -5,15 +5,16 @@
 package base;
 
 import TUIO.TuioCursor;
+import org.newdawn.slick.SlickException;
 
 /**
  *
  * @author roland
  */
 public abstract class Player {
-    public enum MovableObjects{Lovesheep, Cookie, Wolf, Bridge, Fence };
+    public enum MovableObjects{Cookie, Flute, Bridge, Fence };
 
-    private MovableObjects currentObject = MovableObjects.Lovesheep;
+    private MovableObjects currentObject = MovableObjects.Cookie;
     
     private String name ;
     private int playerID;
@@ -28,4 +29,11 @@ public abstract class Player {
     public int getPlayerID(){
         return this.playerID;
     }
+
+    public void changeCurrentObject(MovableObjects newObject) throws SlickException{
+        GameManager.getInstance().removeObject(currentObject,playerID);
+        this.currentObject = newObject;
+        GameManager.getInstance().addObject(currentObject,playerID);
+    }
+    
 }
