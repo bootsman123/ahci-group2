@@ -1,0 +1,77 @@
+\documentclass[a4paper,11pt]{report}
+
+% Math packages.
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+
+% Monospace font.
+\usepackage{inconsolata}
+
+\begin{document}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{GOMSL Specification}
+	In this section two GOSML specifications will be described. Namely one using a mobile phone as tangible object and another using touch gestures. Furthermore, the cooperative aspect of the game will not be specified; a single human playing the game is assumed.
+	
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\subsection{Manual Operators}
+		Besides the original manual operators several extra operators have to be defined to allow for the use of tangible objects and touch gestures.
+		
+		\
+
+# Manual operators (page 17).
+Seve
+
+Move_to target_object
+Similar to Point_to, except that instead the mouse cursor is moved, the hand is moved towards the target object.
+
+Grab target_object
+
+
+// Tasks.
+Task_item: T1
+	Name is ....
+	Type is ....
+	Next is T2
+	
+Task_item: T2
+	Name is ...
+	Type is ...
+	Next is None
+
+// Specification using a mobile phone.
+Method_for_goal: place object using <object_name>, and <location>
+	Step 1. Accomplish_goal: // Grab mobile phone.
+	Step 2. Accomplish_goal: // Select object <object_name>.
+	Step 3. Accomplish_goal: // Place mobile phone <location>.
+	Step 4. Return_with_goal_accomplished.
+	
+Method_for_goal: use object using <object_name>
+	Step 1. Accomplish_goal: determine location
+	Step 2. Accomplish_goal: place object using <object_name>, 
+
+
+Method_for_goal: determine object
+	Step 1. Think_of "Which object to use and where to place"
+	Step 2. Look_for_object_whose Label is "mobile phone"
+			and_store_under <location>.
+
+
+Method_for_goal: determine location
+	Step 1. Think_of "Which object to use and where to place".
+	Step 2. Look_for_object_whose Label is ...
+	 		and_store_under <location>.
+	
+	"(x, y)" under <location>.
+	
+
+
+Method_for_goal: use object using <object_name>, and <location>
+	Step 1. Accomplish_goal: // Determine location.
+	Step 2. Accomplish_goal: place object using "whistle", ...
+	Step 3. Accomplish_goal: use object using "whistle"
+	Step 4. Return_with_goal_accomplished.
+
+// Specification using touch events.
+
+\end{document}
