@@ -181,19 +181,35 @@ public class Sheep extends MovableActor
         else
             moveRandom( delta);
      }
-    
+
+    /**
+     * Sets the location of our lovesheep
+     * @param loveSheepLocation
+     */
     public void setLoveSheepLocation(Point2D.Float loveSheepLocation){
         this.loveSheepLocation = loveSheepLocation;
     }
-    
+
+    /**
+     * Sets the location of the dog
+     * @param dogLocation
+     */
     public void setDogLocation(Point2D.Float dogLocation){
         this.dogLocation = dogLocation;
     }
-    
+
+    /**
+     * Sets the location of the wolf
+     * @param wolfLocation
+     */
     public void setWolfLocation(Point2D.Float wolfLocation){
         this.wolfLocation = wolfLocation;
     }
-    
+
+    /**
+     * Returns if this sheep has reached the goal
+     * @return
+     */
     public boolean getHasReachedGoal(){
         return this.hasReachedGoal;
     }

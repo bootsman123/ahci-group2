@@ -45,6 +45,10 @@ public class Whistle extends MovableActor
 
     }
 
+    /**
+     * Returns the ID of the owner of the whistle
+     * @return
+     */
     public int getOwnerID(){
         return ownerID;
     }

@@ -12,14 +12,8 @@ import org.newdawn.slick.SlickException;
  * @author roland
  */
 public abstract class Player {
-    public enum MovableObjects{Cookie, Flute, Bridge, Fence };
-
-    //private MovableObjects currentObject = MovableObjects.Cookie;
     private MovableActor currentObject;
-    //private String name ;
     private int playerID;
-
-    
     
     public Player(int playerID){
         this.playerID = playerID;

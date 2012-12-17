@@ -49,7 +49,7 @@ public class Wolf extends MovableActor
     private Point2D.Float cookieLocation;
     private ArrayList<Point2D.Float>sheepLocations = new ArrayList<Point2D.Float>();
     
-
+    
     public Wolf( Map map, Point2D.Float position ) throws SlickException
     {
         super( map, position,Wolf.SPEED );
@@ -102,13 +102,14 @@ public class Wolf extends MovableActor
     @Override
     public void update(GameContainer container, int delta) {
         this.move(delta);
-       
         this.animation.update( delta );
-        //this.moveRandom( delta );
     }
 
 
-
+    /**
+     * Lets the wolf walk randomly
+     * @param delta
+     */
     private void moveRandom( int delta ) //gebruik dit alleen voor testen?
     {
         Map map = getMap();
@@ -160,15 +161,21 @@ public class Wolf extends MovableActor
     }
 
 
-
-    public void setCookieLocation(Point2D.Float cookieLocation){
+    /**
+     * Sets the location of the cookie
+     * @param cookieLocation
+     */
+    public void setCookieLocation(Point2D.Float cookieLocation){//@TODO: add the locations of all cookies
         this.cookieLocation = cookieLocation;
     }
 
 
         
     
-    
+    /**
+     * Sets the location of the dog
+     * @param dogLocation
+     */
      public void setDogLocation(Point2D.Float dogLocation){
         this.dogLocation = dogLocation;
     }
@@ -186,11 +193,14 @@ public class Wolf extends MovableActor
             moveAwayFrom( delta, this.getPosition(), dogLocation);
         }
         else{
-            System.out.println(sheepLocations.size());
             moveTo(delta, this.getPosition(), locationClosestSheep());
         }
     }   
-    
+
+    /**
+     * Returns the location of the closest sheep
+     * @return
+     */
     private Point2D.Float locationClosestSheep(){
         Point2D.Float locationClosestSheep = new Point2D.Float(0,0); //to make Netbeans happy
         double distanceToNearestSheep = Math.pow(10, 9); //should start higher than anything
