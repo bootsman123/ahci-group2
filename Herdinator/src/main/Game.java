@@ -17,7 +17,7 @@ public class Game extends StateBasedGame
     public static final int HEIGHT = 640;
     
     private GameState currentState; 
-   // private MenuState mainMenu;
+    private MenuState mainMenu;
 
     public Game() throws SlickException
     {
@@ -28,9 +28,9 @@ public class Game extends StateBasedGame
     public void initStatesList( GameContainer container ) throws SlickException
     {
         this.currentState = new GameState();
-       // this.mainMenu = new MenuState();
+        this.mainMenu = new MenuState();
         this.addState( this.currentState );
-        //this.addState( this.mainMenu );
+        this.addState( this.mainMenu );
         this.enterState( this.currentState.getID() );
     }
 }
