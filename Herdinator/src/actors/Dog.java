@@ -65,7 +65,31 @@ public class Dog extends MovableActor
         this.goalPosition = new Point2D.Float( this.getX(), this.getY() );
         
     }
+<<<<<<< HEAD
     
+=======
+
+   /* private void determineRandomPosition()
+    {
+       
+           
+        Random randomGenerator = new Random();
+
+        this.goalPosition.x = this.getPosition().x + Dog.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
+        this.goalPosition.y = this.getPosition().y + Dog.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
+
+        //@TODO: Fugly.
+        if(GameManager.getInstance().getMap()!=null){
+
+            this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-Dog.SPRITE_SHEET_SPRITE_WIDTH ) );
+            this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-Dog.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        }
+        this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 );
+
+    }*/
+
+    @Override
+>>>>>>> 63b9a1649171ef4b0dd8436bc261ea189066a06d
     public void render(Graphics g) {
 
        this.animation.draw( this.getX(), this.getY() );

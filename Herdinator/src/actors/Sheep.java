@@ -98,9 +98,21 @@ public class Sheep extends MovableActor
         moveCount++;
         
         
+<<<<<<< HEAD
     }   
    
             /**
+=======
+        */
+        //@TODO: Fugly.
+        if(GameManager.getInstance().getMap()!=null){
+            this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-Sheep.SPRITE_SHEET_SPRITE_WIDTH ) );
+            this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-Sheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        }
+    }
+    
+    /**
+>>>>>>> 63b9a1649171ef4b0dd8436bc261ea189066a06d
      * Vlucht voor de hond of de wolf als in de buurt, of loopt naar het love sheep als die in de buurt is
      * @param delta 
      */
