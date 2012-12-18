@@ -60,7 +60,7 @@ public class GameState extends BasicGameState
     @Override
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
-         GameManager.getInstance().getMap().render( container, game, g );
+        GameManager.getInstance().getMap().render( container, game, g );
          // render the overlay
         overlay.render(container, game, g);
  

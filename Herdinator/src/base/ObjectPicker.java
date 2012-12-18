@@ -32,51 +32,35 @@ public class ObjectPicker
      */
     public ObjectPicker( ) throws SlickException
     {
-       
        this.whistles = new ArrayList<Whistle>();
        this.cookies = new ArrayList<Cookie>();
     }
 
     
-    
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
-
-        System.out.println("Initialising objectpicker");
-        //Point2D.Float startingPointDog = new Point2D.Float(10,10);
         int numberOfInstancesHad = 0;
-        int diff = 30;
-        System.out.println("Amount of players: " +GameManager.getInstance().getPlayers().size() );
+        int diff = 30;   
         for(Player p : GameManager.getInstance().getPlayers()){
-                    Point2D.Float startingPoint = new Point2D.Float(0,numberOfInstancesHad+=diff);
-
-          Cookie cookie = new Cookie(GameManager.getInstance().getMap(), startingPoint, p.getPlayerID()); //@TODO: change the ownerID
-          this.cookies.add(cookie);
+            Point2D.Float startingPoint = new Point2D.Float(0,numberOfInstancesHad+=diff);
+            Cookie cookie = new Cookie(GameManager.getInstance().getMap(), startingPoint, p.getPlayerID()); //@TODO: change the ownerID
+            this.cookies.add(cookie);
         }
         for(Player p : GameManager.getInstance().getPlayers()){
-                    Point2D.Float startingPoint = new Point2D.Float(0,numberOfInstancesHad+=diff);
-
-          Whistle whistle = new Whistle(GameManager.getInstance().getMap(), startingPoint, p.getPlayerID()); //@TODO: change the ownerID
-          this.whistles.add(whistle);
-        }
-       
-        
+            Point2D.Float startingPoint = new Point2D.Float(0,numberOfInstancesHad+=diff);
+            Whistle whistle = new Whistle(GameManager.getInstance().getMap(), startingPoint, p.getPlayerID()); //@TODO: change the ownerID
+            this.whistles.add(whistle);
+        }        
     }
     
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
-        //System.out.println("Rendering object picker");
-        g.drawRect(0, 0, PICKER_WIDTH, PICKER_HEIGHT);
-        
+        g.drawRect(0, 0, PICKER_WIDTH, PICKER_HEIGHT);   
         for( Whistle whistle : this.whistles )
         {
-
-
             whistle.render( g );
         }
         for(Cookie cookie : cookies){
-            System.out.println("Rendering object picker whistles");
-
             cookie.render(g);
         }
         
@@ -84,11 +68,9 @@ public class ObjectPicker
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
-        
         if( container.isPaused() )
         {
             return;
-        }
-        
+        }   
     }
 }
