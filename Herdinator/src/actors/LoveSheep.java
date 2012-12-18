@@ -18,6 +18,7 @@ import util.SpriteSheetUtil;
  */
 public class LoveSheep extends MovableActor
 {
+    private static final Float SPEED = 0.1f;
     private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/sheeps_animation.png";
     private static final int SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final int SPRITE_SHEET_SPRITE_HEIGHT = 32;
@@ -27,17 +28,14 @@ public class LoveSheep extends MovableActor
 
     SpriteSheet spriteSheet;
 
-    private static final Float SPEED = 0.2f;
+   
     private static final Float GOAL_MOVEMENT = 0.8f;
     private static final Float GOAL_DISTANCE = 100.0f;
     private static final Float MAX_DISTANCE_TO_LOVE_SHEEP = 100.0f ;
 
     private Point2D.Float closestCookie;
     private Point2D.Float goalPosition;
-
     
-
-
     public LoveSheep( Map map, Point2D.Float position ) throws SlickException
     {
         super( map, position, LoveSheep.SPEED );

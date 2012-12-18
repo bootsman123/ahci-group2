@@ -34,7 +34,7 @@ public class Sheep extends MovableActor
 
     private Point2D.Float goalPosition;
 
-    private Point2D.Float loveSheepLocation;
+    private Point2D.Float loveSheepLocation,  dogLocation, wolfLocation;
 
     /**
      * Constructor.
@@ -73,7 +73,10 @@ public class Sheep extends MovableActor
     @Override
     public void update( GameContainer container, int delta )
     {        
-        this.moveRandom( delta );
+        //this.moveUp(delta);
+        this.move( delta );
+       // this.moveRandom( delta );
+        
     }
     
     private void moveRandom( int delta )
@@ -89,8 +92,13 @@ public class Sheep extends MovableActor
                this.determineRandomPosition();
             }
         }
+
         
         if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) < Sheep.GOAL_MOVEMENT )
+
+        if( Math.abs( this.getX() - this.goalPosition.x ) +
+            Math.abs( this.getY() - this.goalPosition.y ) < Sheep.GOAL_MOVEMENT )
+
         {
             this.determineRandomPosition();
         }
@@ -158,11 +166,37 @@ public class Sheep extends MovableActor
         this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-Sheep.SPRITE_SHEET_SPRITE_WIDTH ) );
         this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight()-Sheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
     }
-
+    
+    /**
+     * Vlucht voor de hond of de wolf als in de buurt, of loopt naar het love sheep als die in de buurt is
+     * @param delta 
+     */
+    public void move( int delta ){ 
+        if(euclideanDistance( this.getPosition(), wolfLocation) < 200) //TODO: fix de parameters
+            moveAwayFrom( delta, this.getPosition(), wolfLocation);
+        else if(euclideanDistance( this.getPosition(), dogLocation) < 200) //TODO: fix de parameters
+            moveAwayFrom( delta, this.getPosition(), dogLocation);
+        else if(euclideanDistance( this.getPosition(), loveSheepLocation) < 200) //TODO: fix de parameters
+            moveTo( delta, this.getPosition(), loveSheepLocation);
+        else
+            moveRandom( delta);
+     }
+    
     public void setLoveSheepLocation(Point2D.Float loveSheepLocation){
         this.loveSheepLocation = loveSheepLocation;
     }
+    
+    public void setDogLocation(Point2D.Float dogLocation){
+        this.dogLocation = dogLocation;
+    }
+    
+    public void setWolfLocation(Point2D.Float wolfLocation){
+        this.wolfLocation = wolfLocation;
+    }
+    
     public boolean getHasReachedGoal(){
         return this.hasReachedGoal;
     }
+
+    
 }

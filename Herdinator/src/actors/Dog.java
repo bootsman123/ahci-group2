@@ -3,7 +3,10 @@ package actors;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
+
 import java.util.Random;
+
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -20,11 +23,11 @@ import util.SpriteSheetUtil;
 public class Dog extends MovableActor
 {
     private static final Float SPEED = 0.1f;
-    
     private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/dogs_animation.png";
     private static final int SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final int SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
+
 
     private static final Float GOAL_DISTANCE = 100.0f;
     private static final Float GOAL_MOVEMENT = 0.8f;
@@ -36,13 +39,17 @@ public class Dog extends MovableActor
     private Point2D.Float goalPosition;
     private Point2D.Float cookieLocation;
     
+
+    
     public Dog( Map map, Point2D.Float position ) throws SlickException
     {
-        super( map, position, Dog.SPEED );
+        super( map, position );
+
         spriteSheet = new SpriteSheet( Dog.SPRITE_SHEET_FILE_PATH,
                                                    Dog.SPRITE_SHEET_SPRITE_WIDTH,
                                                    Dog.SPRITE_SHEET_SPRITE_HEIGHT,
                                                    Dog.SPRITE_SHEET_BACKGROUND_COLOR );
+
         this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 0, 150 );
 
 
@@ -72,16 +79,27 @@ public class Dog extends MovableActor
         //@TODO: Fugly.
         this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-Dog.SPRITE_SHEET_SPRITE_WIDTH ) );
         this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight()-Dog.SPRITE_SHEET_SPRITE_HEIGHT ) );
+
+        this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 );
+
     }
 
     @Override
     public void render(Graphics g) {
+
        this.animation.draw( this.getX(), this.getY() );
+
+         this.animation.draw( this.getX(), this.getY() );
+
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        this.moveRandom( delta );
+    public void update(GameContainer container, int delta) { //de hond wil niet lopen 
+        
+       // this.moveRandom( delta );
+
+         this.animation.update( delta );
+
     }
 
     

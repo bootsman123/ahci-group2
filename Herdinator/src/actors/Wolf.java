@@ -3,7 +3,11 @@ package actors;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
+
 import java.util.Random;
+
+import java.util.ArrayList;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -11,6 +15,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import util.SpriteSheetUtil;
+
+
+
 
 
 /**
@@ -21,10 +28,14 @@ public class Wolf extends MovableActor
 {
     private static final Float SPEED = 0.1f;
 
+
+
+
     private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/wolves_animation.png";
     private static final int SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final int SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
+
 
     private static final Float GOAL_DISTANCE = 100.0f;
     private static final Float GOAL_MOVEMENT = 0.8f;
@@ -32,17 +43,22 @@ public class Wolf extends MovableActor
 
     SpriteSheet spriteSheet;
     private Animation animation, animationUp, animationRight, animationDown, animationLeft;
-
+    
+    private Point2D.Float dogLocation;
     private Point2D.Float goalPosition;
     private Point2D.Float cookieLocation;
+    private ArrayList<Point2D.Float>sheepLocations = new ArrayList<Point2D.Float>();
+    
 
     public Wolf( Map map, Point2D.Float position ) throws SlickException
     {
-        super( map, position, Wolf.SPEED );
+        super( map, position,Wolf.SPEED );
+
         spriteSheet = new SpriteSheet( Wolf.SPRITE_SHEET_FILE_PATH,
                                                    Wolf.SPRITE_SHEET_SPRITE_WIDTH,
                                                    Wolf.SPRITE_SHEET_SPRITE_HEIGHT,
                                                    Wolf.SPRITE_SHEET_BACKGROUND_COLOR );
+
         this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 0, 150 );
 
 
@@ -55,11 +71,12 @@ public class Wolf extends MovableActor
         this.animation = this.animationDown;
 
 
-        this.goalPosition = new Point2D.Float( this.getX(), this.getY() );
-        this.determineRandomPosition();
+       // this.goalPosition = new Point2D.Float( this.getX(), this.getY() );
+//        this.determineRandomPosition();
     }
 
-    private void determineRandomPosition()
+   
+    private void determineRandomPosition() //why?
     {
 
 
@@ -72,6 +89,9 @@ public class Wolf extends MovableActor
         //@TODO: Fugly.
         this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-Wolf.SPRITE_SHEET_SPRITE_WIDTH ) );
         this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight()-Wolf.SPRITE_SHEET_SPRITE_HEIGHT ) );
+
+        this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 );
+
     }
 
     @Override
@@ -81,18 +101,17 @@ public class Wolf extends MovableActor
 
     @Override
     public void update(GameContainer container, int delta) {
-        this.moveRandom( delta );
+        this.move(delta);
+       
+        this.animation.update( delta );
+        //this.moveRandom( delta );
     }
 
 
 
-    private void moveRandom( int delta )
+    private void moveRandom( int delta ) //gebruik dit alleen voor testen?
     {
         Map map = getMap();
-
-
-
-
         if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) < Wolf.GOAL_MOVEMENT )
         {
             this.determineRandomPosition();
@@ -145,5 +164,48 @@ public class Wolf extends MovableActor
     public void setCookieLocation(Point2D.Float cookieLocation){
         this.cookieLocation = cookieLocation;
     }
+
+
+        
+    
+    
+     public void setDogLocation(Point2D.Float dogLocation){
+        this.dogLocation = dogLocation;
+    }
+     
+     public void setSheepLocation(Point2D.Float sheepLocation, int i){
+         //sheepLocations.set(i, sheepLocation); //het spel sluit meteen af als dit aan staat. TODO: fix dit
+                 
+     }
+    
+    /*
+     * Moet naar het ditschbijzijnde schaap lopen maar weg van de hond
+     */
+    private void move( int delta ){
+        if(euclideanDistance(this.getPosition(),dogLocation) < 100){ //TODO: denk wat dieper na over deze variabele, dit is alleen voor testen
+            moveAwayFrom( delta, this.getPosition(), dogLocation);
+        }
+        else{
+            System.out.println(sheepLocations.size());
+            moveTo(delta, this.getPosition(), locationClosestSheep());
+        }
+    }   
+    
+    private Point2D.Float locationClosestSheep(){
+        Point2D.Float locationClosestSheep = new Point2D.Float(0,0); //to make Netbeans happy
+        double distanceToNearestSheep = Math.pow(10, 9); //should start higher than anything
+        for(Point2D.Float sheepLocation:sheepLocations){
+            if(euclideanDistance(sheepLocation, this.getPosition()) < distanceToNearestSheep){
+                locationClosestSheep = sheepLocation;
+                distanceToNearestSheep = euclideanDistance(sheepLocation, this.getPosition());        
+            }     
+        }
+        return locationClosestSheep;
+    }
+
+    
+   
+    
+ 
 
 }
