@@ -177,9 +177,8 @@ public class Map
             sheeps.get(i).setLoveSheepLocation(loveSheep.getPosition());
             sheeps.get(i).setWolfLocation(wolf.getPosition());
             sheeps.get(i).setDogLocation(dog.getPosition());
-            sheeps.get(i).update( container, delta );
             wolf.setSheepLocation(sheeps.get(i).getPosition(),i);
-            
+            sheeps.get(i).update( container, delta );
         }
         wolf.setDogLocation(dog.getPosition());
         
