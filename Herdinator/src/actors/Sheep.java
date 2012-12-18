@@ -81,6 +81,17 @@ public class Sheep extends MovableActor
     
     private void moveRandom( int delta )
     {
+        double direction = Math.random();
+        if(direction<0.25)
+            moveUp( delta );
+        else if(direction<0.5)
+            moveDown( delta );
+        else if(direction<0.75)
+            moveLeft( delta );
+        else
+            moveRight( delta );
+               
+        /* deze code is niet moveRandom maar de oude movement function en werkt niet
         Map map = getMap();
         
         if(map.isGoalTile(this.getPosition())){
@@ -142,7 +153,7 @@ public class Sheep extends MovableActor
         
         //@TODO: Fugly for now.
         this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, this.getMap().getMapWidth() ) );
-        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, this.getMap().getMapHeight() ) );
+        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, this.getMap().getMapHeight() ) );*/
     }
     
     private void determineRandomPosition()
@@ -172,13 +183,13 @@ public class Sheep extends MovableActor
      * @param delta 
      */
     public void move( int delta ){ 
-        if(euclideanDistance( this.getPosition(), wolfLocation) < 200) //TODO: fix de parameters
+      /*  if(euclideanDistance( this.getPosition(), wolfLocation) < 200) //TODO: fix de parameters
             moveAwayFrom( delta, this.getPosition(), wolfLocation);
         else if(euclideanDistance( this.getPosition(), dogLocation) < 200) //TODO: fix de parameters
             moveAwayFrom( delta, this.getPosition(), dogLocation);
         else if(euclideanDistance( this.getPosition(), loveSheepLocation) < 200) //TODO: fix de parameters
             moveTo( delta, this.getPosition(), loveSheepLocation);
-        else
+        else*/
             moveRandom( delta);
      }
 
