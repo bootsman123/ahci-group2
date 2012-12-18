@@ -76,11 +76,12 @@ public class Dog extends MovableActor
         this.goalPosition.x = this.getPosition().x + Dog.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
         this.goalPosition.y = this.getPosition().y + Dog.GOAL_DISTANCE * ( randomGenerator.nextInt(3) - 1 );
 
-        
         //@TODO: Fugly.
-        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-Dog.SPRITE_SHEET_SPRITE_WIDTH ) );
-        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-Dog.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        if(GameManager.getInstance().getMap()!=null){
 
+            this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-Dog.SPRITE_SHEET_SPRITE_WIDTH ) );
+            this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-Dog.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        }
         this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 );
 
     }

@@ -174,8 +174,10 @@ public class Sheep extends MovableActor
         
         */
         //@TODO: Fugly.
-        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-Sheep.SPRITE_SHEET_SPRITE_WIDTH ) );
-        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-Sheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        if(GameManager.getInstance().getMap()!=null){
+            this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-Sheep.SPRITE_SHEET_SPRITE_WIDTH ) );
+            this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-Sheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        }
     }
     
     /**
