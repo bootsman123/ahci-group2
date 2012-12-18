@@ -45,10 +45,10 @@ public class Wolf extends MovableActor
     SpriteSheet spriteSheet;
     private Animation animation, animationUp, animationRight, animationDown, animationLeft;
     
-    private Point2D.Float dogLocation;
-    private Point2D.Float goalPosition;
-    private Point2D.Float cookieLocation;
-    private ArrayList<Point2D.Float>sheepLocations = new ArrayList<Point2D.Float>();
+   private Point2D.Float dogLocation;
+   private Point2D.Float goalPosition; 
+    
+   private ArrayList<Point2D.Float>sheepLocations = new ArrayList<Point2D.Float>();
     
     
     public Wolf(Point2D.Float position ) throws SlickException
@@ -164,30 +164,22 @@ public class Wolf extends MovableActor
     /**
      * Sets the location of the cookie
      * @param cookieLocation
-     */
-    public void setCookieLocation(Point2D.Float cookieLocation){//@TODO: add the locations of all cookies
-        this.cookieLocation = cookieLocation;
-    }
-
-
-        
-    
-    /**
+     */       /**
      * Sets the location of the dog
      * @param dogLocation
      */
+    
+
      public void setDogLocation(Point2D.Float dogLocation){
         this.dogLocation = dogLocation;
     }
      
      public void setSheepLocation(Point2D.Float sheepLocation, int i){
-         //sheepLocations.set(i, sheepLocation); //het spel sluit meteen af als dit aan staat. TODO: fix dit
-                 
+         //sheepLocations.set(i, sheepLocation); //het spel sluit meteen af als dit aan staat. TODO: fix dit            }
      }
     
-    /*
-     * Moet naar het ditschbijzijnde schaap lopen maar weg van de hond
-     */
+     //Moet naar het ditschbijzijnde schaap lopen maar weg van de hond
+     
     private void move( int delta ){
         if(euclideanDistance(this.getPosition(),dogLocation) < 100){ //TODO: denk wat dieper na over deze variabele, dit is alleen voor testen
             moveAwayFrom( delta, this.getPosition(), dogLocation);
@@ -211,11 +203,4 @@ public class Wolf extends MovableActor
             }     
         }
         return locationClosestSheep;
-    }
-
-    
-   
-    
- 
-
-}
+    }}
