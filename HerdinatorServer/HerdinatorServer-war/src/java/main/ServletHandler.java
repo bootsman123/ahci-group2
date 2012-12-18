@@ -13,13 +13,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ServletHandler extends HttpServlet
 {
-    private int test;
-    
+
     public ServletHandler()
     {
         super();
-        
-        this.test = 0;
     }
     
     /** 
@@ -32,23 +29,21 @@ public class ServletHandler extends HttpServlet
     protected void processRequest( HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException
     {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletHandler</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletHandler at " + request.getContextPath () + "</h1>");
-            out.println("<p>" + String.valueOf( this.test ) + "</p>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {            
-            out.close();
-        }
+        // Write response.
+        PrintWriter writer = response.getWriter();
         
-        this.test++;
+        try
+        {
+            //request.getParameter( );
+            
+            writer.printf( "Context path: %s\n", request.getContextPath() );
+            writer.printf( "Request URI: %s\n", request.getRequestURI() );
+            writer.printf( "Path info: %s\n", request.getPathInfo() );
+        }
+        finally
+        {
+            writer.close();
+        }
     }
 
     /** 
@@ -62,20 +57,7 @@ public class ServletHandler extends HttpServlet
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException
     {        
-        // Write response.
-        PrintWriter writer = response.getWriter();
-        
-        try
-        {
-            writer.printf( "Context path: %s\n", request.getContextPath() );
-            writer.printf( "Request URI: %s\n", request.getRequestURI() );
-            writer.printf( "Path info: %s\n", request.getPathInfo() );
-        }
-        finally
-        {
-            writer.close();
-        }
-        //processRequest(request, response);
+        this.processRequest( request, response );
     }
 
     /** 
@@ -86,9 +68,10 @@ public class ServletHandler extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        this.processRequest( request, response );
     }
 
     /** 
@@ -96,7 +79,8 @@ public class ServletHandler extends HttpServlet
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }
 }
