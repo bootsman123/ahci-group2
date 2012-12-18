@@ -42,6 +42,7 @@ public class GameState extends BasicGameState
     {
         // Initialize levels.
         this.maps = new ArrayList<Map>();
+
         this.maps.add( new Map( "../Resources/Maps/level1.tmx" ) );
         this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
 

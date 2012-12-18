@@ -94,8 +94,12 @@ public class Sheep extends MovableActor
             moveLeft( delta );
         else
             moveRight( delta );
-        moveCount++;       
-    }
+
+        moveCount++;
+        
+        
+    }   
+   
             /**
      * Vlucht voor de hond of de wolf als in de buurt, of loopt naar het love sheep als die in de buurt is
      * @param delta 

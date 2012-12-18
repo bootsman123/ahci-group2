@@ -14,6 +14,7 @@ import java.util.List;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -23,7 +24,9 @@ import org.newdawn.slick.tiled.TiledMap;
  */
 public class Map
 {
+    private static final String FARM_AMBIANCE_SOUNDS_PATH = "../Resources/Sounds/farmambiance.wav";
     public static final String CONTROLS_LAYER = "Controls";
+    private Sound fx = null;
     
     private TiledMap map;
     
@@ -143,6 +146,8 @@ public class Map
                 }*/
             }
         }
+        fx = new Sound(FARM_AMBIANCE_SOUNDS_PATH);
+        fx.play();
     }
     
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException

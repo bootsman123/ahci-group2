@@ -65,7 +65,7 @@ public class Dog extends MovableActor
         this.goalPosition = new Point2D.Float( this.getX(), this.getY() );
         
     }
- @Override
+    
     public void render(Graphics g) {
 
        this.animation.draw( this.getX(), this.getY() );
