@@ -30,8 +30,7 @@ public class Dog extends MovableActor
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
 
 
-    private static final Float GOAL_DISTANCE = 100.0f;
-    private static final Float GOAL_MOVEMENT = 0.8f;
+ 
     private static final Float MAX_DISTANCE_TO_LOVE_SHEEP = 100.0f ;
 
     SpriteSheet spriteSheet;
@@ -64,10 +63,10 @@ public class Dog extends MovableActor
 
 
         this.goalPosition = new Point2D.Float( this.getX(), this.getY() );
-        this.determineRandomPosition();
+        
     }
 
-    private void determineRandomPosition()
+   /* private void determineRandomPosition()
     {
        
            
@@ -84,7 +83,7 @@ public class Dog extends MovableActor
         }
         this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 );
 
-    }
+    }*/
 
     @Override
     public void render(Graphics g) {
@@ -105,59 +104,7 @@ public class Dog extends MovableActor
     }
 
     
-
-    private void moveRandom( int delta )
-    { 
-        if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) < Dog.GOAL_MOVEMENT )
-        {
-            this.determineRandomPosition();
-        }
-        else{
-            // Move left or right.
-            if( Math.abs( this.getX() - this.goalPosition.x ) > Dog.GOAL_MOVEMENT / 2 )
-            {
-                if( this.getX() > this.goalPosition.x )
-                {
-                    this.animation = this.animationLeft;
-                    this.moveLeft( delta );
-                }
-                else
-                {
-                    this.animation = this.animationRight;
-                    this.moveRight( delta );
-                }
-            }
-            // Move up or down.
-            else
-            {
-                if( this.getY() > this.goalPosition.y )
-                {
-                    this.animation = this.animationUp;
-                    this.moveUp( delta );
-                }
-                else
-                {
-                    this.animation = this.animationDown;
-                    this.moveDown( delta );
-                }
-            }
-        }
-
-        if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) > Dog.MAX_DISTANCE_TO_LOVE_SHEEP )
-        {
-            this.determineRandomPosition();
-        }
-
-        this.animation.update( delta );
-
-        //@TODO: Fugly for now.
-        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, GameManager.getInstance().getMap().getMapWidth() ) );
-        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, GameManager.getInstance().getMap().getMapHeight() ) );
-    }
-
-    
-
-    public void setCookieLocation(Point2D.Float cookieLocation){
+   public void setCookieLocation(Point2D.Float cookieLocation){
         this.cookieLocation = cookieLocation;
     }
     
