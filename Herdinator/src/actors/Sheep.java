@@ -1,9 +1,9 @@
 package actors;
 
+import base.GameManager;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
-import java.util.Random;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -43,7 +43,7 @@ public class Sheep extends MovableActor
      */
     public Sheep( Map map, Point2D.Float position ) throws SlickException
     {
-        super( map, position, Sheep.SPEED );
+        super(position, Sheep.SPEED );
                 
         // Setup animations.
         SpriteSheet spriteSheet = new SpriteSheet( Sheep.SPRITE_SHEET_FILE_PATH,
@@ -174,8 +174,8 @@ public class Sheep extends MovableActor
         
         */
         //@TODO: Fugly.
-        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-Sheep.SPRITE_SHEET_SPRITE_WIDTH ) );
-        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight()-Sheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-Sheep.SPRITE_SHEET_SPRITE_WIDTH ) );
+        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-Sheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
     }
     
     /**

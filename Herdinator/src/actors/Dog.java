@@ -1,5 +1,6 @@
 package actors;
 
+import base.GameManager;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
@@ -41,9 +42,9 @@ public class Dog extends MovableActor
     
 
     
-    public Dog( Map map, Point2D.Float position ) throws SlickException
+    public Dog(Point2D.Float position ) throws SlickException
     {
-        super( map, position );
+        super( position, Dog.SPEED );
 
         spriteSheet = new SpriteSheet( Dog.SPRITE_SHEET_FILE_PATH,
                                                    Dog.SPRITE_SHEET_SPRITE_WIDTH,
@@ -77,8 +78,8 @@ public class Dog extends MovableActor
 
         
         //@TODO: Fugly.
-        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-Dog.SPRITE_SHEET_SPRITE_WIDTH ) );
-        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight()-Dog.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-Dog.SPRITE_SHEET_SPRITE_WIDTH ) );
+        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-Dog.SPRITE_SHEET_SPRITE_HEIGHT ) );
 
         this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 );
 
@@ -105,12 +106,7 @@ public class Dog extends MovableActor
     
 
     private void moveRandom( int delta )
-    {
-        Map map = getMap();
-
-        
-       
-        
+    { 
         if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) < Dog.GOAL_MOVEMENT )
         {
             this.determineRandomPosition();
@@ -154,8 +150,8 @@ public class Dog extends MovableActor
         this.animation.update( delta );
 
         //@TODO: Fugly for now.
-        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, this.getMap().getMapWidth() ) );
-        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, this.getMap().getMapHeight() ) );
+        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, GameManager.getInstance().getMap().getMapWidth() ) );
+        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, GameManager.getInstance().getMap().getMapHeight() ) );
     }
 
     

@@ -80,8 +80,8 @@ public class Map
         Point2D.Float startingPointDog = new Point2D.Float(0,0);
         this.loveSheep = new LoveSheep(this, startingPoint);
        //Point2D.Float startingPoint = new Point2D.Float(0,0); we need a starting point for each actor, so we can just define them in the initialisations         this.loveSheep = new LoveSheep(this, startingPoint);
-        this.wolf = new Wolf(this, new Point2D.Float(mapWidth/2,mapHeight/10));
-        this.dog = new Dog(this, new Point2D.Float(mapWidth/4,mapHeight/2));
+        this.wolf = new Wolf(new Point2D.Float(mapWidth/2,mapHeight/10));
+        this.dog = new Dog(new Point2D.Float(mapWidth/4,mapHeight/2));
         
         //this.wolf = new Wolf(this, startingPointDog);
 

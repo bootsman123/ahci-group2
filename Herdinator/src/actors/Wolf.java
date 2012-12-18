@@ -156,8 +156,8 @@ public class Wolf extends MovableActor
         this.animation.update( delta );
 
         //@TODO: Fugly for now.
-        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, this.getMap().getMapWidth() ) );
-        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, this.getMap().getMapHeight() ) );
+        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, GameManager.getInstance().getMap().getMapWidth() ) );
+        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, GameManager.getInstance().getMap().getMapHeight() ) );
     }
 
 

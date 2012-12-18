@@ -1,5 +1,6 @@
 package actors;
 
+import base.GameManager;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
@@ -38,7 +39,7 @@ public class LoveSheep extends MovableActor
     
     public LoveSheep( Map map, Point2D.Float position ) throws SlickException
     {
-        super( map, position, LoveSheep.SPEED );
+        super( position, LoveSheep.SPEED );
         spriteSheet = new SpriteSheet( LoveSheep.SPRITE_SHEET_FILE_PATH,
                                                    LoveSheep.SPRITE_SHEET_SPRITE_WIDTH,
                                                    LoveSheep.SPRITE_SHEET_SPRITE_HEIGHT,
@@ -104,8 +105,8 @@ public class LoveSheep extends MovableActor
         this.animation.update( delta );
 
         //@TODO: Fugly for now.
-        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, this.getMap().getMapWidth() ) );
-        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, this.getMap().getMapHeight() ) );
+        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, GameManager.getInstance().getMap().getMapWidth() ) );
+        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, GameManager.getInstance().getMap().getMapHeight() ) );
     }
 
     public void updateCookieLocation(List<Cookie> currentCookies){
@@ -139,8 +140,8 @@ public class LoveSheep extends MovableActor
 
         */
         //@TODO: Fugly.
-        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-LoveSheep.SPRITE_SHEET_SPRITE_WIDTH ) );
-        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight()-LoveSheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-LoveSheep.SPRITE_SHEET_SPRITE_WIDTH ) );
+        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-LoveSheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
     }
     @Override
     public void render(Graphics g) {
