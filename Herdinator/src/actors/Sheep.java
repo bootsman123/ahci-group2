@@ -27,7 +27,8 @@ public class Sheep extends MovableActor
     private static final Float GOAL_MOVEMENT = 0.8f;
     private static final Float GOAL_DISTANCE = 100.0f;
     private static final Float MAX_DISTANCE_TO_LOVE_SHEEP = 100.0f ;
-
+    private int moveCount = 0; //hoe vaak hij een kant op loopt voor moveRandom
+    double direction = 0; //de richting die het schaap op aan het lopen is
     private boolean hasReachedGoal ;
     
     private Animation animation, animationUp, animationRight, animationDown, animationLeft;
@@ -81,7 +82,10 @@ public class Sheep extends MovableActor
     
     private void moveRandom( int delta )
     {
-        double direction = Math.random();
+        if(moveCount == 9){
+            direction = Math.random();
+            moveCount = 0;
+        }
         if(direction<0.25)
             moveUp( delta );
         else if(direction<0.5)
@@ -90,6 +94,8 @@ public class Sheep extends MovableActor
             moveLeft( delta );
         else
             moveRight( delta );
+        moveCount++;
+        
                
         /* deze code is niet moveRandom maar de oude movement function en werkt niet
         Map map = getMap();
