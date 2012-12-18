@@ -62,7 +62,7 @@ public class Sheep extends MovableActor
         this.hasReachedGoal = false;
         
         this.goalPosition = new Point2D.Float( this.getX(), this.getY() );
-        this.determineRandomPosition();
+        //this.determineRandomPosition();
     }
     
     @Override
