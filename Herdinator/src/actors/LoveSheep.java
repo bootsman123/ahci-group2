@@ -57,9 +57,12 @@ public class LoveSheep extends MovableActor
 //        this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 );
     }
 
-    private void moveRandom( int delta )
+    /**
+     * the love sheep should sort of follow the cursor, dummy function, real application doesn't use the mouse
+     * @param delta 
+     */
+    private void move( int delta )
     {
-       
         if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) < LoveSheep.GOAL_MOVEMENT )
         {
            
@@ -151,7 +154,7 @@ public class LoveSheep extends MovableActor
     @Override
     public void update(GameContainer container, int delta) {
        
-        this.moveRandom( delta );
+        this.move( delta );
     }
     
 }

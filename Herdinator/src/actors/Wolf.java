@@ -107,65 +107,7 @@ public class Wolf extends MovableActor
     }
 
 
-    /**
-     * Lets the wolf walk randomly
-     * @param delta
-     */
-    private void moveRandom( int delta ) //gebruik dit alleen voor testen?
-    {
-        if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) < Wolf.GOAL_MOVEMENT )
-        {
-            this.determineRandomPosition();
-        }
-        else{
-            // Move left or right.
-            if( Math.abs( this.getX() - this.goalPosition.x ) > Wolf.GOAL_MOVEMENT / 2 )
-            {
-                if( this.getX() > this.goalPosition.x )
-                {
-                    this.animation = this.animationLeft;
-                    this.moveLeft( delta );
-                }
-                else
-                {
-                    this.animation = this.animationRight;
-                    this.moveRight( delta );
-                }
-            }
-            // Move up or down.
-            else
-            {
-                if( this.getY() > this.goalPosition.y )
-                {
-                    this.animation = this.animationUp;
-                    this.moveUp( delta );
-                }
-                else
-                {
-                    this.animation = this.animationDown;
-                    this.moveDown( delta );
-                }
-            }
-        }
-
-        if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) > Wolf.MAX_DISTANCE_TO_LOVE_SHEEP )
-        {
-            this.determineRandomPosition();
-        }
-
-        this.animation.update( delta );
-
-        //@TODO: Fugly for now.
-        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, GameManager.getInstance().getMap().getMapWidth() ) );
-        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, GameManager.getInstance().getMap().getMapHeight() ) );
-    }
-
-
-    /**
-     * Sets the location of the cookie
-     * @param cookieLocation
-     */       /**
-     * Sets the location of the dog
+          /**     * Sets the location of the dog
      * @param dogLocation
      */
     
