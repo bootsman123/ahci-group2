@@ -26,21 +26,6 @@ public class GameManager {
     private List<Player> players; //@TODO: add list of players
    // private PhoneConnector phoneConnector;
     private GameManager(){
-        this.players = new ArrayList<Player>();
-        this.players.add(new MousePlayer(0));//@TODO: add the right numbers
-       // this.players.add(new MobilePlayer(1));//@TODO: add the right numbers
-       //this.players.add(new MobilePlayer(2));//@TODO: add the right numbers
-       // this.players.add(new MobilePlayer(3));//@TODO: add the right numbers
-        
-        TuioClient client = new TuioClient();
-        for(Player p : players){
-            if (p instanceof MobilePlayer){
-                client.addTuioListener( (MobilePlayer) p);
-            }
-        }
-        
-        client.connect();
-        
         
     }
 
@@ -48,6 +33,31 @@ public class GameManager {
         return instance;
     }
 
+    public void setPlayers(){
+        this.players = new ArrayList<Player>();
+        try{
+            this.players.add(new MousePlayer(0));//@TODO: add the right numbers
+            this.players.add(new MobilePlayer(1));//@TODO: add the right numbers
+            this.players.add(new MobilePlayer(2));//@TODO: add the right numbers
+            this.players.add(new MobilePlayer(3));//@TODO: add the right numbers
+        }
+        catch(Exception e){
+            System.out.println("GameManager: problem with the initialisation of players");
+            e.printStackTrace();
+        }
+        TuioClient client = new TuioClient();
+        for(Player p : players){
+            if (p instanceof MobilePlayer){
+                client.addTuioListener( (MobilePlayer) p);
+            }
+        }
+
+        client.connect();
+
+        for(Player p : players){
+            this.currentMap.addObject(p.getCurrentObject());
+        }
+    }
     public void setMap(Map newMap){
         this.currentMap = newMap;
     }

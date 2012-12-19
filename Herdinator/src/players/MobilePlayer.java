@@ -11,6 +11,7 @@ import TUIO.TuioTime;
 import base.GameManager;
 import base.Player;
 import java.awt.geom.Point2D;
+import org.newdawn.slick.SlickException;
 
 /**
  * Mobile Players
@@ -23,7 +24,7 @@ public class MobilePlayer extends Player implements TuioListener{
     
     
 
-    public MobilePlayer(int id){
+    public MobilePlayer(int id) throws SlickException{
         super(id);
         
     }

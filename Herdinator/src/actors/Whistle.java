@@ -18,8 +18,8 @@ import util.SpriteSheetUtil;
 public class Whistle extends MovableActor
 {
     private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/birdzilla_cow-recolors.png";
-    private static final int SPRITE_SHEET_SPRITE_WIDTH = 32;
-    private static final int SPRITE_SHEET_SPRITE_HEIGHT = 32;
+    public static final int SPRITE_SHEET_SPRITE_WIDTH = 32; //@TODO: is public ok for this?
+    public static final int SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
 
     SpriteSheet spriteSheet;

@@ -52,6 +52,7 @@ public class GameState extends BasicGameState
         currentMap.init( container, game );
 
         GameManager.getInstance().setMap(currentMap);
+        GameManager.getInstance().setPlayers();
 
         overlay = new ObjectPicker();
         overlay.init(container, game);

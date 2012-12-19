@@ -113,16 +113,16 @@ public class LoveSheep extends MovableActor
     }
 
     public void updateCookieLocation(List<Cookie> currentCookies){
-        Cookie newClosestCookie = currentCookies.get(0);
-        for(Cookie cookie : currentCookies){
-            
-            if (Math.sqrt(Math.pow(cookie.getX()-this.getX(), 2) + Math.pow(cookie.getY()-this.getY(), 2)) < Math.sqrt(Math.pow(newClosestCookie.getX()-this.getX(), 2) + Math.pow(newClosestCookie.getY()-this.getY(), 2))){
-                newClosestCookie = cookie ; 
+        if (currentCookies.size() >0){
+            Cookie newClosestCookie = currentCookies.get(0);
+            for(Cookie cookie : currentCookies){
+
+                if (Math.sqrt(Math.pow(cookie.getX()-this.getX(), 2) + Math.pow(cookie.getY()-this.getY(), 2)) < Math.sqrt(Math.pow(newClosestCookie.getX()-this.getX(), 2) + Math.pow(newClosestCookie.getY()-this.getY(), 2))){
+                    newClosestCookie = cookie ;
+                }
             }
-        }
-        this.closestCookie = new Point2D.Float(newClosestCookie.getX(),newClosestCookie.getY());
-        
-        
+            this.closestCookie = new Point2D.Float(newClosestCookie.getX(),newClosestCookie.getY());
+        }   
     }
     private void determineRandomPosition()
     {

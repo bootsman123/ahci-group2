@@ -87,12 +87,14 @@ public class Map
         this.dog = new Dog(new Point2D.Float(mapWidth/4,mapHeight/2));
         
         //this.wolf = new Wolf(this, startingPointDog);
-
-        
+/*
+        System.out.println("Map: current player == null" + GameManager.getInstance().getPlayers() == null);
         for(Player p : GameManager.getInstance().getPlayers()){
-          Cookie cookie = new Cookie(this, startingPoint, p.getPlayerID()); //@TODO: change the ownerID
-          this.cookies.add(cookie);
-        }
+            System.out.println("Map: current object == null" + p == null);
+            if (p.getCurrentObject() instanceof Cookie){
+                this.cookies.add((Cookie)p.getCurrentObject());
+            }
+        }*/
         
         // Loop over all the tiles.
         for( int x = 0; x < this.map.getWidth(); x++ )

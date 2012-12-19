@@ -10,6 +10,7 @@ import TUIO.TuioObject;
 import TUIO.TuioTime;
 import base.Player;
 import java.awt.Point;
+import org.newdawn.slick.SlickException;
 
 /**
  *
@@ -19,7 +20,7 @@ public class TouchPlayer extends Player implements TuioListener{
     private Point fingerLocation ; 
     private boolean hasFingerOnTable ;    
 
-    public TouchPlayer(int id){
+    public TouchPlayer(int id) throws SlickException{
         super(id);
     }
     @Override
