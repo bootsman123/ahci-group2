@@ -42,6 +42,7 @@ public class GameState extends BasicGameState
     {
         // Initialize levels.
         this.maps = new ArrayList<Map>();
+
         this.maps.add( new Map( "../Resources/Maps/level1.tmx" ) );
         this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
 
@@ -51,6 +52,7 @@ public class GameState extends BasicGameState
         currentMap.init( container, game );
 
         GameManager.getInstance().setMap(currentMap);
+        GameManager.getInstance().setPlayers();
 
         overlay = new ObjectPicker();
         overlay.init(container, game);

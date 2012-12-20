@@ -15,17 +15,19 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MenuState extends BasicGameState
 {
     private static final String LOGO_FILE_PATH = "../Resources/Images/herdinatorlogo.png";
+    private static final String BACKGROUND_FILE_PATH = "../Resources/Images/herdinatorbackground.jpg";
     private static final String START_BUTTON_FILE_PATH = "../Resources/Images/startbutton.png";
     private static final String EXIT_BUTTON_FILE_PATH = "../Resources/Images/exitbutton.png";
-    Image logo = null;
-    Image startbuttonlogo = null;
-    Image exitbuttonlogo = null;
+    private Image logo = null;
+    private Image startbuttonlogo = null;
+    private Image exitbuttonlogo = null;
+    private Image background = null;
     public static final int ID = 2;
     private float startGameScale = 1;
     private float exitScale = 1;
     private float scaleStep = 0.0001f;
-    int menuX = 0;
-    int menuY = 0;
+    int menuX = 50;
+    int menuY = 300;
     public MenuState(){
         
     }
@@ -38,19 +40,21 @@ public class MenuState extends BasicGameState
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.logo = new Image(MenuState.LOGO_FILE_PATH);
+        this.background = new Image(MenuState.BACKGROUND_FILE_PATH);
         this.startbuttonlogo = new Image(MenuState.START_BUTTON_FILE_PATH);
-        this.exitbuttonlogo = new Image(MenuState.START_BUTTON_FILE_PATH);
+        this.exitbuttonlogo = new Image(MenuState.EXIT_BUTTON_FILE_PATH);
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        this.logo.draw(0, 0);
-        this.startbuttonlogo.draw(10, 10);
-        this.exitbuttonlogo.draw(20, 30);
+        int startxlogo = (container.getWidth()-logo.getWidth())/2;
+        //System.out.println("MenuState:Starting on " + startxlogo);
 
-        // render the background
-        this.logo.draw(0, 0);
+        int startylogo = 0;
 
+        
+        this.background.draw(0, 0, container.getWidth(), container.getHeight());
+        this.logo.draw(startxlogo, startylogo);
         // Draw menu
         this.startbuttonlogo.draw(menuX, menuY, startGameScale);
 
@@ -82,7 +86,7 @@ public class MenuState extends BasicGameState
 
             if ( input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) ){
                 System.out.println("Starting game");
-                  // sb.enterState(SlickBlocksGame.GAMEPLAYSTATE);
+                game.enterState(GameState.ID);
             }
          }
         
@@ -92,7 +96,7 @@ public class MenuState extends BasicGameState
           }
 
           if ( input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) ){
-            //gc.exit();
+            container.exit();
           }
         }
 

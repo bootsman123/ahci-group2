@@ -31,6 +31,6 @@ public class Game extends StateBasedGame
         this.mainMenu = new MenuState();
         this.addState( this.currentState );
         this.addState( this.mainMenu );
-        this.enterState( this.currentState.getID() );
+        this.enterState( this.mainMenu.getID() );
     }
 }

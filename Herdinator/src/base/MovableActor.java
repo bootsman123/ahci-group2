@@ -10,16 +10,15 @@ public abstract class MovableActor extends Actor implements Movable
 {
     private Float speed;
     
-    public MovableActor( Map map, Point2D.Float position, Float speed )
+    public MovableActor( Point2D.Float position, Float speed )
     {
-        super( map, position );
-        
+        super(position);
         this.speed = speed;
     }
     
     public MovableActor( Map map, Point2D.Float position )
     {
-        this( map, position, 0.0f );
+        this( position, 0.0f );
     }
     
     public MovableActor( Map map )

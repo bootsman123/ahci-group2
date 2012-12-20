@@ -14,6 +14,7 @@ import java.util.List;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -23,7 +24,9 @@ import org.newdawn.slick.tiled.TiledMap;
  */
 public class Map
 {
+    private static final String FARM_AMBIANCE_SOUNDS_PATH = "../Resources/Sounds/farmambiance.wav";
     public static final String CONTROLS_LAYER = "Controls";
+    private Sound fx = null;
     
     private TiledMap map;
     
@@ -39,6 +42,7 @@ public class Map
     
     private List<Sheep> sheeps;
     private List<Cookie> cookies;
+    private List<Whistle> whistles;
     
     private Dog dog; 
     private Wolf wolf;
@@ -61,6 +65,7 @@ public class Map
        
        this.sheeps = new ArrayList<Sheep>();
        this.cookies = new ArrayList<Cookie>();
+       this.whistles = new ArrayList<Whistle>();
     }
     
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
@@ -80,16 +85,18 @@ public class Map
         Point2D.Float startingPointDog = new Point2D.Float(0,0);
         this.loveSheep = new LoveSheep(this, startingPoint);
        //Point2D.Float startingPoint = new Point2D.Float(0,0); we need a starting point for each actor, so we can just define them in the initialisations         this.loveSheep = new LoveSheep(this, startingPoint);
-        this.wolf = new Wolf(this, new Point2D.Float(mapWidth/2,mapHeight/10));
-        this.dog = new Dog(this, new Point2D.Float(mapWidth/4,mapHeight/2));
+        this.wolf = new Wolf(new Point2D.Float(mapWidth/2,mapHeight/10));
+        this.dog = new Dog(new Point2D.Float(mapWidth/4,mapHeight/2));
         
         //this.wolf = new Wolf(this, startingPointDog);
-
-        
+/*
+        System.out.println("Map: current player == null" + GameManager.getInstance().getPlayers() == null);
         for(Player p : GameManager.getInstance().getPlayers()){
-          Cookie cookie = new Cookie(this, startingPoint, p.getPlayerID()); //@TODO: change the ownerID
-          this.cookies.add(cookie);
-        }
+            System.out.println("Map: current object == null" + p == null);
+            if (p.getCurrentObject() instanceof Cookie){
+                this.cookies.add((Cookie)p.getCurrentObject());
+            }
+        }*/
         
         // Loop over all the tiles.
         for( int x = 0; x < this.map.getWidth(); x++ )
@@ -143,6 +150,8 @@ public class Map
                 }*/
             }
         }
+        fx = new Sound(FARM_AMBIANCE_SOUNDS_PATH);
+        fx.play();
     }
     
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
@@ -155,6 +164,9 @@ public class Map
         }
         for(Cookie cookie : cookies){
             cookie.render(g);
+        }
+        for(Whistle whistle : whistles){
+            whistle.render(g);
         }
         loveSheep.render(g);
 
@@ -190,6 +202,9 @@ public class Map
         for(Cookie cookie : cookies){
             cookie.update(container, delta);
         }
+        for(Whistle whistle : whistles){
+            whistle.update(container, delta);
+        }
         
         //this.wolf.update( container, celta );
         this.loveSheep.updateCookieLocation(cookies);
@@ -198,18 +213,14 @@ public class Map
         this.dog.update( container, delta );
     }
 
-    void addCookie(int playerID) throws SlickException {
-        Point2D.Float startingPointCookie = new Point2D.Float(0,0);
-        Cookie newCookie = new Cookie(this, startingPointCookie, playerID);
-        cookies.add(newCookie);
-    }
+    
 
     public void addObject(MovableActor newObject) {
         if(newObject instanceof Cookie){
             this.cookies.add((Cookie)newObject);
         }
         else if(newObject instanceof Whistle){
-            //this.cookies.add((Cookie)newObject);
+            this.whistles.add((Whistle)newObject);
         }
     }
 
@@ -218,14 +229,22 @@ public class Map
             this.cookies.remove((Cookie)oldObject);
         }
         else if(oldObject instanceof Whistle){
-            //this.cookies.add((Cookie)newObject);
+            this.whistles.remove((Whistle)oldObject);
         }
     }
 
-    void removeCookie(int playerID) {
+    
+
+    void setActingPosition(int x, int y, int playerID) {
+        System.out.println("Updating the object to pos " + x + " " + y);
         for(Cookie cookie : cookies){
-            if(cookie.getOwnerID()==playerID){
-                cookies.remove(cookie);
+            if (cookie.getOwnerID() == playerID){
+                cookie.setPosition(new Point2D.Float(x,y));
+            }
+        }
+        for(Whistle cookie : whistles){
+            if (cookie.getOwnerID() == playerID){
+                cookie.setPosition(new Point2D.Float(x,y));
             }
         }
     }
@@ -308,39 +327,5 @@ public class Map
         return this.mapHeight; 
     }
 
-    /**
-     * Function that does something with the x and y position of the mouse.
-     * @param x
-     * @param y
-     */
-
-  
-
-    /**
-     * Function that sets the location of the dog to a specific x and y
-     * @param x
-     * @param y
-     */
-    //public void setDogPosition(int x, int y){
-    //    this.dog.setPosition(new Point2D.Float(x,y));
-   // }
-
-    /**
-     * Function that sets the location of the cookie
-     * @param x
-     * @param y
-     */
-    public void setCookiePosition(int x, int y, int fiducialID){
-        System.out.println("Updating the cookie to pos " + x + " " + y);
-        for(Cookie cookie : cookies){
-            if (cookie.getOwnerID() == fiducialID){
-                cookie.setPosition(new Point2D.Float(x,y));
-            }
-        }
-    }
     
-    public void setMousePosition(int x, int y){ //What exactly is this function supposed to do? 
-        this.loveSheep.setPosition(new Point2D.Float(x,y));
-
-    }
 }

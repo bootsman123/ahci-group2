@@ -14,7 +14,7 @@ public class Bridge extends Actor
 {
     public Bridge( Map map )
     {
-        super( map, new Point2D.Float( 0.0f, 0.0f ) );
+        super(new Point2D.Float( 0.0f, 0.0f ) );
     }
 
     @Override

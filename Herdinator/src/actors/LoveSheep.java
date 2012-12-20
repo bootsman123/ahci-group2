@@ -1,5 +1,6 @@
 package actors;
 
+import base.GameManager;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
@@ -38,7 +39,7 @@ public class LoveSheep extends MovableActor
     
     public LoveSheep( Map map, Point2D.Float position ) throws SlickException
     {
-        super( map, position, LoveSheep.SPEED );
+        super( position, LoveSheep.SPEED );
         spriteSheet = new SpriteSheet( LoveSheep.SPRITE_SHEET_FILE_PATH,
                                                    LoveSheep.SPRITE_SHEET_SPRITE_WIDTH,
                                                    LoveSheep.SPRITE_SHEET_SPRITE_HEIGHT,
@@ -56,9 +57,12 @@ public class LoveSheep extends MovableActor
 //        this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 );
     }
 
-    private void moveRandom( int delta )
+    /**
+     * the love sheep should sort of follow the cursor, dummy function, real application doesn't use the mouse
+     * @param delta 
+     */
+    private void move( int delta )
     {
-       
         if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) < LoveSheep.GOAL_MOVEMENT )
         {
            
@@ -104,21 +108,21 @@ public class LoveSheep extends MovableActor
         this.animation.update( delta );
 
         //@TODO: Fugly for now.
-        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, this.getMap().getMapWidth() ) );
-        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, this.getMap().getMapHeight() ) );
+        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, GameManager.getInstance().getMap().getMapWidth() ) );
+        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, GameManager.getInstance().getMap().getMapHeight() ) );
     }
 
     public void updateCookieLocation(List<Cookie> currentCookies){
-        Cookie newClosestCookie = currentCookies.get(0);
-        for(Cookie cookie : currentCookies){
-            
-            if (Math.sqrt(Math.pow(cookie.getX()-this.getX(), 2) + Math.pow(cookie.getY()-this.getY(), 2)) < Math.sqrt(Math.pow(newClosestCookie.getX()-this.getX(), 2) + Math.pow(newClosestCookie.getY()-this.getY(), 2))){
-                newClosestCookie = cookie ; 
+        if (currentCookies.size() >0){
+            Cookie newClosestCookie = currentCookies.get(0);
+            for(Cookie cookie : currentCookies){
+
+                if (Math.sqrt(Math.pow(cookie.getX()-this.getX(), 2) + Math.pow(cookie.getY()-this.getY(), 2)) < Math.sqrt(Math.pow(newClosestCookie.getX()-this.getX(), 2) + Math.pow(newClosestCookie.getY()-this.getY(), 2))){
+                    newClosestCookie = cookie ;
+                }
             }
-        }
-        this.closestCookie = new Point2D.Float(newClosestCookie.getX(),newClosestCookie.getY());
-        
-        
+            this.closestCookie = new Point2D.Float(newClosestCookie.getX(),newClosestCookie.getY());
+        }   
     }
     private void determineRandomPosition()
     {
@@ -139,8 +143,8 @@ public class LoveSheep extends MovableActor
 
         */
         //@TODO: Fugly.
-        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-LoveSheep.SPRITE_SHEET_SPRITE_WIDTH ) );
-        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight()-LoveSheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-LoveSheep.SPRITE_SHEET_SPRITE_WIDTH ) );
+        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-LoveSheep.SPRITE_SHEET_SPRITE_HEIGHT ) );
     }
     @Override
     public void render(Graphics g) {
@@ -150,7 +154,7 @@ public class LoveSheep extends MovableActor
     @Override
     public void update(GameContainer container, int delta) {
        
-        this.moveRandom( delta );
+        this.move( delta );
     }
     
 }

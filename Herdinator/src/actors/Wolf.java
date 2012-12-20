@@ -1,5 +1,6 @@
 package actors;
 
+import base.GameManager;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;
@@ -50,9 +51,9 @@ public class Wolf extends MovableActor
    private ArrayList<Point2D.Float>sheepLocations = new ArrayList<Point2D.Float>();
     
     
-    public Wolf( Map map, Point2D.Float position ) throws SlickException
+    public Wolf(Point2D.Float position ) throws SlickException
     {
-        super( map, position,Wolf.SPEED );
+        super(position,Wolf.SPEED );
 
         spriteSheet = new SpriteSheet( Wolf.SPRITE_SHEET_FILE_PATH,
                                                    Wolf.SPRITE_SHEET_SPRITE_WIDTH,
@@ -87,8 +88,8 @@ public class Wolf extends MovableActor
 
 
         //@TODO: Fugly.
-        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, this.getMap().getMapWidth()-Wolf.SPRITE_SHEET_SPRITE_WIDTH ) );
-        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, this.getMap().getMapHeight()-Wolf.SPRITE_SHEET_SPRITE_HEIGHT ) );
+        this.goalPosition.x = Math.max( 0, Math.min( this.goalPosition.x, GameManager.getInstance().getMap().getMapWidth()-Wolf.SPRITE_SHEET_SPRITE_WIDTH ) );
+        this.goalPosition.y = Math.max( 0, Math.min( this.goalPosition.y, GameManager.getInstance().getMap().getMapHeight()-Wolf.SPRITE_SHEET_SPRITE_HEIGHT ) );
 
         this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 );
 
@@ -106,66 +107,7 @@ public class Wolf extends MovableActor
     }
 
 
-    /**
-     * Lets the wolf walk randomly
-     * @param delta
-     */
-    private void moveRandom( int delta ) //gebruik dit alleen voor testen?
-    {
-        Map map = getMap();
-        if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) < Wolf.GOAL_MOVEMENT )
-        {
-            this.determineRandomPosition();
-        }
-        else{
-            // Move left or right.
-            if( Math.abs( this.getX() - this.goalPosition.x ) > Wolf.GOAL_MOVEMENT / 2 )
-            {
-                if( this.getX() > this.goalPosition.x )
-                {
-                    this.animation = this.animationLeft;
-                    this.moveLeft( delta );
-                }
-                else
-                {
-                    this.animation = this.animationRight;
-                    this.moveRight( delta );
-                }
-            }
-            // Move up or down.
-            else
-            {
-                if( this.getY() > this.goalPosition.y )
-                {
-                    this.animation = this.animationUp;
-                    this.moveUp( delta );
-                }
-                else
-                {
-                    this.animation = this.animationDown;
-                    this.moveDown( delta );
-                }
-            }
-        }
-
-        if( Math.abs( this.getX() - this.goalPosition.x ) + Math.abs( this.getY() - this.goalPosition.y ) > Wolf.MAX_DISTANCE_TO_LOVE_SHEEP )
-        {
-            this.determineRandomPosition();
-        }
-
-        this.animation.update( delta );
-
-        //@TODO: Fugly for now.
-        this.getPosition().x = Math.max( 0, Math.min( this.getPosition().x, this.getMap().getMapWidth() ) );
-        this.getPosition().y = Math.max( 0, Math.min( this.getPosition().y, this.getMap().getMapHeight() ) );
-    }
-
-
-    /**
-     * Sets the location of the cookie
-     * @param cookieLocation
-     */       /**
-     * Sets the location of the dog
+          /**     * Sets the location of the dog
      * @param dogLocation
      */
     
@@ -203,4 +145,11 @@ public class Wolf extends MovableActor
             }     
         }
         return locationClosestSheep;
-    }}
+
+    }
+    
+}
+
+    
+
+

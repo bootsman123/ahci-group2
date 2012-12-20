@@ -9,27 +9,17 @@ import java.awt.geom.Point2D;
 public abstract class Actor implements Animatable
 {
     private Point2D.Float position;
-    private Map map;
     
     /**
      * Constructor.
      * @param position 
      */
-    public Actor( Map map, Point2D.Float position )
+    public Actor( Point2D.Float position )
     {
-        this.map = map;
+        
         this.position = position;
     }
  
-    public void setMap( Map map )
-    {
-        this.map = map;
-    }
-    
-    public Map getMap()
-    {
-        return this.map;
-    }
     
     public void setPosition( Point2D.Float position )
     {

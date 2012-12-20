@@ -6,6 +6,7 @@
 package players;
 
 import base.Player;
+import org.newdawn.slick.SlickException;
 
 /**
  *
@@ -14,7 +15,7 @@ import base.Player;
 public class MousePlayer extends Player{
 
     
-    public MousePlayer(int id){
+    public MousePlayer(int id) throws SlickException{
         super(id);
     }
 }
