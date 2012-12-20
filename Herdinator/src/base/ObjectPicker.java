@@ -92,23 +92,24 @@ public class ObjectPicker
         int mouseX = input.getMouseX();
         int mouseY = input.getMouseY();
 
-        boolean insideWhistle = false;
-        boolean insideCookie = false;
 
-        Cookie c = cookies.get(0);
-        Whistle whistle = whistles.get(0);
-        int cookieWidth = Cookie.SPRITE_SHEET_SPRITE_WIDTH;
-        int cookieHeight = Cookie.SPRITE_SHEET_SPRITE_HEIGHT;
-        
-        if( ( mouseX >= c.getX() && mouseX <= c.getX() + cookieWidth) && ( mouseY >= c.getY() && mouseY <= c.getY() + cookieHeight) ){
-            insideWhistle = true;
-            System.out.println("Inside da cookie");
+        for (Cookie c : cookies){
+            
+            int cookieWidth = Cookie.SPRITE_SHEET_SPRITE_WIDTH;
+            int cookieHeight = Cookie.SPRITE_SHEET_SPRITE_HEIGHT;
+
+            if( ( mouseX >= c.getX() && mouseX <= c.getX() + cookieWidth) && ( mouseY >= c.getY() && mouseY <= c.getY() + cookieHeight) ){
+                System.out.println("Inside da cookie");
+                GameManager.getInstance().changeObjectOfPlayer(c);
+
+            }
         }
-        else if( ( mouseX >= whistle.getX() && mouseX <= whistle.getX()+ Whistle.SPRITE_SHEET_SPRITE_WIDTH) &&
-                  ( mouseY >= whistle.getY() && mouseY <= whistle.getY()+ Whistle.SPRITE_SHEET_SPRITE_HEIGHT) ){
-            insideCookie = true;
-            System.out.println("Inside da whistle");
-
+        for(Whistle whistle :whistles){
+            if( ( mouseX >= whistle.getX() && mouseX <= whistle.getX()+ Whistle.SPRITE_SHEET_SPRITE_WIDTH) &&
+                      ( mouseY >= whistle.getY() && mouseY <= whistle.getY()+ Whistle.SPRITE_SHEET_SPRITE_HEIGHT) ){
+               System.out.println("Inside da whistle");
+                GameManager.getInstance().changeObjectOfPlayer(whistle);
+            }
         }
     }
 }

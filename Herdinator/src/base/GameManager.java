@@ -6,6 +6,8 @@
 package base;
 
 import TUIO.TuioClient;
+import actors.Cookie;
+import actors.Whistle;
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.GameContainer;
@@ -81,13 +83,13 @@ public class GameManager {
                 MobilePlayer currentPlayer = (MobilePlayer) player; 
                 if(currentPlayer.locationTelephone != null && currentPlayer.hasTelephoneOnTable){
                     System.out.println("First location: " + (int)currentPlayer.locationTelephone.getX() + " second location: " + (int)currentPlayer.locationTelephone.getY());
-                    this.currentMap.setCookiePosition((int)currentPlayer.locationTelephone.getX(), (int)currentPlayer.locationTelephone.getY(), currentPlayer.getPlayerID());
+                    this.currentMap.setActingPosition((int)currentPlayer.locationTelephone.getX(), (int)currentPlayer.locationTelephone.getY(), currentPlayer.getPlayerID());
                 }
             }
             else if (player instanceof MousePlayer){
                 if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
                     
-                    this.currentMap.setCookiePosition(input.getMouseX(), input.getMouseY(), player.getPlayerID());
+                    this.currentMap.setActingPosition(input.getMouseX(), input.getMouseY(), player.getPlayerID());
                 }
             }
             else if (player instanceof TouchPlayer){
@@ -100,6 +102,28 @@ public class GameManager {
         
         this.currentMap.update( container, game, delta );  
     }
+
+    void changeObjectOfPlayer(MovableActor c) throws SlickException {
+        
+        for (Player player : players){
+            if(c instanceof Cookie){
+                Cookie newc = (Cookie) c;
+                if(newc.getOwnerID() == player.getPlayerID())
+                    player.changeCurrentObject(c);
+            }
+            else if(c instanceof Whistle){
+                Whistle newc = (Whistle) c;
+                if(newc.getOwnerID() == player.getPlayerID())
+                    player.changeCurrentObject(c);
+            }
+            
+            
+        }
+    }
+
+    
+
+    
 
 
     

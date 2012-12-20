@@ -42,6 +42,7 @@ public class Map
     
     private List<Sheep> sheeps;
     private List<Cookie> cookies;
+    private List<Whistle> whistles;
     
     private Dog dog; 
     private Wolf wolf;
@@ -64,6 +65,7 @@ public class Map
        
        this.sheeps = new ArrayList<Sheep>();
        this.cookies = new ArrayList<Cookie>();
+       this.whistles = new ArrayList<Whistle>();
     }
     
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
@@ -163,6 +165,9 @@ public class Map
         for(Cookie cookie : cookies){
             cookie.render(g);
         }
+        for(Whistle whistle : whistles){
+            whistle.render(g);
+        }
         loveSheep.render(g);
 
         dog.render(g);
@@ -197,6 +202,9 @@ public class Map
         for(Cookie cookie : cookies){
             cookie.update(container, delta);
         }
+        for(Whistle whistle : whistles){
+            whistle.update(container, delta);
+        }
         
         //this.wolf.update( container, celta );
         this.loveSheep.updateCookieLocation(cookies);
@@ -205,18 +213,14 @@ public class Map
         this.dog.update( container, delta );
     }
 
-    void addCookie(int playerID) throws SlickException {
-        Point2D.Float startingPointCookie = new Point2D.Float(0,0);
-        Cookie newCookie = new Cookie(this, startingPointCookie, playerID);
-        cookies.add(newCookie);
-    }
+    
 
     public void addObject(MovableActor newObject) {
         if(newObject instanceof Cookie){
             this.cookies.add((Cookie)newObject);
         }
         else if(newObject instanceof Whistle){
-            //this.cookies.add((Cookie)newObject);
+            this.whistles.add((Whistle)newObject);
         }
     }
 
@@ -225,14 +229,22 @@ public class Map
             this.cookies.remove((Cookie)oldObject);
         }
         else if(oldObject instanceof Whistle){
-            //this.cookies.add((Cookie)newObject);
+            this.whistles.remove((Whistle)oldObject);
         }
     }
 
-    void removeCookie(int playerID) {
+    
+
+    void setActingPosition(int x, int y, int playerID) {
+        System.out.println("Updating the object to pos " + x + " " + y);
         for(Cookie cookie : cookies){
-            if(cookie.getOwnerID()==playerID){
-                cookies.remove(cookie);
+            if (cookie.getOwnerID() == playerID){
+                cookie.setPosition(new Point2D.Float(x,y));
+            }
+        }
+        for(Whistle cookie : whistles){
+            if (cookie.getOwnerID() == playerID){
+                cookie.setPosition(new Point2D.Float(x,y));
             }
         }
     }
@@ -315,39 +327,5 @@ public class Map
         return this.mapHeight; 
     }
 
-    /**
-     * Function that does something with the x and y position of the mouse.
-     * @param x
-     * @param y
-     */
-
-  
-
-    /**
-     * Function that sets the location of the dog to a specific x and y
-     * @param x
-     * @param y
-     */
-    //public void setDogPosition(int x, int y){
-    //    this.dog.setPosition(new Point2D.Float(x,y));
-   // }
-
-    /**
-     * Function that sets the location of the cookie
-     * @param x
-     * @param y
-     */
-    public void setCookiePosition(int x, int y, int fiducialID){
-        System.out.println("Updating the cookie to pos " + x + " " + y);
-        for(Cookie cookie : cookies){
-            if (cookie.getOwnerID() == fiducialID){
-                cookie.setPosition(new Point2D.Float(x,y));
-            }
-        }
-    }
     
-    public void setMousePosition(int x, int y){ //What exactly is this function supposed to do? 
-        this.loveSheep.setPosition(new Point2D.Float(x,y));
-
-    }
 }

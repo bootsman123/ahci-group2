@@ -20,7 +20,7 @@ public abstract class Player {
     public Player(int playerID) throws SlickException {
         this.playerID = playerID;
         Point2D.Float startingPoint = new Point2D.Float(0,0);
-        this.currentObject = new Cookie(GameManager.getInstance().getMap(), startingPoint, this.playerID );
+        this.currentObject = new Whistle(GameManager.getInstance().getMap(), startingPoint, this.playerID );
     }
 
     public int getPlayerID(){
