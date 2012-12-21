@@ -36,3 +36,4 @@ local.properties
 /Herdinator/build/
 /Herdinator/nbproject/project.properties
 /Herdinator/dist/
+/HerdinatorServerHandler/nbproject/private/

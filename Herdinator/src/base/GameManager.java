@@ -14,7 +14,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import players.MobilePlayer;
+import players.MobilePhonePlayer;
 import players.MousePlayer;
 import players.TouchPlayer;
 
@@ -39,9 +39,9 @@ public class GameManager {
         this.players = new ArrayList<Player>();
         try{
             this.players.add(new MousePlayer(0));//@TODO: add the right numbers
-            this.players.add(new MobilePlayer(1));//@TODO: add the right numbers
-            this.players.add(new MobilePlayer(2));//@TODO: add the right numbers
-            this.players.add(new MobilePlayer(3));//@TODO: add the right numbers
+            this.players.add(new MobilePhonePlayer(1));//@TODO: add the right numbers
+            this.players.add(new MobilePhonePlayer(2));//@TODO: add the right numbers
+            this.players.add(new MobilePhonePlayer(3));//@TODO: add the right numbers
         }
         catch(Exception e){
             System.out.println("GameManager: problem with the initialisation of players");
@@ -49,8 +49,8 @@ public class GameManager {
         }
         TuioClient client = new TuioClient();
         for(Player p : players){
-            if (p instanceof MobilePlayer){
-                client.addTuioListener( (MobilePlayer) p);
+            if (p instanceof MobilePhonePlayer){
+                client.addTuioListener( (MobilePhonePlayer) p);
             }
         }
 
@@ -79,8 +79,8 @@ public class GameManager {
         Input input = container.getInput();
         for (Player player : players){
 
-            if (player instanceof MobilePlayer){
-                MobilePlayer currentPlayer = (MobilePlayer) player; 
+            if (player instanceof MobilePhonePlayer){
+                MobilePhonePlayer currentPlayer = (MobilePhonePlayer) player; 
                 if(currentPlayer.locationTelephone != null && currentPlayer.hasTelephoneOnTable){
                     System.out.println("First location: " + (int)currentPlayer.locationTelephone.getX() + " second location: " + (int)currentPlayer.locationTelephone.getY());
                     this.currentMap.setActingPosition((int)currentPlayer.locationTelephone.getX(), (int)currentPlayer.locationTelephone.getY(), currentPlayer.getPlayerID());
