@@ -1,11 +1,11 @@
 package states;
 
-import base.GameManager;
 import base.Map;
-import base.ObjectPicker;
+import global.GameManager;
+import global.ObjectPicker;
 import java.util.ArrayList;
 import java.util.List;
-
+import main.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -19,22 +19,19 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class GameState extends BasicGameState
 {
-    public static final int ID = 1;
-    
-    ObjectPicker overlay = null;
+    private ObjectPicker overlay = null;
 
-    private List<Map> maps; //@TODO: load levels
-    
+    private List<Map> maps;
+    private Map currentMap;
     
     public GameState() throws SlickException
     {
-        
     }
     
     @Override
     public int getID()
     {
-       return GameState.ID;
+       return Game.GAME_STATE_GAME;
     }
 
     @Override
@@ -45,34 +42,31 @@ public class GameState extends BasicGameState
 
         this.maps.add( new Map( "../Resources/Maps/level1.tmx" ) );
         this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
-
-        Map currentMap;
         
-        currentMap = this.maps.get( 0 );
-        currentMap.init( container, game );
+        // Initialize maps.
+        // @TODO: Could use a for-loop.
+        this.maps.get( 0 ).init( container, game );
+        this.maps.get( 1 ).init( container, game );
 
-        GameManager.getInstance().setMap(currentMap);
+        // Set map.
+        GameManager.getInstance().setMap( this.maps.get( 0 ) );
         GameManager.getInstance().setPlayers();
 
         overlay = new ObjectPicker();
         overlay.init(container, game);
-
     }
 
     @Override
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         GameManager.getInstance().getMap().render( container, game, g );
-         // render the overlay
         overlay.render(container, game, g);
- 
     }
 
     @Override
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
-    {
-        
-        GameManager.getInstance().update(container, game, delta);
+    {   
+        GameManager.getInstance().update( container, game, delta );
         overlay.update(container, game, delta);
     }
 }

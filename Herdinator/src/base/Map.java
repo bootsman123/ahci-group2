@@ -6,28 +6,32 @@ import actors.LoveSheep;
 import actors.Sheep;
 import actors.Whistle;
 import actors.Wolf;
-import util.Pair;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
+import util.Pair;
 
 /**
- *
- * @author roland
+ * 
+ * @author Bas Bootsma
+ * @author Roland Meertens
  */
 public class Map
 {
-    private static final String FARM_AMBIANCE_SOUNDS_PATH = "../Resources/Sounds/farmambiance.wav";
     public static final String CONTROLS_LAYER = "Controls";
-    private Sound fx = null;
+    public static final String FARM_AMBIANCE_SOUND_PATH = "../Resources/Sounds/farmambiance.wav";
     
+    private Sound sound;
+    
+    // Tiled map.
     private TiledMap map;
     
     // Dimensions of the map in pixels.
@@ -41,15 +45,12 @@ public class Map
     private java.util.Map<Pair<Integer, Integer>, Boolean> goals;
     
     private List<Sheep> sheeps;
+    private List<Dog> dogs; 
+    private List<Wolf> wolves;
+    private List<LoveSheep> loveSheeps;
+    
     private List<Cookie> cookies;
     private List<Whistle> whistles;
-    
-    private Dog dog; 
-    private Wolf wolf;
-
-    
-    
-    private LoveSheep loveSheep;
     
     /**
      * Load a new map.
@@ -62,14 +63,21 @@ public class Map
        this.mapWidth = this.map.getWidth() * this.map.getTileWidth();
        this.mapHeight = this.map.getHeight() * this.map.getTileHeight();
 
-       
        this.sheeps = new ArrayList<Sheep>();
+       this.dogs = new ArrayList<Dog>();
+       this.wolves = new ArrayList<Wolf>();
+       this.loveSheeps = new ArrayList<LoveSheep>();
+       
        this.cookies = new ArrayList<Cookie>();
        this.whistles = new ArrayList<Whistle>();
     }
     
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
+        // Initialize sound.
+        this.sound = new Sound( Map.FARM_AMBIANCE_SOUND_PATH );
+        this.sound.play();
+        
         // Initialize.
         this.collisions = new HashMap<Pair<Integer, Integer>, Boolean>();
         this.goals = new HashMap<Pair<Integer, Integer>, Boolean>();
@@ -79,24 +87,9 @@ public class Map
 
         if( index == -1 )
         {
+            Logger.getLogger( Map.class.getName(), "Controls layer unavailable." );
             return;
         }
-        Point2D.Float startingPoint = new Point2D.Float(0,0);
-        Point2D.Float startingPointDog = new Point2D.Float(0,0);
-        this.loveSheep = new LoveSheep(this, startingPoint);
-       //Point2D.Float startingPoint = new Point2D.Float(0,0); we need a starting point for each actor, so we can just define them in the initialisations         this.loveSheep = new LoveSheep(this, startingPoint);
-        this.wolf = new Wolf(new Point2D.Float(mapWidth/2,mapHeight/10));
-        this.dog = new Dog(new Point2D.Float(mapWidth/4,mapHeight/2));
-        
-        //this.wolf = new Wolf(this, startingPointDog);
-/*
-        System.out.println("Map: current player == null" + GameManager.getInstance().getPlayers() == null);
-        for(Player p : GameManager.getInstance().getPlayers()){
-            System.out.println("Map: current object == null" + p == null);
-            if (p.getCurrentObject() instanceof Cookie){
-                this.cookies.add((Cookie)p.getCurrentObject());
-            }
-        }*/
         
         // Loop over all the tiles.
         for( int x = 0; x < this.map.getWidth(); x++ )
@@ -128,53 +121,80 @@ public class Map
                 
                 if( sheep != null )
                 {
-                    //@TODO: Ugly hack for now, see if it is possible to pass map in a different way.
-                    this.sheeps.add( new Sheep( this, this.toPosition( x, y ) ) );
+                    this.sheeps.add( new Sheep( this.toPosition( x, y ) ) );
                     continue;
                 }
                 
                 // Check "Dog".                
-
-                /*String dogString = this.map.getTileProperty( tileId, "Dog", null ); //documenteer deze code aub ik weet niet wat hier de bedoeling van is - Thomas
+                String dog = this.map.getTileProperty( tileId, "Dog", null );
                 
-                if( dogString != null )
-
-                String dog = this.map.getTileProperty( tileId, "Dog", null );//waarom een string? Ik dacht dat er gewoon 1 hond was
-                
-                if( dog != null ) //waarom dog op deze manier implementeren? Nu krijgt hij toch steeds een nieuwe positie? Of is er een hele lijst honden?
-
+                if( dog != null )
                 {
-                    
-                    this.dog = new Dog(this, this.toPosition(x, y));
+                    this.dogs.add( new Dog( this.toPosition( x, y ) ) );
                     continue;
-                }*/
+                    
+                }
+                
+                // Check "Wolf".
+                String wolf = this.map.getTileProperty( tileId, "Wolf", null );
+                
+                if( wolf != null )
+                {
+                    this.wolves.add( new Wolf( this.toPosition( x, y ) ) );
+                    continue;
+                }
+                
+                // Check "LoveSheep".
+                String loveSheep = this.map.getTileProperty( tileId, "LoveSheep", null );
+                
+                if( loveSheep != null )
+                {
+                    this.loveSheeps.add( new LoveSheep( this.toPosition( x, y ) ) );
+                    continue;
+                }
             }
         }
-        fx = new Sound(FARM_AMBIANCE_SOUNDS_PATH);
-        fx.play();
     }
     
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
-        this.map.render( 0, 0 );  
+        this.map.render( 0, 0 );
         
+        // Render sheeps.
         for( Sheep sheep : this.sheeps )
         {
             sheep.render( g );
         }
-        for(Cookie cookie : cookies){
-            cookie.render(g);
+        
+        // Render dogs.
+        for( Dog dog : this.dogs )
+        {
+            dog.render( g );
         }
-        for(Whistle whistle : whistles){
+        
+        // Render wolves.
+        for( Wolf wolf : this.wolves )
+        {
+            wolf.render( g );
+        }
+        
+        // Render love sheeps.
+        for( LoveSheep loveSheep : this.loveSheeps )
+        {
+            loveSheep.render( g );
+        }
+        
+        // Render cookies.
+        for( Cookie cookie : this.cookies )
+        {
+            cookie.render( g );
+        }
+        
+        // Render whistles.
+        for( Whistle whistle : this.whistles )
+        {
             whistle.render(g);
         }
-        loveSheep.render(g);
-
-        dog.render(g);
-        wolf.render(g);
-
-        wolf.render(g);
-        dog.render(g);
     }
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
@@ -183,38 +203,57 @@ public class Map
         {
             return;
         }
-                
-        for(int i=0; i< this.sheeps.size(); i++)
+        
+        // Update sheeps.
+        for( Sheep sheep : this.sheeps )
         {
-            sheeps.get(i).setLoveSheepLocation(loveSheep.getPosition());
-            sheeps.get(i).setWolfLocation(wolf.getPosition());
-            sheeps.get(i).setDogLocation(dog.getPosition());
-            wolf.setSheepLocation(sheeps.get(i).getPosition(),i);
-            sheeps.get(i).update( container, delta );
-        }
-        wolf.setDogLocation(dog.getPosition());
-        
-       
-
-        
-      
-        
-        for(Cookie cookie : cookies){
-            cookie.update(container, delta);
-        }
-        for(Whistle whistle : whistles){
-            whistle.update(container, delta);
+            sheep.update( delta );
         }
         
-        //this.wolf.update( container, celta );
-        this.loveSheep.updateCookieLocation(cookies);
-        this.loveSheep.update( container, delta );
-        this.wolf.update( container, delta );
-        this.dog.update( container, delta );
+        // Update dogs.
+        for( Dog dog : this.dogs )
+        {
+            dog.update( delta );
+        }
+        
+        // Update wolves.
+        for( Wolf wolf : this.wolves )
+        {
+            wolf.update( delta );
+        }
+        
+        // Update love sheeps.
+        for( LoveSheep loveSheep : this.loveSheeps )
+        {
+            loveSheep.update( delta );
+        }
+        
+        // Update cookies.
+        for( Cookie cookie : this.cookies )
+        {
+            cookie.update( delta );
+        }
+        
+        // Update whistles.
+        for( Whistle whistle : this.whistles )
+        {
+            whistle.update( delta );
+        }
     }
+    
+    /*
+    @TODO: Nice trick.
+    private void render( List<? extends Renderable> renderables, Graphics g )
+    {
+        for( Renderable r : renderables )
+        {
+            r.render( g );
+        }
+    }
+    */
 
     
-
+/*
     public void addObject(MovableActor newObject) {
         if(newObject instanceof Cookie){
             this.cookies.add((Cookie)newObject);
@@ -232,10 +271,11 @@ public class Map
             this.whistles.remove((Whistle)oldObject);
         }
     }
+    */
 
     
 
-    void setActingPosition(int x, int y, int playerID) {
+    public void setActingPosition(int x, int y, int playerID) {
         System.out.println("Updating the object to pos " + x + " " + y);
         for(Cookie cookie : cookies){
             if (cookie.getOwnerID() == playerID){

@@ -3,15 +3,13 @@
  * and open the template in the editor.
  */
 
-package main;
+package server;
 
 /**
  *
- * @author roland
+ * @author bootsman
  */
-class MainMenuState {
-
-    public MainMenuState() {
-    }
+public class SeverHandler
+{
 
 }

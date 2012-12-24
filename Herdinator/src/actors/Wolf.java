@@ -1,6 +1,6 @@
 package actors;
 
-import base.GameManager;
+import global.GameManager;
 import base.Map;
 import base.MovableActor;
 import java.awt.geom.Point2D;

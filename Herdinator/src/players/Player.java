@@ -2,10 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package base;
+package players;
 
 import actors.Cookie;
 import actors.Whistle;
+import global.GameManager;
+import base.MovableActor;
 import java.awt.geom.Point2D;
 import org.newdawn.slick.SlickException;
 
@@ -15,16 +17,16 @@ import org.newdawn.slick.SlickException;
  */
 public abstract class Player {
     private MovableActor currentObject;
-    private int playerID;
+    private int id;
     
-    public Player(int playerID) throws SlickException {
-        this.playerID = playerID;
+    public Player( int id ) throws SlickException {
+        this.id = id;
         Point2D.Float startingPoint = new Point2D.Float(0,0);
-        this.currentObject = new Whistle(GameManager.getInstance().getMap(), startingPoint, this.playerID );
+        this.currentObject = new Whistle(GameManager.getInstance().getMap(), startingPoint, this.id );
     }
 
-    public int getPlayerID(){
-        return this.playerID;
+    public Integer getId(){
+        return this.id;
     }
 
     public void changeCurrentObject(MovableActor newObject) throws SlickException{

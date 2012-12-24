@@ -1,15 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package players;
 
-import TUIO.TuioCursor;
-import TUIO.TuioListener;
-import TUIO.TuioObject;
-import TUIO.TuioTime;
-import base.GameManager;
-import base.Player;
 import java.awt.geom.Point2D;
 import org.newdawn.slick.SlickException;
 
@@ -17,64 +7,38 @@ import org.newdawn.slick.SlickException;
  * Mobile Players
  * @author roland
  */
-public class MobilePhonePlayer extends Player implements TuioListener{
-    public Point2D locationTelephone ;
+public class MobilePhonePlayer extends Player
+{
+    private Point2D mobilePhoneLocation;
 
-    public boolean hasTelephoneOnTable ;
-    
-    
-
-    public MobilePhonePlayer(int id) throws SlickException{
-        super(id);
-        
+    /**
+     * Constructor.
+     * @param id Mark identifier.
+     * @throws SlickException 
+     */
+    public MobilePhonePlayer( Integer id ) throws SlickException
+    {
+        super( id ); 
+        this.mobilePhoneLocation = null;
     }
     
-    @Override
-    public void addTuioCursor(TuioCursor arg0) {
-         //   System.out.println("Added TuioCursor: " + arg0.getCursorID()) ;
-
+    public void setMobilePhoneLocation( Point2D.Float mobilePhoneLocation )
+    {
+        this.mobilePhoneLocation = mobilePhoneLocation;
     }
-
-    @Override
-    public void addTuioObject(TuioObject arg0) {
-        //    System.out.println("Added TuioObject: " + arg0.getSymbolID()) ;
-           
+    
+    public void setMobilePhoneLocation( Float x, Float y )
+    {
+        this.setMobilePhoneLocation( new Point2D.Float( x, y ) );
     }
-
-    @Override
-    public void refresh(TuioTime arg0) {
-
+    
+    public Point2D getMobilePhoneLocation()
+    {
+        return this.mobilePhoneLocation;
     }
-
-    @Override
-    public void removeTuioCursor(TuioCursor arg0) {
-           // System.out.println("Removed TuioCursor: " + arg0.getCursorID()) ;
+    
+    public Boolean isMobilePhoneOnTable()
+    {
+        return this.mobilePhoneLocation != null;
     }
-
-    @Override
-    public void removeTuioObject(TuioObject arg0) {
-           
-            if (arg0.getSymbolID() ==this.getPlayerID()){
-                 System.out.println("Removed TuioObject: " + arg0.getSymbolID()) ;
-                this.hasTelephoneOnTable = false; 
-            }
-    }
-
-    @Override
-    public void updateTuioCursor(TuioCursor arg0) {
-          //  System.out.println("Updated TuioCursor: " + arg0.getCursorID() + " location: " + arg0.getX() + " " + arg0.getY()) ;
-            
-    }
-
-    @Override
-    public void updateTuioObject(TuioObject arg0) {
-         
-            if (arg0.getSymbolID() ==this.getPlayerID()){
-                   System.out.println("Updated TuioObject: " + arg0.getSymbolID() + " location: " + arg0.getX() + " " + arg0.getY()) ;
-                this.hasTelephoneOnTable = true;
-                
-                this.locationTelephone = new Point2D.Double(arg0.getX()* GameManager.getInstance().getMap().getMapHeight(), arg0.getY()* GameManager.getInstance().getMap().getMapWidth());
-            }
-    }
-
 }

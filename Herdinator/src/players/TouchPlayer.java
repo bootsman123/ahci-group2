@@ -8,7 +8,6 @@ import TUIO.TuioCursor;
 import TUIO.TuioListener;
 import TUIO.TuioObject;
 import TUIO.TuioTime;
-import base.Player;
 import java.awt.Point;
 import org.newdawn.slick.SlickException;
 

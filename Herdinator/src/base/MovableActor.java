@@ -1,29 +1,31 @@
 package base;
 
 import java.awt.geom.Point2D;
+import java.util.EnumMap;
+import org.newdawn.slick.Animation;
 
 /**
  *
  * @author bootsman
  */
 public abstract class MovableActor extends Actor implements Movable
-{
+{  
     private Float speed;
+    
+    // Map of all directions to animations.
+    // @TODO: Protected is fugly, but sufficient for not.
+    protected java.util.Map<Direction, Animation> animations;
     
     public MovableActor( Point2D.Float position, Float speed )
     {
-        super(position);
+        super( position );
         this.speed = speed;
+        this.animations = new EnumMap<Direction, Animation>( Direction.class );
     }
     
-    public MovableActor( Map map, Point2D.Float position )
+    public MovableActor()
     {
-        this( position, 0.0f );
-    }
-    
-    public MovableActor( Map map )
-    {
-        this( map, new Point2D.Float( 0.0f, 0.0f ) );
+        this( new Point2D.Float( 0.0f, 0.0f ), 0.0f );
     }
     
     public void setSpeed( Float speed )
@@ -37,58 +39,77 @@ public abstract class MovableActor extends Actor implements Movable
     }
     
     @Override
-    public void moveUp( int delta )
+    public void move( Direction direction )
     {
-        this.setY( this.getY() - delta * this.getSpeed() );
+        Float x = this.getX();
+        Float y = this.getY();
+        
+        switch( direction )
+        {
+            case UP:
+                y -= this.getLastDelta() * this.getSpeed();
+                break;
+            case RIGHT:
+                x += this.getLastDelta() * this.getSpeed();
+                break;
+            case DOWN:
+                y += this.getLastDelta() * this.getSpeed();
+                break;
+            case LEFT:
+                x -= this.getLastDelta() * this.getSpeed();
+                break;
+        }
+        
+        this.setAnimation( this.animations.get( direction ) );
+        this.setPosition( x, y );
+        
     }
     
-    @Override
-    public void moveRight( int delta )
+    public void moveTo( Point2D.Float target )
     {
-        this.setX( this.getX() + delta * this.getSpeed() );
-    }
-    
-    @Override
-    public void moveDown( int delta )
-    {
-        this.setY( this.getY() + delta * this.getSpeed() );
-    }
-    
-    @Override
-    public void moveLeft( int delta )
-    {
-        this.setX( this.getX() - delta * this.getSpeed() );
-    }
-    
-    public void moveTo( int delta, Point2D.Float position, Point2D.Float target ){
-        if(Math.abs(position.x-target.x) < Math.abs(position.y-target.y)){
-            if(position.x > target.x)
-                moveLeft( delta);
+        if( Math.abs( this.getPosition().x - target.x ) < Math.abs( this.getPosition().y - target.y ) )
+        {
+            if( this.getPosition().x > target.x )
+            {
+                this.move( Direction.LEFT );
+            }
             else
-                moveRight( delta );
+            {
+                this.move( Direction.RIGHT );
+            }
+        }
+        else
+        {
+            if( this.getPosition().y > target.y )
+            {
+                this.move( Direction.UP );
+            }
+            else
+            {
+                this.move( Direction.DOWN  );
+            }
+        }
+    }
+    
+    public void moveAwayFrom( Point2D.Float target )
+    {
+        // Something like this?
+        target.x = this.getPosition().x - target.x;
+        target.y = this.getPosition().y - target.y;
+        this.moveTo( target );
+        
+        /*
+         *      if( Math.abs(position.x-target.x) < Math.abs(position.y-target.y)){
+            if(position.x > target.x)
+                move( Direction.RIGHT, delta);
+            else
+                move( Direction.LEFT, delta );
         }
         else
              if(position.y > target.y)
-                moveUp( delta);
+                move( Direction.DOWN, delta);
             else
-                moveDown( delta );  
-    }
-    
-    public void moveAwayFrom( int delta, Point2D.Float position, Point2D.Float target ){
-        if(Math.abs(position.x-target.x) < Math.abs(position.y-target.y)){
-            if(position.x > target.x)
-                moveRight( delta);
-            else
-                moveLeft( delta );
-        }
-        else
-             if(position.y > target.y)
-                moveDown( delta);
-            else
-                moveUp( delta ); 
-    }
-    
-    public double euclideanDistance(Point2D.Float a, Point2D.Float b){
-        return Math.sqrt(Math.pow((a.x - b.x),2)+Math.pow((a.x - b.x),2));
+                move( Direction.UP, delta ); 
+         */
     }
 }

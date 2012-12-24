@@ -12,25 +12,32 @@ import states.MenuState;
  */
 public class Game extends StateBasedGame
 {
+    // Constants of all possible game states.
+    public static final int GAME_STATE_MENU = 1;
+    public static final int GAME_STATE_GAME = 2;
+    
     public static final String NAME = "Herdinator";
     public static final int WIDTH = 800;
     public static final int HEIGHT = 640;
-    
-    private GameState currentState; 
-    private MenuState mainMenu;
 
+    /**
+     * Constructor.
+     * @throws SlickException 
+     */
     public Game() throws SlickException
     {
         super( Game.NAME );
+        
+        this.addState( new MenuState() );
+        this.addState( new GameState() );
+        
+        this.enterState( Game.GAME_STATE_MENU );
     }
 
     @Override
     public void initStatesList( GameContainer container ) throws SlickException
-    {
-        this.currentState = new GameState();
-        this.mainMenu = new MenuState();
-        this.addState( this.currentState );
-        this.addState( this.mainMenu );
-        this.enterState( this.mainMenu.getID() );
+    {        
+        this.getState( Game.GAME_STATE_GAME ).init( container, this );
+        this.getState( Game.GAME_STATE_MENU ).init( container, this );
     }
 }

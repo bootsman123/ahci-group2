@@ -1,7 +1,8 @@
-package base;
+package global;
 
 import actors.Cookie;
 import actors.Whistle;
+import global.GameManager;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import players.MousePlayer;
+import players.Player;
 
 /**
  *
@@ -101,7 +103,6 @@ public class ObjectPicker
             if( ( mouseX >= c.getX() && mouseX <= c.getX() + cookieWidth) && ( mouseY >= c.getY() && mouseY <= c.getY() + cookieHeight) ){
                 System.out.println("Inside da cookie");
                 GameManager.getInstance().changeObjectOfPlayer(c);
-
             }
         }
         for(Whistle whistle :whistles){

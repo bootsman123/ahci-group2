@@ -1,5 +1,6 @@
 package states;
 
+import main.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -13,28 +14,32 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author bootsman
  */
 public class MenuState extends BasicGameState
-{
+{    
     private static final String LOGO_FILE_PATH = "../Resources/Images/herdinatorlogo.png";
     private static final String BACKGROUND_FILE_PATH = "../Resources/Images/herdinatorbackground.jpg";
     private static final String START_BUTTON_FILE_PATH = "../Resources/Images/startbutton.png";
     private static final String EXIT_BUTTON_FILE_PATH = "../Resources/Images/exitbutton.png";
+    
     private Image logo = null;
     private Image startbuttonlogo = null;
     private Image exitbuttonlogo = null;
     private Image background = null;
-    public static final int ID = 2;
+    
     private float startGameScale = 1;
     private float exitScale = 1;
     private float scaleStep = 0.0001f;
-    int menuX = 50;
-    int menuY = 300;
-    public MenuState(){
-        
+    
+    private int menuX = 50;
+    private int menuY = 300;
+    
+    public MenuState()
+    {    
     }
 
     @Override
-    public int getID() {
-        return ID;
+    public int getID()
+    {
+        return Game.GAME_STATE_MENU;
     }
 
     @Override
@@ -85,8 +90,7 @@ public class MenuState extends BasicGameState
             startGameScale += scaleStep * delta;
 
             if ( input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) ){
-                System.out.println("Starting game");
-                game.enterState(GameState.ID);
+                game.enterState( Game.GAME_STATE_GAME );
             }
          }
         
@@ -103,7 +107,9 @@ public class MenuState extends BasicGameState
         if(insideExit)
         {
            if(exitScale < 1.05f)
+           {
              exitScale +=  scaleStep * delta;
+           }
         }
         else{
           if(exitScale > 1.0f){

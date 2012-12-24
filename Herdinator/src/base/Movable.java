@@ -6,8 +6,10 @@ package base;
  */
 public interface Movable
 {
-    public void moveUp( int delta );
-    public void moveRight( int delta );
-    public void moveDown( int delta );
-    public void moveLeft( int delta );
+    public enum Direction
+    {
+        UP, RIGHT, DOWN, LEFT;
+    };
+    
+    public void move( Direction direction );
 }

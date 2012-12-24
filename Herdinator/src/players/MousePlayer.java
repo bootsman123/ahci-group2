@@ -5,7 +5,6 @@
 
 package players;
 
-import base.Player;
 import org.newdawn.slick.SlickException;
 
 /**
