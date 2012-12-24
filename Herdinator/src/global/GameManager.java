@@ -1,6 +1,5 @@
 package global;
 
-import players.Player;
 import TUIO.TuioClient;
 import TUIO.TuioCursor;
 import TUIO.TuioListener;
@@ -19,6 +18,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import players.MobilePhonePlayer;
 import players.MousePlayer;
+import players.Player;
 import players.TouchPlayer;
 
 /**
@@ -59,13 +59,15 @@ public class GameManager implements TuioListener
     {
         return GameManager.instance;
     }
-    
+
+    /*
     public void init( ... )
     {
         
     }
+    */
     
-    public void update( ... )
+    public void update( GameContainer container, StateBasedGame game, int delta )
     {
         
     }

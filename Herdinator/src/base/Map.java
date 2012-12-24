@@ -26,8 +26,8 @@ import util.Pair;
  */
 public class Map
 {
-    public static final String CONTROLS_LAYER = "Controls";
-    public static final String FARM_AMBIANCE_SOUND_PATH = "../Resources/Sounds/farmambiance.wav";
+    private static final String CONTROLS_LAYER = "Controls";
+    private static final String FARM_AMBIANCE_SOUND_PATH = "../Resources/Sounds/farmambiance.wav";
     
     private Sound sound;
     
@@ -274,7 +274,7 @@ public class Map
     */
 
     
-
+/*
     public void setActingPosition(int x, int y, int playerID) {
         System.out.println("Updating the object to pos " + x + " " + y);
         for(Cookie cookie : cookies){
@@ -288,6 +288,7 @@ public class Map
             }
         }
     }
+    * */
 
     
     private Pair<Integer, Integer> fromPosition( Point2D.Float position )
@@ -367,5 +368,57 @@ public class Map
         return this.mapHeight; 
     }
 
+    /**
+     * Returns a list of all the sheeps.
+     * @return 
+     */
+    public List<Sheep> getSheeps()
+    {
+        return this.sheeps;
+    }
     
+    /**
+     * Returns a list of all the dogs.
+     * @return 
+     */
+    public List<Dog> getDogs()
+    {
+        return this.dogs;
+    }
+    
+    /**
+     * Returns a list of all the wolves.
+     * @return 
+     */
+    public List<Wolf> getWolves()
+    {
+        return this.wolves;
+    }
+    
+    /**
+     * Returns a list of all the love sheeps.
+     * @return 
+     */
+    public List<LoveSheep> getLoveSheeps()
+    {
+        return this.loveSheeps;
+    }
+    
+    /**
+     * Returns a list of all the whistles.
+     * @return 
+     */
+    public List<Whistle> getWhistles()
+    {
+        return this.whistles;
+    }
+    
+    /**
+     * Returns a list of all the cookies.
+     * @return 
+     */
+    public List<Cookie> getCookies()
+    {
+        return this.cookies;
+    }
 }
