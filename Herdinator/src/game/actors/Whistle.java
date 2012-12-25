@@ -25,7 +25,7 @@ public class Whistle extends Actor
      * @param position
      * @throws SlickException 
      */
-    public Whistle( Point2D.Float position ) throws SlickException
+    public Whistle( Point2D.Double position ) throws SlickException
     {
         super( position );
     }

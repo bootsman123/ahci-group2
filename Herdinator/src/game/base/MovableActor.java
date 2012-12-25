@@ -10,13 +10,13 @@ import org.newdawn.slick.Animation;
  */
 public abstract class MovableActor extends Actor implements Movable
 {  
-    private Float speed;
+    private Double speed;
     
     // Map of all directions to animations.
     // @TODO: Protected is fugly, but sufficient for not.
     protected java.util.Map<Direction, Animation> animations;
     
-    public MovableActor( Point2D.Float position, Float speed )
+    public MovableActor( Point2D.Double position, Double speed )
     {
         super( position );
         this.speed = speed;
@@ -25,15 +25,15 @@ public abstract class MovableActor extends Actor implements Movable
     
     public MovableActor()
     {
-        this( new Point2D.Float( 0.0f, 0.0f ), 0.0f );
+        this( new Point2D.Double( 0.0, 0.0 ), 0.0 );
     }
     
-    public void setSpeed( Float speed )
+    public void setSpeed( Double speed )
     {
         this.speed = speed;
     }
     
-    public Float getSpeed()
+    public Double getSpeed()
     {
         return this.speed;
     }
@@ -41,8 +41,8 @@ public abstract class MovableActor extends Actor implements Movable
     @Override
     public void move( Direction direction )
     {
-        Float x = this.getX();
-        Float y = this.getY();
+        Double x = this.getX();
+        Double y = this.getY();
         
         switch( direction )
         {
@@ -65,7 +65,7 @@ public abstract class MovableActor extends Actor implements Movable
         
     }
     
-    public void moveTo( Point2D.Float target )
+    public void moveTo( Point2D.Double target )
     {
         if( Math.abs( this.getPosition().x - target.x ) < Math.abs( this.getPosition().y - target.y ) )
         {
@@ -91,7 +91,7 @@ public abstract class MovableActor extends Actor implements Movable
         }
     }
     
-    public void moveAwayFrom( Point2D.Float target )
+    public void moveAwayFrom( Point2D.Double target )
     {
         // Something like this?
         target.x = this.getPosition().x - target.x;

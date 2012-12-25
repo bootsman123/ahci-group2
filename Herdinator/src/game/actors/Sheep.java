@@ -1,13 +1,15 @@
 package game.actors;
 
 import game.base.MovableActor;
+import game.global.GameManager;
+import game.util.Distance;
+import game.util.SpriteSheetUtil;
 import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import game.util.SpriteSheetUtil;
     
 /**
  *
@@ -20,26 +22,20 @@ public class Sheep extends MovableActor
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Float SPEED = 0.1f;
-    private static final Float GOAL_MOVEMENT = 0.8f;
-    private static final Float GOAL_DISTANCE = 100.0f;
-    private static final Float MAX_DISTANCE_TO_LOVE_SHEEP = 100.0f ;
+    private static final Double SPEED = 0.1;
+    private static final Double DISTANCE_TO_GOAL = 2.0;
+    private static final Double DISTANCE_GOAL_FROM_POSITION = 100.0;
 
-    private Boolean hasReachedGoal;
-    private Point2D.Float goalPosition;
+    private Point2D.Double goalPosition;
 
     /**
      * Constructor.
      * @param position
      * @throws SlickException 
      */
-    public Sheep( Point2D.Float position ) throws SlickException
+    public Sheep( Point2D.Double position ) throws SlickException
     {
         super( position, Sheep.SPEED );
-
-        this.hasReachedGoal = false;  
-        this.goalPosition = new Point2D.Float( this.getX(), this.getY() );
-        //this.determineRandomPosition();
     }
     
     @Override
@@ -65,6 +61,8 @@ public class Sheep extends MovableActor
         {
             Logger.getLogger( Sheep.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
         }
+        
+        this.goalPosition = this.determineRandomPosition( this.getPosition() );
     }
     
     @Override
@@ -72,12 +70,27 @@ public class Sheep extends MovableActor
     {
         super.update( delta );
         
-        this.moveRandom();
+        // Check if the sheep is close to its goal.
+        if( Distance.euclidian( this.getPosition(), this.goalPosition ) < Sheep.DISTANCE_TO_GOAL )
+        {
+            this.goalPosition = this.determineRandomPosition( this.getPosition() );
+        }
+        
+        this.moveTo( this.goalPosition );
     }
     
-    private void moveRandom()
+    private Point2D.Double determineRandomPosition( Point2D.Double position )
     {
-        this.move( Direction.DOWN );
+        Double x = 0.0;
+        Double y = 0.0;
+        
+        x = Sheep.DISTANCE_GOAL_FROM_POSITION * ( Math.random() - 0.5 );
+        y = Sheep.DISTANCE_GOAL_FROM_POSITION * ( Math.random() - 0.5 );
+        
+        x = Math.max( 0, Math.min( x, GameManager.getInstance().getMap().getMapWidth() ) );
+        y = Math.max( 0, Math.min( y, GameManager.getInstance().getMap().getMapHeight() ) );
+
+        return new Point2D.Double( position.x + x, position.y + y );
     }
     
     /**
@@ -96,13 +109,4 @@ public class Sheep extends MovableActor
             moveRandom( delta);
      }
      * */
-    
-    /**
-     * Returns if this sheep has reached the goal
-     * @return
-     */
-    public boolean getHasReachedGoal()
-    {
-        return this.hasReachedGoal;
-    }
 }

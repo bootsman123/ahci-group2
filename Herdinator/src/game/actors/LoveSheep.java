@@ -20,14 +20,14 @@ public class LoveSheep extends MovableActor
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Float SPEED = 0.1f;
+    private static final Double SPEED = 0.1;
 
     /**
      * Constructor.
      * @param position
      * @throws SlickException 
      */
-    public LoveSheep( Point2D.Float position ) throws SlickException
+    public LoveSheep( Point2D.Double position ) throws SlickException
     {
         super( position, LoveSheep.SPEED );
     }
@@ -67,7 +67,7 @@ public class LoveSheep extends MovableActor
                     newClosestCookie = cookie ;
                 }
             }
-            this.closestCookie = new Point2D.Float(newClosestCookie.getX(),newClosestCookie.getY());
+            this.closestCookie = new Point2D.Double(newClosestCookie.getX(),newClosestCookie.getY());
         }   
     }
     */

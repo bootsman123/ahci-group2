@@ -25,7 +25,7 @@ public class Cookie extends Actor
      * @param position
      * @throws SlickException 
      */
-    public Cookie( Point2D.Float position ) throws SlickException
+    public Cookie( Point2D.Double position ) throws SlickException
     {
         super( position );
     }

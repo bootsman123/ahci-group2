@@ -17,7 +17,7 @@ public abstract class Player {
     
     public Player( int id ) throws SlickException {
         this.id = id;
-        Point2D.Float startingPoint = new Point2D.Float(0,0);
+        Point2D.Double startingPoint = new Point2D.Double(0,0);
         this.currentObject = new Whistle(startingPoint );
     }
 

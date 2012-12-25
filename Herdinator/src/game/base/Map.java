@@ -6,7 +6,9 @@ import game.actors.LoveSheep;
 import game.actors.Sheep;
 import game.actors.Whistle;
 import game.actors.Wolf;
+import game.util.Pair;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +19,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
-import game.util.Pair;
 
 /**
  * 
@@ -59,17 +60,17 @@ public class Map
      */
     public Map( String filePath ) throws SlickException
     {
-       this.map = new TiledMap( filePath );
-       this.mapWidth = this.map.getWidth() * this.map.getTileWidth();
-       this.mapHeight = this.map.getHeight() * this.map.getTileHeight();
+        this.map = new TiledMap( filePath );        
+        this.mapWidth = this.map.getWidth() * this.map.getTileWidth();
+        this.mapHeight = this.map.getHeight() * this.map.getTileHeight();
 
-       this.sheeps = new ArrayList<Sheep>();
-       this.dogs = new ArrayList<Dog>();
-       this.wolves = new ArrayList<Wolf>();
-       this.loveSheeps = new ArrayList<LoveSheep>();
-       
-       this.cookies = new ArrayList<Cookie>();
-       this.whistles = new ArrayList<Whistle>();
+        this.sheeps = new ArrayList<Sheep>();
+        this.dogs = new ArrayList<Dog>();
+        this.wolves = new ArrayList<Wolf>();
+        this.loveSheeps = new ArrayList<LoveSheep>();
+
+        this.cookies = new ArrayList<Cookie>();
+        this.whistles = new ArrayList<Whistle>();
     }
     
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
@@ -132,7 +133,6 @@ public class Map
                 {
                     this.dogs.add( new Dog( this.toPosition( x, y ) ) );
                     continue;
-                    
                 }
                 
                 // Check "Wolf".
@@ -286,6 +286,10 @@ public class Map
             r.render( g );
         }
     }
+   
+    private void update( List<? extends Actor> actors, int delta )
+    
+    
     */
 
     
@@ -315,27 +319,27 @@ public class Map
         System.out.println("Updating the object to pos " + x + " " + y);
         for(Cookie cookie : cookies){
             if (cookie.getOwnerID() == playerID){
-                cookie.setPosition(new Point2D.Float(x,y));
+                cookie.setPosition(new Point2D.Double(x,y));
             }
         }
         for(Whistle cookie : whistles){
             if (cookie.getOwnerID() == playerID){
-                cookie.setPosition(new Point2D.Float(x,y));
+                cookie.setPosition(new Point2D.Double(x,y));
             }
         }
     }
     * */
 
     
-    private Pair<Integer, Integer> fromPosition( Point2D.Float position )
+    private Pair<Integer, Integer> fromPosition( Point2D.Double position )
     {
         return Pair.of( (int)( position.x / this.map.getTileWidth() ),
                         (int)( position.y / this.map.getTileHeight() ) );
     }
     
-    private Point2D.Float toPosition( int x, int y )
+    private Point2D.Double toPosition( int x, int y )
     {
-        return new Point2D.Float( x * this.map.getTileWidth(),
+        return new Point2D.Double( x * this.map.getTileWidth(),
                                   y * this.map.getTileHeight() );
     }
     
@@ -345,7 +349,7 @@ public class Map
      * @param y
      * @return 
      */
-    public boolean isValidTile( Point2D.Float position )
+    public boolean isValidTile( Point2D.Double position )
     {
         return ( position.x >= 0 && position.x <= this.map.getWidth() &&
                  position.y >= 0 && position.y <= this.map.getHeight() );
@@ -357,7 +361,7 @@ public class Map
      * @param y
      * @return 
      */
-    public boolean isCollisionTile( Point2D.Float position )
+    public boolean isCollisionTile( Point2D.Double position )
     {
         if( !this.isValidTile( position ) )
         {
@@ -374,7 +378,7 @@ public class Map
      * @param y
      * @return 
      */
-    public boolean isGoalTile( Point2D.Float position )
+    public boolean isGoalTile( Point2D.Double position )
     {
       /*
        if( !this.isValidTile( position ) )

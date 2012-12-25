@@ -9,7 +9,7 @@ import java.awt.geom.Point2D;
  */
 public class Bridge extends Actor
 {
-    public Bridge( Point2D.Float position )
+    public Bridge( Point2D.Double position )
     {
         super( position );
     }

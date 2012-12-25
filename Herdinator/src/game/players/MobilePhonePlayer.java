@@ -22,14 +22,14 @@ public class MobilePhonePlayer extends Player
         this.mobilePhoneLocation = null;
     }
     
-    public void setMobilePhoneLocation( Point2D.Float mobilePhoneLocation )
+    public void setMobilePhoneLocation( Point2D.Double mobilePhoneLocation )
     {
         this.mobilePhoneLocation = mobilePhoneLocation;
     }
     
-    public void setMobilePhoneLocation( Float x, Float y )
+    public void setMobilePhoneLocation( Double x, Double y )
     {
-        this.setMobilePhoneLocation( new Point2D.Float( x, y ) );
+        this.setMobilePhoneLocation( new Point2D.Double( x, y ) );
     }
     
     public Point2D getMobilePhoneLocation()

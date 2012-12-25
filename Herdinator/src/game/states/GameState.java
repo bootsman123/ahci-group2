@@ -42,14 +42,15 @@ public class GameState extends BasicGameState
 
         this.maps.add( new Map( "../Resources/Maps/level1.tmx" ) );
         this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
+       
+        // Set map.
+        GameManager.getInstance().setMap( this.maps.get( 0 ) );
         
         // Initialize maps.
         // @TODO: Could use a for-loop.
         this.maps.get( 0 ).init( container, game );
         this.maps.get( 1 ).init( container, game );
 
-        // Set map.
-        GameManager.getInstance().setMap( this.maps.get( 0 ) );
         
         //GameManager.getInstance().setPlayers();
 
@@ -67,7 +68,8 @@ public class GameState extends BasicGameState
     @Override
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {   
-        GameManager.getInstance().update( container, game, delta );
+        GameManager.getInstance().getMap().update( container, game, delta );
+        //GameManager.getInstance().update( container, game, delta );
         //overlay.update(container, game, delta);
     }
 }

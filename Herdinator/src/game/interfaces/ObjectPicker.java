@@ -58,11 +58,11 @@ public class ObjectPicker
         int diff = 30;   
         for(Player p : GameManager.getInstance().getPlayers()){
             if(p instanceof MousePlayer){
-                Point2D.Float startingPoint = new Point2D.Float(PICKER_START_X+IMAGE_OFFSET,numberOfInstancesHad+=diff);
+                Point2D.Double startingPoint = new Point2D.Double(PICKER_START_X+IMAGE_OFFSET,numberOfInstancesHad+=diff);
                 Cookie cookie = new Cookie(GameManager.getInstance().getMap(), startingPoint, p.getPlayerID()); //@TODO: change the ownerID
                 this.cookies.add(cookie);
 
-                startingPoint = new Point2D.Float(PICKER_START_X+IMAGE_OFFSET,numberOfInstancesHad+=diff);
+                startingPoint = new Point2D.Double(PICKER_START_X+IMAGE_OFFSET,numberOfInstancesHad+=diff);
                 Whistle whistle = new Whistle(GameManager.getInstance().getMap(), startingPoint, p.getPlayerID()); //@TODO: change the ownerID
                 this.whistles.add(whistle);
             }

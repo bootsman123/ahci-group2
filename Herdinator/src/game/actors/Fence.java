@@ -10,7 +10,7 @@ import java.awt.geom.Point2D;
  */
 public class Fence extends Actor
 {
-    public Fence( Point2D.Float position )
+    public Fence( Point2D.Double position )
     {
         super( position );
     }

@@ -11,7 +11,7 @@ import org.newdawn.slick.Graphics;
 public abstract class Actor implements Renderable
 {
     // Current position.
-    private Point2D.Float position;
+    private Point2D.Double position;
     
     // Current animation.
     private Animation animation;
@@ -23,45 +23,45 @@ public abstract class Actor implements Renderable
      * Constructor.
      * @param position 
      */
-    public Actor( Point2D.Float position )
+    public Actor( Point2D.Double position )
     {
         this.position = position;
         this.animation = null;
         this.lastDelta = 0;
     }
 
-    public void setPosition( Point2D.Float position )
+    public void setPosition( Point2D.Double position )
     {
         this.position = position;
     }
     
-    public void setPosition( Float x, Float y )
+    public void setPosition( Double x, Double y )
     {
         this.setX( x );
         this.setY( y );
     }
     
-    public Point2D.Float getPosition()
+    public Point2D.Double getPosition()
     {
         return this.position;
     }
     
-    public void setX( Float x )
+    public void setX( Double x )
     {
         this.position.x = x;
     }
     
-    public Float getX()
+    public Double getX()
     {
         return this.position.x;
     }
     
-    public void setY( Float y )
+    public void setY( Double y )
     {
         this.position.y = y;
     }
     
-    public Float getY()
+    public Double getY()
     {
         return this.position.y;
     }
@@ -89,7 +89,7 @@ public abstract class Actor implements Renderable
     @Override
     public void render( Graphics g )
     {
-        this.getAnimation().draw( this.getX(), this.getY() );
+        this.getAnimation().draw( this.getX().floatValue(), this.getY().floatValue() );
     }
     
     /**
