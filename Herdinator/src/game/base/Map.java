@@ -75,8 +75,8 @@ public class Map
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
         // Initialize sound.
-        this.sound = new Sound( Map.FARM_AMBIANCE_SOUND_PATH );
-        this.sound.play();
+        //this.sound = new Sound( Map.FARM_AMBIANCE_SOUND_PATH );
+        //this.sound.play();
         
         // Initialize.
         this.collisions = new HashMap<Point, Boolean>();

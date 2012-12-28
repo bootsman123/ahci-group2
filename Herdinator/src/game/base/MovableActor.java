@@ -46,8 +46,8 @@ public abstract class MovableActor extends Actor implements Movable
     @Override
     public void move( Direction direction )
     {
-        Double x = this.getX();
-        Double y = this.getY();
+        Double x = this.getPosition().x;
+        Double y = this.getPosition().y;
         
         switch( direction )
         {
@@ -65,14 +65,16 @@ public abstract class MovableActor extends Actor implements Movable
                 break;
         }
         
-        this.setAnimation( this.animations.get( direction ) );
-        this.setPosition( x, y );
+        //System.out.printf( "x: %f - y: %f\n", x, y );
         
+        this.setAnimation( this.animations.get( direction ) );
+        this.getAnimation().update( this.getLastDelta() );
+        this.setPosition( x, y );
     }
     
     public void moveTo( Point2D.Double target )
     {
-        if( Math.abs( this.getPosition().x - target.x ) < Math.abs( this.getPosition().y - target.y ) )
+        if( Math.abs( this.getPosition().x - target.x ) > Math.abs( this.getPosition().y - target.y ) )
         {
             if( this.getPosition().x > target.x )
             {
@@ -98,7 +100,7 @@ public abstract class MovableActor extends Actor implements Movable
     
     public void moveAwayFrom( Point2D.Double target )
     {
-        // Something like this?
+        // @TODO: Something like this?
         target.x = this.getPosition().x - target.x;
         target.y = this.getPosition().y - target.y;
         this.moveTo( target );

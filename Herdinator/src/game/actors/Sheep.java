@@ -3,13 +3,12 @@ package game.actors;
 import game.base.Map;
 import game.base.MovableActor;
 import game.global.GameManager;
-import game.util.Distance;
+import game.util.Math;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
@@ -27,11 +26,10 @@ public class Sheep extends MovableActor
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.1;
+    private static final Double SPEED = 0.01;
     private static final Double DISTANCE_TO_GOAL = 2.0;
 
-    private Random generator;
-    private Point2D.Double goalPosition;
+    private Point2D.Double positionTarget;
 
     /**
      * Constructor.
@@ -67,8 +65,7 @@ public class Sheep extends MovableActor
             Logger.getLogger( Sheep.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
         }
         
-        this.generator = new Random();
-        this.goalPosition = this.determineRandomPosition( this.getPosition() );
+        this.positionTarget = this.determineRandomPosition( this.getPosition() );
     }
     
     @Override
@@ -76,13 +73,15 @@ public class Sheep extends MovableActor
     {
         super.update( delta );
         
+        //System.out.printf( "%f\n", Math.distanceEuclidian( this.getPosition(), this.positionTarget ) );
+
         // Check if the sheep is close to its goal.
-        if( Distance.euclidian( this.getPosition(), this.goalPosition ) < Sheep.DISTANCE_TO_GOAL )
+        if( Math.distanceEuclidian( this.getPosition(), this.positionTarget ) < Sheep.DISTANCE_TO_GOAL )
         {
-            this.goalPosition = this.determineRandomPosition( this.getPosition() );
+            this.positionTarget = this.determineRandomPosition( this.getPosition() );
         }
         
-        this.moveTo( this.goalPosition );
+        this.moveTo( this.positionTarget );
     }
     
     private Point2D.Double determineRandomPosition( Point2D.Double position )
@@ -93,7 +92,7 @@ public class Sheep extends MovableActor
         // Get the tile for the given position.
         Integer x = (int)( position.getX() / map.getTileWidth() );
         Integer y = (int)( position.getY() / map.getTileHeight() );
-        
+                
         // Fill a list with possible positions.
         List<Point> positionsNew = new ArrayList<Point>();
         
@@ -119,9 +118,10 @@ public class Sheep extends MovableActor
         }
         
         // Select a random new position.
-        Point positionNew = positionsNew.get( this.generator.nextInt( positionsNewSize ) );
-         
-        return new Point2D.Double( position.x * map.getTileWidth(), position.y * map.getTileHeight() );
+        int r = (int)( java.lang.Math.random() * positionsNewSize );
+        Point positionNew = positionsNew.get( r );
+                 
+        return new Point2D.Double( positionNew.x * map.getTileWidth(), positionNew.y * map.getTileHeight() );
     }
     
     /**

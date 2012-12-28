@@ -20,6 +20,7 @@ public abstract class Actor implements Renderable
     
     // Current animation.
     private Animation animation;
+    private Action action;
     
     // Last update delta.
     private Integer lastDelta;
@@ -31,7 +32,10 @@ public abstract class Actor implements Renderable
     public Actor( Point2D.Double position )
     {
         this.position = position;
+        
         this.animation = null;
+        this.action = Action.IDLE;
+        
         this.lastDelta = 0;
     }
 
@@ -79,6 +83,16 @@ public abstract class Actor implements Renderable
     public Animation getAnimation()
     {
         return this.animation;
+    }
+    
+    public void setAction( Action action )
+    {
+        this.action = action;
+    }
+    
+    public Action getAction()
+    {
+        return this.action;
     }
     
     public void setLastDelta( Integer lastDelta )
