@@ -13,9 +13,14 @@ public abstract class MovableActor extends Actor implements Movable
     private Double speed;
     
     // Map of all directions to animations.
-    // @TODO: Protected is fugly, but sufficient for not.
+    // @TODO: Protected is fugly, but sufficient for now.
     protected java.util.Map<Direction, Animation> animations;
     
+    /**
+     * Constructor.
+     * @param position
+     * @param speed 
+     */
     public MovableActor( Point2D.Double position, Double speed )
     {
         super( position );

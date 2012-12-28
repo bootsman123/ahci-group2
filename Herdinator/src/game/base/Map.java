@@ -6,9 +6,8 @@ import game.actors.LoveSheep;
 import game.actors.Sheep;
 import game.actors.Whistle;
 import game.actors.Wolf;
-import game.util.Pair;
+import java.awt.Point;
 import java.awt.geom.Point2D;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,14 +35,14 @@ public class Map
     private TiledMap map;
     
     // Dimensions of the map in pixels.
-    private int mapWidth;
-    private int mapHeight;
+    private Integer widthInPixels;
+    private Integer heightInPixels;
     
     // Coordinates of collision tiles.
-    private java.util.Map<Pair<Integer, Integer>, Boolean> collisions;
+    private java.util.Map<Point, Boolean> collisions;
     
     // Coordinates of goal tiles.
-    private java.util.Map<Pair<Integer, Integer>, Boolean> goals;
+    private java.util.Map<Point, Boolean> goals;
     
     private List<Sheep> sheeps;
     private List<Dog> dogs; 
@@ -61,8 +60,8 @@ public class Map
     public Map( String filePath ) throws SlickException
     {
         this.map = new TiledMap( filePath );        
-        this.mapWidth = this.map.getWidth() * this.map.getTileWidth();
-        this.mapHeight = this.map.getHeight() * this.map.getTileHeight();
+        this.widthInPixels = this.map.getWidth() * this.map.getTileWidth();
+        this.heightInPixels = this.map.getHeight() * this.map.getTileHeight();
 
         this.sheeps = new ArrayList<Sheep>();
         this.dogs = new ArrayList<Dog>();
@@ -80,8 +79,8 @@ public class Map
         this.sound.play();
         
         // Initialize.
-        this.collisions = new HashMap<Pair<Integer, Integer>, Boolean>();
-        this.goals = new HashMap<Pair<Integer, Integer>, Boolean>();
+        this.collisions = new HashMap<Point, Boolean>();
+        this.goals = new HashMap<Point, Boolean>();
         
         // Parse the controls-layer.
         int index = this.map.getLayerIndex( Map.CONTROLS_LAYER );
@@ -104,7 +103,7 @@ public class Map
                 
                 if( collision != null )
                 {
-                    this.collisions.put( Pair.of( x, y ), true );
+                    this.collisions.put( new Point( x, y ), true );
                     continue;
                 }
                 
@@ -113,7 +112,7 @@ public class Map
                 
                 if( goal != null )
                 {
-                    this.goals.put( Pair.of( x, y ), true );
+                    this.goals.put( new Point( x, y ), true );
                     continue;
                 }
                 
@@ -122,7 +121,7 @@ public class Map
                 
                 if( sheep != null )
                 {
-                    this.sheeps.add( new Sheep( this.toPosition( x, y ) ) );
+                    this.sheeps.add( new Sheep( this.toPositionInPixels( x, y ) ) );
                     continue;
                 }
                 
@@ -131,7 +130,7 @@ public class Map
                 
                 if( dog != null )
                 {
-                    this.dogs.add( new Dog( this.toPosition( x, y ) ) );
+                    this.dogs.add( new Dog( this.toPositionInPixels( x, y ) ) );
                     continue;
                 }
                 
@@ -140,7 +139,7 @@ public class Map
                 
                 if( wolf != null )
                 {
-                    this.wolves.add( new Wolf( this.toPosition( x, y ) ) );
+                    this.wolves.add( new Wolf( this.toPositionInPixels( x, y ) ) );
                     continue;
                 }
                 
@@ -149,7 +148,7 @@ public class Map
                 
                 if( loveSheep != null )
                 {
-                    this.loveSheeps.add( new LoveSheep( this.toPosition( x, y ) ) );
+                    this.loveSheeps.add( new LoveSheep( this.toPositionInPixels( x, y ) ) );
                     continue;
                 }
             }
@@ -331,16 +330,27 @@ public class Map
     * */
 
     
-    private Pair<Integer, Integer> fromPosition( Point2D.Double position )
+    /**
+     * Convert from position in pixels to position in tiles
+     * @param position
+     * @return 
+     */
+    private Point fromPositionInPixels( Point2D.Double position )
     {
-        return Pair.of( (int)( position.x / this.map.getTileWidth() ),
-                        (int)( position.y / this.map.getTileHeight() ) );
+        return new Point( (int)( position.x / this.map.getTileWidth() ),
+                          (int)( position.y / this.map.getTileHeight() ) );
     }
     
-    private Point2D.Double toPosition( int x, int y )
+    /**
+     * Convert from a position tiles to a position in pixels.
+     * @param x
+     * @param y
+     * @return 
+     */
+    private Point2D.Double toPositionInPixels( int x, int y )
     {
         return new Point2D.Double( x * this.map.getTileWidth(),
-                                  y * this.map.getTileHeight() );
+                                   y * this.map.getTileHeight() );
     }
     
     /**
@@ -369,7 +379,7 @@ public class Map
             return true;
         }
         
-        return this.collisions.containsKey( this.fromPosition( position ) );
+        return this.collisions.containsKey( this.fromPositionInPixels( position ) );
     }
     
     /**
@@ -380,32 +390,48 @@ public class Map
      */
     public boolean isGoalTile( Point2D.Double position )
     {
-      /*
        if( !this.isValidTile( position ) )
        {
-           System.out.println("Not asking for a valid tile");
            return false;
-       }*/
+       }
        
-       return this.goals.containsKey( this.fromPosition( position ) );
+       return this.goals.containsKey( this.fromPositionInPixels( position ) );
+    }
+    
+    /**
+     * Returns the width of a tile.
+     * @return 
+     */
+    public Integer getTileWidth()
+    {
+        return this.map.getTileWidth();
+    }
+    
+    /**
+     * Returns the height of a tile.
+     * @return 
+     */
+    public Integer getTileHeight()
+    {
+        return this.map.getTileHeight();
     }
     
     /**
      * Returns the width of the map in pixels.
      * @return 
      */
-    public int getMapWidth()
+    public Integer getWidthInPixels()
     {
-        return this.mapWidth; 
+        return this.widthInPixels; 
     }
     
     /**
      * Returns the height of the map in pixels.
      * @return 
      */
-    public int getMapHeight()
+    public Integer getHeightInPixels()
     {
-        return this.mapHeight; 
+        return this.heightInPixels; 
     }
 
     /**

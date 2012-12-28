@@ -24,7 +24,6 @@ public class Sheep extends MovableActor
     
     private static final Double SPEED = 0.1;
     private static final Double DISTANCE_TO_GOAL = 2.0;
-    private static final Double DISTANCE_GOAL_FROM_POSITION = 100.0;
 
     private Point2D.Double goalPosition;
 
@@ -81,14 +80,12 @@ public class Sheep extends MovableActor
     
     private Point2D.Double determineRandomPosition( Point2D.Double position )
     {
-        Double x = 0.0;
-        Double y = 0.0;
+        Integer x = GameManager.getInstance().getMap().getTileWidth() * ( ( Math.random() < 0.5 ) ? 1 : -1 );
+        Integer y = GameManager.getInstance().getMap().getTileHeight() * ( ( Math.random() < 0.5 ) ? 1 : -1 );
         
-        x = Sheep.DISTANCE_GOAL_FROM_POSITION * ( Math.random() - 0.5 );
-        y = Sheep.DISTANCE_GOAL_FROM_POSITION * ( Math.random() - 0.5 );
-        
-        x = Math.max( 0, Math.min( x, GameManager.getInstance().getMap().getMapWidth() ) );
-        y = Math.max( 0, Math.min( y, GameManager.getInstance().getMap().getMapHeight() ) );
+ 
+        x = Math.max( 0, Math.min( x, GameManager.getInstance().getMap().getWidthInPixels() ) );
+        y = Math.max( 0, Math.min( y, GameManager.getInstance().getMap().getHeightInPixels() ) );
 
         return new Point2D.Double( position.x + x, position.y + y );
     }
