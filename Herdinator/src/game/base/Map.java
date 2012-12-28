@@ -355,11 +355,10 @@ public class Map
     
     /**
      * Returns true if the position is within the map.
-     * @param x
-     * @param y
+     * @param position
      * @return 
      */
-    public boolean isValidTile( Point2D.Double position )
+    private boolean isValidTile( Point position )
     {
         return ( position.x >= 0 && position.x <= this.map.getWidth() &&
                  position.y >= 0 && position.y <= this.map.getHeight() );
@@ -367,11 +366,10 @@ public class Map
     
     /**
      * Returns true if the current position is of a collision tile.
-     * @param x
-     * @param y
+     * @param position
      * @return 
      */
-    public boolean isCollisionTile( Point2D.Double position )
+    public boolean isCollisionTile( Point position )
     {
         if( !this.isValidTile( position ) )
         {
@@ -379,23 +377,22 @@ public class Map
             return true;
         }
         
-        return this.collisions.containsKey( this.fromPositionInPixels( position ) );
+        return this.collisions.containsKey( position );
     }
     
     /**
      * Returns true if the current position is of a goal tile.
-     * @param x
-     * @param y
+     * @param position
      * @return 
      */
-    public boolean isGoalTile( Point2D.Double position )
+    public boolean isGoalTile( Point position )
     {
        if( !this.isValidTile( position ) )
        {
            return false;
        }
        
-       return this.goals.containsKey( this.fromPositionInPixels( position ) );
+       return this.goals.containsKey( position );
     }
     
     /**

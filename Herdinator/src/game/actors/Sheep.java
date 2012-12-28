@@ -1,10 +1,15 @@
 package game.actors;
 
+import game.base.Map;
 import game.base.MovableActor;
 import game.global.GameManager;
 import game.util.Distance;
 import game.util.SpriteSheetUtil;
+import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
@@ -25,6 +30,7 @@ public class Sheep extends MovableActor
     private static final Double SPEED = 0.1;
     private static final Double DISTANCE_TO_GOAL = 2.0;
 
+    private Random generator;
     private Point2D.Double goalPosition;
 
     /**
@@ -61,6 +67,7 @@ public class Sheep extends MovableActor
             Logger.getLogger( Sheep.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
         }
         
+        this.generator = new Random();
         this.goalPosition = this.determineRandomPosition( this.getPosition() );
     }
     
@@ -80,14 +87,41 @@ public class Sheep extends MovableActor
     
     private Point2D.Double determineRandomPosition( Point2D.Double position )
     {
-        Integer x = GameManager.getInstance().getMap().getTileWidth() * ( ( Math.random() < 0.5 ) ? 1 : -1 );
-        Integer y = GameManager.getInstance().getMap().getTileHeight() * ( ( Math.random() < 0.5 ) ? 1 : -1 );
+        // Current map.
+        Map map = GameManager.getInstance().getMap();
         
- 
-        x = Math.max( 0, Math.min( x, GameManager.getInstance().getMap().getWidthInPixels() ) );
-        y = Math.max( 0, Math.min( y, GameManager.getInstance().getMap().getHeightInPixels() ) );
-
-        return new Point2D.Double( position.x + x, position.y + y );
+        // Get the tile for the given position.
+        Integer x = (int)( position.getX() / map.getTileWidth() );
+        Integer y = (int)( position.getY() / map.getTileHeight() );
+        
+        // Fill a list with possible positions.
+        List<Point> positionsNew = new ArrayList<Point>();
+        
+        for( Direction direction : Direction.values() )
+        {
+            Integer xNew = x + direction.getVector().x;
+            Integer yNew = y + direction.getVector().y;
+            Point positionNew = new Point( xNew, yNew );
+            
+            if( !map.isCollisionTile( positionNew ) &&
+                !map.isGoalTile( positionNew ) )
+            {
+                positionsNew.add( positionNew );
+            }
+        }
+        
+        // Check if it possible to move.
+        Integer positionsNewSize = positionsNew.size();
+        
+        if( positionsNewSize == 0 )
+        {
+            return position;
+        }
+        
+        // Select a random new position.
+        Point positionNew = positionsNew.get( this.generator.nextInt( positionsNewSize ) );
+         
+        return new Point2D.Double( position.x * map.getTileWidth(), position.y * map.getTileHeight() );
     }
     
     /**

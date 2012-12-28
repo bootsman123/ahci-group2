@@ -33,7 +33,7 @@ public class Game extends StateBasedGame
         
         // @TODO: Just for debugging.
         //this.enterState( Game.GAME_STATE_MENU );
-        this.enterState( Game.GAME_STATE_MENU );
+        this.enterState( Game.GAME_STATE_GAME );
     }
 
     @Override

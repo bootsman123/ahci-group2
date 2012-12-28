@@ -10,6 +10,11 @@ import org.newdawn.slick.Graphics;
  */
 public abstract class Actor implements Renderable
 {
+    public enum Action
+    {
+        IDLE, MOVE
+    };
+    
     // Current position.
     private Point2D.Double position;
     
