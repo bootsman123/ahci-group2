@@ -1,6 +1,7 @@
 package game.global;
 
 import TUIO.TuioClient;
+import game.actors.Whistle;
 import game.base.Map;
 import game.players.Player;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class GameManager
     {
         return GameManager.instance;
     }
+
 
     /*
     public void init( ... )

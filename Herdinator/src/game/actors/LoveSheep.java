@@ -55,19 +55,4 @@ public class LoveSheep extends MovableActor
             Logger.getLogger( LoveSheep.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
         }
     }
-
-    /*
-    public void updateCookieLocation(List<Cookie> currentCookies){
-        if (currentCookies.size() >0){
-            Cookie newClosestCookie = currentCookies.get(0);
-            for(Cookie cookie : currentCookies){
-
-                if (Math.sqrt(Math.pow(cookie.getX()-this.getX(), 2) + Math.pow(cookie.getY()-this.getY(), 2)) < Math.sqrt(Math.pow(newClosestCookie.getX()-this.getX(), 2) + Math.pow(newClosestCookie.getY()-this.getY(), 2))){
-                    newClosestCookie = cookie ;
-                }
-            }
-            this.closestCookie = new Point2D.Double(newClosestCookie.getX(),newClosestCookie.getY());
-        }   
-    }
-    */
 }

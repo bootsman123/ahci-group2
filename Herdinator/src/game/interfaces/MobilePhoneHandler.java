@@ -11,12 +11,10 @@ import game.players.Player;
 /**
  *
  * @author bootsman
- */
+ 
 public class MobilePhoneHandler implements TuioListener
 {
-    /**
-     * Constructor.
-     */
+    
     public MobilePhoneHandler()
     {
         
@@ -81,4 +79,4 @@ public class MobilePhoneHandler implements TuioListener
     public void refresh( TuioTime time )
     {
     }
-}
+}*/

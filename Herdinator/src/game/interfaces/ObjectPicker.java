@@ -19,7 +19,7 @@ import game.players.Player;
 /**
  *
  * @author roland
- */
+ 
 public class ObjectPicker
 {
     private static final String VERTICAL_PICKER_IMAGE_FILE_PATH = "../Resources/Images/verticalpicker.png";
@@ -38,11 +38,7 @@ public class ObjectPicker
     private List<Cookie> cookies;
 
     
-    /**
-     * Load a new ObjectPicker
-     * @param filePath
-     * @throws SlickException 
-     */
+   
     public ObjectPicker( ) throws SlickException
     {
        this.whistles = new ArrayList<Whistle>();
@@ -115,3 +111,4 @@ public class ObjectPicker
         }
     }
 }
+*/
