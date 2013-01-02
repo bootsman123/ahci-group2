@@ -177,6 +177,7 @@ public class Map
         this.renderActors( this.cookies, g );
         this.renderActors( this.whistles, g );
     }
+
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {

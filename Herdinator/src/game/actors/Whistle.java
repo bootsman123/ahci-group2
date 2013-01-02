@@ -1,8 +1,6 @@
 package game.actors;
 
-import game.base.Actor;
 import game.base.ImmovableActor;
-import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;

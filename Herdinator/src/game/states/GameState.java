@@ -68,7 +68,7 @@ public class GameState extends BasicGameState
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {   
         GameManager.getInstance().getMap().update( container, game, delta );
-        //GameManager.getInstance().update( container, game, delta );
+        GameManager.getInstance().update( container, game, delta );
         //overlay.update(container, game, delta);
     }
 }

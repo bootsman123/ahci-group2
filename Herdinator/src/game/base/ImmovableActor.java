@@ -3,6 +3,7 @@ package game.base;
 import game.global.GameManager;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
@@ -31,6 +32,8 @@ public abstract class ImmovableActor extends Actor
         float y = (float)( position.y - 0.5 * this.animation.getHeight() );
         this.animation.draw( x, y );
     }
+
+    
     
     @Override
     public void update( int delta )

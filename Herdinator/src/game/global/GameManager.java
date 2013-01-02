@@ -6,9 +6,13 @@ import game.interfaces.MobilePhoneHandler;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
+import game.players.TouchPlayer;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -56,7 +60,33 @@ public class GameManager
     
     public void update( GameContainer container, StateBasedGame game, int delta )
     {
-        
+
+        Input input = container.getInput();
+        for (Player player : players){
+
+            if (player instanceof MobilePhonePlayer){
+                /*
+                MobilePhonePlayer currentPlayer = (MobilePhonePlayer) player;
+                if(currentPlayer.locationTelephone != null && currentPlayer.hasTelephoneOnTable){
+                    System.out.println("First location: " + (int)currentPlayer.locationTelephone.getX() + " second location: " + (int)currentPlayer.locationTelephone.getY());
+                    this.map.setActingPosition((int)currentPlayer.locationTelephone.getX(), (int)currentPlayer.locationTelephone.getY(), currentPlayer.getPlayerID());
+                }
+                 */
+            }
+            else if (player instanceof MousePlayer){
+                if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
+                    player.moveObject(map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
+                    //this.map.setActingPosition(input.getMouseX(), input.getMouseY(), player.getPlayerID());
+                }
+            }
+            else if (player instanceof TouchPlayer){
+                System.out.println("Touch player not yet supported");
+            }
+            else{
+                System.out.println("Player not supported");
+            }
+        }
+
     }
     
     
@@ -104,36 +134,6 @@ public class GameManager
     }
 
     /*
-    public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
-    {
-
-        Input input = container.getInput();
-        for (Player player : players){
-
-            if (player instanceof MobilePhonePlayer){
-                MobilePhonePlayer currentPlayer = (MobilePhonePlayer) player; 
-                if(currentPlayer.locationTelephone != null && currentPlayer.hasTelephoneOnTable){
-                    System.out.println("First location: " + (int)currentPlayer.locationTelephone.getX() + " second location: " + (int)currentPlayer.locationTelephone.getY());
-                    this.map.setActingPosition((int)currentPlayer.locationTelephone.getX(), (int)currentPlayer.locationTelephone.getY(), currentPlayer.getPlayerID());
-                }
-            }
-            else if (player instanceof MousePlayer){
-                if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
-                    
-                    this.map.setActingPosition(input.getMouseX(), input.getMouseY(), player.getPlayerID());
-                }
-            }
-            else if (player instanceof TouchPlayer){
-                System.out.println("Touch player not yet supported");
-            }
-            else{
-                System.out.println("Player not supported");
-            }
-        }
-        
-        this.map.update( container, game, delta );  
-    }
-
     public void changeObjectOfPlayer(MovableActor c) throws SlickException {
         
         for (Player player : players){

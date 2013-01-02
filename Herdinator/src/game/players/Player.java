@@ -1,9 +1,7 @@
 package game.players;
 
 import game.actors.Whistle;
-import game.base.Actor;
 import game.base.ImmovableActor;
-import game.base.MovableActor;
 import game.global.GameManager;
 import java.awt.Point;
 import org.newdawn.slick.SlickException;
@@ -37,6 +35,9 @@ public abstract class Player {
     public ImmovableActor getObject(){
         return object;
     }
-    
+
+    public void moveObject(Point newPoint){
+        this.object.setPosition(newPoint);
+    }
     
 }
