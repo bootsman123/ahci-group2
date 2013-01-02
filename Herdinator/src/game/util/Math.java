@@ -14,8 +14,13 @@ public final class Math
                                     java.lang.Math.pow( p1.y - p2.y, 2 ) );
     }
     
-    public static Double clamp( Double value, Double min, Double max )
+    public static double clamp( double value, double min, double max )
     {
-        return java.lang.Math.min( value, java.lang.Math.max( value, max ) );
+        return java.lang.Math.max( min, java.lang.Math.min( value, max ) );
+    }
+    
+    public static double lerp( double a, double b, double t )
+    {
+        return a + ( b - a ) * t;
     }
 }

@@ -121,7 +121,7 @@ public class Map
                 
                 if( sheep != null )
                 {
-                    this.sheeps.add( new Sheep( this.toPositionInPixels( x, y ) ) );
+                    this.sheeps.add( new Sheep( new Point( x, y ) ) );
                     continue;
                 }
                 
@@ -130,7 +130,7 @@ public class Map
                 
                 if( dog != null )
                 {
-                    this.dogs.add( new Dog( this.toPositionInPixels( x, y ) ) );
+                    this.dogs.add( new Dog( new Point( x, y ) ) );
                     continue;
                 }
                 
@@ -139,7 +139,7 @@ public class Map
                 
                 if( wolf != null )
                 {
-                    this.wolves.add( new Wolf( this.toPositionInPixels( x, y ) ) );
+                    this.wolves.add( new Wolf( new Point( x, y ) ) );
                     continue;
                 }
                 
@@ -148,7 +148,7 @@ public class Map
                 
                 if( loveSheep != null )
                 {
-                    this.loveSheeps.add( new LoveSheep( this.toPositionInPixels( x, y ) ) );
+                    this.loveSheeps.add( new LoveSheep( new Point( x, y ) ) );
                     continue;
                 }
             }
@@ -335,24 +335,28 @@ public class Map
      * @param position
      * @return 
      */
-    private Point fromPositionInPixels( Point2D.Double position )
+    public Point fromPositionInPixels( Point2D.Double position )
     {
         return new Point( (int)( position.x / this.map.getTileWidth() ),
                           (int)( position.y / this.map.getTileHeight() ) );
     }
     
     /**
-     * Convert from a position tiles to a position in pixels.
+     * Convert from a position tiles to a center position in pixels.
      * @param x
      * @param y
      * @return 
      */
-    private Point2D.Double toPositionInPixels( int x, int y )
+    public Point2D.Double toPositionInPixels( int x, int y )
     {
-        return new Point2D.Double( x * this.map.getTileWidth(),
-                                   y * this.map.getTileHeight() );
+        Point2D.Double position =  new Point2D.Double( x * this.map.getTileWidth(),
+                                                       y * this.map.getTileHeight() );
+        position.x += 0.5 * this.getTileWidth();
+        position.y += 0.5 * this.getTileHeight();
+        
+        return position;
     }
-    
+
     /**
      * Returns true if the position is within the map.
      * @param position
@@ -360,12 +364,12 @@ public class Map
      */
     private boolean isValidTile( Point position )
     {
-        return ( position.x >= 0 && position.x <= this.map.getWidth() &&
-                 position.y >= 0 && position.y <= this.map.getHeight() );
+        return ( position.x >= 0 && position.x < this.map.getWidth() &&
+                 position.y >= 0 && position.y < this.map.getHeight() );
     }
     
     /**
-     * Returns true if the current position is of a collision tile.
+     * Returns true if the given position is of a collision tile.
      * @param position
      * @return 
      */
@@ -393,6 +397,34 @@ public class Map
        }
        
        return this.goals.containsKey( position );
+    }
+    
+
+    
+    /**
+     * Returns true if the given position collides with either a collision tile or with an actor.
+     * @param position
+     * @return 
+     */
+    public boolean doesCollideWith( Point position )
+    {
+        if( this.isCollisionTile( position ) )
+        {
+            return true;
+        }
+        
+        // Check sheeps.
+        for( Sheep sheep : this.sheeps )
+        {
+            if( sheep.getPosition() == position )
+            {
+                return true;
+            }
+        }
+        
+        // @TODO: More stuff.
+        
+        return false;
     }
     
     /**

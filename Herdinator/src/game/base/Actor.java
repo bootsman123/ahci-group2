@@ -1,8 +1,6 @@
 package game.base;
 
-import java.awt.geom.Point2D;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Graphics;
+import java.awt.Point;
 
 /**
  * An object which is positioned and rendered in the game.
@@ -10,17 +8,8 @@ import org.newdawn.slick.Graphics;
  */
 public abstract class Actor implements Renderable
 {
-    public enum Action
-    {
-        IDLE, MOVE
-    };
-    
-    // Current position.
-    private Point2D.Double position;
-    
-    // Current animation.
-    private Animation animation;
-    private Action action;
+    // Current position (in tiles).
+    private Point position;
     
     // Last update delta.
     private Integer lastDelta;
@@ -29,73 +18,49 @@ public abstract class Actor implements Renderable
      * Constructor.
      * @param position 
      */
-    public Actor( Point2D.Double position )
+    public Actor( Point position )
     {
         this.position = position;
-        
-        this.animation = null;
-        this.action = Action.IDLE;
-        
         this.lastDelta = 0;
     }
 
-    public void setPosition( Point2D.Double position )
+    public void setPosition( Point position )
     {
         this.position = position;
     }
     
-    public void setPosition( Double x, Double y )
+    public void setPosition( Integer x, Integer y )
     {
-        this.setX( x );
-        this.setY( y );
+        this.position.x = x;
+        this.position.y = y;
     }
     
-    public Point2D.Double getPosition()
+    public Point getPosition()
     {
         return this.position;
     }
     
-    public void setX( Double x )
+    public void setX( Integer x )
     {
         this.position.x = x;
     }
     
-    public Double getX()
+    public Integer getX()
     {
         return this.position.x;
     }
     
-    public void setY( Double y )
+    public void setY( Integer y )
     {
         this.position.y = y;
     }
     
-    public Double getY()
+    public Integer getY()
     {
         return this.position.y;
     }
     
-    public void setAnimation( Animation animation )
-    {
-        this.animation = animation;
-    }
-    
-    public Animation getAnimation()
-    {
-        return this.animation;
-    }
-    
-    public void setAction( Action action )
-    {
-        this.action = action;
-    }
-    
-    public Action getAction()
-    {
-        return this.action;
-    }
-    
-    public void setLastDelta( Integer lastDelta )
+    protected void setLastDelta( Integer lastDelta )
     {
         this.lastDelta = lastDelta;
     }
@@ -105,19 +70,10 @@ public abstract class Actor implements Renderable
         return this.lastDelta;
     }
     
-    @Override
-    public void render( Graphics g )
-    {
-        this.getAnimation().draw( this.getX().floatValue(), this.getY().floatValue() );
-    }
-    
     /**
      * Initialization function, called during initialization.
      */
-    public void init()
-    {
-        // Empty for consistancy.
-    }
+    public abstract void init();
     
     /**
      * Update function, called each update.

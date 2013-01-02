@@ -1,16 +1,21 @@
 package game.actors;
 
-import game.base.Actor;
-import java.awt.geom.Point2D;
+import game.base.ImmovableActor;
+import java.awt.Point;
 
 /**
  *
  * @author roland
  */
-public class Bridge extends Actor
+public class Bridge extends ImmovableActor
 {
-    public Bridge( Point2D.Double position )
+    public Bridge( Point position )
     {
         super( position );
+    }
+
+    @Override
+    public void init()
+    {
     }
 }

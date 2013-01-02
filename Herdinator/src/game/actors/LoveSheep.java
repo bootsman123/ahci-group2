@@ -8,6 +8,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import game.util.SpriteSheetUtil;
+import java.awt.Point;
 
 /**
  *
@@ -27,16 +28,14 @@ public class LoveSheep extends MovableActor
      * @param position
      * @throws SlickException 
      */
-    public LoveSheep( Point2D.Double position ) throws SlickException
+    public LoveSheep( Point position ) throws SlickException
     {
         super( position, LoveSheep.SPEED );
     }
 
     @Override
     public void init()
-    {
-        super.init();
-               
+    {      
         try
         {
             // Setup animations.
@@ -49,7 +48,7 @@ public class LoveSheep extends MovableActor
             this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 2, 150 ) );
             this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 ) );
             this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 1, 150 ) );
-            this.setAnimation( this.animations.get( Direction.DOWN ) );
+            this.animation = this.animations.get( Direction.DOWN );
         }
         catch( SlickException e )
         {

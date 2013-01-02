@@ -26,6 +26,11 @@ public interface Movable
         {
             return this.vector;
         }
+        
+        public Point toPosition( Point position )
+        {
+            return new Point( position.x + this.vector.x, position.y + this.vector.y );
+        }
     };
     
     public void move( Direction direction );

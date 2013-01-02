@@ -2,7 +2,7 @@ package game.actors;
 
 import game.base.MovableActor;
 import game.util.SpriteSheetUtil;
-import java.awt.geom.Point2D;
+import java.awt.Point;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
@@ -27,16 +27,14 @@ public class Wolf extends MovableActor
      * @param position
      * @throws SlickException 
      */
-    public Wolf( Point2D.Double position ) throws SlickException
+    public Wolf( Point position ) throws SlickException
     {
-        super( position,Wolf.SPEED );
+        super( position, Wolf.SPEED );
     }
 
     @Override
     public void init()
-    {
-        super.init();
-               
+    {               
         try
         {
             // Setup animations.
@@ -49,7 +47,7 @@ public class Wolf extends MovableActor
             this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 2, 150 ) );
             this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 0, 150 ) );
             this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 1, 150 ) );
-            this.setAnimation( this.animations.get( Direction.DOWN ) );
+            this.animation = this.animations.get( Direction.DOWN );
         }
         catch( SlickException e )
         {

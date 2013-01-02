@@ -2,9 +2,7 @@ package game.players;
 
 import game.actors.Whistle;
 import game.base.Actor;
-import game.base.MovableActor;
-import game.global.GameManager;
-import java.awt.geom.Point2D;
+import java.awt.Point;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -17,7 +15,7 @@ public abstract class Player {
     
     public Player( int id ) throws SlickException {
         this.id = id;
-        Point2D.Double startingPoint = new Point2D.Double(0,0);
+        Point startingPoint = new Point(0,0);
         this.currentObject = new Whistle(startingPoint );
     }
 

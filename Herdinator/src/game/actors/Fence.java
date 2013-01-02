@@ -1,17 +1,21 @@
 package game.actors;
 
-import game.base.Actor;
-import java.awt.geom.Point2D;
-
+import game.base.ImmovableActor;
+import java.awt.Point;
 
 /**
  *
  * @author roland
  */
-public class Fence extends Actor
+public class Fence extends ImmovableActor
 {
-    public Fence( Point2D.Double position )
+    public Fence( Point position )
     {
         super( position );
+    }
+
+    @Override
+    public void init()
+    {
     }
 }

@@ -22,6 +22,8 @@ public class Main
         {
             AppGameContainer app = new AppGameContainer( new Game() );
             app.setDisplayMode( Game.WIDTH, Game.HEIGHT, false );
+            //app.setTargetFrameRate( 60 );
+            //app.setSmoothDeltas( true );
             app.start();
         }
         catch( SlickException ex )
