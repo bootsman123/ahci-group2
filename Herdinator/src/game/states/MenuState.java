@@ -18,9 +18,9 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MenuState extends BasicGameState
 {    
-    private static final String BACKGROUND_FILE_PATH = "../Resources/Images/herdinatorbackground.jpg";
-    private static final String START_BUTTON_FILE_PATH = "../Resources/Images/startbutton.png";
-    private static final String EXIT_BUTTON_FILE_PATH = "../Resources/Images/exitbutton.png";
+    private static final String BACKGROUND_FILE_PATH = "../Resources/Images/Menu/background.jpg";
+    private static final String START_BUTTON_FILE_PATH = "../Resources/Images/buttonStart.png";
+    private static final String EXIT_BUTTON_FILE_PATH = "../Resources/Images/buttonExit.png";
     
     private static final String TITLE = "Herdinator";
     private static final String TITLE_FONT_FILE_PATH = "../Resources/Fonts/Harabara.ttf";
@@ -34,6 +34,18 @@ public class MenuState extends BasicGameState
     private UnicodeFont subTitleFont;
     
     private Image background;
+    
+    private Image buttonNumberOfPlayersOne;
+    private Point2D.Double buttonNumberOfPlayersOnePosition;
+    
+    private Image buttonNumberOfPlayersTwo;
+    private Point2D.Double buttonNumberOfPlayersTwoPosition;
+    
+    private Image buttonNumberOfPlayersThree;
+    private Point2D.Double buttonNumberOfPlayersThreePosition;
+    
+    private Image buttonNumberOfPlayersFour;
+    private Point2D.Double buttonNumberOfPlayersFourPosition;
     
     private Image buttonStart;
     private Point2D.Double buttonStartPosition;

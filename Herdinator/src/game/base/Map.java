@@ -161,8 +161,8 @@ public class Map
         this.initActors( this.dogs );
         this.initActors( this.wolves );
         this.initActors( this.loveSheeps );
-        this.initActors( this.cookies );
-        this.initActors( this.whistles );
+        //this.initActors( this.cookies );
+        //this.initActors( this.whistles );
     }
     
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
@@ -230,6 +230,42 @@ public class Map
         for( Actor actor : actors )
         {
             actor.update( delta );
+        }
+    }
+    
+    /**
+     * Add a new object to the map.
+     * @param object 
+     */
+    public void addObject( ImmovableActor object )
+    {
+        if( object instanceof Cookie )
+        {
+            Cookie cookie = (Cookie)object;
+            cookie.init();
+            this.cookies.add( cookie );
+        }
+        else if( object instanceof Whistle )
+        {
+            Whistle whistle = (Whistle)object;
+            whistle.init();
+            this.whistles.add( whistle );
+        }
+    }
+
+    /**
+     * Remove an object from the map.
+     * @param oldObject 
+     */
+    public void removeObject( ImmovableActor object )
+    {
+        if( object instanceof Cookie )
+        {
+            this.cookies.remove( (Cookie)object );
+        }
+        else if( object instanceof Whistle )
+        {
+            this.whistles.remove( (Whistle)object );
         }
     }
     
@@ -430,28 +466,6 @@ public class Map
     public List<Cookie> getCookies()
     {
         return this.cookies;
-    }
-
-    public void addObject(ImmovableActor newObject) {
-        if(newObject instanceof Cookie){
-            Cookie cookie = (Cookie)newObject;
-            this.cookies.add(cookie);
-            cookie.init();
-        }
-        else if(newObject instanceof Whistle){
-            Whistle whistle = ((Whistle)newObject);
-            this.whistles.add(whistle);
-            whistle.init();
-        }
-    }
-
-    public void removeObject(ImmovableActor oldObject) {
-        if(oldObject instanceof Cookie){
-            this.cookies.remove((Cookie)oldObject);
-        }
-        else if(oldObject instanceof Whistle){
-            this.whistles.remove((Whistle)oldObject);
-        }
     }
 }
 

@@ -31,6 +31,7 @@ public class GameManager
     private List<Player> players;
     
     private TuioClient tuioClient;
+    private MobilePhoneHandler mobilePhoneHandler;
     
     /**
      * Hidden constructor.
@@ -39,7 +40,11 @@ public class GameManager
     {
         this.map = null;
         this.players = new ArrayList<Player>();
+        
         this.tuioClient = new TuioClient();
+        this.mobilePhoneHandler = new MobilePhoneHandler();
+        
+        this.tuioClient.addTuioListener( this.mobilePhoneHandler );
     }
 
     /**
@@ -50,13 +55,6 @@ public class GameManager
     {
         return GameManager.instance;
     }
-
-
-    /*
-    public void init( ... )
-    {  
-    }
-    */
     
     public void update( GameContainer container, StateBasedGame game, int delta )
     {
@@ -102,17 +100,11 @@ public class GameManager
         }
         catch(Exception e){
             System.out.println("GameManager: problem with the initialisation of players");
-            e.printStackTrace();
         }
         
-        MobilePhoneHandler mobilePhoneHandler = new MobilePhoneHandler();
-
-        TuioClient client = new TuioClient();
-        client.addTuioListener(mobilePhoneHandler);
-        client.connect();
-        
-        for(Player p : players){
-            this.map.addObject(p.getObject());
+        for( Player player : this.players )
+        {
+            this.map.addObject( player.getObject() );
         }
         
     }
