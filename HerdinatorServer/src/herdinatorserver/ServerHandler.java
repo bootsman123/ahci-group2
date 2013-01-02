@@ -32,19 +32,18 @@ public class ServerHandler
         this.tomcat.getServer().await();
     }
     
-    
-    
-    
-    
     /**
      * @param args the command line arguments
      */
     public static void main( String[] args )
     {
-        try {
+        try
+        {
             new ServerHandler();
-        } catch (LifecycleException ex) {
-            Logger.getLogger(ServerHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch( LifecycleException e )
+        {
+            Logger.getLogger( ServerHandler.class.getName() ).log( Level.SEVERE, null, e );
         }
     }
 

@@ -6,7 +6,7 @@ import java.util.UUID;
  *
  * @author bootsman
  */
-public class MobilePhone
+public class MobilePhonePlayer
 {
     public enum MobilePhoneObject
     {
@@ -27,7 +27,7 @@ public class MobilePhone
             return this.name;
         }
         
-        public MobilePhoneObject fromName( String name )
+        public static MobilePhoneObject fromName( String name )
         {
             return MobilePhoneObject.valueOf( name.toUpperCase() );
         }
@@ -38,7 +38,11 @@ public class MobilePhone
     private Integer markId;
     private MobilePhoneObject object;
     
-    public MobilePhone( Integer markId )
+    /**
+     * Constructor.
+     * @param markId 
+     */
+    public MobilePhonePlayer( Integer markId )
     {
         this.id = UUID.randomUUID();
         this.markId = markId;
@@ -55,5 +59,13 @@ public class MobilePhone
         return this.markId;
     }
     
-    public MobilePhoneObject
+    public void setObject( MobilePhoneObject object )
+    {
+        this.object = object;
+    }
+    
+    public MobilePhoneObject getObject()
+    {
+        return this.object;
+    }
 }
