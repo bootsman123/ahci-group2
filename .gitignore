@@ -24,16 +24,9 @@ local.properties
 
 # Herdinator.
 /HerdinatorServer/nbproject/private/
-/HerdinatorServer/HerdinatorServer-war/nbproject/private/
-/HerdinatorServer/HerdinatorServer-ejb/nbproject/private/
-/HerdinatorServer/HerdinatorServer-ejb/build/
-/HerdinatorServer/HerdinatorServer-war/build/
 /HerdinatorServer/build/
-/HerdinatorServer/HerdinatorServer-war/dist/
-/HerdinatorServer/HerdinatorServer-ejb/dist/
 /HerdinatorServer/dist/
 /Herdinator/nbproject/private/
 /Herdinator/build/
 /Herdinator/nbproject/project.properties
 /Herdinator/dist/
-/HerdinatorServerHandler/nbproject/private/
