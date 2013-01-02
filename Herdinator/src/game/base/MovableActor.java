@@ -134,74 +134,15 @@ public abstract class MovableActor extends Actor implements Movable
         }
     }
     
-    /*
-    public void moveTo( Point2D.Double target )
-    {
-        Double diffX = java.lang.Math.abs( this.getPosition().x - target.x );
-        Double diffY = java.lang.Math.abs( this.getPosition().y - target.y );
-        
-        // @TODO: Fugly.
-        if( diffX < 1.0 && diffY < 1.0 )
-        {
-            return;
-        }
-        
-        if( diffX > diffY )
-        {
-            if( this.getPosition().x > target.x )
-            {
-                this.move( Direction.LEFT );
-            }
-            else
-            {
-                this.move( Direction.RIGHT );
-            }
-        }
-        else
-        {
-            if( this.getPosition().y > target.y )
-            {
-                this.move( Direction.UP );
-            }
-            else
-            {
-                this.move( Direction.DOWN  );
-            }
-        }
-    }
-    
-    public void moveAwayFrom( Point2D.Double target )
-    {
-        // @TODO: Something like this?
-        target.x = this.getPosition().x - target.x;
-        target.y = this.getPosition().y - target.y;
-        this.moveTo( target );
-        
-        /*
-         *      if( Math.abs(position.x-target.x) < Math.abs(position.y-target.y)){
-            if(position.x > target.x)
-                move( Direction.RIGHT, delta);
-            else
-                move( Direction.LEFT, delta );
-        }
-        else
-             if(position.y > target.y)
-                move( Direction.DOWN, delta);
-            else
-                move( Direction.UP, delta ); 
-         *
-    }
-*/
-    
     /**
      * Returns a list of all the directions which are currently not occupied.
      * @return 
      */
-    public List<Direction> getDirectionsToNonCollidableTiles()
+    protected List<Direction> getDirectionsToNonCollidableTiles()
     {    
         // Fill a list with possible positions.
         List<Direction> directions = new ArrayList<Direction>();
-        
+
         for( Direction direction : Direction.values() )
         {
             if( !GameManager.getInstance().getMap().doesCollide( direction.toPosition( this.getPosition() ) ) )

@@ -3,7 +3,7 @@ package game.states;
 import game.Game;
 import game.base.Map;
 import game.global.GameManager;
-import game.interfaces.ObjectPicker;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.GameContainer;
@@ -22,7 +22,6 @@ public class GameState extends BasicGameState
     //private ObjectPicker overlay = null;
 
     private List<Map> maps;
-    private Map currentMap;
     
     public GameState() throws SlickException
     {
@@ -41,7 +40,7 @@ public class GameState extends BasicGameState
         this.maps = new ArrayList<Map>();
 
         this.maps.add( new Map( "../Resources/Maps/level1.tmx" ) );
-        this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
+       // this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
        
         // Set map.
         GameManager.getInstance().setMap( this.maps.get( 0 ) );
@@ -49,10 +48,10 @@ public class GameState extends BasicGameState
         // Initialize maps.
         // @TODO: Could use a for-loop.
         this.maps.get( 0 ).init( container, game );
-        this.maps.get( 1 ).init( container, game );
+      //  this.maps.get( 1 ).init( container, game );
 
         
-        //GameManager.getInstance().setPlayers();
+        GameManager.getInstance().setPlayers();
 
         //overlay = new ObjectPicker();
         //overlay.init(container, game);

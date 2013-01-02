@@ -430,20 +430,21 @@ public class Map
     {
         return this.cookies;
     }
-}
 
-    
-/*
-    public void addObject(MovableActor newObject) {
+    public void addObject(ImmovableActor newObject) {
         if(newObject instanceof Cookie){
-            this.cookies.add((Cookie)newObject);
+            Cookie cookie = (Cookie)newObject;
+            this.cookies.add(cookie);
+            cookie.init();
         }
         else if(newObject instanceof Whistle){
-            this.whistles.add((Whistle)newObject);
+            Whistle whistle = ((Whistle)newObject);
+            this.whistles.add(whistle);
+            whistle.init();
         }
     }
 
-    public void removeObject(MovableActor oldObject) {
+    public void removeObject(ImmovableActor oldObject) {
         if(oldObject instanceof Cookie){
             this.cookies.remove((Cookie)oldObject);
         }
@@ -451,7 +452,12 @@ public class Map
             this.whistles.remove((Whistle)oldObject);
         }
     }
-    */
+}
+
+    
+
+  
+    
 
     
 /*

@@ -14,9 +14,7 @@ import game.players.Player;
  */
 public class MobilePhoneHandler implements TuioListener
 {
-    /**
-     * Constructor.
-     */
+    
     public MobilePhoneHandler()
     {
         
@@ -39,7 +37,7 @@ public class MobilePhoneHandler implements TuioListener
                 if( player instanceof MobilePhonePlayer )
                 {
                     MobilePhonePlayer mobilePhonePlayer = (MobilePhonePlayer)player;
-                    mobilePhonePlayer.setMobilePhoneLocation( object.getX(), object.getY() );
+                    mobilePhonePlayer.setMobilePhoneLocation( (double)object.getX(), (double)object.getY() );
                 }
             }
         }
@@ -56,7 +54,7 @@ public class MobilePhoneHandler implements TuioListener
                 if( player instanceof MobilePhonePlayer )
                 {
                     MobilePhonePlayer mobilePhonePlayer = (MobilePhonePlayer)player;
-                    mobilePhonePlayer.setMobilePhoneLocation( object.getX(), object.getY() );
+                    mobilePhonePlayer.setMobilePhoneLocation( (double)object.getX(), (double)object.getY() );
                 }
             }
         }
