@@ -11,6 +11,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -44,6 +45,7 @@ public class Map
     // Coordinates of goal tiles.
     private java.util.Map<Point, Boolean> goals;
     
+    // Lists of all the actors.    
     private List<Sheep> sheeps;
     private List<Dog> dogs; 
     private List<Wolf> wolves;
@@ -62,7 +64,7 @@ public class Map
         this.map = new TiledMap( filePath );        
         this.widthInPixels = this.map.getWidth() * this.map.getTileWidth();
         this.heightInPixels = this.map.getHeight() * this.map.getTileHeight();
-
+        
         this.sheeps = new ArrayList<Sheep>();
         this.dogs = new ArrayList<Dog>();
         this.wolves = new ArrayList<Wolf>();
@@ -87,7 +89,7 @@ public class Map
 
         if( index == -1 )
         {
-            Logger.getLogger( Map.class.getName(), "Controls layer unavailable." );
+            Logger.getLogger( Map.class.getName() ).log( Level.WARNING, "Controls layer unavailable." );
             return;
         }
         
@@ -99,54 +101,54 @@ public class Map
                 int tileId = this.map.getTileId( x, y, index );
                 
                 // Check "Collision".
-                String collision = this.map.getTileProperty( tileId, "Collision", null );
+                String collisionString = this.map.getTileProperty( tileId, "Collision", null );
                 
-                if( collision != null )
+                if( collisionString != null )
                 {
                     this.collisions.put( new Point( x, y ), true );
                     continue;
                 }
                 
                 // Check "Goal".
-                String goal = this.map.getTileProperty( tileId, "Goal", null );
+                String goalString = this.map.getTileProperty( tileId, "Goal", null );
                 
-                if( goal != null )
+                if( goalString != null )
                 {
                     this.goals.put( new Point( x, y ), true );
                     continue;
                 }
                 
                 // Check "Sheep".                
-                String sheep = this.map.getTileProperty( tileId, "Sheep", null );
+                String sheepString = this.map.getTileProperty( tileId, "Sheep", null );
                 
-                if( sheep != null )
+                if( sheepString != null )
                 {
                     this.sheeps.add( new Sheep( new Point( x, y ) ) );
                     continue;
                 }
                 
                 // Check "Dog".                
-                String dog = this.map.getTileProperty( tileId, "Dog", null );
+                String dogString = this.map.getTileProperty( tileId, "Dog", null );
                 
-                if( dog != null )
+                if( dogString != null )
                 {
                     this.dogs.add( new Dog( new Point( x, y ) ) );
                     continue;
                 }
                 
                 // Check "Wolf".
-                String wolf = this.map.getTileProperty( tileId, "Wolf", null );
+                String wolfString = this.map.getTileProperty( tileId, "Wolf", null );
                 
-                if( wolf != null )
+                if( wolfString != null )
                 {
                     this.wolves.add( new Wolf( new Point( x, y ) ) );
                     continue;
                 }
                 
                 // Check "LoveSheep".
-                String loveSheep = this.map.getTileProperty( tileId, "LoveSheep", null );
+                String loveSheepString = this.map.getTileProperty( tileId, "LoveSheep", null );
                 
-                if( loveSheep != null )
+                if( loveSheepString != null )
                 {
                     this.loveSheeps.add( new LoveSheep( new Point( x, y ) ) );
                     continue;
@@ -154,82 +156,26 @@ public class Map
             }
         }
         
-        // Initialize sheeps.
-        for( Sheep sheep : this.sheeps )
-        {
-            sheep.init();
-        }
-        
-        // Initialize dogs.
-        for( Dog dog : this.dogs )
-        {
-            dog.init();
-        }
-        
-        // Initialize wolves.
-        for( Wolf wolf : this.wolves )
-        {
-            wolf.init();
-        }
-        
-        // Initialize love sheeps.
-        for( LoveSheep loveSheep : this.loveSheeps )
-        {
-            loveSheep.init();
-        }
-        
-        // Initialize cookies.
-        for( Cookie cookie : this.cookies )
-        {
-            cookie.init();
-        }
-        
-        // Initialize whistles.
-        for( Whistle whistle : this.whistles )
-        {
-            whistle.init();
-        }
+        // Initialize actors.
+        this.initActors( this.sheeps );
+        this.initActors( this.dogs );
+        this.initActors( this.wolves );
+        this.initActors( this.loveSheeps );
+        this.initActors( this.cookies );
+        this.initActors( this.whistles );
     }
     
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );
         
-        // Render sheeps.
-        for( Sheep sheep : this.sheeps )
-        {
-            sheep.render( g );
-        }
-        
-        // Render dogs.
-        for( Dog dog : this.dogs )
-        {
-            dog.render( g );
-        }
-        
-        // Render wolves.
-        for( Wolf wolf : this.wolves )
-        {
-            wolf.render( g );
-        }
-        
-        // Render love sheeps.
-        for( LoveSheep loveSheep : this.loveSheeps )
-        {
-            loveSheep.render( g );
-        }
-        
-        // Render cookies.
-        for( Cookie cookie : this.cookies )
-        {
-            cookie.render( g );
-        }
-        
-        // Render whistles.
-        for( Whistle whistle : this.whistles )
-        {
-            whistle.render( g );
-        }
+        // Render actors.
+        this.renderActors( this.sheeps, g );
+        this.renderActors( this.dogs, g );
+        this.renderActors( this.wolves, g );
+        this.renderActors( this.loveSheeps, g );
+        this.renderActors( this.cookies, g );
+        this.renderActors( this.whistles, g );
     }
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
@@ -239,46 +185,33 @@ public class Map
             return;
         }
         
-        // Update sheeps.
-        for( Sheep sheep : this.sheeps )
+        // Update actors.
+        this.updateActors( this.sheeps, delta );
+        this.updateActors( this.dogs, delta );
+        this.updateActors( this.wolves, delta );
+        this.updateActors( this.loveSheeps, delta );
+        this.updateActors( this.cookies, delta );
+        this.updateActors( this.whistles, delta );
+    }
+    
+    /**
+     * Initialize a list of actors.
+     * @param actors 
+     */
+    private void initActors( List<? extends Actor> actors )
+    {
+        for( Actor actor : actors )
         {
-            sheep.update( delta );
-        }
-        
-        // Update dogs.
-        for( Dog dog : this.dogs )
-        {
-            dog.update( delta );
-        }
-        
-        // Update wolves.
-        for( Wolf wolf : this.wolves )
-        {
-            wolf.update( delta );
-        }
-        
-        // Update love sheeps.
-        for( LoveSheep loveSheep : this.loveSheeps )
-        {
-            loveSheep.update( delta );
-        }
-        
-        // Update cookies.
-        for( Cookie cookie : this.cookies )
-        {
-            cookie.update( delta );
-        }
-        
-        // Update whistles.
-        for( Whistle whistle : this.whistles )
-        {
-            whistle.update( delta );
+           actor.init();
         }
     }
     
-    /*
-    @TODO: Nice trick.
-    private void render( List<? extends Renderable> renderables, Graphics g )
+    /**
+     * Render a list of renderables.
+     * @param renderables
+     * @param g 
+     */
+    private void renderActors( List<? extends Renderable> renderables, Graphics g )
     {
         for( Renderable r : renderables )
         {
@@ -286,49 +219,18 @@ public class Map
         }
     }
    
-    private void update( List<? extends Actor> actors, int delta )
-    
-    
-    */
-
-    
-/*
-    public void addObject(MovableActor newObject) {
-        if(newObject instanceof Cookie){
-            this.cookies.add((Cookie)newObject);
-        }
-        else if(newObject instanceof Whistle){
-            this.whistles.add((Whistle)newObject);
+    /**
+     * Update a list of actors.
+     * @param actors
+     * @param delta 
+     */
+    private void updateActors( List<? extends Actor> actors, int delta )
+    {
+        for( Actor actor : actors )
+        {
+            actor.update( delta );
         }
     }
-
-    public void removeObject(MovableActor oldObject) {
-        if(oldObject instanceof Cookie){
-            this.cookies.remove((Cookie)oldObject);
-        }
-        else if(oldObject instanceof Whistle){
-            this.whistles.remove((Whistle)oldObject);
-        }
-    }
-    */
-
-    
-/*
-    public void setActingPosition(int x, int y, int playerID) {
-        System.out.println("Updating the object to pos " + x + " " + y);
-        for(Cookie cookie : cookies){
-            if (cookie.getOwnerID() == playerID){
-                cookie.setPosition(new Point2D.Double(x,y));
-            }
-        }
-        for(Whistle cookie : whistles){
-            if (cookie.getOwnerID() == playerID){
-                cookie.setPosition(new Point2D.Double(x,y));
-            }
-        }
-    }
-    * */
-
     
     /**
      * Convert from position in pixels to position in tiles
@@ -406,23 +308,35 @@ public class Map
      * @param position
      * @return 
      */
-    public boolean doesCollideWith( Point position )
+    public boolean doesCollide( Point position )
     {
         if( this.isCollisionTile( position ) )
         {
             return true;
         }
         
-        // Check sheeps.
-        for( Sheep sheep : this.sheeps )
+        // Check collisions with actors.
+        return ( this.doesCollideWithActors( this.sheeps, position ) ||
+                 this.doesCollideWithActors( this.dogs, position ) ||
+                 this.doesCollideWithActors( this.wolves, position ) ||
+                 this.doesCollideWithActors( this.loveSheeps, position ) );
+    }
+    
+    /**
+     * Returns true 
+     * @param actors
+     * @param position
+     * @return 
+     */
+    private boolean doesCollideWithActors( List<? extends Actor> actors, Point position )
+    {
+        for( Actor actor : actors )
         {
-            if( sheep.getPosition() == position )
+            if( actor.getPosition().equals( position ) )
             {
                 return true;
             }
         }
-        
-        // @TODO: More stuff.
         
         return false;
     }
@@ -517,3 +431,41 @@ public class Map
         return this.cookies;
     }
 }
+
+    
+/*
+    public void addObject(MovableActor newObject) {
+        if(newObject instanceof Cookie){
+            this.cookies.add((Cookie)newObject);
+        }
+        else if(newObject instanceof Whistle){
+            this.whistles.add((Whistle)newObject);
+        }
+    }
+
+    public void removeObject(MovableActor oldObject) {
+        if(oldObject instanceof Cookie){
+            this.cookies.remove((Cookie)oldObject);
+        }
+        else if(oldObject instanceof Whistle){
+            this.whistles.remove((Whistle)oldObject);
+        }
+    }
+    */
+
+    
+/*
+    public void setActingPosition(int x, int y, int playerID) {
+        System.out.println("Updating the object to pos " + x + " " + y);
+        for(Cookie cookie : cookies){
+            if (cookie.getOwnerID() == playerID){
+                cookie.setPosition(new Point2D.Double(x,y));
+            }
+        }
+        for(Whistle cookie : whistles){
+            if (cookie.getOwnerID() == playerID){
+                cookie.setPosition(new Point2D.Double(x,y));
+            }
+        }
+    }
+    * */

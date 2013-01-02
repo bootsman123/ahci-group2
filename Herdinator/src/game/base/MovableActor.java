@@ -114,7 +114,7 @@ public abstract class MovableActor extends Actor implements Movable
             Point positionTarget = direction.toPosition( positionCurrent );
             
             // Check if the tile in the direction is unoccupied.
-            if( map.doesCollideWith( positionTarget ) )
+            if( map.doesCollide( positionTarget ) )
             {
                 Logger.getLogger( MovableActor.class.getCanonicalName() ).log( Level.INFO, "Collidable direction given." );
                 return;
@@ -204,7 +204,7 @@ public abstract class MovableActor extends Actor implements Movable
         
         for( Direction direction : Direction.values() )
         {
-            if( !GameManager.getInstance().getMap().doesCollideWith( direction.toPosition( this.getPosition() ) ) )
+            if( !GameManager.getInstance().getMap().doesCollide( direction.toPosition( this.getPosition() ) ) )
             {
                 directions.add( direction );
             }
