@@ -22,7 +22,6 @@ public class GameState extends BasicGameState
     //private ObjectPicker overlay = null;
 
     private List<Map> maps;
-    private Map currentMap;
     
     public GameState() throws SlickException
     {
@@ -52,7 +51,7 @@ public class GameState extends BasicGameState
       //  this.maps.get( 1 ).init( container, game );
 
         
-        //GameManager.getInstance().setPlayers();
+        GameManager.getInstance().setPlayers();
 
         //overlay = new ObjectPicker();
         //overlay.init(container, game);

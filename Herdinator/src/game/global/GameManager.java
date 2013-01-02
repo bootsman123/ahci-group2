@@ -1,8 +1,10 @@
 package game.global;
 
 import TUIO.TuioClient;
-import game.actors.Whistle;
 import game.base.Map;
+import game.interfaces.MobilePhoneHandler;
+import game.players.MobilePhonePlayer;
+import game.players.MousePlayer;
 import game.players.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +60,9 @@ public class GameManager
     }
     
     
-/*
+
     public void setPlayers(){
+        
         this.players = new ArrayList<Player>();
         try{
             this.players.add(new MousePlayer(0));//@TODO: add the right numbers
@@ -71,20 +74,19 @@ public class GameManager
             System.out.println("GameManager: problem with the initialisation of players");
             e.printStackTrace();
         }
+        
+        MobilePhoneHandler mobilePhoneHandler = new MobilePhoneHandler();
+
         TuioClient client = new TuioClient();
-        for(Player p : players){
-            if (p instanceof MobilePhonePlayer){
-                client.addTuioListener( (MobilePhonePlayer) p);
-            }
-        }
-
+        client.addTuioListener(mobilePhoneHandler);
         client.connect();
-
+        
         for(Player p : players){
-            this.map.addObject(p.getCurrentObject());
+            this.map.addObject(p.getObject());
         }
+        
     }
-    * */
+
     
     public void setMap( Map map )
     {

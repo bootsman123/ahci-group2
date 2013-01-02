@@ -17,7 +17,7 @@ import java.awt.Point;
  */
 public class Whistle extends ImmovableActor
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/birdzilla_cow-recolors.png";
+    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/whistle.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
@@ -42,8 +42,8 @@ public class Whistle extends ImmovableActor
                                                        Whistle.SPRITE_SHEET_SPRITE_WIDTH,
                                                        Whistle.SPRITE_SHEET_SPRITE_HEIGHT,
                                                        Whistle.SPRITE_SHEET_BACKGROUND_COLOR );
-
-            this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 3, 150 );
+                                                       
+            this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 0, 0, 150 );
         }
         catch( SlickException e )
         {
