@@ -2,6 +2,7 @@ package game.global;
 
 import TUIO.TuioClient;
 import game.base.Map;
+import game.base.UsableActor;
 import game.interfaces.MobilePhoneHandler;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
@@ -73,8 +74,30 @@ public class GameManager
             }
             else if (player instanceof MousePlayer){
                 if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
-                    player.moveObject(map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
-                    //this.map.setActingPosition(input.getMouseX(), input.getMouseY(), player.getPlayerID());
+                    MousePlayer mousePlayer = (MousePlayer) player;
+                    if(mousePlayer.isDraggingObject()){
+                        player.moveObject(map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
+                    }
+                    else{
+                        
+                        Point2D tilePoint = map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY()));
+                        int tileX = (int) tilePoint.getX();
+                        int tileY = (int) tilePoint.getY();
+                        for (UsableActor actor : map.getCookies()){
+                            if(actor.getX()==tileX && actor.getY()==tileY){
+                                mousePlayer.setIsDraggingObject(true);
+                            }
+                        }
+                        for (UsableActor actor : map.getWhistles()){
+                            if(actor.getX()==tileX && actor.getY()==tileY){
+                                mousePlayer.setIsDraggingObject(true);
+                            }
+                        }
+                    }
+                }
+                else{
+                    MousePlayer mousePlayer = ( MousePlayer ) player;
+                    mousePlayer.setIsDraggingObject( false );
                 }
             }
             else if (player instanceof TouchPlayer){
@@ -106,8 +129,7 @@ public class GameManager
         for( Player player : this.players )
         {
             this.map.addObject( player.getObject() );
-        }
-        
+        }   
     }
 
 

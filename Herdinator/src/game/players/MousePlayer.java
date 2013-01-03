@@ -14,8 +14,17 @@ import org.newdawn.slick.SlickException;
  */
 public class MousePlayer extends Player{
 
-    
+    private boolean isDraggingObject = false;
     public MousePlayer(int id, Color color) throws SlickException{
         super(id, color);
+    }
+
+    public boolean isDraggingObject(){
+        return this.isDraggingObject;
+    }
+
+    public void setIsDraggingObject( boolean newDragging )
+    {
+        this.isDraggingObject = newDragging;
     }
 }
