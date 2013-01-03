@@ -15,7 +15,7 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class Cookie extends ImmovableActor
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/temporarycookie.png";
+    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/cookie.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
@@ -41,11 +41,18 @@ public class Cookie extends ImmovableActor
                                                        Cookie.SPRITE_SHEET_SPRITE_HEIGHT,
                                                        Cookie.SPRITE_SHEET_BACKGROUND_COLOR );
 
-            this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 3, 150 );
+            this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 0, 0, 150 );
         }
         catch( SlickException e )
         {
             Logger.getLogger( Whistle.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
         }
+    }
+
+    public static int getObjectWidth(){
+        return Cookie.SPRITE_SHEET_SPRITE_WIDTH;
+    }
+    public static int getObjectHeight(){
+        return Cookie.SPRITE_SHEET_SPRITE_HEIGHT;
     }
 }
