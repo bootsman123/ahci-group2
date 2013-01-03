@@ -14,6 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import game.players.MousePlayer;
 import game.players.Player;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 /**
  *
@@ -94,20 +95,24 @@ public class ObjectPicker
         int mouseX = input.getMouseX();
         int mouseY = input.getMouseY();
 
+        Point mousePos = GameManager.getInstance().getMap().fromPositionInPixels(new Point2D.Double(mouseX,mouseY));
 
+        mouseX = (int) mousePos.getX();
+        mouseY = (int) mousePos.getY();
         for (Cookie c : cookies){
             
-            int cookieWidth = Cookie.getObjectWidth();
-            int cookieHeight = Cookie.getObjectHeight();
-
+            int cookieWidth = 1;//Cookie.getObjectWidth();
+            int cookieHeight = 1;Cookie.getObjectHeight();
+            
             if( ( mouseX >= c.getX() && mouseX <= c.getX() + cookieWidth) && ( mouseY >= c.getY() && mouseY <= c.getY() + cookieHeight) ){
                 System.out.println("Inside da cookie");
+                
                 GameManager.getInstance().getPlayers().get(0).setObject(c);
             }
         }
         for(Whistle whistle :whistles){
-            int whistleWidth = Whistle.getObjectWidth();
-            int whistleHeight = Whistle.getObjectHeight();
+            int whistleWidth = 1;//Whistle.getObjectWidth();
+            int whistleHeight = 1;//Whistle.getObjectHeight();
             if( ( mouseX >= whistle.getX() && mouseX <= whistle.getX()+ whistleWidth) &&
                       ( mouseY >= whistle.getY() && mouseY <= whistle.getY()+ whistleHeight) ){
                System.out.println("Inside da whistle");
