@@ -110,7 +110,7 @@ public class GameManager
         
     }
 
-    
+
     public void setMap( Map map )
     {
         this.map = map;
