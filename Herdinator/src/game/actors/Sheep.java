@@ -1,17 +1,16 @@
 package game.actors;
 
+import game.base.Map;
 import game.base.MovableActor;
 import game.global.GameManager;
 import game.util.SpriteSheetUtil;
+import game.util.Math;
 import java.awt.Point;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
     
@@ -27,8 +26,13 @@ public class Sheep extends MovableActor
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
     private static final Double SPEED = 0.001;
+    
+    // Distances in Manhatten tiles.
+    private static final Integer DISTANCE_TO_OTHER_SHEEP = 100;
+    private static final Integer DISTANCE_TO_DOG = 5;
 
     private Direction currentDirection;
+    private Boolean isInGoalTile;
 
     /**
      * Constructor.
@@ -63,6 +67,7 @@ public class Sheep extends MovableActor
         
         this.currentDirection = Direction.DOWN;
         this.animation = this.animations.get( this.currentDirection );
+        this.isInGoalTile = false;
     }
     
     @Override
@@ -70,10 +75,103 @@ public class Sheep extends MovableActor
     {
         super.update( delta );
         
-        if( !this.isMoving() )
+        // Check if in goal.
+        if( this.isInGoalTile )
         {
-            // Determine new direction.
-            List<Direction> directions = this.getDirectionsToNonCollidableTiles();
+            // Don't do anything for now.
+            return;
+        }
+        else
+        {
+            if( !this.isMoving() )
+            {
+                // Check if in goal tile.
+                Map map = GameManager.getInstance().getMap();
+
+                if( map.isGoalTile( this.getPosition() ) )
+                {
+                    this.isInGoalTile = true;
+                    return;
+                }
+                else
+                {
+                    // Determine new direction.
+                    List<Direction> directions = this.getDirectionsToNonCollidableTiles();
+                    
+                    // Check if another sheep is close enough by. If so, move towards it.
+                    Direction direction = this.lookForSheeps( directions );
+                    
+                    if( direction == null )
+                    {
+                        // Pick a random element.
+                        Integer r = ( new Random() ).nextInt( directions.size() );
+                        this.currentDirection = directions.get( r );   
+                    }
+                }
+            }
+
+            this.move( this.currentDirection );
+        }
+    }
+    
+    private Direction lookForSheeps( List<Direction> directions )
+    {
+        for( Sheep sheep : GameManager.getInstance().getMap().getSheeps() )
+        {
+            // Check for self.
+            if( this == sheep )
+            {
+                continue;
+            }
+
+            if( Math.distanceManhatten( this.getPosition(), sheep.getPosition() ) <= Sheep.DISTANCE_TO_OTHER_SHEEP )
+            {
+                Direction direction = this.determineClosestDirection( this.getPosition(), sheep.getPosition() );
+                
+                if( directions.contains( direction ) )
+                {
+                    return direction;
+                }
+            }
+        }
+        
+        return null;
+    }
+      
+    private Direction determineClosestDirection( Point p1, Point p2 )
+    {        
+        Integer absX = java.lang.Math.abs( p1.x - p2.x );
+        Integer absY = java.lang.Math.abs( p1.y - p2.y );
+
+        // Move closer on the x-axis.
+        if( absX > absY )
+        {
+            if( p1.x > p2.x )
+            {
+                return Direction.RIGHT;
+            }
+            else
+            {
+                return Direction.LEFT;
+            }
+        }
+        // Move closer on the y-axis.
+        else
+        {
+            if( p1.y > p2.y )
+            {
+                return Direction.UP;
+            }
+            else
+            {
+                return Direction.DOWN;
+            }
+        }
+    }
+
+   
+    
+            /*
             Iterator<Direction> iterator = directions.iterator();
             
             while( iterator.hasNext() )
@@ -85,31 +183,5 @@ public class Sheep extends MovableActor
                     iterator.remove();
                 }
             }
-            
-            // Pick a random element.
-            Integer r = ( new Random() ).nextInt( directions.size() );
-            this.currentDirection = directions.get( r ); 
-        }
-        
-        this.move( this.currentDirection );
-    }
-    
-    
-    
-    /**
-
-     * Vlucht voor de hond of de wolf als in de buurt, of loopt naar het love sheep als die in de buurt is
-     * @param delta 
-     *
-    public void move( int delta ){ 
-        if(euclideanDistance( this.getPosition(), wolfLocation) < 100) //TODO: fix de parameters
-            moveAwayFrom( delta, this.getPosition(), wolfLocation);
-        else if(euclideanDistance( this.getPosition(), dogLocation) < 100) //TODO: fix de parameters
-            moveAwayFrom( delta, this.getPosition(), dogLocation);
-        else if(euclideanDistance( this.getPosition(), loveSheepLocation) < 100) //TODO: fix de parameters
-            moveTo( this.getPosition(), loveSheepLocation, delta);
-        else
-            moveRandom( delta);
-     }
-     * */
+            */
 }
