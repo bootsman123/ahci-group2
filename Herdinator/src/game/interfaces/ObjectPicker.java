@@ -15,6 +15,7 @@ import game.players.MousePlayer;
 import game.players.Player;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.util.HashMap;
 
 /**
  *
@@ -38,7 +39,7 @@ public class ObjectPicker
     private List<Whistle> whistles;
     private List<Cookie> cookies;
 
-    
+    private HashMap hashMap = null;
    
     public ObjectPicker( ) throws SlickException
     {
@@ -49,20 +50,23 @@ public class ObjectPicker
     
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
+        this.hashMap = new HashMap();
         this.horizontalPicker = new Image(ObjectPicker.HORIZONTAL_PICKER_IMAGE_FILE_PATH);
         this.verticalPicker = new Image(ObjectPicker.VERTICAL_PICKER_IMAGE_FILE_PATH);
         int numberOfInstancesHad = 0;
-        int diff = 30;   
+        int diff = 30;
         for(Player p : GameManager.getInstance().getPlayers()){
             if(p instanceof MousePlayer){
-                Point startingPoint = new Point(4,5); //@TODO: set all the locations right
+                Point startingPoint = new Point(4,p.getId()+5); //@TODO: set all the locations right
                 
-                Cookie cookie = new Cookie(startingPoint);
+                Cookie cookie = new Cookie(startingPoint, p);
+                hashMap.put(cookie, p);
                 this.cookies.add(cookie);
                 cookie.init();
 
-                startingPoint = new Point(2,3); //@TODO: set all the locations right
-                Whistle whistle = new Whistle(startingPoint);
+                startingPoint = new Point(2,p.getId()+3); //@TODO: set all the locations right
+                Whistle whistle = new Whistle(startingPoint, p);
+                hashMap.put(whistle, p);
                 this.whistles.add(whistle);
                 whistle.init();
             }
@@ -90,7 +94,6 @@ public class ObjectPicker
             return;
         }
 
-
         Input input = container.getInput();
         int mouseX = input.getMouseX();
         int mouseY = input.getMouseY();
@@ -100,22 +103,23 @@ public class ObjectPicker
         mouseX = (int) mousePos.getX();
         mouseY = (int) mousePos.getY();
         for (Cookie c : cookies){
-            
-            int cookieWidth = 1;//Cookie.getObjectWidth();
-            int cookieHeight = 1;Cookie.getObjectHeight();
+           
+            int cookieWidth = 1;
+            int cookieHeight = 1;
             
             if( ( mouseX >= c.getX() && mouseX <= c.getX() + cookieWidth) && ( mouseY >= c.getY() && mouseY <= c.getY() + cookieHeight) ){
-                System.out.println("Inside da cookie");
                 
+                Player owner = (Player)hashMap.get(c);
+                System.out.println("Inside da cookie: " + owner.getId() );
                 GameManager.getInstance().getPlayers().get(0).setObject(c);
             }
         }
         for(Whistle whistle :whistles){
-            int whistleWidth = 1;//Whistle.getObjectWidth();
-            int whistleHeight = 1;//Whistle.getObjectHeight();
-            if( ( mouseX >= whistle.getX() && mouseX <= whistle.getX()+ whistleWidth) &&
-                      ( mouseY >= whistle.getY() && mouseY <= whistle.getY()+ whistleHeight) ){
-               System.out.println("Inside da whistle");
+            int whistleWidth = 1;
+            int whistleHeight = 1;
+            if( ( mouseX >= whistle.getX() && mouseX <= whistle.getX()+ whistleWidth) && ( mouseY >= whistle.getY() && mouseY <= whistle.getY()+ whistleHeight) ){
+                Player owner = (Player)hashMap.get(whistle);
+                System.out.println("Inside da whistle: " + owner.getId());
                 GameManager.getInstance().getPlayers().get(0).setObject(whistle);
             }
         }

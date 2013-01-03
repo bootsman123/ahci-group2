@@ -1,6 +1,7 @@
 package game.actors;
 
-import game.base.ImmovableActor;
+import game.base.UsableActor;
+import game.players.Player;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.util.logging.Level;
@@ -13,7 +14,7 @@ import org.newdawn.slick.SpriteSheet;
  *
  * @author roland
  */
-public class Cookie extends ImmovableActor
+public class Cookie extends UsableActor 
 {
     private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/cookie.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
@@ -25,9 +26,9 @@ public class Cookie extends ImmovableActor
      * @param position
      * @throws SlickException 
      */
-    public Cookie( Point position ) throws SlickException
+    public Cookie( Point position, Player owner ) throws SlickException
     {
-        super( position );
+        super( position, owner );
     }
 
     @Override
@@ -49,10 +50,8 @@ public class Cookie extends ImmovableActor
         }
     }
 
-    public static int getObjectWidth(){
-        return Cookie.SPRITE_SHEET_SPRITE_WIDTH;
-    }
-    public static int getObjectHeight(){
-        return Cookie.SPRITE_SHEET_SPRITE_HEIGHT;
+    @Override
+    public void use() {
+        
     }
 }

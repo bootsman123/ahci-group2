@@ -237,7 +237,7 @@ public class Map
      * Add a new object to the map.
      * @param object 
      */
-    public void addObject( ImmovableActor object )
+    public void addObject( UsableActor object )
     {
         if( object instanceof Cookie )
         {
@@ -257,7 +257,7 @@ public class Map
      * Remove an object from the map.
      * @param oldObject 
      */
-    public void removeObject( ImmovableActor object )
+    public void removeObject( UsableActor object )
     {
         if( object instanceof Cookie )
         {
