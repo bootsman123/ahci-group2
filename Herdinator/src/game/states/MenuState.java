@@ -19,8 +19,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MenuState extends BasicGameState
 {    
     private static final String BACKGROUND_FILE_PATH = "../Resources/Images/Menu/background.jpg";
-    private static final String START_BUTTON_FILE_PATH = "../Resources/Images/buttonStart.png";
-    private static final String EXIT_BUTTON_FILE_PATH = "../Resources/Images/buttonExit.png";
+    private static final String START_BUTTON_FILE_PATH = "../Resources/Images/Menu/buttonStart.png";
+    private static final String EXIT_BUTTON_FILE_PATH = "../Resources/Images/Menu/buttonExit.png";
     
     private static final String TITLE = "Herdinator";
     private static final String TITLE_FONT_FILE_PATH = "../Resources/Fonts/Harabara.ttf";
