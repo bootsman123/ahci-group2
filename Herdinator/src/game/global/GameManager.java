@@ -147,23 +147,4 @@ public class GameManager
     {
         return this.players;
     }
-
-    /*
-    public void changeObjectOfPlayer(MovableActor c) throws SlickException {
-        
-        for (Player player : players){
-            if(c instanceof Cookie){
-                Cookie newc = (Cookie) c;
-                if(newc.getOwnerID() == player.getId())
-                    player.changeCurrentObject(c);
-            }
-            else if(c instanceof Whistle){
-                Whistle newc = (Whistle) c;
-                if(newc.getOwnerID() == player.getId())
-                    player.changeCurrentObject(c);
-            }        
-        }
-    }
-*/
-
 }
