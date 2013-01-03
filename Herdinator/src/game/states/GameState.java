@@ -4,6 +4,7 @@ import game.Game;
 import game.base.Map;
 import game.global.GameManager;
 
+import game.interfaces.ObjectPicker;
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.GameContainer;
@@ -19,7 +20,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class GameState extends BasicGameState
 {
-    //private ObjectPicker overlay = null;
+    private ObjectPicker overlay = null;
 
     private List<Map> maps;
     
@@ -53,15 +54,15 @@ public class GameState extends BasicGameState
         
         GameManager.getInstance().setPlayers();
 
-        //overlay = new ObjectPicker();
-        //overlay.init(container, game);
+        overlay = new ObjectPicker();
+        overlay.init(container, game);
     }
 
     @Override
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         GameManager.getInstance().getMap().render( container, game, g );
-        //overlay.render(container, game, g);
+        overlay.render(container, game, g);
     }
 
     @Override
@@ -69,6 +70,6 @@ public class GameState extends BasicGameState
     {   
         GameManager.getInstance().getMap().update( container, game, delta );
         GameManager.getInstance().update( container, game, delta );
-        //overlay.update(container, game, delta);
+        overlay.update(container, game, delta);
     }
 }

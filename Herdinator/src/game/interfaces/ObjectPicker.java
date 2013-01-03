@@ -3,8 +3,6 @@ package game.interfaces;
 import game.actors.Cookie;
 import game.actors.Whistle;
 import game.global.GameManager;
-import game.global.GameManager;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.GameContainer;
@@ -15,15 +13,17 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import game.players.MousePlayer;
 import game.players.Player;
+import java.awt.Point;
 
 /**
  *
  * @author roland
- 
+ */
 public class ObjectPicker
 {
     private static final String VERTICAL_PICKER_IMAGE_FILE_PATH = "../Resources/Images/verticalpicker.png";
     private static final String HORIZONTAL_PICKER_IMAGE_FILE_PATH = "../Resources/Images/verticalpicker.png";
+
     // Dimensions of the picker in pixels.
     private static final int PICKER_START_X = 5;
     private static final int PICKER_START_Y= 20;
@@ -54,13 +54,16 @@ public class ObjectPicker
         int diff = 30;   
         for(Player p : GameManager.getInstance().getPlayers()){
             if(p instanceof MousePlayer){
-                Point2D.Double startingPoint = new Point2D.Double(PICKER_START_X+IMAGE_OFFSET,numberOfInstancesHad+=diff);
-                Cookie cookie = new Cookie(GameManager.getInstance().getMap(), startingPoint, p.getPlayerID()); //@TODO: change the ownerID
+                Point startingPoint = new Point(4,5); //@TODO: set all the locations right
+                
+                Cookie cookie = new Cookie(startingPoint);
                 this.cookies.add(cookie);
+                cookie.init();
 
-                startingPoint = new Point2D.Double(PICKER_START_X+IMAGE_OFFSET,numberOfInstancesHad+=diff);
-                Whistle whistle = new Whistle(GameManager.getInstance().getMap(), startingPoint, p.getPlayerID()); //@TODO: change the ownerID
+                startingPoint = new Point(2,3); //@TODO: set all the locations right
+                Whistle whistle = new Whistle(startingPoint);
                 this.whistles.add(whistle);
+                whistle.init();
             }
         }        
     }
@@ -94,21 +97,22 @@ public class ObjectPicker
 
         for (Cookie c : cookies){
             
-            int cookieWidth = Cookie.SPRITE_SHEET_SPRITE_WIDTH;
-            int cookieHeight = Cookie.SPRITE_SHEET_SPRITE_HEIGHT;
+            int cookieWidth = Cookie.getObjectWidth();
+            int cookieHeight = Cookie.getObjectHeight();
 
             if( ( mouseX >= c.getX() && mouseX <= c.getX() + cookieWidth) && ( mouseY >= c.getY() && mouseY <= c.getY() + cookieHeight) ){
                 System.out.println("Inside da cookie");
-                GameManager.getInstance().changeObjectOfPlayer(c);
+                GameManager.getInstance().getPlayers().get(0).setObject(c);
             }
         }
         for(Whistle whistle :whistles){
-            if( ( mouseX >= whistle.getX() && mouseX <= whistle.getX()+ Whistle.SPRITE_SHEET_SPRITE_WIDTH) &&
-                      ( mouseY >= whistle.getY() && mouseY <= whistle.getY()+ Whistle.SPRITE_SHEET_SPRITE_HEIGHT) ){
+            int whistleWidth = Whistle.getObjectWidth();
+            int whistleHeight = Whistle.getObjectHeight();
+            if( ( mouseX >= whistle.getX() && mouseX <= whistle.getX()+ whistleWidth) &&
+                      ( mouseY >= whistle.getY() && mouseY <= whistle.getY()+ whistleHeight) ){
                System.out.println("Inside da whistle");
-                GameManager.getInstance().changeObjectOfPlayer(whistle);
+                GameManager.getInstance().getPlayers().get(0).setObject(whistle);
             }
         }
     }
 }
-*/

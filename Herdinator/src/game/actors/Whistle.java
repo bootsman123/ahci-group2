@@ -48,4 +48,11 @@ public class Whistle extends ImmovableActor
             Logger.getLogger( Whistle.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
         }
     }
+
+    public static int getObjectWidth(){
+        return Whistle.SPRITE_SHEET_SPRITE_WIDTH;
+    }
+    public static int getObjectHeight(){
+        return Whistle.SPRITE_SHEET_SPRITE_HEIGHT;
+    }
 }

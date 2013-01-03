@@ -138,9 +138,7 @@ public class GameManager
                 Whistle newc = (Whistle) c;
                 if(newc.getOwnerID() == player.getId())
                     player.changeCurrentObject(c);
-            }
-            
-            
+            }        
         }
     }
 */
