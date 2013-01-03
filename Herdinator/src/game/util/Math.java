@@ -1,6 +1,6 @@
 package game.util;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
 
 /**
  *
@@ -8,10 +8,16 @@ import java.awt.geom.Point2D;
  */
 public final class Math
 {
-    public static Double distanceEuclidian( Point2D.Double p1, Point2D.Double p2 )
+    public static double distanceEuclidian( Point p1, Point p2 )
     {
         return java.lang.Math.sqrt( java.lang.Math.pow( p1.x - p2.x, 2 ) + 
                                     java.lang.Math.pow( p1.y - p2.y, 2 ) );
+    }
+    
+    public static double distanceManhatten( Point p1, Point p2 )
+    {
+        return java.lang.Math.abs( p1.x - p2.x ) + 
+               java.lang.Math.abs( p1.y - p2.y );
     }
     
     public static double clamp( double value, double min, double max )
