@@ -19,8 +19,15 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MenuState extends BasicGameState
 {    
     private static final String BACKGROUND_FILE_PATH = "../Resources/Images/Menu/background.jpg";
+
     private static final String START_BUTTON_FILE_PATH = "../Resources/Images/Menu/buttonStart.png";
     private static final String EXIT_BUTTON_FILE_PATH = "../Resources/Images/Menu/buttonExit.png";
+
+    private static final String BUTTON_NUMBER_OF_PLAYERS_ONE = "../Resources/Images/Menu/buttonNumberOfPlayersOne.png";
+    
+    private static final String BUTTON_NUMBER_OF_PLAYERS_TWO = "../Resources/Images/Menu/buttonNumberOfPlayersTwo.png";
+    private static final String BUTTON_NUMBER_OF_PLAYERS_THREE = "../Resources/Images/Menu/buttonNumberOfPlayersThree.png";
+    private static final String BUTTON_NUMBER_OF_PLAYERS_FOUR = "../Resources/Images/Menu/buttonNumberOfPlayersFour.png";
     
     private static final String TITLE = "Herdinator";
     private static final String TITLE_FONT_FILE_PATH = "../Resources/Fonts/Harabara.ttf";
@@ -81,10 +88,10 @@ public class MenuState extends BasicGameState
         this.subTitleFont.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
         this.subTitleFont.loadGlyphs();
         
-        this.buttonStart = new Image( MenuState.START_BUTTON_FILE_PATH );
+        this.buttonStart = new Image( MenuState.BUTTON_START_FILE_PATH );
         this.buttonStartPosition = new Point2D.Double( ( container.getWidth() - this.buttonStart.getWidth() ) / 2, 200 ); // @TODO: Fugly magic number.
        
-        this.buttonExit = new Image( MenuState.EXIT_BUTTON_FILE_PATH );
+        this.buttonExit = new Image( MenuState.BUTTON_EXIT_FILE_PATH );
         this.buttonExitPosition = new Point2D.Double( ( container.getWidth() - this.buttonExit.getWidth() ) / 2, 260 ); // @TODO: Fugly magic number.
     }
 
