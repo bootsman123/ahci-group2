@@ -94,9 +94,9 @@ public class GameManager
         this.players = new ArrayList<Player>();
         try{
             this.players.add(new MousePlayer(0));//@TODO: add the right numbers
-            this.players.add(new MobilePhonePlayer(1));//@TODO: add the right numbers
-            this.players.add(new MobilePhonePlayer(2));//@TODO: add the right numbers
-            this.players.add(new MobilePhonePlayer(3));//@TODO: add the right numbers
+        //    this.players.add(new MobilePhonePlayer(1));//@TODO: add the right numbers
+        //    this.players.add(new MobilePhonePlayer(2));//@TODO: add the right numbers
+         //   this.players.add(new MobilePhonePlayer(3));//@TODO: add the right numbers
         }
         catch(Exception e){
             System.out.println("GameManager: problem with the initialisation of players");
