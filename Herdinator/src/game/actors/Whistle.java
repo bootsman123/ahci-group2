@@ -1,6 +1,7 @@
 package game.actors;
 
-import game.base.ImmovableActor;
+import game.base.UsableActor;
+import game.players.Player;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
@@ -13,7 +14,7 @@ import java.awt.Point;
  *
  * @author roland
  */
-public class Whistle extends ImmovableActor
+public class Whistle extends UsableActor
 {
     private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/whistle.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
@@ -25,9 +26,9 @@ public class Whistle extends ImmovableActor
      * @param position
      * @throws SlickException 
      */
-    public Whistle( Point position ) throws SlickException
+    public Whistle( Point position, Player owner ) throws SlickException
     {
-        super( position );
+        super( position, owner );
     }
     
     @Override
@@ -49,10 +50,8 @@ public class Whistle extends ImmovableActor
         }
     }
 
-    public static int getObjectWidth(){
-        return Whistle.SPRITE_SHEET_SPRITE_WIDTH;
-    }
-    public static int getObjectHeight(){
-        return Whistle.SPRITE_SHEET_SPRITE_HEIGHT;
+    @Override
+    public void use() {
+        
     }
 }

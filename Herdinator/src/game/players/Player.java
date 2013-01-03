@@ -1,9 +1,10 @@
 package game.players;
 
 import game.actors.Whistle;
-import game.base.ImmovableActor;
+import game.base.UsableActor;
 import game.global.GameManager;
 import java.awt.Point;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -11,13 +12,15 @@ import org.newdawn.slick.SlickException;
  * @author roland
  */
 public abstract class Player {
-    private ImmovableActor object;
+    private UsableActor object;
     private int id;
-    
-    public Player( int id ) throws SlickException {
+    private Color color;
+
+    public Player( int id, Color color ) throws SlickException {
         this.id = id;
         Point startingPoint = new Point(0,0);
-        this.object = new Whistle(startingPoint );
+        this.color = color;
+        this.object = new Whistle(startingPoint, this );
         
     }
 
@@ -26,18 +29,22 @@ public abstract class Player {
     }
 
     
-    public void setObject(ImmovableActor newObject) throws SlickException{
+    public void setObject(UsableActor newObject) throws SlickException{
         GameManager.getInstance().getMap().removeObject(this.object);//@TODO: do not let the player object remove the current object from the map?
         this.object = newObject;
         GameManager.getInstance().getMap().addObject(this.object);
     }
 
-    public ImmovableActor getObject(){
+    public UsableActor getObject(){
         return object;
     }
 
     public void moveObject(Point newPoint){
         this.object.setPosition(newPoint);
+    }
+    
+    public Color getColor(){
+        return this.color;
     }
     
 }

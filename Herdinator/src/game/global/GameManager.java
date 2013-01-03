@@ -10,9 +10,9 @@ import game.players.TouchPlayer;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -93,7 +93,8 @@ public class GameManager
         
         this.players = new ArrayList<Player>();
         try{
-            this.players.add(new MousePlayer(0));//@TODO: add the right numbers
+            this.players.add(new MousePlayer(0, Color.blue));//@TODO: add the right numbers
+            this.players.add(new MousePlayer(1, Color.red));
         //    this.players.add(new MobilePhonePlayer(1));//@TODO: add the right numbers
         //    this.players.add(new MobilePhonePlayer(2));//@TODO: add the right numbers
          //   this.players.add(new MobilePhonePlayer(3));//@TODO: add the right numbers

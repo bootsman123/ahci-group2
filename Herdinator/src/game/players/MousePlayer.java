@@ -5,6 +5,7 @@
 
 package game.players;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -14,7 +15,7 @@ import org.newdawn.slick.SlickException;
 public class MousePlayer extends Player{
 
     
-    public MousePlayer(int id) throws SlickException{
-        super(id);
+    public MousePlayer(int id, Color color) throws SlickException{
+        super(id, color);
     }
 }
