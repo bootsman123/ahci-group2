@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -25,10 +27,12 @@ public class GameManager
     // Instance variable.
     private static final GameManager instance = new GameManager();
     
-    // Current map.
+    // List of all the maps.
     private Map map;
+    private List<Map> maps;
     
     // List of all the players.
+    private Integer numberOfPlayers;
     private List<Player> players;
     
     private TuioClient tuioClient;
@@ -39,9 +43,6 @@ public class GameManager
      */
     private GameManager()
     {
-        this.map = null;
-        this.players = new ArrayList<Player>();
-        
         this.tuioClient = new TuioClient();
         this.mobilePhoneHandler = new MobilePhoneHandler();
         
@@ -57,11 +58,54 @@ public class GameManager
         return GameManager.instance;
     }
     
-    public void update( GameContainer container, StateBasedGame game, int delta )
+    /**
+     * Initialize.
+     * @param container
+     * @param game
+     * @throws SlickException 
+     */
+    public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
+        // Initialize maps.
+        this.maps = new ArrayList<Map>();
 
+        // Level 1.
+        this.maps.add( new Map( "../Resources/Maps/level1.tmx" ) );
+        
+        this.map = this.maps.get( 0 ); // @TODO: Fugly solution.
+        
+        this.maps.get( 0 ).init( container, game );
+
+        // Level 2.
+        //this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
+        //this.maps.get( 1 ).init( container, game );
+                
+        // Initialize players.
+        this.players = new ArrayList<Player>();
+        
+        for( Integer i = 0; i < this.numberOfPlayers; i++ )
+        {
+            this.players.add( new MousePlayer( i, Color.blue ) );
+            this.map.addObject( this.players.get( i ).getObject() );
+        }
+    }
+    
+    /**
+     * Update.
+     * @param container
+     * @param game
+     * @param delta
+     * @throws SlickException 
+     */
+    public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
+    {
+        // Update map.
+        this.map.update( container, game, delta );
+
+        // Update players.
         Input input = container.getInput();
-        for (Player player : players){
+        for( Player player : this.getPlayers() )
+        {
 
             if (player instanceof MobilePhonePlayer){
                 /*
@@ -76,19 +120,19 @@ public class GameManager
                 if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
                     MousePlayer mousePlayer = (MousePlayer) player;
                     if(mousePlayer.isDraggingObject()){
-                        player.moveObject(map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
+                        player.moveObject( this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
                     }
                     else{
                         
-                        Point2D tilePoint = map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY()));
+                        Point2D tilePoint = this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY()));
                         int tileX = (int) tilePoint.getX();
                         int tileY = (int) tilePoint.getY();
-                        for (UsableActor actor : map.getCookies()){
+                        for (UsableActor actor : this.map.getCookies()){
                             if(actor.getX()==tileX && actor.getY()==tileY){
                                 mousePlayer.setIsDraggingObject(true);
                             }
                         }
-                        for (UsableActor actor : map.getWhistles()){
+                        for (UsableActor actor : this.map.getWhistles()){
                             if(actor.getX()==tileX && actor.getY()==tileY){
                                 mousePlayer.setIsDraggingObject(true);
                             }
@@ -110,39 +154,40 @@ public class GameManager
 
     }
     
-    
-
-    public void setPlayers(){
-        
-        this.players = new ArrayList<Player>();
-        try{
-            this.players.add(new MousePlayer(0, Color.blue));//@TODO: add the right numbers
-            this.players.add(new MousePlayer(1, Color.red));
-        //    this.players.add(new MobilePhonePlayer(1));//@TODO: add the right numbers
-        //    this.players.add(new MobilePhonePlayer(2));//@TODO: add the right numbers
-         //   this.players.add(new MobilePhonePlayer(3));//@TODO: add the right numbers
-        }
-        catch(Exception e){
-            System.out.println("GameManager: problem with the initialisation of players");
-        }
-        
-        for( Player player : this.players )
-        {
-            this.map.addObject( player.getObject() );
-        }   
-    }
-
-
-    public void setMap( Map map )
+    /**
+     * Render.
+     * @param container
+     * @param game
+     * @param g
+     * @throws SlickException 
+     */
+    public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
-        this.map = map;
+        this.map.render( container, game, g );
     }
-
+    
+    /**
+     * Set the number of players playing the game.
+     * @param numberOfPlayers 
+     */
+    public void setNumberOfPlayers( Integer numberOfPlayers )
+    {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+    
+    /**
+     * Returns the current map.
+     * @return 
+     */
     public Map getMap()
     {
         return this.map;
     }
 
+    /**
+     * Returns the list of players.
+     * @return 
+     */
     public List<Player> getPlayers()
     {
         return this.players;

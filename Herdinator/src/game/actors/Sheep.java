@@ -3,8 +3,8 @@ package game.actors;
 import game.base.Map;
 import game.base.MovableActor;
 import game.global.GameManager;
-import game.util.SpriteSheetUtil;
 import game.util.Math;
+import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.util.List;
 import java.util.Random;
@@ -28,7 +28,7 @@ public class Sheep extends MovableActor
     private static final Double SPEED = 0.001;
     
     // Distances in Manhatten tiles.
-    private static final Integer DISTANCE_TO_OTHER_SHEEP = 100;
+    private static final Integer DISTANCE_TO_OTHER_SHEEP = 5;
     private static final Integer DISTANCE_TO_DOG = 5;
 
     private Direction currentDirection;

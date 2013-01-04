@@ -4,10 +4,10 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.SpriteSheet;
 
 /**
- *
- * @author bootsman
+ * Utilization functions for handling sprite sheets.
+ * @author Bas Bootsma
  */
-public class SpriteSheetUtil
+public final class SpriteSheetUtil
 {
     public static Animation getAnimation( SpriteSheet spriteSheet, int xFrom, int xTo, int y, int duration )
     {

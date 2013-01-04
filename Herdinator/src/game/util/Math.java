@@ -3,8 +3,8 @@ package game.util;
 import java.awt.Point;
 
 /**
- *
- * @author bootsman
+ * Generic mathematics functions.
+ * @author Bas Bootsma
  */
 public final class Math
 {

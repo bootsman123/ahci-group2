@@ -74,6 +74,12 @@ public class Map
         this.whistles = new ArrayList<Whistle>();
     }
     
+    /**
+     * Initialize.
+     * @param container
+     * @param game
+     * @throws SlickException 
+     */
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
         // Initialize sound.
@@ -165,6 +171,13 @@ public class Map
         //this.initActors( this.whistles );
     }
     
+    /**
+     * Render.
+     * @param container
+     * @param game
+     * @param g
+     * @throws SlickException 
+     */
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );
@@ -178,7 +191,13 @@ public class Map
         this.renderActors( this.whistles, g );
     }
 
-    
+    /**
+     * Update.
+     * @param container
+     * @param game
+     * @param delta
+     * @throws SlickException 
+     */
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
         if( container.isPaused() )
@@ -338,8 +357,6 @@ public class Map
        return this.goals.containsKey( position );
     }
     
-
-    
     /**
      * Returns true if the given position collides with either a collision tile or with an actor.
      * @param position
@@ -468,25 +485,3 @@ public class Map
         return this.cookies;
     }
 }
-
-    
-
-  
-    
-
-    
-/*
-    public void setActingPosition(int x, int y, int playerID) {
-        System.out.println("Updating the object to pos " + x + " " + y);
-        for(Cookie cookie : cookies){
-            if (cookie.getOwnerID() == playerID){
-                cookie.setPosition(new Point2D.Double(x,y));
-            }
-        }
-        for(Whistle cookie : whistles){
-            if (cookie.getOwnerID() == playerID){
-                cookie.setPosition(new Point2D.Double(x,y));
-            }
-        }
-    }
-    * */
