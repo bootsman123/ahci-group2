@@ -191,7 +191,7 @@ public abstract class MovableActor extends Actor implements Movable
      * @param p2
      * @return 
      */
-    protected Direction directionToActor( Actor a1, Actor a2 )
+    protected Direction directionTowardsActor( Actor a1, Actor a2 )
     {        
         Integer absX = java.lang.Math.abs( a1.getX() - a2.getX() );
         Integer absY = java.lang.Math.abs( a1.getY() - a2.getY() );
@@ -223,12 +223,12 @@ public abstract class MovableActor extends Actor implements Movable
     }
     
     /**
-     * Returns the best direction from actor a1 to actor a2 given a list of predefined directions.
+     * Returns the best direction from actor a1 towards actor a2 given a list of predefined directions.
      * @param direction
      * @param p
      * @return 
      */
-    protected Direction directionToActorFromList( Actor a1, Actor a2, List<Direction> directions )
+    protected Direction directionTowardsActorFromList( Actor a1, Actor a2, List<Direction> directions )
     {
         Direction bestDirection = null;
         Double bestAngle = Double.MAX_VALUE;
@@ -248,5 +248,86 @@ public abstract class MovableActor extends Actor implements Movable
         }
         
         return bestDirection;
+    }
+    
+    /**
+     * Returns the best direction from actor a1 away from actor a2 given a list of directions.
+     * @param a1
+     * @param a2
+     * @param directions
+     * @return 
+     */
+    protected Direction directionAwayFromActorFromList( Actor a1, Actor a2, List<Direction> directions )
+    {
+        Direction bestDirection = null;
+        Double bestAngle = Double.MIN_VALUE;
+        
+        // Determine the best direction.
+        Double angle = Math.angle( a1.getPosition(), a2.getPosition() );
+        
+        for( Direction direction : directions )
+        {
+            Double currentAngle = java.lang.Math.abs( angle - direction.getAngle() );
+            
+            if( currentAngle > bestAngle )
+            {
+                bestAngle = currentAngle;
+                bestDirection = direction;
+            }
+        }
+        
+        return bestDirection;  
+    }
+    
+    /**
+     * Returns the best direction towards the closest actor given a list of possible directions.
+     * Furthermore the search can be refined if a distance and a percentage (i.e. if percentage is 1.0 than
+     * the correct direction is always returned, if available).
+     * @param actor
+     * @param actors
+     * @param directions
+     * @param distance
+     * @param percentage
+     * @return 
+     */
+    protected Direction directionTowardsClosestActorFromList( Actor actor, List<? extends Actor> actors, List<Direction> directions, Integer distance, Double percentage )
+    {
+        Actor closestActor = this.closestActor( actor, actors );
+        
+        if( closestActor != null )
+        {
+            if( Math.distanceManhattan( actor.getPosition(), closestActor.getPosition() ) <= distance &&
+                java.lang.Math.random() <= percentage )
+            {
+                return this.directionTowardsActorFromList( actor, closestActor, directions );
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Returns the best direction away from the closest actor given a list of directions.
+     * @param actor
+     * @param actors
+     * @param directions
+     * @param distance
+     * @param percentage
+     * @return 
+     */
+    protected Direction directionAwayFromClosestActorFromList( Actor actor, List<? extends Actor> actors, List<Direction> directions, Integer distance, Double percentage )
+    {
+        Actor closestActor = this.closestActor( actor, actors );
+        
+        if( closestActor != null )
+        {
+            if( Math.distanceManhattan( actor.getPosition(), closestActor.getPosition() ) <= distance &&
+                java.lang.Math.random() <= percentage )
+            {
+                return this.directionAwayFromActorFromList( this, closestActor, directions );
+            }
+        }
+        
+        return null;
     }
 }

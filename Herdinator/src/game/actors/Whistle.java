@@ -2,13 +2,13 @@ package game.actors;
 
 import game.base.UsableActor;
 import game.players.Player;
+import game.util.SpriteSheetUtil;
+import java.awt.Point;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import game.util.SpriteSheetUtil;
-import java.awt.Point;
 
 /**
  *

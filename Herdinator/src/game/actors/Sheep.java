@@ -1,10 +1,8 @@
 package game.actors;
 
-import game.base.Actor;
 import game.base.Map;
 import game.base.MovableActor;
 import game.global.GameManager;
-import game.util.Math;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.util.List;
@@ -29,10 +27,11 @@ public class Sheep extends MovableActor
     private static final Double SPEED = 0.001;
     
     // Distances in Manhatten tiles.
-    private static final Integer OTHER_SHEEP_DISTANCE = 5;
+    private static final Integer OTHER_SHEEP_DISTANCE = 6;
     private static final Double OTHER_SHEEP_PERCENTAGE = 0.5;
     
-    private static final Integer DOG_DISTANCE = 5;
+    private static final Integer DOG_DISTANCE = 12;
+    private static final Double DOG_PERCENTAGE = 0.8;
 
     private Direction currentDirection;
     private Boolean isInGoalTile;
@@ -99,19 +98,16 @@ public class Sheep extends MovableActor
                 else
                 {
                     // Determine new direction.
-                    Direction direction = null;
+                    Direction direction;
                     List<Direction> directions = this.directionsToNonCollidableTiles();
                     
-                    // Check other sheep.
-                    Actor closestSheep = this.closestActor( this, map.getSheeps() );
+                    // Check for a dog.
+                    direction = this.directionAwayFromClosestActorFromList( this, map.getDogs(), directions, Sheep.DOG_DISTANCE, Sheep.DOG_PERCENTAGE );
                     
-                    if( closestSheep != null )
+                    if( direction == null )
                     {
-                        if( Math.distanceManhattan( this.getPosition(), closestSheep.getPosition() ) <= Sheep.OTHER_SHEEP_DISTANCE &&
-                            java.lang.Math.random() <= Sheep.OTHER_SHEEP_PERCENTAGE )
-                        {
-                            direction = this.directionToActorFromList( this, closestSheep, directions );
-                        }
+                        // Check for other sheep.
+                        direction = this.directionTowardsClosestActorFromList( this, map.getSheeps(), directions, Sheep.OTHER_SHEEP_DISTANCE, Sheep.OTHER_SHEEP_PERCENTAGE );
                     }
                     
                     if( direction == null )
@@ -127,19 +123,19 @@ public class Sheep extends MovableActor
 
             this.move( this.currentDirection );
         }
-    }   
-    
-            /*
-            Iterator<Direction> iterator = directions.iterator();
-            
-            while( iterator.hasNext() )
-            {
-                Direction direction = iterator.next();
-                
-                if( GameManager.getInstance().getMap().isGoalTile( direction.toPosition( this.getPosition() ) ) )
-                {
-                    iterator.remove();
-                }
-            }
-            */
+    }
+        
+    /*
+    Iterator<Direction> iterator = directions.iterator();
+
+    while( iterator.hasNext() )
+    {
+        Direction direction = iterator.next();
+
+        if( GameManager.getInstance().getMap().isGoalTile( direction.toPosition( this.getPosition() ) ) )
+        {
+            iterator.remove();
+        }
+    }
+    */
 }

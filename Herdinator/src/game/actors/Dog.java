@@ -1,10 +1,8 @@
 package game.actors;
 
-import game.base.Actor;
 import game.base.Map;
 import game.base.MovableActor;
 import game.global.GameManager;
-import game.util.Math;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.util.List;
@@ -73,21 +71,15 @@ public class Dog extends MovableActor
         if( !this.isMoving() )
         {            
             // Determine new direction.
-            Direction direction = null;
+            Direction direction;
             List<Direction> directions = this.directionsToNonCollidableTiles();
             Map map = GameManager.getInstance().getMap();
             
             // Check whistles.
-            Actor closestWhistle = this.closestActor( this, map.getWhistles() );
-                        
-            if( closestWhistle != null )
-            {
-                //Double distance = Math.distanceManhattan( this.getPosition(), closestWhistle.getPosition() );
-                direction = this.directionToActorFromList( this, closestWhistle, directions );
-            }
+            direction = this.directionTowardsClosestActorFromList( this, map.getWhistles(), directions, 200, 0.8 );
             
             if( direction == null )
-            {
+            {                
                 // Pick a random element.
                 Integer r = ( new Random() ).nextInt( directions.size() );
                 direction = directions.get( r ); 
