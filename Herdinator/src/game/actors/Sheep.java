@@ -1,5 +1,6 @@
 package game.actors;
 
+import game.base.Actor;
 import game.base.Map;
 import game.base.MovableActor;
 import game.global.GameManager;
@@ -28,8 +29,10 @@ public class Sheep extends MovableActor
     private static final Double SPEED = 0.001;
     
     // Distances in Manhatten tiles.
-    private static final Integer DISTANCE_TO_OTHER_SHEEP = 5;
-    private static final Integer DISTANCE_TO_DOG = 5;
+    private static final Integer OTHER_SHEEP_DISTANCE = 5;
+    private static final Double OTHER_SHEEP_PERCENTAGE = 0.5;
+    
+    private static final Integer DOG_DISTANCE = 5;
 
     private Direction currentDirection;
     private Boolean isInGoalTile;
@@ -96,80 +99,35 @@ public class Sheep extends MovableActor
                 else
                 {
                     // Determine new direction.
-                    List<Direction> directions = this.getDirectionsToNonCollidableTiles();
+                    Direction direction = null;
+                    List<Direction> directions = this.directionsToNonCollidableTiles();
                     
-                    // Check if another sheep is close enough by. If so, move towards it.
-                    Direction direction = this.lookForSheeps( directions );
+                    // Check other sheep.
+                    Actor closestSheep = this.closestActor( this, map.getSheeps() );
+                    
+                    if( closestSheep != null )
+                    {
+                        if( Math.distanceManhattan( this.getPosition(), closestSheep.getPosition() ) <= Sheep.OTHER_SHEEP_DISTANCE &&
+                            java.lang.Math.random() <= Sheep.OTHER_SHEEP_PERCENTAGE )
+                        {
+                            direction = this.directionToActorFromList( this, closestSheep, directions );
+                        }
+                    }
                     
                     if( direction == null )
                     {
                         // Pick a random element.
                         Integer r = ( new Random() ).nextInt( directions.size() );
-                        this.currentDirection = directions.get( r );   
+                        direction = directions.get( r );
                     }
+                    
+                    this.currentDirection = direction;
                 }
             }
 
             this.move( this.currentDirection );
         }
-    }
-    
-    private Direction lookForSheeps( List<Direction> directions )
-    {
-        for( Sheep sheep : GameManager.getInstance().getMap().getSheeps() )
-        {
-            // Check for self.
-            if( this == sheep )
-            {
-                continue;
-            }
-
-            if( Math.distanceManhatten( this.getPosition(), sheep.getPosition() ) <= Sheep.DISTANCE_TO_OTHER_SHEEP )
-            {
-                Direction direction = this.determineClosestDirection( this.getPosition(), sheep.getPosition() );
-                
-                if( directions.contains( direction ) )
-                {
-                    return direction;
-                }
-            }
-        }
-        
-        return null;
-    }
-      
-    private Direction determineClosestDirection( Point p1, Point p2 )
-    {        
-        Integer absX = java.lang.Math.abs( p1.x - p2.x );
-        Integer absY = java.lang.Math.abs( p1.y - p2.y );
-
-        // Move closer on the x-axis.
-        if( absX > absY )
-        {
-            if( p1.x > p2.x )
-            {
-                return Direction.RIGHT;
-            }
-            else
-            {
-                return Direction.LEFT;
-            }
-        }
-        // Move closer on the y-axis.
-        else
-        {
-            if( p1.y > p2.y )
-            {
-                return Direction.UP;
-            }
-            else
-            {
-                return Direction.DOWN;
-            }
-        }
-    }
-
-   
+    }   
     
             /*
             Iterator<Direction> iterator = directions.iterator();

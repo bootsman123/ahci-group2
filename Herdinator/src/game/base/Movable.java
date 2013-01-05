@@ -1,6 +1,7 @@
 package game.base;
 
 import java.awt.Point;
+import game.util.Math;
 
 /**
  *
@@ -16,15 +17,22 @@ public interface Movable
         LEFT( new Point( -1, 0 ) );
 
         private Point vector;
+        private Double angle;
         
         Direction( Point vector )
         {
             this.vector = vector;
+            this.angle = Math.angle( new Point( 0, 0 ), this.vector );
         }
         
         public Point getVector()
         {
             return this.vector;
+        }
+        
+        public Double getAngle()
+        {
+            return this.angle;
         }
         
         public Point toPosition( Point position )

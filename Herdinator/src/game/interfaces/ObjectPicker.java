@@ -114,7 +114,7 @@ public class ObjectPicker
             if( ( mouseX >= c.getX() && mouseX <= c.getX() + cookieWidth) && ( mouseY >= c.getY() && mouseY <= c.getY() + cookieHeight) ){
                 
                 Player owner = c.getOwner();
-                System.out.println("Inside da cookie: " + owner.getId() );
+                //System.out.println("Inside da cookie: " + owner.getId() );
                 GameManager.getInstance().getPlayers().get(0).setObject(c);
             }
         }
@@ -123,7 +123,7 @@ public class ObjectPicker
             int whistleHeight = 1;
             if( ( mouseX >= whistle.getX() && mouseX <= whistle.getX()+ whistleWidth) && ( mouseY >= whistle.getY() && mouseY <= whistle.getY()+ whistleHeight) ){
                 Player owner = whistle.getOwner();
-                System.out.println("Inside da whistle: " + owner.getId());
+                //System.out.println("Inside da whistle: " + owner.getId());
                 GameManager.getInstance().getPlayers().get(0).setObject(whistle);
             }
         }

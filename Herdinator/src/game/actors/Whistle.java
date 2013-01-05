@@ -51,7 +51,8 @@ public class Whistle extends UsableActor
     }
 
     @Override
-    public void use() {
+    public void use()
+    {
         
     }
 }

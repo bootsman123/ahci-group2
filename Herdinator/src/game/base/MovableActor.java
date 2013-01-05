@@ -80,7 +80,7 @@ public abstract class MovableActor extends Actor implements Movable
     {
         float x = (float)( this.movingPositionCurrent.x - 0.5 * this.animation.getWidth() );
         float y = (float)( this.movingPositionCurrent.y - 0.5 * this.animation.getHeight() );
-        this.animation.draw( x, y );            
+        this.animation.draw( x, y );
     }
     
     @Override
@@ -114,7 +114,7 @@ public abstract class MovableActor extends Actor implements Movable
             Point positionTarget = direction.toPosition( positionCurrent );
             
             // Check if the tile in the direction is unoccupied.
-            if( map.doesCollide( positionTarget ) )
+            if( map.isBlocked( positionTarget ) )
             {
                 Logger.getLogger( MovableActor.class.getCanonicalName() ).log( Level.INFO, "Collidable direction given." );
                 return;
@@ -135,22 +135,118 @@ public abstract class MovableActor extends Actor implements Movable
     }
     
     /**
+     * Returns the closest other actor from the list to the given actor.
+     * @param actor
+     * @param actors
+     * @return 
+     */
+    protected Actor closestActor( Actor actor, List<? extends Actor> actors )
+    {
+        Actor closestActor = null;
+        Double closestDistance = Double.MAX_VALUE;
+        
+        for( Actor a : actors )
+        {
+            // Self-comparison.
+            if( actor == a )
+            {
+                continue;
+            }
+            
+            Double d = Math.distanceManhattan( actor.getPosition(), a.getPosition() );
+            
+            if( d < closestDistance )
+            {
+                closestActor = a;
+                closestDistance = d;
+            }
+        }
+        
+        return closestActor;
+    }
+    
+    /**
      * Returns a list of all the directions which are currently not occupied.
      * @return 
      */
-    protected List<Direction> getDirectionsToNonCollidableTiles()
+    protected List<Direction> directionsToNonCollidableTiles()
     {    
         // Fill a list with possible positions.
         List<Direction> directions = new ArrayList<Direction>();
 
         for( Direction direction : Direction.values() )
         {
-            if( !GameManager.getInstance().getMap().doesCollide( direction.toPosition( this.getPosition() ) ) )
+            if( !GameManager.getInstance().getMap().isBlocked( direction.toPosition( this.getPosition() ) ) )
             {
                 directions.add( direction );
             }
         }
         
         return directions;
+    }
+        
+    /**
+     * Returns the best direction from actor a1 to actor a2.
+     * @param p1
+     * @param p2
+     * @return 
+     */
+    protected Direction directionToActor( Actor a1, Actor a2 )
+    {        
+        Integer absX = java.lang.Math.abs( a1.getX() - a2.getX() );
+        Integer absY = java.lang.Math.abs( a1.getY() - a2.getY() );
+
+        // Move closer on the x-axis.
+        if( absX > absY )
+        {
+            if( a1.getX() > a2.getX() )
+            {
+                return Direction.RIGHT;
+            }
+            else
+            {
+                return Direction.LEFT;
+            }
+        }
+        // Move closer on the y-axis.
+        else
+        {
+            if( a1.getY() > a2.getY() )
+            {
+                return Direction.UP;
+            }
+            else
+            {
+                return Direction.DOWN;
+            }
+        }
+    }
+    
+    /**
+     * Returns the best direction from actor a1 to actor a2 given a list of predefined directions.
+     * @param direction
+     * @param p
+     * @return 
+     */
+    protected Direction directionToActorFromList( Actor a1, Actor a2, List<Direction> directions )
+    {
+        Direction bestDirection = null;
+        Double bestAngle = Double.MAX_VALUE;
+        
+        // Determine the best direction.
+        Double angle = Math.angle( a1.getPosition(), a2.getPosition() );
+        
+        for( Direction direction : directions )
+        {
+            Double currentAngle = java.lang.Math.abs( angle - direction.getAngle() );
+            
+            if( currentAngle < bestAngle )
+            {
+                bestAngle = currentAngle;
+                bestDirection = direction;
+            }
+        }
+        
+        return bestDirection;
     }
 }

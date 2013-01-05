@@ -8,6 +8,7 @@ import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
 import game.players.TouchPlayer;
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.pathfinding.AStarPathFinder;
+import org.newdawn.slick.util.pathfinding.Path;
+import org.newdawn.slick.util.pathfinding.PathFinder;
 
 /**
  *
@@ -34,6 +38,9 @@ public class GameManager
     // List of all the players.
     private Integer numberOfPlayers;
     private List<Player> players;
+    
+    // Path finder.
+    private PathFinder pathFinder;
     
     private TuioClient tuioClient;
     private MobilePhoneHandler mobilePhoneHandler;
@@ -88,6 +95,9 @@ public class GameManager
             this.players.add( new MousePlayer( i, Color.blue ) );
             this.map.addObject( this.players.get( i ).getObject() );
         }
+        
+        // Initialize pathfinder.
+        this.pathFinder = new AStarPathFinder( this.map, this.map.getWidthInTiles() + this.map.getHeightInTiles(), false );
     }
     
     /**
@@ -173,6 +183,11 @@ public class GameManager
     public void setNumberOfPlayers( Integer numberOfPlayers )
     {
         this.numberOfPlayers = numberOfPlayers;
+    }
+    
+    public Path pathTo( Point p1, Point p2 )
+    {
+        return this.pathFinder.findPath( null, p1.x, p1.y, p2.x, p2.y );
     }
     
     /**

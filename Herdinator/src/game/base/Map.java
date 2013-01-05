@@ -19,13 +19,15 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.util.pathfinding.PathFindingContext;
+import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
 /**
  * 
  * @author Bas Bootsma
  * @author Roland Meertens
  */
-public class Map
+public class Map implements TileBasedMap
 {
     private static final String CONTROLS_LAYER = "Controls";
     private static final String FARM_AMBIANCE_SOUND_PATH = "../Resources/Sounds/farmambiance.wav";
@@ -362,7 +364,7 @@ public class Map
      * @param position
      * @return 
      */
-    public boolean doesCollide( Point position )
+    public boolean isBlocked( Point position )
     {
         if( this.isCollisionTile( position ) )
         {
@@ -370,10 +372,10 @@ public class Map
         }
         
         // Check collisions with actors.
-        return ( this.doesCollideWithActors( this.sheeps, position ) ||
-                 this.doesCollideWithActors( this.dogs, position ) ||
-                 this.doesCollideWithActors( this.wolves, position ) ||
-                 this.doesCollideWithActors( this.loveSheeps, position ) );
+        return ( this.isBlockedByActors( this.sheeps, position ) ||
+                 this.isBlockedByActors( this.dogs, position ) ||
+                 this.isBlockedByActors( this.wolves, position ) ||
+                 this.isBlockedByActors( this.loveSheeps, position ) );
     }
     
     /**
@@ -382,7 +384,7 @@ public class Map
      * @param position
      * @return 
      */
-    private boolean doesCollideWithActors( List<? extends Actor> actors, Point position )
+    private boolean isBlockedByActors( List<? extends Actor> actors, Point position )
     {
         for( Actor actor : actors )
         {
@@ -429,6 +431,35 @@ public class Map
     public Integer getHeightInPixels()
     {
         return this.heightInPixels; 
+    }
+    
+    @Override
+    public int getWidthInTiles()
+    {
+        return this.map.getWidth();
+    }
+
+    @Override
+    public int getHeightInTiles()
+    {
+        return this.map.getHeight();
+    }
+
+    @Override
+    public void pathFinderVisited( int x, int y )
+    {
+    }
+
+    @Override
+    public boolean blocked( PathFindingContext context, int tx, int ty )
+    {
+        return this.isBlocked( new Point( tx, ty ) );
+    }
+
+    @Override
+    public float getCost( PathFindingContext context, int tx, int ty )
+    {
+        return 1.0f;
     }
 
     /**

@@ -1,10 +1,12 @@
 package game.actors;
 
+import game.base.Actor;
+import game.base.Map;
 import game.base.MovableActor;
 import game.global.GameManager;
+import game.util.Math;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -53,12 +55,14 @@ public class Dog extends MovableActor
             this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 2, 100 ) );
             this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 0, 100 ) );
             this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 1, 100 ) );
-            this.animation = this.animations.get( Direction.DOWN );
         }
         catch( SlickException e )
         {
             Logger.getLogger( Dog.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
-        }        
+        }
+        
+        this.currentDirection = Direction.DOWN;
+        this.animation = this.animations.get( this.currentDirection );
     }
     
     @Override
@@ -67,24 +71,29 @@ public class Dog extends MovableActor
         super.update( delta );
         
         if( !this.isMoving() )
-        {
+        {            
             // Determine new direction.
-            List<Direction> directions = this.getDirectionsToNonCollidableTiles();
-            Iterator<Direction> iterator = directions.iterator();
+            Direction direction = null;
+            List<Direction> directions = this.directionsToNonCollidableTiles();
+            Map map = GameManager.getInstance().getMap();
             
-            while( iterator.hasNext() )
+            // Check whistles.
+            Actor closestWhistle = this.closestActor( this, map.getWhistles() );
+                        
+            if( closestWhistle != null )
             {
-                Direction direction = iterator.next();
-                
-                if( GameManager.getInstance().getMap().isGoalTile( direction.toPosition( this.getPosition() ) ) )
-                {
-                    iterator.remove();
-                }
+                //Double distance = Math.distanceManhattan( this.getPosition(), closestWhistle.getPosition() );
+                direction = this.directionToActorFromList( this, closestWhistle, directions );
             }
             
-            // Pick a random element.
-            Integer r = ( new Random() ).nextInt( directions.size() );
-            this.currentDirection = directions.get( r ); 
+            if( direction == null )
+            {
+                // Pick a random element.
+                Integer r = ( new Random() ).nextInt( directions.size() );
+                direction = directions.get( r ); 
+            }
+            
+            this.currentDirection = direction;
         }
         
         this.move( this.currentDirection );
