@@ -34,10 +34,15 @@
     <property name="Dog" value="1"/>
    </properties>
   </tile>
+  <tile id="5">
+   <properties>
+    <property name="LoveSheep" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Controls" width="50" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3YwQqAIBBFUYva+v+fGyFCi5FcaDPP7oFZBTEvswlTwh8c2buDfkq9Ah5m75EtlwKAFr4TRX0Od+1GPa9H1urfyhPZrBw9c3fkbF5lPXoy1IpMMcdp9KKYw7JKDvV9/jb/FHPMnOdfnXEo/HPAh8c5G+8jAMQyahaMuA8zAiou32eG80AfAAA=
+   H4sIAAAAAAAAA+3Y0QqAIAyFYYvqsvd/3AgRulgkpG3H/g92FcROaQtTwh8su3cH9ZR6BTz03iPTngt4a2MdDYvvRFaew1mzUdfrkd31b+WJrFeOmrnbcjaP8j5qMpSKTDHHavSimMMySg71ff40/xRz9JznX51xKPxzwIfHORvrEQBiaTULWtyHGQEVB6iS0TVAHwAA
   </data>
  </layer>
  <layer name="Ground" width="50" height="40">

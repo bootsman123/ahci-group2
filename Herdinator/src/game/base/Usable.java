@@ -1,14 +1,27 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package game.base;
+
+import game.base.listeners.UseListener;
 
 /**
  *
  * @author roland
  */
-public interface Usable {
+public interface Usable
+{    
+    /**
+     * Add a use listener.
+     * @param listener 
+     */
+    public void addUseListener( UseListener listener );
+    
+    /**
+     * Remove a use listener.
+     * @param listener 
+     */
+    public void removeUseListener( UseListener listener );
+    
+    /**
+     * Uses the actor and fires the associated listeners.
+     */ 
     public void use();
 }

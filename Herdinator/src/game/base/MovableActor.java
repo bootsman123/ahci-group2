@@ -18,6 +18,11 @@ import org.newdawn.slick.Graphics;
  */
 public abstract class MovableActor extends Actor implements Movable
 {
+    public enum Act
+    {
+        IDLING, MOVING, ACTING, NONE
+    }
+    
     private Double speed;
     
     // Map of all directions to animations.
@@ -25,11 +30,12 @@ public abstract class MovableActor extends Actor implements Movable
     protected Animation animation;
     protected java.util.Map<Direction, Animation> animations;
     
-    private boolean isMoving;
     private Double movingTime;
     private Point2D.Double movingPositionInitial;
     private Point2D.Double movingPositionCurrent;
     private Point2D.Double movingPositionTarget;
+    
+    protected Act act;
            
     /**
      * Constructor.
@@ -44,7 +50,6 @@ public abstract class MovableActor extends Actor implements Movable
         
         this.animations = new EnumMap<Direction, Animation>( Direction.class );
         
-        this.isMoving = false;
         this.movingTime = 0.0;
         
         // Current map.
@@ -53,6 +58,8 @@ public abstract class MovableActor extends Actor implements Movable
         this.movingPositionInitial = map.toPositionInPixels( this.getX(), this.getY() );
         this.movingPositionCurrent = map.toPositionInPixels( this.getX(), this.getY() );
         this.movingPositionTarget = map.toPositionInPixels( this.getX(), this.getY() );
+        
+        this.act = Act.NONE;
     }
     
     public MovableActor()
@@ -70,9 +77,19 @@ public abstract class MovableActor extends Actor implements Movable
         return this.speed;
     }
     
+    public Boolean isIdling()
+    {
+        return ( this.act == Act.IDLING );
+    }
+    
     public Boolean isMoving()
     {
-        return this.isMoving;
+        return ( this.act == Act.MOVING );
+    }
+    
+    public Boolean isActing()
+    {
+        return ( this.act == Act.ACTING );
     }
     
     @Override
@@ -91,7 +108,7 @@ public abstract class MovableActor extends Actor implements Movable
             // Check if the target position has been reached.
             if( this.movingPositionCurrent.equals( this.movingPositionTarget ) )
             {
-                this.isMoving = false;
+                this.act = Act.NONE;
                 this.movingTime = 0.0;
                 return;
             }
@@ -125,7 +142,7 @@ public abstract class MovableActor extends Actor implements Movable
             this.movingPositionCurrent = map.toPositionInPixels( positionCurrent.x, positionCurrent.y );
             this.movingPositionTarget = map.toPositionInPixels( positionTarget.x , positionTarget.y );
                         
-            this.isMoving = true;
+            this.act = Act.MOVING;
             this.animation = this.animations.get( direction );            
             
             // The actor is already 'located' at the target position to make 
@@ -184,6 +201,29 @@ public abstract class MovableActor extends Actor implements Movable
         
         return directions;
     }
+    
+    /**
+     * Returns a list of all the directions which are currently not occupied and reside within the goal area.
+     * @return 
+     */
+    protected List<Direction> directionsToNonCollidableGoalTiles()
+    {
+        // Fill a list with possible positions.
+        Map map = GameManager.getInstance().getMap();
+        List<Direction> directions = new ArrayList<Direction>();
+
+        for( Direction direction : Direction.values() )
+        {
+            if( !map.isBlocked( direction.toPosition( this.getPosition() ) ) &&
+                map.isGoalTile( this.getPosition() ) )
+            {
+                directions.add( direction );
+            }
+        }
+        
+        return directions;
+    }
+        
         
     /**
      * Returns the best direction from actor a1 to actor a2.
@@ -290,14 +330,14 @@ public abstract class MovableActor extends Actor implements Movable
      * @param percentage
      * @return 
      */
-    protected Direction directionTowardsClosestActorFromList( Actor actor, List<? extends Actor> actors, List<Direction> directions, Integer distance, Double percentage )
+    protected Direction directionTowardsClosestActorFromList( Actor actor, List<? extends Actor> actors, List<Direction> directions, Integer distance, Double obeyance )
     {
         Actor closestActor = this.closestActor( actor, actors );
         
         if( closestActor != null )
         {
             if( Math.distanceManhattan( actor.getPosition(), closestActor.getPosition() ) <= distance &&
-                java.lang.Math.random() <= percentage )
+                java.lang.Math.random() <= obeyance )
             {
                 return this.directionTowardsActorFromList( actor, closestActor, directions );
             }
@@ -315,14 +355,14 @@ public abstract class MovableActor extends Actor implements Movable
      * @param percentage
      * @return 
      */
-    protected Direction directionAwayFromClosestActorFromList( Actor actor, List<? extends Actor> actors, List<Direction> directions, Integer distance, Double percentage )
+    protected Direction directionAwayFromClosestActorFromList( Actor actor, List<? extends Actor> actors, List<Direction> directions, Integer distance, Double obeyance )
     {
         Actor closestActor = this.closestActor( actor, actors );
         
         if( closestActor != null )
         {
             if( Math.distanceManhattan( actor.getPosition(), closestActor.getPosition() ) <= distance &&
-                java.lang.Math.random() <= percentage )
+                java.lang.Math.random() <= obeyance )
             {
                 return this.directionAwayFromActorFromList( this, closestActor, directions );
             }
