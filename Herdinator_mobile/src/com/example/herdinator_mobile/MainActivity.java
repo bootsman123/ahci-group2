@@ -21,6 +21,12 @@ public class MainActivity extends Activity {
             R.drawable.flute
     };
     
+    String[] object_strings = {
+    		"fence",
+    		"bridge",
+    		"flute"
+    };
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +44,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
             {                
             	Intent intent = new Intent(getBaseContext(), SelectedObjectActivity.class);
-            	intent.putExtra("imageID", imageIDs[position]);
+            	((HerdinatorApplication)getApplication()).setSelected_object(object_strings[position]);
             	startActivity(intent);
             }
         });        
