@@ -348,7 +348,7 @@ public abstract class MovableActor extends Actor implements Movable
             if( Math.distanceManhattan( actor.getPosition(), closestActor.getPosition() ) <= distance &&
                 java.lang.Math.random() <= obeyance )
             {
-                return this.directionAwayFromActorFromList( this, closestActor, directions );
+                return this.directionAwayFromActorFromList( actor, closestActor, directions );
             }
         }
         
