@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="25" height="20" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="RPGmakerXPMegaTileset" tilewidth="32" tileheight="32">
-  <image source="../Images/Tilesets/RPGmakerXPMegaTileset.png" width="256" height="15300"/>
+  <image source="../Images/Tilesets/RPGmakerXP1.png" width="256" height="4736"/>
  </tileset>
- <tileset firstgid="3825" name="ControlsTileset" tilewidth="32" tileheight="32">
+ <tileset firstgid="1185" name="ControlsTileset" tilewidth="32" tileheight="32">
   <image source="../Images/Tilesets/ControlsTileset.png" width="128" height="64"/>
   <tile id="0">
    <properties>
@@ -33,7 +33,7 @@
  </tileset>
  <layer name="Controls" width="25" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGBzgIx9t1Q8W8HWQuRvknsHmJmzgC4lu/ISkHubHrwTE8AFC6Q2fOdQK31E7MAGueKFGnJMDCJk/VMstegJy4ojYcEVPD8MNAABTkE+30AcAAA==
+   H4sIAAAAAAAAA2NgGBxgIQtt1Q8WsHSQuRvknsHmJmxgCYluXISkHubHpQTE8AFC6Q2fOdQK31E7MAGueKFGnJMDCJk/VMstegJy4ojYcEVPD8MNAAAXX2Ek0AcAAA==
   </data>
  </layer>
  <layer name="Underground" width="25" height="20">
@@ -48,12 +48,12 @@
  </layer>
  <layer name="Objects" width="25" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgoB9YysHAsAyIlwPxCg7a2LEWaO46IF4PxBtItOMJC3HqtgLN3QbE24F4B4l2vCHSjr1Ac/cB8X4gPkCjsDoKNPcYEB8H4hM0smMUjILBAqayQDAtwVwWCB4F5INJwPCbSKMwnIrEnjkM4wkAffvzr9AHAAA=
+   H4sIAAAAAAAAA2NgoB/QBGItINYGYh0a2WEIxEZAbAzEJjSywxKIrYDYGohtaGSHIxA7AbEzELvQyA5PIPYCYm8g9qGRHaNgFAwWMJUFgmkJ5rJA8CggH0wCht9EGoXhVCT2zGEYTwANI74h0AcAAA==
   </data>
  </layer>
  <layer name="Foliage" width="25" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGBiwgmOALB4FGGDpQDtgkIEZA+0AKoDpA+2AUTDowCQoPZtG5k8G4jlAPItG5sPcDTJ/Cgn6njCRZs9k0pTDwWMS7aEFAABXmQ1C0AcAAA==
+   H4sIAAAAAAAAA2NgGAUjHSwdaAcMMjBjoB1ABTB9oB0wCgYdmASlZ9PI/MlAPAeIZ9HIfJi7QeZPIUHfEybS7JlMmnI4eEyiPbQAAKTrGLnQBwAA
   </data>
  </layer>
 </map>
