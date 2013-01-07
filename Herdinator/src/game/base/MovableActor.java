@@ -18,11 +18,6 @@ import org.newdawn.slick.Graphics;
  */
 public abstract class MovableActor extends Actor implements Movable
 {
-    public enum Act
-    {
-        IDLING, MOVING, ACTING, NONE
-    }
-    
     private Double speed;
     
     // Map of all directions to animations.
@@ -30,12 +25,11 @@ public abstract class MovableActor extends Actor implements Movable
     protected Animation animation;
     protected java.util.Map<Direction, Animation> animations;
     
+    private Boolean isMoving;
     private Double movingTime;
     private Point2D.Double movingPositionInitial;
     private Point2D.Double movingPositionCurrent;
     private Point2D.Double movingPositionTarget;
-    
-    protected Act act;
            
     /**
      * Constructor.
@@ -59,7 +53,7 @@ public abstract class MovableActor extends Actor implements Movable
         this.movingPositionCurrent = map.toPositionInPixels( this.getX(), this.getY() );
         this.movingPositionTarget = map.toPositionInPixels( this.getX(), this.getY() );
         
-        this.act = Act.NONE;
+        this.isMoving = false;
     }
     
     public MovableActor()
@@ -77,19 +71,9 @@ public abstract class MovableActor extends Actor implements Movable
         return this.speed;
     }
     
-    public Boolean isIdling()
-    {
-        return ( this.act == Act.IDLING );
-    }
-    
     public Boolean isMoving()
     {
-        return ( this.act == Act.MOVING );
-    }
-    
-    public Boolean isActing()
-    {
-        return ( this.act == Act.ACTING );
+        return this.isMoving;
     }
     
     @Override
@@ -101,21 +85,6 @@ public abstract class MovableActor extends Actor implements Movable
     }
     
     @Override
-    public void update( int delta )
-    {
-        super.update( delta );
-        
-        if( this.isIdling() )
-        {
-            
-        }
-        else if( this.isActing() )
-        {
-            
-        }
-    }
-    
-    @Override
     public void move( Direction direction )
     {
         if( this.isMoving() )
@@ -123,7 +92,7 @@ public abstract class MovableActor extends Actor implements Movable
             // Check if the target position has been reached.
             if( this.movingPositionCurrent.equals( this.movingPositionTarget ) )
             {
-                this.act = Act.NONE;
+                this.isMoving = false;
                 this.movingTime = 0.0;
                 return;
             }
@@ -148,7 +117,7 @@ public abstract class MovableActor extends Actor implements Movable
             // Check if the tile in the direction is unoccupied.
             if( map.isBlocked( positionTarget ) )
             {
-                Logger.getLogger( MovableActor.class.getCanonicalName() ).log( Level.INFO, "Collidable direction given." );
+                Logger.getLogger( MovableActor.class.getName() ).log( Level.INFO, "Collidable direction given." );
                 return;
             }
             
@@ -157,7 +126,7 @@ public abstract class MovableActor extends Actor implements Movable
             this.movingPositionCurrent = map.toPositionInPixels( positionCurrent.x, positionCurrent.y );
             this.movingPositionTarget = map.toPositionInPixels( positionTarget.x , positionTarget.y );
                         
-            this.act = Act.MOVING;
+            this.isMoving = true;
             this.animation = this.animations.get( direction );            
             
             // The actor is already 'located' at the target position to make 
