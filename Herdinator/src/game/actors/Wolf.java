@@ -15,7 +15,7 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class Wolf extends MovableActor
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/wolves_animation.png";
+    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/wolves_animation.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );

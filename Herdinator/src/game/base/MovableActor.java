@@ -105,7 +105,14 @@ public abstract class MovableActor extends Actor implements Movable
     {
         super.update( delta );
         
-        
+        if( this.isIdling() )
+        {
+            
+        }
+        else if( this.isActing() )
+        {
+            
+        }
     }
     
     @Override

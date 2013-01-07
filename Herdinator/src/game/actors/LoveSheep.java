@@ -21,7 +21,7 @@ import java.util.Random;
  */
 public class LoveSheep extends MovableActor implements UseListener
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/sheeps_animation.png";
+    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/sheeps_animation.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );

@@ -77,15 +77,11 @@ public class GameManager
         this.maps = new ArrayList<Map>();
 
         // Level 1.
-        this.maps.add( new Map( "../Resources/Maps/level1.tmx" ) );
+        this.maps.add( new Map( "../Resources/Maps/Level1.tmx" ) );
         
         this.map = this.maps.get( 0 ); // @TODO: Fugly solution.
         
         this.maps.get( 0 ).init( container, game );
-
-        // Level 2.
-        //this.maps.add( new Map( "../Resources/Maps/level2.tmx" ) );
-        //this.maps.get( 1 ).init( container, game );
                 
         // Initialize players.
         this.players = new ArrayList<Player>();

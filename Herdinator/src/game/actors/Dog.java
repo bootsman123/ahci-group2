@@ -21,12 +21,15 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class Dog extends MovableActor implements UseListener
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/dogs_animation.png";
+    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/dogs_animation.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
     private static final Double SPEED = 0.005;
+    
+    private static final Integer WHISTLE_DISTANCE = 200;
+    private static final Double WHISTLE_OBEYANCE = 0.8;
     
     private Direction currentDirection;
 
@@ -78,7 +81,7 @@ public class Dog extends MovableActor implements UseListener
             Map map = GameManager.getInstance().getMap();
             
             // Check whistles.
-            direction = this.directionTowardsClosestActorFromList( this, map.getWhistles(), directions, 200, 0.8 );
+            direction = this.directionTowardsClosestActorFromList( this, map.getWhistles(), directions, Dog.WHISTLE_DISTANCE, Dog.WHISTLE_OBEYANCE );
             
             if( direction == null )
             {                

@@ -19,7 +19,7 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class Sheep extends MovableActor
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/sheeps_animation.png";
+    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/sheeps_animation.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
@@ -30,14 +30,12 @@ public class Sheep extends MovableActor
     private static final Integer OTHER_SHEEP_DISTANCE = 6;
     private static final Double OTHER_SHEEP_OBEYANCE = 0.5;
     
-    private static final Integer DOG_DISTANCE = 12;
+    private static final Integer DOG_DISTANCE = 10;
     private static final Double DOG_OBEYANCE = 0.9;
     
     private static final Integer LOVE_SHEEP_DISTANCE = 8;
     private static final Double LOVE_SHEEP_OBEYANCE = 0.7;
     
-    private static final Double IDLE_PERCENTAGE = 0.1;
-
     private Direction currentDirection;
 
     /**
