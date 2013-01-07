@@ -101,6 +101,14 @@ public abstract class MovableActor extends Actor implements Movable
     }
     
     @Override
+    public void update( int delta )
+    {
+        super.update( delta );
+        
+        
+    }
+    
+    @Override
     public void move( Direction direction )
     {
         if( this.isMoving() )

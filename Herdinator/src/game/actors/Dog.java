@@ -1,7 +1,9 @@
 package game.actors;
 
+import game.base.Actor;
 import game.base.Map;
 import game.base.MovableActor;
+import game.base.listeners.UseListener;
 import game.global.GameManager;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
@@ -17,7 +19,7 @@ import org.newdawn.slick.SpriteSheet;
  *
  * @author bootsman
  */
-public class Dog extends MovableActor
+public class Dog extends MovableActor implements UseListener
 {
     private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/dogs_animation.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
@@ -89,5 +91,10 @@ public class Dog extends MovableActor
         }
         
         this.move( this.currentDirection );
+    }
+
+    @Override
+    public void onUse( Actor actor )
+    {
     }
 }

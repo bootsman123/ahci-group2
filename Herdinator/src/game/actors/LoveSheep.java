@@ -1,7 +1,9 @@
 package game.actors;
 
+import game.base.Actor;
 import game.base.Map;
 import game.base.MovableActor;
+import game.base.listeners.UseListener;
 import game.global.GameManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +19,7 @@ import java.util.Random;
  *
  * @author roland
  */
-public class LoveSheep extends MovableActor
+public class LoveSheep extends MovableActor implements UseListener
 {
     private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/sheeps_animation.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
@@ -91,5 +93,12 @@ public class LoveSheep extends MovableActor
         }
         
         this.move( this.currentDirection );
+    }
+
+    @Override
+    public void onUse( Actor actor )
+    {
+        // It's a cookie, so:
+        // Cookie cookie = (Cookie)actor;
     }
 }

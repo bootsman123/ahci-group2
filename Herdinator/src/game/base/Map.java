@@ -264,12 +264,26 @@ public class Map implements TileBasedMap
         {
             Cookie cookie = (Cookie)object;
             cookie.init();
+            
+            // Add listeners.
+            for( LoveSheep loveSheep : this.loveSheeps )
+            {
+                cookie.addUseListener( loveSheep );
+            }
+            
             this.cookies.add( cookie );
         }
         else if( object instanceof Whistle )
         {
             Whistle whistle = (Whistle)object;
             whistle.init();
+            
+            // Add listeners.
+            for( Dog dog : this.dogs )
+            {
+                whistle.addUseListener( dog );
+            }
+            
             this.whistles.add( whistle );
         }
     }
