@@ -20,8 +20,6 @@ public abstract class Player {
         this.id = id;
         Point startingPoint = new Point(0,0);
         this.color = color;
-        this.object = new Whistle(startingPoint, this );
-        
     }
 
     public Integer getId(){
@@ -30,9 +28,9 @@ public abstract class Player {
 
     
     public void setObject(UsableActor newObject) throws SlickException{
-        GameManager.getInstance().getMap().removeObject(this.object);//@TODO: do not let the player object remove the current object from the map?
+        GameManager.getInstance().getMap().removeUsableActor(this.object);//@TODO: do not let the player object remove the current object from the map?
         this.object = newObject;
-        GameManager.getInstance().getMap().addObject(this.object);
+        GameManager.getInstance().getMap().addUsableActor(this.object);
     }
 
     public UsableActor getObject(){

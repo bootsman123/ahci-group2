@@ -30,10 +30,15 @@
     <property name="Collision" value="1"/>
    </properties>
   </tile>
+  <tile id="5">
+   <properties>
+    <property name="Goal" value="1"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Controls" width="25" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGBxgIQtt1Y8C7GApCwQPdrCERDcugqqH+Q/dj7jEcQF86Y2QGdQI31E7sANs8UKtOCcHEDJ/tNwiDMiJI2LDFdncoVDukQoA4oN26tAHAAA=
+   H4sIAAAAAAAAA2NgGBxgIQtt1Y8C7GApCwQPdrCERDcugqqH+Q+ElyFhZHFiAL70hm42OqZG+I7agR1gixdqxTk5gJD5o+UWYUBOHBEbrsjmDoVyj1QAADjqnQ/QBwAA
   </data>
  </layer>
  <layer name="Underground" width="25" height="20">

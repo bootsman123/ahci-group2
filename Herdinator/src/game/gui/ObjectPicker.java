@@ -1,4 +1,4 @@
-package game.interfaces;
+package game.gui;
 
 import game.actors.Cookie;
 import game.actors.Whistle;
@@ -63,13 +63,13 @@ public class ObjectPicker
             if(p instanceof MousePlayer){
                 Point startingPoint = new Point(ObjectPicker.MAP_POSITION_X,ObjectPicker.MAP_POSITION_Y+(p.getId()*NEXT_OBJECT_DIFFERENCE)); //@TODO: set all the locations right
                 
-                Cookie cookie = new Cookie(startingPoint, p);
+                Cookie cookie = new Cookie(startingPoint, p, false);
                 
                 this.cookies.add(cookie);
                 cookie.init();
 
                 startingPoint = new Point(ObjectPicker.MAP_POSITION_X,ObjectPicker.MAP_POSITION_Y+(p.getId()*NEXT_OBJECT_DIFFERENCE)+3); //@TODO: set all the locations right
-                Whistle whistle = new Whistle(startingPoint, p);
+                Whistle whistle = new Whistle(startingPoint, p, false);
                 
                 this.whistles.add(whistle);
                 whistle.init();
@@ -114,6 +114,14 @@ public class ObjectPicker
             if( ( mouseX >= c.getX() && mouseX <= c.getX() + cookieWidth) && ( mouseY >= c.getY() && mouseY <= c.getY() + cookieHeight) ){
                 
                 Player owner = c.getOwner();
+
+                for (Whistle whistle : whistles){
+                    if (whistle.getOwner().equals(owner)){
+                        Point startingPoint = new Point(ObjectPicker.MAP_POSITION_X,ObjectPicker.MAP_POSITION_Y+(owner.getId()*NEXT_OBJECT_DIFFERENCE)+3); //@TODO: set all the locations right
+                        whistle.setPosition(startingPoint);
+                    }
+                }
+                
                 //System.out.println("Inside da cookie: " + owner.getId() );
                 GameManager.getInstance().getPlayers().get(0).setObject(c);
             }
@@ -123,7 +131,12 @@ public class ObjectPicker
             int whistleHeight = 1;
             if( ( mouseX >= whistle.getX() && mouseX <= whistle.getX()+ whistleWidth) && ( mouseY >= whistle.getY() && mouseY <= whistle.getY()+ whistleHeight) ){
                 Player owner = whistle.getOwner();
-                //System.out.println("Inside da whistle: " + owner.getId());
+                for (Cookie cookie : cookies){
+                    if (cookie.getOwner().equals(owner)){
+                        Point startingPoint = new Point(ObjectPicker.MAP_POSITION_X,ObjectPicker.MAP_POSITION_Y+(owner.getId()*NEXT_OBJECT_DIFFERENCE)); //@TODO: set all the locations right
+                        cookie.setPosition(startingPoint);
+                    }
+                }
                 GameManager.getInstance().getPlayers().get(0).setObject(whistle);
             }
         }

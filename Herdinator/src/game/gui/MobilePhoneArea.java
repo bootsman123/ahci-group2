@@ -1,4 +1,4 @@
-package game.interfaces;
+package game.gui;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -70,5 +70,16 @@ public class MobilePhoneArea extends AbstractComponent
     public int getHeight()
     {
         return (int)this.area.getHeight();
+    }
+    
+    /**
+     * Returns true if a position (x, y) is contained within the area.
+     * @param x
+     * @param y
+     * @return 
+     */
+    public boolean contains( int x, int y )
+    {
+        return this.area.contains( x, y );
     }
 }

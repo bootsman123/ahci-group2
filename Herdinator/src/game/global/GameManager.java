@@ -3,7 +3,7 @@ package game.global;
 import TUIO.TuioClient;
 import game.base.Map;
 import game.base.UsableActor;
-import game.interfaces.MobilePhoneHandler;
+import game.gui.MobilePhoneHandler;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
@@ -38,9 +38,6 @@ public class GameManager
     // List of all the players.
     private Integer numberOfPlayers;
     private List<Player> players;
-    
-    // Path finder.
-    private PathFinder pathFinder;
     
     private TuioClient tuioClient;
     private MobilePhoneHandler mobilePhoneHandler;
@@ -89,11 +86,8 @@ public class GameManager
         for( Integer i = 0; i < this.numberOfPlayers; i++ )
         {
             this.players.add( new MousePlayer( i, Color.blue ) );
-            this.map.addObject( this.players.get( i ).getObject() );
+            this.map.addUsableActor( this.players.get( i ).getObject() );
         }
-        
-        // Initialize pathfinder.
-        this.pathFinder = new AStarPathFinder( this.map, this.map.getWidthInTiles() + this.map.getHeightInTiles(), false );
     }
     
     /**
@@ -179,11 +173,6 @@ public class GameManager
     public void setNumberOfPlayers( Integer numberOfPlayers )
     {
         this.numberOfPlayers = numberOfPlayers;
-    }
-    
-    public Path pathTo( Point p1, Point p2 )
-    {
-        return this.pathFinder.findPath( null, p1.x, p1.y, p2.x, p2.y );
     }
     
     /**
