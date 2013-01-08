@@ -1,19 +1,21 @@
 package game.actors;
 
-import game.base.ImmovableActor;
+import game.base.UsableActor;
+import game.base.listeners.UseListener;
+import game.players.Player;
+import game.util.SpriteSheetUtil;
+import java.awt.Point;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import game.util.SpriteSheetUtil;
-import java.awt.Point;
 
 /**
  *
  * @author roland
  */
-public class Whistle extends ImmovableActor
+public class Whistle extends UsableActor
 {
     private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/whistle.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
@@ -25,9 +27,9 @@ public class Whistle extends ImmovableActor
      * @param position
      * @throws SlickException 
      */
-    public Whistle( Point position ) throws SlickException
+    public Whistle( Point position, Player owner ) throws SlickException
     {
-        super( position );
+        super( position, owner );
     }
     
     @Override
@@ -46,6 +48,19 @@ public class Whistle extends ImmovableActor
         catch( SlickException e )
         {
             Logger.getLogger( Whistle.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
+        }
+    }
+
+    @Override
+    public void use()
+    {
+        // Play sound.
+        // ...
+        
+        // Fire listeners.
+        for( UseListener listener : this.useListeners )
+        {
+            listener.onUse( this );
         }
     }
 }

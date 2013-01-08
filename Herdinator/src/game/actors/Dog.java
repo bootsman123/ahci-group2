@@ -1,10 +1,12 @@
 package game.actors;
 
+import game.base.Actor;
+import game.base.Map;
 import game.base.MovableActor;
+import game.base.listeners.UseListener;
 import game.global.GameManager;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -17,14 +19,17 @@ import org.newdawn.slick.SpriteSheet;
  *
  * @author bootsman
  */
-public class Dog extends MovableActor
+public class Dog extends MovableActor implements UseListener
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/dogs_animation.png";
+    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/dogs_animation.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.005;
+    private static final Double SPEED = 0.003;
+    
+    private static final Integer WHISTLE_DISTANCE = 200;
+    private static final Double WHISTLE_OBEYANCE = 0.8;
     
     private Direction currentDirection;
 
@@ -53,12 +58,14 @@ public class Dog extends MovableActor
             this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 2, 100 ) );
             this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 0, 100 ) );
             this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 1, 100 ) );
-            this.animation = this.animations.get( Direction.DOWN );
         }
         catch( SlickException e )
         {
             Logger.getLogger( Dog.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
-        }        
+        }
+        
+        this.currentDirection = Direction.DOWN;
+        this.animation = this.animations.get( this.currentDirection );
     }
     
     @Override
@@ -67,26 +74,30 @@ public class Dog extends MovableActor
         super.update( delta );
         
         if( !this.isMoving() )
-        {
+        {            
             // Determine new direction.
-            List<Direction> directions = this.getDirectionsToNonCollidableTiles();
-            Iterator<Direction> iterator = directions.iterator();
+            Direction direction;
+            List<Direction> directions = this.directionsToNonCollidableTiles();
+            Map map = GameManager.getInstance().getMap();
             
-            while( iterator.hasNext() )
-            {
-                Direction direction = iterator.next();
-                
-                if( GameManager.getInstance().getMap().isGoalTile( direction.toPosition( this.getPosition() ) ) )
-                {
-                    iterator.remove();
-                }
+            // Check whistles.
+            direction = this.directionTowardsClosestActorFromList( this, map.getWhistles(), directions, Dog.WHISTLE_DISTANCE, Dog.WHISTLE_OBEYANCE );
+            
+            if( direction == null )
+            {                
+                // Pick a random element.
+                Integer r = ( new Random() ).nextInt( directions.size() );
+                direction = directions.get( r ); 
             }
             
-            // Pick a random element.
-            Integer r = ( new Random() ).nextInt( directions.size() );
-            this.currentDirection = directions.get( r ); 
+            this.currentDirection = direction;
         }
         
         this.move( this.currentDirection );
+    }
+
+    @Override
+    public void onUse( Actor actor )
+    {
     }
 }

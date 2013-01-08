@@ -1,6 +1,7 @@
 package game.players;
 
 import java.awt.geom.Point2D;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -16,9 +17,9 @@ public class MobilePhonePlayer extends Player
      * @param id Mark identifier.
      * @throws SlickException 
      */
-    public MobilePhonePlayer( Integer id ) throws SlickException
+    public MobilePhonePlayer( Integer id, Color color ) throws SlickException
     {
-        super( id ); 
+        super( id, color );
         this.mobilePhoneLocation = null;
     }
     

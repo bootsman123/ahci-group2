@@ -66,7 +66,7 @@ public class ServerHandlerServlet extends HttpServlet
                 
                 // Set response.
                 success = Boolean.TRUE;
-                json.put( "markId", player.getId() );
+                json.put( "phoneId", player.getId().toString() );
             }
             
             // Set response.
@@ -152,7 +152,5 @@ public class ServerHandlerServlet extends HttpServlet
         PrintWriter writer = response.getWriter();
         writer.write( json.toJSONString() );
         writer.close();
-        
-        System.out.println( json.toJSONString() );
     }
 }

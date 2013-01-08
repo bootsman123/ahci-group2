@@ -19,13 +19,15 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.util.pathfinding.PathFindingContext;
+import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
 /**
  * 
  * @author Bas Bootsma
  * @author Roland Meertens
  */
-public class Map
+public class Map implements TileBasedMap
 {
     private static final String CONTROLS_LAYER = "Controls";
     private static final String FARM_AMBIANCE_SOUND_PATH = "../Resources/Sounds/farmambiance.wav";
@@ -74,6 +76,12 @@ public class Map
         this.whistles = new ArrayList<Whistle>();
     }
     
+    /**
+     * Initialize.
+     * @param container
+     * @param game
+     * @throws SlickException 
+     */
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
         // Initialize sound.
@@ -161,10 +169,17 @@ public class Map
         this.initActors( this.dogs );
         this.initActors( this.wolves );
         this.initActors( this.loveSheeps );
-        this.initActors( this.cookies );
-        this.initActors( this.whistles );
+        //this.initActors( this.cookies );
+        //this.initActors( this.whistles );
     }
     
+    /**
+     * Render.
+     * @param container
+     * @param game
+     * @param g
+     * @throws SlickException 
+     */
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );
@@ -178,7 +193,13 @@ public class Map
         this.renderActors( this.whistles, g );
     }
 
-    
+    /**
+     * Update.
+     * @param container
+     * @param game
+     * @param delta
+     * @throws SlickException 
+     */
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
         if( container.isPaused() )
@@ -230,6 +251,56 @@ public class Map
         for( Actor actor : actors )
         {
             actor.update( delta );
+        }
+    }
+    
+    /**
+     * Add a new object to the map.
+     * @param object 
+     */
+    public void addObject( UsableActor object )
+    {
+        if( object instanceof Cookie )
+        {
+            Cookie cookie = (Cookie)object;
+            cookie.init();
+            
+            // Add listeners.
+            for( LoveSheep loveSheep : this.loveSheeps )
+            {
+                cookie.addUseListener( loveSheep );
+            }
+            
+            this.cookies.add( cookie );
+        }
+        else if( object instanceof Whistle )
+        {
+            Whistle whistle = (Whistle)object;
+            whistle.init();
+            
+            // Add listeners.
+            for( Dog dog : this.dogs )
+            {
+                whistle.addUseListener( dog );
+            }
+            
+            this.whistles.add( whistle );
+        }
+    }
+
+    /**
+     * Remove an object from the map.
+     * @param oldObject 
+     */
+    public void removeObject( UsableActor object )
+    {
+        if( object instanceof Cookie )
+        {
+            this.cookies.remove( (Cookie)object );
+        }
+        else if( object instanceof Whistle )
+        {
+            this.whistles.remove( (Whistle)object );
         }
     }
     
@@ -302,14 +373,12 @@ public class Map
        return this.goals.containsKey( position );
     }
     
-
-    
     /**
      * Returns true if the given position collides with either a collision tile or with an actor.
      * @param position
      * @return 
      */
-    public boolean doesCollide( Point position )
+    public boolean isBlocked( Point position )
     {
         if( this.isCollisionTile( position ) )
         {
@@ -317,10 +386,10 @@ public class Map
         }
         
         // Check collisions with actors.
-        return ( this.doesCollideWithActors( this.sheeps, position ) ||
-                 this.doesCollideWithActors( this.dogs, position ) ||
-                 this.doesCollideWithActors( this.wolves, position ) ||
-                 this.doesCollideWithActors( this.loveSheeps, position ) );
+        return ( this.isBlockedByActors( this.sheeps, position ) ||
+                 this.isBlockedByActors( this.dogs, position ) ||
+                 this.isBlockedByActors( this.wolves, position ) ||
+                 this.isBlockedByActors( this.loveSheeps, position ) );
     }
     
     /**
@@ -329,7 +398,7 @@ public class Map
      * @param position
      * @return 
      */
-    private boolean doesCollideWithActors( List<? extends Actor> actors, Point position )
+    private boolean isBlockedByActors( List<? extends Actor> actors, Point position )
     {
         for( Actor actor : actors )
         {
@@ -376,6 +445,35 @@ public class Map
     public Integer getHeightInPixels()
     {
         return this.heightInPixels; 
+    }
+    
+    @Override
+    public int getWidthInTiles()
+    {
+        return this.map.getWidth();
+    }
+
+    @Override
+    public int getHeightInTiles()
+    {
+        return this.map.getHeight();
+    }
+
+    @Override
+    public void pathFinderVisited( int x, int y )
+    {
+    }
+
+    @Override
+    public boolean blocked( PathFindingContext context, int tx, int ty )
+    {
+        return this.isBlocked( new Point( tx, ty ) );
+    }
+
+    @Override
+    public float getCost( PathFindingContext context, int tx, int ty )
+    {
+        return 1.0f;
     }
 
     /**
@@ -431,48 +529,4 @@ public class Map
     {
         return this.cookies;
     }
-
-    public void addObject(ImmovableActor newObject) {
-        if(newObject instanceof Cookie){
-            Cookie cookie = (Cookie)newObject;
-            this.cookies.add(cookie);
-            cookie.init();
-        }
-        else if(newObject instanceof Whistle){
-            Whistle whistle = ((Whistle)newObject);
-            this.whistles.add(whistle);
-            whistle.init();
-        }
-    }
-
-    public void removeObject(ImmovableActor oldObject) {
-        if(oldObject instanceof Cookie){
-            this.cookies.remove((Cookie)oldObject);
-        }
-        else if(oldObject instanceof Whistle){
-            this.whistles.remove((Whistle)oldObject);
-        }
-    }
 }
-
-    
-
-  
-    
-
-    
-/*
-    public void setActingPosition(int x, int y, int playerID) {
-        System.out.println("Updating the object to pos " + x + " " + y);
-        for(Cookie cookie : cookies){
-            if (cookie.getOwnerID() == playerID){
-                cookie.setPosition(new Point2D.Double(x,y));
-            }
-        }
-        for(Whistle cookie : whistles){
-            if (cookie.getOwnerID() == playerID){
-                cookie.setPosition(new Point2D.Double(x,y));
-            }
-        }
-    }
-    * */

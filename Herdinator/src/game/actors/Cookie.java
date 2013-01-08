@@ -1,6 +1,7 @@
 package game.actors;
 
-import game.base.ImmovableActor;
+import game.base.UsableActor;
+import game.players.Player;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.util.logging.Level;
@@ -13,9 +14,9 @@ import org.newdawn.slick.SpriteSheet;
  *
  * @author roland
  */
-public class Cookie extends ImmovableActor
+public class Cookie extends UsableActor 
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/temporarycookie.png";
+    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/cookie.png";
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
@@ -25,9 +26,9 @@ public class Cookie extends ImmovableActor
      * @param position
      * @throws SlickException 
      */
-    public Cookie( Point position ) throws SlickException
+    public Cookie( Point position, Player owner ) throws SlickException
     {
-        super( position );
+        super( position, owner );
     }
 
     @Override
@@ -41,11 +42,16 @@ public class Cookie extends ImmovableActor
                                                        Cookie.SPRITE_SHEET_SPRITE_HEIGHT,
                                                        Cookie.SPRITE_SHEET_BACKGROUND_COLOR );
 
-            this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 3, 150 );
+            this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 0, 0, 150 );
         }
         catch( SlickException e )
         {
             Logger.getLogger( Whistle.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
         }
+    }
+
+    @Override
+    public void use() {
+        
     }
 }

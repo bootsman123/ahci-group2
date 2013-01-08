@@ -1,21 +1,27 @@
 package game.actors;
 
-import game.base.ImmovableActor;
+import game.base.UsableActor;
+import game.players.Player;
 import java.awt.Point;
 
 /**
  *
  * @author roland
  */
-public class Fence extends ImmovableActor
+public class Fence extends UsableActor
 {
-    public Fence( Point position )
+    public Fence( Point position, Player owner )
     {
-        super( position );
+        super( position, owner );
     }
 
     @Override
     public void init()
     {
+    }
+
+    @Override
+    public void use() {
+        
     }
 }
