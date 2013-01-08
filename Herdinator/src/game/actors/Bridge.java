@@ -10,9 +10,9 @@ import java.awt.Point;
  */
 public class Bridge extends UsableActor
 {
-    public Bridge( Point position, Player owner )
+    public Bridge( Point position, Player owner, boolean isOnMap )
     {
-        super( position, owner );
+        super( position, owner, isOnMap );
     }
 
     @Override

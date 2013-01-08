@@ -26,9 +26,9 @@ public class Cookie extends UsableActor
      * @param position
      * @throws SlickException 
      */
-    public Cookie( Point position, Player owner ) throws SlickException
+    public Cookie( Point position, Player owner, boolean isOnMap ) throws SlickException
     {
-        super( position, owner );
+        super( position, owner, isOnMap );
     }
 
     @Override

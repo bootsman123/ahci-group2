@@ -20,8 +20,6 @@ public abstract class Player {
         this.id = id;
         Point startingPoint = new Point(0,0);
         this.color = color;
-        this.object = new Whistle(startingPoint, this );
-        
     }
 
     public Integer getId(){
