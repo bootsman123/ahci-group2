@@ -2,7 +2,7 @@ package game.states;
 
 import game.Game;
 import game.global.GameManager;
-import game.interfaces.ObjectPicker;
+import game.gui.ObjectPicker;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;

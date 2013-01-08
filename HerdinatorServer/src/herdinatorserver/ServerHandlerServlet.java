@@ -143,11 +143,16 @@ public class ServerHandlerServlet extends HttpServlet
             
             json.put( "success", success );
         } 
+        else
+        {
+            json.put( "success", Boolean.FALSE );
+        }
 
         // Never cache the response.
         response.addHeader( "Cache-Control", "private, no-cache" );
 	response.addHeader( "Expires", "Tue, 1 Jan 1970 01:00:00 GMT" );
 	response.addHeader( "Pragma", "no-cache" );
+        response.setContentType("application/json");
         
         PrintWriter writer = response.getWriter();
         writer.write( json.toJSONString() );

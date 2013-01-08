@@ -3,7 +3,7 @@ package game.global;
 import TUIO.TuioClient;
 import game.base.Map;
 import game.base.UsableActor;
-import game.interfaces.MobilePhoneHandler;
+import game.gui.MobilePhoneHandler;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;

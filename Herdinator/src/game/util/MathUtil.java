@@ -6,7 +6,7 @@ import java.awt.Point;
  * Generic mathematics functions.
  * @author Bas Bootsma
  */
-public final class Math
+public final class MathUtil
 {
     /**
      * Euclidian distance between point p1 and point p2.
@@ -41,7 +41,7 @@ public final class Math
     public static double angle( Point p1, Point p2 )
     {
         Double angle = java.lang.Math.atan2( p2.y - p1.y, p2.x - p1.x );
-        //angle += java.lang.Math.PI;
+        //angle += java.lang.MathUtil.PI;
         
         return angle;
     }
