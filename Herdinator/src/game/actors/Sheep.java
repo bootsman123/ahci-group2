@@ -83,7 +83,7 @@ public class Sheep extends MovableActor
             // Determine new direction.
             Direction direction = null;
             Map map = GameManager.getInstance().getMap();
-            List<Direction> directions = this.directionsToNonCollidableTiles(); 
+            List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() ); 
 
             // Check for a dog.
             direction = this.directionAwayFromClosestActorFromList( this, map.getDogs(), directions, Sheep.DOG_DISTANCE, Sheep.DOG_OBEYANCE );

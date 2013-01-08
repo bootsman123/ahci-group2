@@ -19,6 +19,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.util.pathfinding.AStarPathFinder;
+import org.newdawn.slick.util.pathfinding.Path;
+import org.newdawn.slick.util.pathfinding.PathFinder;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
@@ -55,6 +58,9 @@ public class Map implements TileBasedMap
     
     private List<Cookie> cookies;
     private List<Whistle> whistles;
+    
+    // Path finder.
+    private PathFinder pathFinder;
     
     /**
      * Load a new map.
@@ -171,6 +177,10 @@ public class Map implements TileBasedMap
         this.initActors( this.loveSheeps );
         //this.initActors( this.cookies );
         //this.initActors( this.whistles );
+        
+        // Initialize pathfinder.
+        this.pathFinder = new AStarPathFinder( this, this.getWidthInTiles() + this.getHeightInTiles(), false );
+
     }
     
     /**
@@ -447,12 +457,20 @@ public class Map implements TileBasedMap
         return this.heightInPixels; 
     }
     
+    /**
+     * Returns the width of the map in tiles.
+     * @return 
+     */
     @Override
     public int getWidthInTiles()
     {
         return this.map.getWidth();
     }
 
+    /**
+     * Returns the height of the map in tiles.
+     * @return 
+     */
     @Override
     public int getHeightInTiles()
     {
@@ -464,16 +482,41 @@ public class Map implements TileBasedMap
     {
     }
 
+    /**
+     * Returns true when the position on (tx, ty) is blocked given a pathfinding context.
+     * @param context
+     * @param tx
+     * @param ty
+     * @return 
+     */
     @Override
     public boolean blocked( PathFindingContext context, int tx, int ty )
     {
         return this.isBlocked( new Point( tx, ty ) );
     }
 
+    /**
+     * Returns the cost of position (tx, ty) given a pathfinding context.
+     * @param context
+     * @param tx
+     * @param ty
+     * @return 
+     */
     @Override
     public float getCost( PathFindingContext context, int tx, int ty )
     {
         return 1.0f;
+    }
+    
+    /**
+     * Returns the path from position p1 to position p2.
+     * @param p1
+     * @param p2
+     * @return 
+     */
+    public Path pathTo( Point p1, Point p2 )
+    {
+        return this.pathFinder.findPath( null, p1.x, p1.y, p2.x, p2.y );
     }
 
     /**
