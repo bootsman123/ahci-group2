@@ -170,14 +170,14 @@ public abstract class MovableActor extends Actor implements Movable
      * Returns a list of all the directions which are currently not occupied.
      * @return 
      */
-    protected List<Direction> directionsToNonCollidableTiles()
+    protected List<Direction> directionsToNonCollidableTiles( Point position )
     {    
         // Fill a list with possible positions.
         List<Direction> directions = new ArrayList<Direction>();
 
         for( Direction direction : Direction.values() )
         {
-            if( !GameManager.getInstance().getMap().isBlocked( direction.toPosition( this.getPosition() ) ) )
+            if( !GameManager.getInstance().getMap().isBlocked( direction.toPosition( position ) ) )
             {
                 directions.add( direction );
             }

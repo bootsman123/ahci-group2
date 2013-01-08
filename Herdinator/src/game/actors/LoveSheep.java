@@ -28,6 +28,9 @@ public class LoveSheep extends MovableActor implements UseListener
     
     private static final Double SPEED = 0.001;
     
+    private static final Integer WHISTLE_DISTANCE = 200;
+    private static final Double WHISTLE_OBEYANCE = 0.8;
+    
     private Direction currentDirection;
 
     /**
@@ -69,18 +72,16 @@ public class LoveSheep extends MovableActor implements UseListener
     public void update( int delta )
     {
         super.update( delta );
-        
-        System.out.println( "LoveSheep::update()" );
-        
+
         if( !this.isMoving() )
         {            
             // Determine new direction.
             Direction direction;
-            List<Direction> directions = this.directionsToNonCollidableTiles();
+            List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
             Map map = GameManager.getInstance().getMap();
             
             // Check for cookies.
-            direction = this.directionTowardsClosestActorFromList( this, map.getCookies(), directions, 200, 0.8 );
+            direction = this.directionTowardsClosestActorFromList( this, map.getCookies(), directions, LoveSheep.WHISTLE_DISTANCE, LoveSheep.WHISTLE_OBEYANCE );
             
             if( direction == null )
             {                

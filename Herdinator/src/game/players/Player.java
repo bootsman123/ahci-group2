@@ -30,9 +30,9 @@ public abstract class Player {
 
     
     public void setObject(UsableActor newObject) throws SlickException{
-        GameManager.getInstance().getMap().removeObject(this.object);//@TODO: do not let the player object remove the current object from the map?
+        GameManager.getInstance().getMap().removeUsableActor(this.object);//@TODO: do not let the player object remove the current object from the map?
         this.object = newObject;
-        GameManager.getInstance().getMap().addObject(this.object);
+        GameManager.getInstance().getMap().addUsableActor(this.object);
     }
 
     public UsableActor getObject(){

@@ -31,7 +31,7 @@ public class Sheep extends MovableActor
     private static final Double OTHER_SHEEP_OBEYANCE = 0.5;
     
     private static final Integer DOG_DISTANCE = 10;
-    private static final Double DOG_OBEYANCE = 0.9;
+    private static final Double DOG_OBEYANCE = 1.0;
     
     private static final Integer LOVE_SHEEP_DISTANCE = 8;
     private static final Double LOVE_SHEEP_OBEYANCE = 0.7;
@@ -83,7 +83,7 @@ public class Sheep extends MovableActor
             // Determine new direction.
             Direction direction = null;
             Map map = GameManager.getInstance().getMap();
-            List<Direction> directions = this.directionsToNonCollidableTiles(); 
+            List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() ); 
 
             // Check for a dog.
             direction = this.directionAwayFromClosestActorFromList( this, map.getDogs(), directions, Sheep.DOG_DISTANCE, Sheep.DOG_OBEYANCE );
@@ -103,7 +103,7 @@ public class Sheep extends MovableActor
             if( direction == null )
             {
                 // Pick a random element.
-                Integer r = ( new Random() ).nextInt( directions.size() );
+                Integer r = ( new Random() ).nextInt( directions.size() ); //@TODO: there is a bug here. 
                 direction = directions.get( r );
             }
 
