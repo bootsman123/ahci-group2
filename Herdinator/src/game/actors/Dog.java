@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.util.pathfinding.Path;
 
 /**
  *
@@ -32,6 +33,9 @@ public class Dog extends MovableActor implements UseListener
     private static final Double WHISTLE_OBEYANCE = 1.0;
     
     private Direction currentDirection;
+    
+    private Path currentPath;
+    private Integer currentPathStepIndex;
 
     /**
      * Constructor.
@@ -66,6 +70,9 @@ public class Dog extends MovableActor implements UseListener
         
         this.currentDirection = Direction.DOWN;
         this.animation = this.animations.get( this.currentDirection );
+        
+        this.currentPath = null;
+        this.currentPathStepIndex = 0;
     }
     
     @Override
@@ -74,10 +81,38 @@ public class Dog extends MovableActor implements UseListener
         super.update( delta );
         
         if( !this.isMoving() )
-        {            
+        {           
+            // Check if there is a path to be followed.
+            if( this.currentPath != null )
+            {
+                // Check if there are still steps left.
+                if( this.currentPathStepIndex < this.currentPath.getLength() )
+                {
+                    Path.Step step = this.currentPath.getStep( this.currentPathStepIndex );
+                    this.currentPathStepIndex++;
+
+                    // Check if the step is still valid.
+                    Map map = GameManager.getInstance().getMap();
+                                        
+                    if( map.isBlocked( new Point( step.getX(), step.getY() ) ) )
+                    {
+                        // Calculate a new path.
+                        Path.Step finalStep = this.currentPath.getStep( this.currentPath.getLength() - 1 );
+                        Point finalPosition = new Point( finalStep.getX(), finalStep.getY() );
+                                
+                        this.currentPath = map.pathTo( this.getPosition(), finalPosition );
+                        this.currentPathStepIndex = 0;
+                    }
+                    
+                    // Determine the direction.
+                    
+                }
+            }
+            
+            
             // Determine new direction.
             Direction direction;
-            List<Direction> directions = this.directionsToNonCollidableTiles();
+            List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
             Map map = GameManager.getInstance().getMap();
             
             // Check whistles.
@@ -99,5 +134,8 @@ public class Dog extends MovableActor implements UseListener
     @Override
     public void onUse( Actor actor )
     {
+        // A whistle has been pressed.
+        this.currentPath = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
+        this.currentPathStepIndex = 0;
     }
 }
