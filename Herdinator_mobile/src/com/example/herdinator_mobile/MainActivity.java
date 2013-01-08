@@ -16,9 +16,15 @@ import android.widget.ImageView;
 
 public class MainActivity extends Activity {
     Integer[] imageIDs = {
+            R.drawable.flute,
             R.drawable.fence,
             R.drawable.bridge,
-            R.drawable.flute
+    };
+    
+    String[] object_strings = {
+    		"flute",
+    		"fence",
+    		"bridge",
     };
     
     @Override
@@ -38,7 +44,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
             {                
             	Intent intent = new Intent(getBaseContext(), SelectedObjectActivity.class);
-            	intent.putExtra("imageID", imageIDs[position]);
+            	((HerdinatorApplication)getApplication()).setSelected_object(object_strings[position]);
             	startActivity(intent);
             }
         });        
