@@ -16,15 +16,15 @@ import android.widget.ImageView;
 
 public class MainActivity extends Activity {
     Integer[] imageIDs = {
+            R.drawable.flute,
             R.drawable.fence,
             R.drawable.bridge,
-            R.drawable.flute
     };
     
     String[] object_strings = {
+    		"flute",
     		"fence",
     		"bridge",
-    		"flute"
     };
     
     @Override

@@ -1,13 +1,7 @@
 package com.example.herdinator_mobile;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,15 +10,12 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +41,9 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.settings_layout);     
         
 //        String default_url = "http://wlan-132-054.wlan.ru.nl:8080";
-        String default_url = "http://127.0.0.1:8080";
+//        String default_url = "http://127.0.0.1:8080";
+        String default_url = "http://10.0.2.2:8080";
+//        String default_url = "10.0.2.2:8080";
         
         EditText server_adress = (EditText) findViewById(R.id.server_adress);
         server_adress.setText(default_url);
@@ -84,26 +77,16 @@ public class SettingsActivity extends Activity {
 				markID = Integer.valueOf(markString);
 			
 			String urlString = server_adress.getText().toString();
+			
+			error.setText("start!");
+			progress.setActivated(true);
 
 			error.setText("thread!");
 			Thread connectThread = new Thread(new RunConnect(markID, urlString){}); 
 			connectThread.start();
 
-			error.setText("start!");
-			
-			Time time = new Time(Time.getCurrentTimezone());
-			time.setToNow();
-			int start = time.SECOND;
-			while (
-					time.SECOND < start+20 &&
-					!((HerdinatorApplication)getApplication()).isConnected()
-					){
-				
-				error.setText(String.valueOf(time.SECOND));
-				time.setToNow();
-			}
-			connectThread.stop();
 			error.setText("Connected!");
+			progress.setActivated(false);
 		}
     }
     
@@ -120,7 +103,8 @@ public class SettingsActivity extends Activity {
 		public void run() {
 			ProgressBar progress = (ProgressBar) findViewById(R.id.progress);
 			TextView error = (TextView)findViewById(R.id.error_field);
-			
+			HttpResponse response = null;
+			String s= "";
 			try {
 
 				List<NameValuePair> params = new ArrayList<NameValuePair>(2);
@@ -130,37 +114,33 @@ public class SettingsActivity extends Activity {
 				
 				HttpGet httpGet = new HttpGet(urlString + "/?"+ paramString);
 				DefaultHttpClient httpClient = new DefaultHttpClient();
+
 				
-				
-				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "Http String");
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "errHttp String");
 				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, httpGet.getURI().toASCIIString() );
 
-				// Throws exception after execute
-				error.setText("0!");
-				HttpResponse response = httpClient.execute(httpGet);
-				error.setText("1!");
-				String responseString = EntityUtils.toString(response.getEntity());
-				error.setText("2!");
-				JSONObject map = (JSONObject) JSONValue.parse(responseString);
-				error.setText("3!");
-				error.setText(String.valueOf(map.getBoolean("success")));
-//				if(map.getBoolean("success")){
-//					((HerdinatorApplication) getApplication()).setPhone_id(map.getInt("phoneId"));
-//				}
-//				progress.setVisibility(View.VISIBLE);
-				
-				((HerdinatorApplication)getApplication()).setConnected(true);
+				response = httpClient.execute(httpGet);
+				HttpEntity entity = response.getEntity();
+				s = EntityUtils.toString(entity);
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, s);
 				
 			} catch (ClientProtocolException e) {
-//				error.setText("ClientProtocolException");
-				progress.setVisibility(View.INVISIBLE);
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "ClientProtocolException");
 			} catch (IOException e) {
-//				error.setText("IOException");
-				progress.setVisibility(View.INVISIBLE);
-			} catch (JSONException e) {
-//				error.setText("JSONException");
-				progress.setVisibility(View.INVISIBLE);
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "IOException");
 			}
+			JSONObject map = (JSONObject) JSONValue.parse(s);
+			try {
+				if(map.getBoolean("success")){
+					((HerdinatorApplication) getApplication()).setPhone_id(map.getInt("phoneId"));
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			progress.setVisibility(View.VISIBLE);
+			
+			((HerdinatorApplication)getApplication()).setConnected(true);
+			
 		}
     }
 }

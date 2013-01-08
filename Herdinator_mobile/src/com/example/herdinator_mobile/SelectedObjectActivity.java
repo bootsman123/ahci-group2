@@ -40,6 +40,7 @@ public class SelectedObjectActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				((HerdinatorApplication)getApplication()).setSelected_object("");
+				
 				finish();
 			}
 		});
