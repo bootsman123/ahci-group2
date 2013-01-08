@@ -1,6 +1,7 @@
 package com.example.herdinator_mobile;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,9 +41,9 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_layout);     
         
-//        String default_url = "http://wlan-132-054.wlan.ru.nl:8080";
+        String default_url = "http://wlan-133-119.wlan.ru.nl:8080";
 //        String default_url = "http://127.0.0.1:8080";
-        String default_url = "http://10.0.2.2:8080";
+//        String default_url = "http://10.0.2.2:8080";
 //        String default_url = "10.0.2.2:8080";
         
         EditText server_adress = (EditText) findViewById(R.id.server_adress);
@@ -79,14 +80,14 @@ public class SettingsActivity extends Activity {
 			String urlString = server_adress.getText().toString();
 			
 			error.setText("start!");
-			progress.setActivated(true);
+			progress.setVisibility(View.VISIBLE);
 
 			error.setText("thread!");
 			Thread connectThread = new Thread(new RunConnect(markID, urlString){}); 
 			connectThread.start();
 
 			error.setText("Connected!");
-			progress.setActivated(false);
+			progress.setVisibility(View.INVISIBLE);
 		}
     }
     
@@ -117,19 +118,24 @@ public class SettingsActivity extends Activity {
 
 				
 				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "errHttp String");
-				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, httpGet.getURI().toASCIIString() );
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "err "+httpGet.getURI().toASCIIString() );
 
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "err before execute");
 				response = httpClient.execute(httpGet);
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "err after execute");
 				HttpEntity entity = response.getEntity();
 				s = EntityUtils.toString(entity);
-				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, s);
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "err "+s);
 				
 			} catch (ClientProtocolException e) {
-				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "ClientProtocolException");
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "err ClientProtocolException");
 			} catch (IOException e) {
-				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "IOException");
-			}
+				Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "err IOException");
+			} 
+
+			Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "err before json parse");
 			JSONObject map = (JSONObject) JSONValue.parse(s);
+			Logger.getLogger( SettingsActivity.class.getName() ).log( Level.WARNING, "err after parse");
 			try {
 				if(map.getBoolean("success")){
 					((HerdinatorApplication) getApplication()).setPhone_id(map.getInt("phoneId"));
