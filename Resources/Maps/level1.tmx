@@ -33,7 +33,7 @@
  </tileset>
  <layer name="Controls" width="25" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGBxgIQtt1Q8WsHSQuRvknsHmJmxgCYluXISkHubHpQTE8AFC6Q2fOdQK31E7MAGueKFGnJMDCJk/VMstegJy4ojYcEVPD8MNAAAXX2Ek0AcAAA==
+   H4sIAAAAAAAAA2NgGBxgIQtt1Y8C7GApCwQPdrCERDcugqqH+Q/dj7jEcQF86Y2QGdQI31E7sANs8UKtOCcHEDJ/tNwiDMiJI2LDFdncoVDukQoA4oN26tAHAAA=
   </data>
  </layer>
  <layer name="Underground" width="25" height="20">
@@ -43,7 +43,7 @@
  </layer>
  <layer name="Fences" width="25" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAWjYOBAGgsDQzUQl7MgxCqgYqksuPWRAvKA5jQDcT2SeQ1QsVwq2TEBjzn9o3aggDKgOclAnI5kXgZUrJRKdtQBzckG4nwk8wqgYrVUsmMUjILBBgAM5E8t0AcAAA==
+   H4sIAAAAAAAAA2NgGAWjYGBAGgsDQzUQl7OgildAxVNZsOsjBeQBzWgG4no0sxqg4rlUsGMCATP6R+2AgzKgGclAnI5mVgZUvJQKdtQBzcgG4nw0swqg4rVUsGMUjILBCAAbphZS0AcAAA==
   </data>
  </layer>
  <layer name="Objects" width="25" height="20">
