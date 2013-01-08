@@ -37,6 +37,8 @@ public class Sheep extends MovableActor
     private static final Double LOVE_SHEEP_OBEYANCE = 0.7;
     
     private Direction currentDirection;
+    
+    private boolean isFinished = false;
 
     /**
      * Constructor.
@@ -76,13 +78,23 @@ public class Sheep extends MovableActor
     @Override
     public void update( int delta )
     {
+        if(!isFinished){
+            takeAction(delta);
+        }
+    }    
+    public void takeAction(int delta){ 
+        Map map = GameManager.getInstance().getMap();
+        if(map.isGoalTile(this.getPosition())){
+            isFinished = true;
+            
+        }    
         super.update( delta );
         
-        if( !this.isMoving() )
+        if( !this.isMoving() && !isFinished )
         {
             // Determine new direction.
             Direction direction = null;
-            Map map = GameManager.getInstance().getMap();
+            
             List<Direction> directions = this.directionsToNonCollidableTiles(); 
 
             // Check for a dog.

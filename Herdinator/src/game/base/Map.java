@@ -512,6 +512,8 @@ public class Map implements TileBasedMap
         return this.loveSheeps;
     }
     
+   
+    
     /**
      * Returns a list of all the whistles.
      * @return 
