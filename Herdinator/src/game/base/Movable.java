@@ -1,7 +1,7 @@
 package game.base;
 
 import java.awt.Point;
-import game.util.Math;
+import game.util.MathUtil;
 
 /**
  *
@@ -22,7 +22,7 @@ public interface Movable
         Direction( Point vector )
         {
             this.vector = vector;
-            this.angle = Math.angle( new Point( 0, 0 ), this.vector );
+            this.angle = MathUtil.angle( new Point( 0, 0 ), this.vector );
         }
         
         public Point getVector()

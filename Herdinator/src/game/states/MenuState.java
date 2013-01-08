@@ -90,6 +90,8 @@ public class MenuState extends BasicGameState
      */
     public MenuState()
     {
+        super();
+        
         this.buttonSelectedNumberOfPlayers = null;
     }
 

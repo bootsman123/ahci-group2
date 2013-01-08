@@ -1,4 +1,4 @@
-package game.interfaces;
+package game.gui;
 
 import TUIO.TuioCursor;
 import TUIO.TuioListener;

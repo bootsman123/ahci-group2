@@ -1,7 +1,7 @@
 package game.base;
 
 import game.global.GameManager;
-import game.util.Math;
+import game.util.MathUtil;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -98,10 +98,10 @@ public abstract class MovableActor extends Actor implements Movable
             }
             
             this.movingTime += this.getSpeed() * this.getLastDelta();
-            this.movingTime = Math.clamp( this.movingTime, 0.0, 1.0 );
+            this.movingTime = MathUtil.clamp( this.movingTime, 0.0, 1.0 );
                         
-            this.movingPositionCurrent.x = Math.lerp( this.movingPositionInitial.x, this.movingPositionTarget.x, this.movingTime );
-            this.movingPositionCurrent.y = Math.lerp( this.movingPositionInitial.y, this.movingPositionTarget.y, this.movingTime );
+            this.movingPositionCurrent.x = MathUtil.lerp( this.movingPositionInitial.x, this.movingPositionTarget.x, this.movingTime );
+            this.movingPositionCurrent.y = MathUtil.lerp( this.movingPositionInitial.y, this.movingPositionTarget.y, this.movingTime );
             
             this.animation.update( this.getLastDelta() );
         }
@@ -154,7 +154,7 @@ public abstract class MovableActor extends Actor implements Movable
                 continue;
             }
             
-            Double d = Math.distanceManhattan( actor.getPosition(), a.getPosition() );
+            Double d = MathUtil.distanceManhattan( actor.getPosition(), a.getPosition() );
             
             if( d < closestDistance )
             {
@@ -258,7 +258,7 @@ public abstract class MovableActor extends Actor implements Movable
         Double bestAngle = Double.MAX_VALUE;
         
         // Determine the best direction.
-        Double angle = Math.angle( a1.getPosition(), a2.getPosition() );
+        Double angle = MathUtil.angle( a1.getPosition(), a2.getPosition() );
         
         for( Direction direction : directions )
         {
@@ -287,7 +287,7 @@ public abstract class MovableActor extends Actor implements Movable
         Double bestAngle = Double.MIN_VALUE;
         
         // Determine the best direction.
-        Double angle = Math.angle( a1.getPosition(), a2.getPosition() );
+        Double angle = MathUtil.angle( a1.getPosition(), a2.getPosition() );
         
         for( Direction direction : directions )
         {
@@ -320,7 +320,7 @@ public abstract class MovableActor extends Actor implements Movable
         
         if( closestActor != null )
         {
-            if( Math.distanceManhattan( actor.getPosition(), closestActor.getPosition() ) <= distance &&
+            if( MathUtil.distanceManhattan( actor.getPosition(), closestActor.getPosition() ) <= distance &&
                 java.lang.Math.random() <= obeyance )
             {
                 return this.directionTowardsActorFromList( actor, closestActor, directions );
@@ -345,7 +345,7 @@ public abstract class MovableActor extends Actor implements Movable
         
         if( closestActor != null )
         {
-            if( Math.distanceManhattan( actor.getPosition(), closestActor.getPosition() ) <= distance &&
+            if( MathUtil.distanceManhattan( actor.getPosition(), closestActor.getPosition() ) <= distance &&
                 java.lang.Math.random() <= obeyance )
             {
                 return this.directionAwayFromActorFromList( actor, closestActor, directions );
