@@ -258,7 +258,7 @@ public class Map implements TileBasedMap
      * Add a new object to the map.
      * @param object 
      */
-    public void addObject( UsableActor object )
+    public void addUsableActor( UsableActor object )
     {
         if( object instanceof Cookie )
         {
@@ -292,7 +292,7 @@ public class Map implements TileBasedMap
      * Remove an object from the map.
      * @param oldObject 
      */
-    public void removeObject( UsableActor object )
+    public void removeUsableActor( UsableActor object )
     {
         if( object instanceof Cookie )
         {

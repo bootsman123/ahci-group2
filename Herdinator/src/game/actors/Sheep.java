@@ -103,7 +103,7 @@ public class Sheep extends MovableActor
             if( direction == null )
             {
                 // Pick a random element.
-                Integer r = ( new Random() ).nextInt( directions.size() );
+                Integer r = ( new Random() ).nextInt( directions.size() ); //@TODO: there is a bug here. 
                 direction = directions.get( r );
             }
 

@@ -89,7 +89,7 @@ public class GameManager
         for( Integer i = 0; i < this.numberOfPlayers; i++ )
         {
             this.players.add( new MousePlayer( i, Color.blue ) );
-            this.map.addObject( this.players.get( i ).getObject() );
+            this.map.addUsableActor( this.players.get( i ).getObject() );
         }
         
         // Initialize pathfinder.
