@@ -190,7 +190,7 @@ public abstract class MovableActor extends Actor implements Movable
      * Returns a list of all the directions which are currently not occupied and reside within the goal area.
      * @return 
      */
-    protected List<Direction> directionsToNonCollidableGoalTiles()
+    protected List<Direction> directionsToOtherGoalTiles()
     {
         // Fill a list with possible positions.
         Map map = GameManager.getInstance().getMap();
@@ -207,8 +207,7 @@ public abstract class MovableActor extends Actor implements Movable
         
         return directions;
     }
-        
-        
+    
     /**
      * Returns the best direction from actor a1 to actor a2.
      * @param p1

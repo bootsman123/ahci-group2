@@ -78,11 +78,6 @@ public class Sheep extends MovableActor
     @Override
     public void update( int delta )
     {
-        if(!isFinished){
-            takeAction(delta);
-        }
-    }    
-    public void takeAction(int delta){ 
         Map map = GameManager.getInstance().getMap();
         if(map.isGoalTile(this.getPosition())){
             isFinished = true;
@@ -95,8 +90,11 @@ public class Sheep extends MovableActor
             // Determine new direction.
             Direction direction = null;
             
-            List<Direction> directions = this.directionsToNonCollidableTiles(); 
-
+            List<Direction> directions;
+            if(!isFinished)        
+                 directions = this.directionsToNonCollidableTiles();                
+            else
+                directions = this.directionsToOtherGoalTiles();
             // Check for a dog.
             direction = this.directionAwayFromClosestActorFromList( this, map.getDogs(), directions, Sheep.DOG_DISTANCE, Sheep.DOG_OBEYANCE );
 
