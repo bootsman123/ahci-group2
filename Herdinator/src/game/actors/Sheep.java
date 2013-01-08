@@ -31,7 +31,7 @@ public class Sheep extends MovableActor
     private static final Double OTHER_SHEEP_OBEYANCE = 0.5;
     
     private static final Integer DOG_DISTANCE = 10;
-    private static final Double DOG_OBEYANCE = 0.9;
+    private static final Double DOG_OBEYANCE = 1.0;
     
     private static final Integer LOVE_SHEEP_DISTANCE = 8;
     private static final Double LOVE_SHEEP_OBEYANCE = 0.7;

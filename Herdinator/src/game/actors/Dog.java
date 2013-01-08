@@ -29,7 +29,7 @@ public class Dog extends MovableActor implements UseListener
     private static final Double SPEED = 0.003;
     
     private static final Integer WHISTLE_DISTANCE = 200;
-    private static final Double WHISTLE_OBEYANCE = 0.8;
+    private static final Double WHISTLE_OBEYANCE = 1.0;
     
     private Direction currentDirection;
 
