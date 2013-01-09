@@ -15,7 +15,7 @@ public class Button extends MouseOverArea
      * Constructor.
      * @param context 
      */
-    public Button( GUIContext context, Image image)
+    public Button( GUIContext context, Image )
     {
         super( context );
     }
