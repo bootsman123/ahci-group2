@@ -37,6 +37,7 @@ public class GameState extends BasicGameState
     {
         GameManager.getInstance().init( container, game );
         this.overlay = new UsableActorContainer(container);
+        System.out.println("GameState.enter: Init overlay!");
         this.overlay.init( container, game );
     }
 

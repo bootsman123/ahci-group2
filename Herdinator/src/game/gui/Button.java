@@ -8,16 +8,16 @@ import org.newdawn.slick.gui.MouseOverArea;
 /**
  *
  * @author bootsman
- */
+ *
 public class Button extends MouseOverArea
 {
     /**
      * Constructor.
      * @param context 
-     */
+     *
     public Button( GUIContext context, Image image)
     {
         super( context );
     }
 
-}
+}*/

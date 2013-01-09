@@ -172,6 +172,7 @@ public class GameManager
      */
     public void setNumberOfPlayers( Integer numberOfPlayers )
     {
+        System.out.println("GameManager.setNumberOfPlayers: amount of players: " + numberOfPlayers);
         this.numberOfPlayers = numberOfPlayers;
     }
     
