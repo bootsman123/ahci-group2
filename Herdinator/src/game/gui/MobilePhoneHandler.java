@@ -23,12 +23,13 @@ public class MobilePhoneHandler implements TuioListener
     @Override
     public void addTuioObject( TuioObject object )
     {
-        
+        System.out.println("Added TuioObject");
     }
 
     @Override
     public void updateTuioObject( TuioObject object )
     {
+/*
         // Update players.
         for( Player player : GameManager.getInstance().getPlayers() )
         {
@@ -41,11 +42,13 @@ public class MobilePhoneHandler implements TuioListener
                 }
             }
         }
+ */
     }
 
     @Override
     public void removeTuioObject( TuioObject object )
     {
+        /*
         // Update players.
         for( Player player : GameManager.getInstance().getPlayers() )
         {
@@ -58,11 +61,13 @@ public class MobilePhoneHandler implements TuioListener
                 }
             }
         }
+         */
     }
 
     @Override
     public void addTuioCursor( TuioCursor cursor )
     {
+        System.out.println("Added TuioCursor");
     }
 
     @Override

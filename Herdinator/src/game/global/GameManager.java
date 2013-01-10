@@ -4,6 +4,7 @@ import TUIO.TuioClient;
 import game.base.Map;
 import game.base.UsableActor;
 import game.gui.MobilePhoneHandler;
+import game.gui.TouchHandler;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
@@ -38,6 +39,7 @@ public class GameManager
     
     private TuioClient tuioClient;
     private MobilePhoneHandler mobilePhoneHandler;
+    private TouchHandler touchHandler;
     
     /**
      * Hidden constructor.
@@ -46,8 +48,10 @@ public class GameManager
     {
         this.tuioClient = new TuioClient();
         this.mobilePhoneHandler = new MobilePhoneHandler();
-        
+        this.touchHandler = new TouchHandler();
         this.tuioClient.addTuioListener( this.mobilePhoneHandler );
+        this.tuioClient.addTuioListener( this.touchHandler );
+        this.tuioClient.connect();
     }
 
     /**
@@ -88,7 +92,7 @@ public class GameManager
         
         for( Integer i = 0; i < this.numberOfPlayers; i++ )
         {
-            this.players.add( new MousePlayer( i, colorsForPlayers[i] ) );
+            this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
             this.map.addUsableActor( this.players.get( i ).getObject() );
         }
     }
@@ -177,7 +181,16 @@ public class GameManager
                 }
             }
             else if (player instanceof TouchPlayer){
-                System.out.println("Touch player not yet supported");
+                TouchPlayer touchPlayer = (TouchPlayer) player;
+                if(touchPlayer.hasFingerOnTable()){
+                    //@TODO: make sure to select the right object when dragging
+                    System.out.println("GameManager.update: player is now dragging this object");
+                    Point2D.Double touchPoint = touchPlayer.getFingerLocation();
+                    player.moveObject( this.map.fromPositionInPixels(touchPoint));
+                }
+                else{
+
+                }
             }
             else{
                 System.out.println("Player not supported");

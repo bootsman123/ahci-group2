@@ -9,6 +9,7 @@ import TUIO.TuioListener;
 import TUIO.TuioObject;
 import TUIO.TuioTime;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 
@@ -17,15 +18,17 @@ import org.newdawn.slick.SlickException;
  * @author roland
  */
 public class TouchPlayer extends Player implements TuioListener{
-    private Point fingerLocation ; 
-    private boolean hasFingerOnTable ;    
+    private Point2D.Double fingerLocation ;
+    private boolean hasFingerOnTable ;
+    private int assignedBlobID;
 
     public TouchPlayer(int id, Color color) throws SlickException{
         super(id, color);
+        this.hasFingerOnTable = false;
     }
     @Override
     public void addTuioObject(TuioObject to) {
-       
+       System.out.println("Added tuioobject");
     }
 
     @Override
@@ -40,7 +43,7 @@ public class TouchPlayer extends Player implements TuioListener{
 
     @Override
     public void addTuioCursor(TuioCursor tc) {
-        
+       System.out.println("Added tuiocursor");
     }
 
     @Override
@@ -57,4 +60,27 @@ public class TouchPlayer extends Player implements TuioListener{
     public void refresh(TuioTime tt) {
         
     }
+    public int getAssignedBlobID(){
+        return assignedBlobID;
+    }
+
+    public void setAssignedBlobID(int newBlobID){
+        this.assignedBlobID = newBlobID;
+    }
+
+    public boolean hasFingerOnTable(){
+        return hasFingerOnTable;
+    }
+    
+    public void setHasFingerOnTable(boolean hasFingerOnTable){
+        this.hasFingerOnTable = hasFingerOnTable;
+    }
+
+    public Point2D.Double getFingerLocation(){
+        return fingerLocation;
+    }
+    public void setFingerLocation(Point2D.Double fingerLocation){
+        this.fingerLocation = fingerLocation;
+    }
+
 }
