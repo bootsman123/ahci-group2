@@ -1,14 +1,13 @@
 package game.states;
 
 import game.Game;
-import game.global.GameManager;
 import game.gui.Button;
+import game.gui.ButtonGroup;
+import game.gui.ButtonToggle;
 import java.awt.Font;
-import java.awt.geom.Point2D;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -21,11 +20,6 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MenuState extends BasicGameState
 {
-    private enum ButtonNumberOfPlayers
-    {
-        ONE, TWO, THREE, FOUR
-    };
-    
     private static final String BACKGROUND_FILE_PATH = "../Resources/Images/Menu/background.jpg";
 
     private static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
@@ -61,38 +55,13 @@ public class MenuState extends BasicGameState
     private UnicodeFont numberOfPlayersFont;
     
     private Image background;
+        
+    private ButtonToggle buttonNumberOfPlayersOne;
+    private ButtonToggle buttonNumberOfPlayersTwo;
+    private ButtonToggle buttonNumberOfPlayersThree;
+    private ButtonToggle buttonNumberOfPlayersFour;
     
-    /*
-    private Image buttonNumberOfPlayersOne;
-    private Image buttonActiveNumberOfPlayersOne;
-    private Point2D.Double buttonPositionNumberOfPlayersOne;
-    
-    private Image buttonNumberOfPlayersTwo;
-    private Image buttonActiveNumberOfPlayersTwo;
-    private Point2D.Double buttonPositionNumberOfPlayersTwo;
-    
-    private Image buttonNumberOfPlayersThree;
-    private Image buttonActiveNumberOfPlayersThree;
-    private Point2D.Double buttonPositionNumberOfPlayersThree;
-    
-    private Image buttonNumberOfPlayersFour;
-    private Image buttonActiveNumberOfPlayersFour;
-    private Point2D.Double buttonPositionNumberOfPlayersFour;
-    
-    private Image buttonStart;
-    private Point2D.Double buttonPositionStart;
-    
-    private Image buttonExit;
-    private Point2D.Double buttonPositionExit;
-    * */
-    
-    private ButtonNumberOfPlayers buttonSelectedNumberOfPlayers;
-    
-    
-    private Button buttonNumberOfPlayersOne;
-    private Button buttonNumberOfPlayersTwo;
-    private Button buttonNumberOfPlayersThree;
-    private Button buttonNumberOfPlayersFour;
+    private ButtonGroup buttonNumberOfPlayers;
     
     private Button buttonStart;
     private Button buttonExit;
@@ -103,8 +72,6 @@ public class MenuState extends BasicGameState
     public MenuState()
     {
         super();
-        
-        this.buttonSelectedNumberOfPlayers = null;
     }
 
     @Override
@@ -135,45 +102,21 @@ public class MenuState extends BasicGameState
         this.numberOfPlayersFont.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
         this.numberOfPlayersFont.loadGlyphs();
         
-        // Button positions.
-        // Assuming all 'number of players'-buttons have equal width (@TODO: Bit fugly).
-        Integer buttonWidthNumberOfPlayers = ( new Image( MenuState.BUTTON_NUMBER_OF_PLAYERS_ONE ) ).getWidth();
-        Double buttonMarginNumberOfPlayers = ( ( new Image( MenuState.BUTTON_START_FILE_PATH ) ).getWidth() - buttonWidthNumberOfPlayers * 4 ) / 3.0;
-        Double buttonPositionInitial = ( container.getWidth() - buttonWidthNumberOfPlayers * 4 - buttonMarginNumberOfPlayers * 3 ) / 2;
-                
-        Point2D.Double buttonPositionNumberOfPlayersOne = new Point2D.Double( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 0, 260 ); // @TODO: Fugly magic number.
-        Point2D.Double buttonPositionNumberOfPlayersTwo = new Point2D.Double( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 1, 260 ); // @TODO: Fugly magic number.
-        Point2D.Double buttonPositionNumberOfPlayersThree = new Point2D.Double( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 2, 260 ); // @TODO: Fugly magic number.
-        Point2D.Double buttonPositionNumberOfPlayersFour = new Point2D.Double( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 3, 260 ); // @TODO: Fugly magic number.
+        // Buttons.        
+        this.buttonNumberOfPlayersOne = new ButtonToggle( container, MenuState.BUTTON_NUMBER_OF_PLAYERS_ONE, MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE );
+        this.buttonNumberOfPlayersTwo = new ButtonToggle( container, MenuState.BUTTON_NUMBER_OF_PLAYERS_TWO, MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_TWO );
+        this.buttonNumberOfPlayersThree = new ButtonToggle( container, MenuState.BUTTON_NUMBER_OF_PLAYERS_THREE, MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_THREE );
+        this.buttonNumberOfPlayersFour = new ButtonToggle( container, MenuState.BUTTON_NUMBER_OF_PLAYERS_FOUR, MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_FOUR );
         
-        Point2D.Double buttonPositionStart = new Point2D.Double( ( container.getWidth() - this.buttonStart.getWidth() ) / 2, 320 ); // @TODO: Fugly magic number.
-        Point2D.Double buttonPositionExit = new Point2D.Double( ( container.getWidth() - this.buttonExit.getWidth() ) / 2, 380 ); // @TODO: Fugly magic number.
-    
+        // Create a button group.
+        this.buttonNumberOfPlayers = new ButtonGroup();
+        this.buttonNumberOfPlayers.add( this.buttonNumberOfPlayersOne );
+        this.buttonNumberOfPlayers.add( this.buttonNumberOfPlayersTwo );
+        this.buttonNumberOfPlayers.add( this.buttonNumberOfPlayersThree );
+        this.buttonNumberOfPlayers.add( this.buttonNumberOfPlayersFour );
         
-        // Buttons.
-        this.buttonSelectedNumberOfPlayers = ButtonNumberOfPlayers.ONE;
-        
-        
-        this.buttonNumberOfPlayersOne = new Button( container,
-                                                    MenuState.BUTTON_NUMBER_OF_PLAYERS_ONE,
-                                                    MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE,
-                                                    MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE,
-                                                    0,
-                                                    0 );
-        
-        
-        
-        this.buttonNumberOfPlayersOne = new Image( MenuState.BUTTON_NUMBER_OF_PLAYERS_ONE );
-        this.buttonActiveNumberOfPlayersOne = new Image( MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE );
-        this.buttonNumberOfPlayersTwo = new Image( MenuState.BUTTON_NUMBER_OF_PLAYERS_TWO );
-        this.buttonActiveNumberOfPlayersTwo = new Image( MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_TWO );
-        this.buttonNumberOfPlayersThree = new Image( MenuState.BUTTON_NUMBER_OF_PLAYERS_THREE );
-        this.buttonActiveNumberOfPlayersThree = new Image( MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_THREE );
-        this.buttonNumberOfPlayersFour = new Image( MenuState.BUTTON_NUMBER_OF_PLAYERS_FOUR );
-        this.buttonActiveNumberOfPlayersFour = new Image( MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_FOUR );
-        
-        this.buttonStart = new Image( MenuState.BUTTON_START_FILE_PATH );
-        this.buttonExit = new Image( MenuState.BUTTON_EXIT_FILE_PATH );
+        this.buttonStart = new Button( container, MenuState.BUTTON_START, MenuState.BUTTON_START );
+        this.buttonExit = new Button( container, MenuState.BUTTON_EXIT, MenuState.BUTTON_EXIT );
         
         // Button positions.
         // Assuming all 'number of players'-buttons have equal width (@TODO: Bit fugly).
@@ -181,13 +124,13 @@ public class MenuState extends BasicGameState
         Double buttonMarginNumberOfPlayers = ( this.buttonStart.getWidth() - buttonWidthNumberOfPlayers * 4 ) / 3.0;
         Double buttonPositionInitial = ( container.getWidth() - buttonWidthNumberOfPlayers * 4 - buttonMarginNumberOfPlayers * 3 ) / 2;
                 
-        this.buttonPositionNumberOfPlayersOne = new Point2D.Double( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 0, 260 ); // @TODO: Fugly magic number.
-        this.buttonPositionNumberOfPlayersTwo = new Point2D.Double( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 1, 260 ); // @TODO: Fugly magic number.
-        this.buttonPositionNumberOfPlayersThree = new Point2D.Double( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 2, 260 ); // @TODO: Fugly magic number.
-        this.buttonPositionNumberOfPlayersFour = new Point2D.Double( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 3, 260 ); // @TODO: Fugly magic number.
+        this.buttonNumberOfPlayersOne.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 0 ), 260 );
+        this.buttonNumberOfPlayersTwo.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 1 ), 260 );
+        this.buttonNumberOfPlayersThree.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 2 ), 260 );
+        this.buttonNumberOfPlayersFour.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 3 ), 260 );
         
-        this.buttonPositionStart = new Point2D.Double( ( container.getWidth() - this.buttonStart.getWidth() ) / 2, 320 ); // @TODO: Fugly magic number.
-        this.buttonPositionExit = new Point2D.Double( ( container.getWidth() - this.buttonExit.getWidth() ) / 2, 380 ); // @TODO: Fugly magic number.
+        this.buttonStart.setLocation( ( container.getWidth() - this.buttonStart.getWidth() ) / 2, 320 );
+        this.buttonExit.setLocation( ( container.getWidth() - this.buttonExit.getWidth() ) / 2, 380 );
     }
 
     @Override
@@ -214,52 +157,19 @@ public class MenuState extends BasicGameState
         this.numberOfPlayersFont.drawString( numberOfPlayersStringX, numberOfPlayersStringY, MenuState.NUMBER_OF_PLAYERS_STRING );
               
         // Draw buttons.
-        if( this.buttonSelectedNumberOfPlayers == ButtonNumberOfPlayers.ONE )
-        {
-            this.buttonActiveNumberOfPlayersOne.draw( (float)this.buttonPositionNumberOfPlayersOne.getX(), (float)this.buttonPositionNumberOfPlayersOne.getY() );
-        }
-        else
-        {
-            this.buttonNumberOfPlayersOne.draw( (float)this.buttonPositionNumberOfPlayersOne.getX(), (float)this.buttonPositionNumberOfPlayersOne.getY() );
-        }
+        this.buttonNumberOfPlayersOne.render( container, g );
+        this.buttonNumberOfPlayersTwo.render( container, g );
+        this.buttonNumberOfPlayersThree.render( container, g );
+        this.buttonNumberOfPlayersFour.render( container, g );
         
-        if( this.buttonSelectedNumberOfPlayers == ButtonNumberOfPlayers.TWO )
-        {
-            this.buttonActiveNumberOfPlayersTwo.draw( (float)this.buttonPositionNumberOfPlayersTwo.getX(), (float)this.buttonPositionNumberOfPlayersTwo.getY() );
-        }
-        else
-        {
-            this.buttonNumberOfPlayersTwo.draw( (float)this.buttonPositionNumberOfPlayersTwo.getX(), (float)this.buttonPositionNumberOfPlayersTwo.getY() );
-        }
-        
-        if( this.buttonSelectedNumberOfPlayers == ButtonNumberOfPlayers.THREE )
-        {
-            this.buttonActiveNumberOfPlayersThree.draw( (float)this.buttonPositionNumberOfPlayersThree.getX(), (float)this.buttonPositionNumberOfPlayersThree.getY() );
-        }
-        else
-        {
-            this.buttonNumberOfPlayersThree.draw( (float)this.buttonPositionNumberOfPlayersThree.getX(), (float)this.buttonPositionNumberOfPlayersThree.getY() );
-        }
-        
-        if( this.buttonSelectedNumberOfPlayers == ButtonNumberOfPlayers.FOUR )
-        {
-            this.buttonActiveNumberOfPlayersFour.draw( (float)this.buttonPositionNumberOfPlayersFour.getX(), (float)this.buttonPositionNumberOfPlayersFour.getY() );
-        }
-        else
-        {
-            this.buttonNumberOfPlayersFour.draw( (float)this.buttonPositionNumberOfPlayersFour.getX(), (float)this.buttonPositionNumberOfPlayersFour.getY() );
-        }
-        
-        this.buttonStart.draw( (float)this.buttonPositionStart.getX(), (float)this.buttonPositionStart.getY() );
-        this.buttonExit.draw( (float)this.buttonPositionExit.getX(), (float)this.buttonPositionExit.getY() );
-        
-        
-        this.buttonNumberOfPlayersOne1.render( container, g );
+        this.buttonStart.render( container, g );
+        this.buttonExit.render( container, g );
     }
 
     @Override
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
+        /*
         Input input = container.getInput();
 
         Integer mouseX = input.getMouseX();
@@ -320,5 +230,6 @@ public class MenuState extends BasicGameState
                 container.exit();
             }
         }
+        */
     }
 }
