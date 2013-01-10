@@ -48,7 +48,19 @@ public class MenuState extends BasicGameState
     private static final String TITLE_FONT_FILE_PATH = "../Resources/Fonts/Harabara.ttf";
     private static final Integer TITLE_FONT_SIZE = 60;
     
-    private static final String SUB_TITLE_STRING = "Catching sheep has never been more fun!";
+    private static final String SUB_TITLE_STRING = "Catching sheep has never been more fun! YOHO, you only herd once.  ";
+    private static final String[] POSSIBLE_SUB_TITLE_STRINGS = {
+        "Catching sheep has never been more fun!",
+        "YOHO, you only herd once!",
+        "It's all fun and games until someone gets herd!",
+        "You may have herd of our game!",
+        "Q:what has 8 legs, 4 ears, and twice as much wool as a sheep? A: 2 sheep.",
+        "Why did the ram jump off the cliff? He didn't see the ewe turn.",
+        "What did the sheep say to another sheep after they had come back from being ill? How are ewe!",
+        "My jokes are sheeeeppppp."
+    };
+    private String subTitleStringForNow;
+
     private static final String SUB_TITLE_FONT_FILE_PATH = "../Resources/Fonts/simplicity.ttf";
     private static final Integer SUB_TITLE_FONT_SIZE = 30;
     
@@ -104,6 +116,8 @@ public class MenuState extends BasicGameState
     @Override
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
+     
+        this.subTitleStringForNow = MenuState.POSSIBLE_SUB_TITLE_STRINGS[(int)(Math.random()*MenuState.POSSIBLE_SUB_TITLE_STRINGS.length)];
         this.background = new Image( MenuState.BACKGROUND_FILE_PATH );
         
         // Fonts.
@@ -165,10 +179,10 @@ public class MenuState extends BasicGameState
         this.titleFont.drawString( titleStringX, titleStringY, MenuState.TITLE_STRING );
         
         // Draw sub title.
-        Integer subTitleStringX = ( container.getWidth() - this.subTitleFont.getWidth( MenuState.SUB_TITLE_STRING ) ) / 2;
+        Integer subTitleStringX = ( container.getWidth() - this.subTitleFont.getWidth( this.subTitleStringForNow ) ) / 2;
         Integer subTitleStringY = 80;
         
-        this.subTitleFont.drawString( subTitleStringX, subTitleStringY, MenuState.SUB_TITLE_STRING );
+        this.subTitleFont.drawString( subTitleStringX, subTitleStringY, this.subTitleStringForNow );
         
         // Draw number of players.
         Integer numberOfPlayersStringX = ( container.getWidth() - this.numberOfPlayersFont.getWidth( MenuState.NUMBER_OF_PLAYERS_STRING ) ) / 2;

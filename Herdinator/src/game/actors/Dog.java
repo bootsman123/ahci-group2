@@ -118,6 +118,7 @@ public class Dog extends MovableActor implements UseListener
             // Check whistles.
             direction = this.directionTowardsClosestActorFromList( this, map.getWhistles(), directions, Dog.WHISTLE_DISTANCE, Dog.WHISTLE_OBEYANCE );
             
+            
             if( direction == null )
             {                
                 // Pick a random element.

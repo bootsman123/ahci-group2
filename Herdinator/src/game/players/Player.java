@@ -27,7 +27,7 @@ public abstract class Player {
     }
 
     
-    public void setObject(UsableActor newObject) throws SlickException{
+    public void setObject(UsableActor newObject) {
         GameManager.getInstance().getMap().removeUsableActor(this.object);//@TODO: do not let the player object remove the current object from the map?
         this.object = newObject;
         GameManager.getInstance().getMap().addUsableActor(this.object);
@@ -38,7 +38,12 @@ public abstract class Player {
     }
 
     public void moveObject(Point newPoint){
-        this.object.setPosition(newPoint);
+        if(object !=null){
+            this.object.setPosition(newPoint);
+        }
+        else{
+            System.err.println("Player.moveObject: object == null");
+        }
     }
     
     public Color getColor(){

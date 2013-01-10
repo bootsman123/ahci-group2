@@ -4,6 +4,7 @@ import TUIO.TuioClient;
 import game.base.Map;
 import game.base.UsableActor;
 import game.gui.MobilePhoneHandler;
+import game.gui.TouchHandler;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
@@ -18,9 +19,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.pathfinding.AStarPathFinder;
-import org.newdawn.slick.util.pathfinding.Path;
-import org.newdawn.slick.util.pathfinding.PathFinder;
 
 /**
  *
@@ -41,6 +39,7 @@ public class GameManager
     
     private TuioClient tuioClient;
     private MobilePhoneHandler mobilePhoneHandler;
+    private TouchHandler touchHandler;
     
     /**
      * Hidden constructor.
@@ -49,8 +48,10 @@ public class GameManager
     {
         this.tuioClient = new TuioClient();
         this.mobilePhoneHandler = new MobilePhoneHandler();
-        
+        this.touchHandler = new TouchHandler();
         this.tuioClient.addTuioListener( this.mobilePhoneHandler );
+        this.tuioClient.addTuioListener( this.touchHandler );
+        this.tuioClient.connect();
     }
 
     /**
@@ -83,9 +84,15 @@ public class GameManager
         // Initialize players.
         this.players = new ArrayList<Player>();
         
+        Color[] colorsForPlayers = new Color[4];
+        colorsForPlayers[0] = Color.blue;
+        colorsForPlayers[1] = Color.pink;
+        colorsForPlayers[2] = Color.red;
+        colorsForPlayers[3] = Color.green;
+        
         for( Integer i = 0; i < this.numberOfPlayers; i++ )
         {
-            this.players.add( new MousePlayer( i, Color.blue ) );
+            this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
             this.map.addUsableActor( this.players.get( i ).getObject() );
         }
     }
@@ -120,21 +127,50 @@ public class GameManager
                 if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
                     MousePlayer mousePlayer = (MousePlayer) player;
                     if(mousePlayer.isDraggingObject()){
+                        //@TODO: make sure to select the right object when dragging
+                        System.out.println("GameManager.update: player is now dragging this object");
                         player.moveObject( this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
                     }
                     else{
                         
-                        Point2D tilePoint = this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY()));
-                        int tileX = (int) tilePoint.getX();
-                        int tileY = (int) tilePoint.getY();
+                        Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
+                        int pixelX = (int) pixelPoint.getX();
+                        int pixelY = (int) pixelPoint.getY();
+
                         for (UsableActor actor : this.map.getCookies()){
-                            if(actor.getX()==tileX && actor.getY()==tileY){
-                                mousePlayer.setIsDraggingObject(true);
+                            if (actor.getOwner().equals(player)){
+                                int actorTileX = actor.getX();
+                                int actorTileY = actor.getY();
+                                Point2D.Double positionInPixels = map.toPositionInPixels(actorTileX, actorTileY);
+                                double actorPixelX = positionInPixels.getX();
+                                double actorPixelY = positionInPixels.getY();
+                                
+                                int actorWidth = actor.getWidth();
+                                int actorHeight = actor.getHeight();
+                                System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
+                                if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
+                                    System.out.println("GameManager.update: Player is now dragging the object");
+
+                                    mousePlayer.setIsDraggingObject(true);
+                                    mousePlayer.setObject(actor);
+                                }
                             }
                         }
-                        for (UsableActor actor : this.map.getWhistles()){
-                            if(actor.getX()==tileX && actor.getY()==tileY){
-                                mousePlayer.setIsDraggingObject(true);
+                       for (UsableActor actor : this.map.getWhistles()){
+                            if (actor.getOwner().equals(player)){
+                                int actorTileX = actor.getX();
+                                int actorTileY = actor.getY();
+                                Point2D.Double positionInPixels = map.toPositionInPixels(actorTileX, actorTileY);
+                                double actorPixelX = positionInPixels.getX();
+                                double actorPixelY = positionInPixels.getY();
+                                int actorWidth = actor.getWidth();
+                                int actorHeight = actor.getHeight();
+                                System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
+                                if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
+                                    System.out.println("GameManager.update: Player is now dragging the object");
+                                    mousePlayer.setIsDraggingObject(true);
+                                    mousePlayer.setObject(actor);
+                                }
                             }
                         }
                     }
@@ -145,7 +181,16 @@ public class GameManager
                 }
             }
             else if (player instanceof TouchPlayer){
-                System.out.println("Touch player not yet supported");
+                TouchPlayer touchPlayer = (TouchPlayer) player;
+                if(touchPlayer.hasFingerOnTable()){
+                    //@TODO: make sure to select the right object when dragging
+                    System.out.println("GameManager.update: player is now dragging this object");
+                    Point2D.Double touchPoint = touchPlayer.getFingerLocation();
+                    player.moveObject( this.map.fromPositionInPixels(touchPoint));
+                }
+                else{
+
+                }
             }
             else{
                 System.out.println("Player not supported");

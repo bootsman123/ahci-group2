@@ -224,6 +224,7 @@ public class Map implements TileBasedMap
         this.updateActors( this.loveSheeps, delta );
         this.updateActors( this.cookies, delta );
         this.updateActors( this.whistles, delta );
+        
     }
     
     /**
@@ -282,6 +283,7 @@ public class Map implements TileBasedMap
             }
             
             this.cookies.add( cookie );
+            
         }
         else if( object instanceof Whistle )
         {
@@ -293,8 +295,10 @@ public class Map implements TileBasedMap
             {
                 whistle.addUseListener( dog );
             }
+
             
             this.whistles.add( whistle );
+            
         }
     }
 
@@ -310,7 +314,7 @@ public class Map implements TileBasedMap
         }
         else if( object instanceof Whistle )
         {
-            this.whistles.remove( (Whistle)object );
+            this.whistles.remove( (Whistle)object );   
         }
     }
     
