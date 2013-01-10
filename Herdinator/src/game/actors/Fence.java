@@ -10,9 +10,9 @@ import java.awt.Point;
  */
 public class Fence extends UsableActor
 {
-    public Fence( Point position, Player owner )
+    public Fence( Point position, Player owner, boolean isOnMap )
     {
-        super( position, owner );
+        super( position, owner, isOnMap );
     }
 
     @Override

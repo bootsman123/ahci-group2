@@ -2,7 +2,7 @@ package game.states;
 
 import game.Game;
 import game.global.GameManager;
-import game.gui.ObjectPicker;
+import game.interfaces.UsableActorContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -15,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class GameState extends BasicGameState
 {
-    private ObjectPicker overlay;
+    private UsableActorContainer overlay;
 
     public GameState() throws SlickException
     {
@@ -36,7 +36,8 @@ public class GameState extends BasicGameState
     public void enter( GameContainer container, StateBasedGame game ) throws SlickException
     {
         GameManager.getInstance().init( container, game );
-        this.overlay = new ObjectPicker();
+        this.overlay = new UsableActorContainer(container);
+        System.out.println("GameState.enter: Init overlay!");
         this.overlay.init( container, game );
     }
 
@@ -45,7 +46,7 @@ public class GameState extends BasicGameState
     {
         GameManager.getInstance().render( container, game, g );
         
-        this.overlay.render(container, game, g);
+        this.overlay.render(container, g);
     }
 
     @Override

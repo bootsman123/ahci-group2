@@ -12,6 +12,7 @@ import org.newdawn.slick.gui.GUIContext;
 /**
  *
  * @author bootsman
+<<<<<<< HEAD
  */
 public class Button extends AbstractComponent
 {    

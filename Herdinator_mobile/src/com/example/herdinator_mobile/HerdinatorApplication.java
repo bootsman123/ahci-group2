@@ -4,10 +4,23 @@ import android.app.Application;
 import android.graphics.Color;
 
 public class HerdinatorApplication extends Application {
-	private int phone_id;
+
+	public Integer[] imageIDs = { R.drawable.cookie, R.drawable.whistle, };
+	public String[] object_strings = { "cookie", "whistle" };
+
+	private String phone_id;
 	private Color overlay_color;
-	private String selected_object;
+	private int selected_object;
 	private boolean connected; 
+	private String url;
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public boolean isConnected() {
 		return connected;
@@ -17,11 +30,11 @@ public class HerdinatorApplication extends Application {
 		this.connected = connected;
 	}
 
-	public String getSelected_object() {
+	public int getSelected_object() {
 		return selected_object;
 	}
 
-	public void setSelected_object(String selected_object) {
+	public void setSelected_object(int selected_object) {
 		this.selected_object = selected_object;
 	}
 
@@ -33,11 +46,19 @@ public class HerdinatorApplication extends Application {
 		this.overlay_color = overlay_color;
 	}
 
-	public int getPhone_id() {
+	public String getPhone_id() {
 		return phone_id;
 	}
 
-	public void setPhone_id(int phone_id) {
+	public void setPhone_id(String phone_id) {
 		this.phone_id = phone_id;
+	}
+
+	public int getImageID() {
+		return imageIDs[selected_object];
+	}
+
+	public String getSelected_string() {
+		return object_strings[selected_object];
 	}
 }

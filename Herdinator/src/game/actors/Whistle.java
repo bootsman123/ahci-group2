@@ -27,14 +27,15 @@ public class Whistle extends UsableActor
      * @param position
      * @throws SlickException 
      */
-    public Whistle( Point position, Player owner ) throws SlickException
+    public Whistle( Point position, Player owner, boolean isOnMap ) throws SlickException
     {
-        super( position, owner );
+        super( position, owner, isOnMap );
     }
     
     @Override
     public void init()
-    {     
+    {
+        
         try
         {
             // Setup animations.
@@ -63,4 +64,6 @@ public class Whistle extends UsableActor
             listener.onUse( this );
         }
     }
+
+    
 }
