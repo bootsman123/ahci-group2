@@ -38,9 +38,6 @@ public class GameManager
     
     private TuioClient tuioClient;
     private MobilePhoneHandler mobilePhoneHandler;
-
-    private int actorWidth = 10; //@TODO: assign somewhere else
-    private int actorHeight = 10; //@TODO: assign somewhere else
     
     /**
      * Hidden constructor.
@@ -143,8 +140,10 @@ public class GameManager
                                 Point2D.Double positionInPixels = map.toPositionInPixels(actorTileX, actorTileY);
                                 double actorPixelX = positionInPixels.getX();
                                 double actorPixelY = positionInPixels.getY();
+                                
+                                int actorWidth = actor.getWidth();
+                                int actorHeight = actor.getHeight();
                                 System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
-
                                 if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
                                     System.out.println("GameManager.update: Player is now dragging the object");
 
@@ -160,11 +159,11 @@ public class GameManager
                                 Point2D.Double positionInPixels = map.toPositionInPixels(actorTileX, actorTileY);
                                 double actorPixelX = positionInPixels.getX();
                                 double actorPixelY = positionInPixels.getY();
+                                int actorWidth = actor.getWidth();
+                                int actorHeight = actor.getHeight();
                                 System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
-
                                 if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
                                     System.out.println("GameManager.update: Player is now dragging the object");
-
                                     mousePlayer.setIsDraggingObject(true);
                                     mousePlayer.setObject(actor);
                                 }

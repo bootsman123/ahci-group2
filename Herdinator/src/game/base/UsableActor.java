@@ -116,4 +116,10 @@ public abstract class UsableActor extends Actor implements Usable
     public double getOffset(){
         return UsableActor.OFFSET;
     }
+    public int getWidth(){
+        return this.animation.getWidth();
+    }
+    public int getHeight(){
+        return this.animation.getHeight();
+    }
 }

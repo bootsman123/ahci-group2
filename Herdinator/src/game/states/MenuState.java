@@ -53,8 +53,11 @@ public class MenuState extends BasicGameState
         "Catching sheep has never been more fun!",
         "YOHO, you only herd once!",
         "It's all fun and games until someone gets herd!",
-        "You may have herd of our game!"
-
+        "You may have herd of our game!",
+        "Q:what has 8 legs, 4 ears, and twice as much wool as a sheep? A: 2 sheep.",
+        "Why did the ram jump off the cliff? He didn't see the ewe turn.",
+        "What did the sheep say to another sheep after they had come back from being ill? How are ewe!",
+        "My jokes are sheeeeppppp."
     };
     private String subTitleStringForNow;
 
