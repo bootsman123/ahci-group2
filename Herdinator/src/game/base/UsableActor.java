@@ -61,7 +61,11 @@ public abstract class UsableActor extends Actor implements Usable
 
         g.setColor( this.owner.getColor() );
         g.fill( shape );
-        g.setColor( Color.blue );
+        if(this.isOnMap)
+            g.setColor( Color.blue );
+        else{
+            g.setColor(Color.magenta);
+        }
         g.setLineWidth(3f);
         g.draw(shape);
 
@@ -108,5 +112,8 @@ public abstract class UsableActor extends Actor implements Usable
 
     public Point2D.Double getLocationInsideActorContainer(){
         return this.locationInsideActorContainer;
+    }
+    public double getOffset(){
+        return UsableActor.OFFSET;
     }
 }

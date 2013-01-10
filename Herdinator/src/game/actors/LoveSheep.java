@@ -83,6 +83,7 @@ public class LoveSheep extends MovableActor implements UseListener
             // Check for cookies.
             direction = this.directionTowardsClosestActorFromList( this, map.getCookies(), directions, LoveSheep.WHISTLE_DISTANCE, LoveSheep.WHISTLE_OBEYANCE );
             
+            
             if( direction == null )
             {                
                 // Pick a random element.

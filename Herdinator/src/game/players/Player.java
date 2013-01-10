@@ -38,7 +38,12 @@ public abstract class Player {
     }
 
     public void moveObject(Point newPoint){
-        this.object.setPosition(newPoint);
+        if(object !=null){
+            this.object.setPosition(newPoint);
+        }
+        else{
+            System.err.println("Player.moveObject: object == null");
+        }
     }
     
     public Color getColor(){
