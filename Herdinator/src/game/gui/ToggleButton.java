@@ -1,26 +1,21 @@
 package game.gui;
 
+import game.gui.listeners.ToggleListener;
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
 /**
  *
  * @author bootsman
  */
-public class ButtonToggle extends Button
-{
-    public interface ToggleListener extends ComponentListener
-    {
-        public void onToggle( ButtonToggle buttonToggle );
-    }
-    
+public class ToggleButton extends Button
+{   
     private Boolean isToggled;
     
-    private List<ToggleListener> toggleListeners;
+    private List<ToggleListener> listenersToggle;
     
     /**
      * Constructor.
@@ -31,13 +26,22 @@ public class ButtonToggle extends Button
      * @param y
      * @throws SlickException 
      */
-    public ButtonToggle( GUIContext context, String imageUp, String imageDown ) throws SlickException
+    public ToggleButton( GUIContext context, String imageUp, String imageDown ) throws SlickException
     {
         super( context, imageUp, imageDown );
         
         this.isToggled = Boolean.FALSE;
         
-        this.toggleListeners = new ArrayList<ToggleListener>();
+        this.listenersToggle = new ArrayList<ToggleListener>();
+    }
+    
+    /**
+     * Returns whether the button is toggled on or off.
+     * @return 
+     */
+    public Boolean isToggled()
+    {
+        return this.isToggled;
     }
     
     /**
@@ -47,24 +51,29 @@ public class ButtonToggle extends Button
     public void setIsToggled( Boolean isToggled )
     {
         this.isToggled = isToggled;
+        
+        if( this.isToggled )
+        {
+            this.isDown = Boolean.TRUE;
+        }
     }
     
     /**
      * Add toggle listener.
      * @param toggleListener 
      */
-    public void addToggleListener( ToggleListener toggleListener )
+    public void addToggleListener( ToggleListener listenerToggle )
     {
-        this.toggleListeners.add( toggleListener );
+        this.listenersToggle.add( listenerToggle );
     }
     
     /**
      * Remove toggle listener.
      * @param toggleListener 
      */
-    public void removeToggleListener( ToggleListener toggleListener )
+    public void removeToggleListener( ToggleListener listenerToggle )
     {
-        this.toggleListeners.remove( toggleListener );
+        this.listenersToggle.remove( listenerToggle );
     }
     
     @Override
@@ -79,9 +88,9 @@ public class ButtonToggle extends Button
                 this.isToggled = !this.isToggled;
                 
                 // Notify listeners.
-                for( ToggleListener listener : this.toggleListeners )
+                for( ToggleListener listenerToggle : this.listenersToggle )
                 {
-                    listener.onToggle( this );
+                    listenerToggle.onToggle( this );
                 }
             }
         }

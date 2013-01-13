@@ -1,82 +1,51 @@
 package game.states;
 
-import game.Game;
-import game.gui.Button;
-import game.gui.ButtonGroup;
-import game.gui.ButtonToggle;
-import java.awt.Font;
+import game.util.FontUtil;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.HieroSettings;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- *
- * @author bootsman
+ * Abstract menu with a background, a title and a subtitle.
+ * Top color: #fa0d70.
+ * Bottom color: #db2864.
+ * @author Bas Bootsma
  */
-public class MenuState extends BasicGameState
+public abstract class MenuState extends BasicGameState
 {
     private static final String BACKGROUND_FILE_PATH = "../Resources/Images/Menu/background.jpg";
 
-    private static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
-    private static final String BUTTON_EXIT = "../Resources/Images/Menu/buttonExit.png";
-
-    // Number of players buttons.
-    private static final String BUTTON_NUMBER_OF_PLAYERS_ONE = "../Resources/Images/Menu/buttonNumberOfPlayersOne.png";
-    private static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE = "../Resources/Images/Menu/buttonActiveNumberOfPlayersOne.png";
-    
-    private static final String BUTTON_NUMBER_OF_PLAYERS_TWO = "../Resources/Images/Menu/buttonNumberOfPlayersTwo.png";
-    private static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_TWO = "../Resources/Images/Menu/buttonActiveNumberOfPlayersTwo.png";
-
-    private static final String BUTTON_NUMBER_OF_PLAYERS_THREE = "../Resources/Images/Menu/buttonNumberOfPlayersThree.png";
-    private static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_THREE = "../Resources/Images/Menu/buttonActiveNumberOfPlayersThree.png";
-
-    private static final String BUTTON_NUMBER_OF_PLAYERS_FOUR = "../Resources/Images/Menu/buttonNumberOfPlayersFour.png";
-    private static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_FOUR = "../Resources/Images/Menu/buttonActiveNumberOfPlayersFour.png";
-    
     // Titles.
     private static final String TITLE_STRING = "Herdinator";
     private static final String TITLE_FONT_FILE_PATH = "../Resources/Fonts/Harabara.ttf";
     private static final Integer TITLE_FONT_SIZE = 60;
-    
-    private static final String SUB_TITLE_STRING = "Catching sheep has never been more fun! YOHO, you only herd once.  ";
-    private static final String[] POSSIBLE_SUB_TITLE_STRINGS = {
+   
+    //private static final String SUB_TITLE_STRING = "Catching sheep has never been more fun! YOHO, you only herd once.";
+    private static final String[] SUB_TITLE_STRINGS = {
         "Catching sheep has never been more fun!",
         "YOHO, you only herd once!",
         "It's all fun and games until someone gets herd!",
         "You may have herd of our game!",
-        "Q:what has 8 legs, 4 ears, and twice as much wool as a sheep? A: 2 sheep.",
-        "Why did the ram jump off the cliff? He didn't see the ewe turn.",
-        "What did the sheep say to another sheep after they had come back from being ill? How are ewe!",
         "My jokes are sheeeeppppp."
     };
-    private String subTitleStringForNow;
-
     private static final String SUB_TITLE_FONT_FILE_PATH = "../Resources/Fonts/simplicity.ttf";
     private static final Integer SUB_TITLE_FONT_SIZE = 30;
     
-    private static final String NUMBER_OF_PLAYERS_STRING = "Number of players:";
-    private static final Integer NUMBER_OF_PLAYERS_FONT_SIZE = 16;
-    
     private UnicodeFont titleFont;
     private UnicodeFont subTitleFont;
-    private UnicodeFont numberOfPlayersFont;
+    
+    private String subTitleString;
     
     private Image background;
-        
-    private ButtonToggle buttonNumberOfPlayersOne;
-    private ButtonToggle buttonNumberOfPlayersTwo;
-    private ButtonToggle buttonNumberOfPlayersThree;
-    private ButtonToggle buttonNumberOfPlayersFour;
     
-    private ButtonGroup buttonNumberOfPlayers;
-    
-    private Button buttonStart;
-    private Button buttonExit;
+    protected GameContainer container;
+    protected StateBasedGame game;
     
     /**
      * Constructor.
@@ -87,64 +56,33 @@ public class MenuState extends BasicGameState
     }
 
     @Override
-    public int getID()
-    {
-        return Game.GAME_STATE_MENU;
-    }
-
-    @Override
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
-    {
-     
-        this.subTitleStringForNow = MenuState.POSSIBLE_SUB_TITLE_STRINGS[(int)(Math.random()*MenuState.POSSIBLE_SUB_TITLE_STRINGS.length)];
+    {        
         this.background = new Image( MenuState.BACKGROUND_FILE_PATH );
         
         // Fonts.
-        this.titleFont = new UnicodeFont( MenuState.TITLE_FONT_FILE_PATH, MenuState.TITLE_FONT_SIZE, false, false );
-        this.titleFont.addAsciiGlyphs();
-        this.titleFont.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
-        this.titleFont.loadGlyphs();        
+        HieroSettings titleSettings = new HieroSettings();
+        titleSettings.setFontSize( MenuState.TITLE_FONT_SIZE );
+        titleSettings.setBold( Boolean.FALSE );
+        titleSettings.setItalic( Boolean.FALSE );
+        titleSettings.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
         
-        this.subTitleFont = new UnicodeFont( MenuState.SUB_TITLE_FONT_FILE_PATH, MenuState.SUB_TITLE_FONT_SIZE, false, false );
+        this.titleFont = FontUtil.load( MenuState.TITLE_FONT_FILE_PATH, titleSettings );
+        this.titleFont.addAsciiGlyphs();
+        this.titleFont.loadGlyphs();
+        
+        HieroSettings subTitleSettings = new HieroSettings();
+        subTitleSettings.setFontSize( MenuState.SUB_TITLE_FONT_SIZE );
+        subTitleSettings.setBold( Boolean.FALSE );
+        subTitleSettings.setItalic( Boolean.FALSE );
+        subTitleSettings.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
+        
+        this.subTitleFont = FontUtil.load( MenuState.SUB_TITLE_FONT_FILE_PATH, subTitleSettings );
         this.subTitleFont.addAsciiGlyphs();
-        this.subTitleFont.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
         this.subTitleFont.loadGlyphs();
         
-        java.awt.Font font = new java.awt.Font( "Verdana", Font.BOLD, MenuState.NUMBER_OF_PLAYERS_FONT_SIZE );
-        this.numberOfPlayersFont = new UnicodeFont( font );
-        this.numberOfPlayersFont.addAsciiGlyphs();
-        this.numberOfPlayersFont.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
-        this.numberOfPlayersFont.loadGlyphs();
-        
-        // Buttons.        
-        this.buttonNumberOfPlayersOne = new ButtonToggle( container, MenuState.BUTTON_NUMBER_OF_PLAYERS_ONE, MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE );
-        this.buttonNumberOfPlayersTwo = new ButtonToggle( container, MenuState.BUTTON_NUMBER_OF_PLAYERS_TWO, MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_TWO );
-        this.buttonNumberOfPlayersThree = new ButtonToggle( container, MenuState.BUTTON_NUMBER_OF_PLAYERS_THREE, MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_THREE );
-        this.buttonNumberOfPlayersFour = new ButtonToggle( container, MenuState.BUTTON_NUMBER_OF_PLAYERS_FOUR, MenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_FOUR );
-        
-        // Create a button group.
-        this.buttonNumberOfPlayers = new ButtonGroup();
-        this.buttonNumberOfPlayers.add( this.buttonNumberOfPlayersOne );
-        this.buttonNumberOfPlayers.add( this.buttonNumberOfPlayersTwo );
-        this.buttonNumberOfPlayers.add( this.buttonNumberOfPlayersThree );
-        this.buttonNumberOfPlayers.add( this.buttonNumberOfPlayersFour );
-        
-        this.buttonStart = new Button( container, MenuState.BUTTON_START, MenuState.BUTTON_START );
-        this.buttonExit = new Button( container, MenuState.BUTTON_EXIT, MenuState.BUTTON_EXIT );
-        
-        // Button positions.
-        // Assuming all 'number of players'-buttons have equal width (@TODO: Bit fugly).
-        Integer buttonWidthNumberOfPlayers = this.buttonNumberOfPlayersOne.getWidth();
-        Double buttonMarginNumberOfPlayers = ( this.buttonStart.getWidth() - buttonWidthNumberOfPlayers * 4 ) / 3.0;
-        Double buttonPositionInitial = ( container.getWidth() - buttonWidthNumberOfPlayers * 4 - buttonMarginNumberOfPlayers * 3 ) / 2;
-                
-        this.buttonNumberOfPlayersOne.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 0 ), 260 );
-        this.buttonNumberOfPlayersTwo.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 1 ), 260 );
-        this.buttonNumberOfPlayersThree.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 2 ), 260 );
-        this.buttonNumberOfPlayersFour.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 3 ), 260 );
-        
-        this.buttonStart.setLocation( ( container.getWidth() - this.buttonStart.getWidth() ) / 2, 320 );
-        this.buttonExit.setLocation( ( container.getWidth() - this.buttonExit.getWidth() ) / 2, 380 );
+        // Random subtitle.
+        this.subTitleString = MenuState.SUB_TITLE_STRINGS[ (int)( Math.random() * MenuState.SUB_TITLE_STRINGS.length ) ];
     }
 
     @Override
@@ -159,31 +97,28 @@ public class MenuState extends BasicGameState
         this.titleFont.drawString( titleStringX, titleStringY, MenuState.TITLE_STRING );
         
         // Draw sub title.
-        Integer subTitleStringX = ( container.getWidth() - this.subTitleFont.getWidth( this.subTitleStringForNow ) ) / 2;
+        Integer subTitleStringX = ( container.getWidth() - this.subTitleFont.getWidth( this.subTitleString ) ) / 2;
         Integer subTitleStringY = 80;
         
-        this.subTitleFont.drawString( subTitleStringX, subTitleStringY, this.subTitleStringForNow );
-        
-        // Draw number of players.
-        Integer numberOfPlayersStringX = ( container.getWidth() - this.numberOfPlayersFont.getWidth( MenuState.NUMBER_OF_PLAYERS_STRING ) ) / 2;
-        Integer numberOfPlayersStringY = 230;
-        
-        this.numberOfPlayersFont.drawString( numberOfPlayersStringX, numberOfPlayersStringY, MenuState.NUMBER_OF_PLAYERS_STRING );
-              
-        // Draw buttons.
-        this.buttonNumberOfPlayersOne.render( container, g );
-        this.buttonNumberOfPlayersTwo.render( container, g );
-        this.buttonNumberOfPlayersThree.render( container, g );
-        this.buttonNumberOfPlayersFour.render( container, g );
-        
-        this.buttonStart.render( container, g );
-        this.buttonExit.render( container, g );
+        this.subTitleFont.drawString( subTitleStringX, subTitleStringY, this.subTitleString );
     }
-
+    
     @Override
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
-        /*
+    }
+    
+    @Override
+    public void enter( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+        this.container = container;
+        this.game = game;
+    }
+
+    /*
+    @Override
+    public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
+    {
         Input input = container.getInput();
 
         Integer mouseX = input.getMouseX();
@@ -244,6 +179,6 @@ public class MenuState extends BasicGameState
                 container.exit();
             }
         }
-        */
     }
+    */
 }

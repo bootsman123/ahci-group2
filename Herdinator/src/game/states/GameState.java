@@ -24,22 +24,24 @@ public class GameState extends BasicGameState
     @Override
     public int getID()
     {
-       return Game.GAME_STATE_GAME;
+       return Game.GAME_STATE;
     }
 
     @Override
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
-    {
+    {        
+        GameManager.getInstance().init( container, game );
+
+        this.overlay = new UsableActorContainer(container);
+        this.overlay.init( container, game );
     }
     
+    /*
     @Override
     public void enter( GameContainer container, StateBasedGame game ) throws SlickException
     {
-        GameManager.getInstance().init( container, game );
-        this.overlay = new UsableActorContainer(container);
-        System.out.println("GameState.enter: Init overlay!");
-        this.overlay.init( container, game );
     }
+    */
 
     @Override
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException

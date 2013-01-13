@@ -8,13 +8,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
- * @author bootsman
+ * @author Bas Bootsma
  */
-public class ModalitySelectorState extends BasicGameState
+public class LoadingState extends BasicGameState
 {
-    public ModalitySelectorState()
+    public LoadingState()
     {
-        super();
+        
     }
 
     @Override
@@ -30,14 +30,12 @@ public class ModalitySelectorState extends BasicGameState
     }
 
     @Override
-    public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
-    {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
-    {
+    public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

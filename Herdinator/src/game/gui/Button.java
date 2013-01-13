@@ -1,5 +1,13 @@
 package game.gui;
 
+import TUIO.TuioCursor;
+import TUIO.TuioListener;
+import TUIO.TuioObject;
+import TUIO.TuioPoint;
+import TUIO.TuioTime;
+import game.gui.listeners.ClickAndTouchListener;
+import java.util.ArrayList;
+import java.util.List;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -10,18 +18,19 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 
 /**
- *
- * @author bootsman
-<<<<<<< HEAD
+ * Basic button.
+ * @author Bas Bootsma
  */
-public class Button extends AbstractComponent
-{    
+public class Button extends AbstractComponent implements TuioListener
+{
     private Image imageUp;
     private Image imageDown;
     
     protected Shape area;
     protected Boolean isOver;
-    protected Boolean isDown;
+    protected Boolean isDown;    
+    
+    private List<ClickAndTouchListener> listenersClickAndTouch;
     
     /**
      * Constructor.
@@ -40,6 +49,8 @@ public class Button extends AbstractComponent
         this.area = area;
         this.isOver = Boolean.FALSE;
         this.isDown = Boolean.FALSE;
+        
+        this.listenersClickAndTouch = new ArrayList<ClickAndTouchListener>();
     }
     
     /**
@@ -79,6 +90,35 @@ public class Button extends AbstractComponent
     public Button( GUIContext context, String imageUp, String imageDown ) throws SlickException
     {
         this( context, imageUp, imageDown, 0, 0 );
+    }
+    
+    /**
+     * Add 'click and touch'-listener.
+     * @param listener 
+     */
+    public void addClickAndTouchListener( ClickAndTouchListener listenerClickAndTouch )
+    {
+        this.listenersClickAndTouch.add( listenerClickAndTouch );
+    }
+    
+    /**
+     * Remove 'click and touch'-listener.
+     * @param listener 
+     */
+    public void removeClickAndTouchListener( ClickAndTouchListener listenerClickAndTouch )
+    {
+        this.listenersClickAndTouch.remove( listenerClickAndTouch );
+    }
+    
+    /**
+     * Notify click and touch listeners.
+     */
+    private void notifyClickAndTouchListeners()
+    {
+        for( ClickAndTouchListener listenerClickAndTouch : this.listenersClickAndTouch )
+        {
+            listenerClickAndTouch.onClickOrTouch( this );
+        }
     }
 
     @Override
@@ -168,8 +208,93 @@ public class Button extends AbstractComponent
         super.mouseReleased( button, x, y );
         
         this.isOver = this.area.contains( x, y );
+        
+        if( this.isDown )
+        {
+            this.notifyClickAndTouchListeners();
+        }
+        
         this.isDown = Boolean.FALSE;
         
+        /*
+        this.isOver = this.area.contains( x, y );
+        this.isDown = Boolean.FALSE;
+        
+        this.notifyClickAndTouchListeners();
+        */
+        
+        /*
+        if( this.area.contains( x, y ) )
+        {
+            this.isOver = Boolean.TRUE;
+            this.isDown = Boolean.FALSE;
+            
+            this.notifyClickAndTouchListeners();
+        }
+        else
+        {
+            this.isOver = Boolean.FALSE;
+        }
+        */
+        
         //this.notifyListeners();
+    }
+
+    @Override
+    public void addTuioObject( TuioObject o )
+    {
+    }
+
+    @Override
+    public void updateTuioObject( TuioObject o )
+    {
+    }
+
+    @Override
+    public void removeTuioObject( TuioObject o )
+    {
+    }
+
+    @Override
+    public void addTuioCursor( TuioCursor c )
+    {
+        // @TODO: Hacky and fugly.
+        if( !this.isAcceptingInput() )
+        {
+            return;
+        }
+        
+        this.updateTuioCursor( c );
+    }
+
+    @Override
+    public void updateTuioCursor( TuioCursor c )
+    {
+        // @TODO: Hacky and fugly.
+        if( !this.isAcceptingInput() )
+        {
+            return;
+        }
+        
+        TuioPoint point = c.getPosition();
+        
+        if( this.area.contains( point.getX(), point.getY() ) )
+        {
+            this.isDown = Boolean.TRUE;        
+            this.notifyClickAndTouchListeners();
+        }        
+    }
+
+    @Override
+    public void removeTuioCursor( TuioCursor c )
+    {
+        TuioPoint point = c.getPosition();
+        
+        this.isDown = Boolean.FALSE;
+    }
+
+    @Override
+    public void refresh( TuioTime t )
+    {
     }
 }

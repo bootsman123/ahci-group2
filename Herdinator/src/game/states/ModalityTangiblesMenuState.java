@@ -5,11 +5,23 @@
 
 package game.states;
 
+import game.Game;
+
 /**
  *
  * @author bootsman
  */
 public class ModalityTangiblesMenuState extends MenuState
 {
+    public ModalityTangiblesMenuState()
+    {
+        super();
+    }
+    
+    @Override
+    public int getID()
+    {
+        return Game.MODALITY_TANGIBLES_MENU_STATE;
+    }
 
 }

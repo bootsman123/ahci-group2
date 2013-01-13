@@ -90,11 +90,14 @@ public class GameManager
         colorsForPlayers[2] = Color.red;
         colorsForPlayers[3] = Color.green;
         
+        /*
+        // @TODO: Need to find a place for this. 
         for( Integer i = 0; i < this.numberOfPlayers; i++ )
         {
             this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
             this.map.addUsableActor( this.players.get( i ).getObject() );
-        }
+        } 
+        * */
     }
     
     /**
@@ -208,6 +211,11 @@ public class GameManager
      */
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
+        if( this.map == null )
+        {
+            System.out.println( "Map is NULL" );
+        }
+        
         this.map.render( container, game, g );
     }
     
