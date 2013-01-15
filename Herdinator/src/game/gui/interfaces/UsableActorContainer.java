@@ -1,4 +1,4 @@
-package game.interfaces;
+package game.gui.interfaces;
 
 import game.actors.Cookie;
 import game.actors.Whistle;
