@@ -9,7 +9,6 @@ import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -65,7 +64,7 @@ public class GameState extends BasicGameState
         java.awt.Font font = new java.awt.Font( "Verdana", Font.PLAIN, GameState.TIME_LEFT_FONT_SIZE );
         this.timeLeftFont = new UnicodeFont( font );
         this.timeLeftFont.addAsciiGlyphs();
-        this.timeLeftFont.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
+        this.timeLeftFont.getEffects().add( new ColorEffect( java.awt.Color.decode( "#db2864" ) ) );
         this.timeLeftFont.loadGlyphs();
     }
     
@@ -85,7 +84,7 @@ public class GameState extends BasicGameState
         
         // Draw time left.
         Long timeLeft = TimeUnit.SECONDS.toMillis( GameState.TIME_TO_COMPLETE ) - this.timeElapsed;
-        String timeLeftString = ( new SimpleDateFormat( "mm:ss" ) ).format( new Date( timeLeft ) );
+        String timeLeftString = String.format( "%s %s", "Time left:", ( new SimpleDateFormat( "mm:ss" ) ).format( new Date( timeLeft ) );
         
         this.timeLeftFont.drawString( ( container.getWidth() - this.timeLeftFont.getWidth( timeLeftString ) ) / 2,
                                       10,
