@@ -19,6 +19,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class MenuState extends BasicGameState
 {
+    public static final Integer BUTTON_MARGIN = 20;
+    
     private static final String BACKGROUND_FILE_PATH = "../Resources/Images/Menu/background.jpg";
 
     // Titles.

@@ -3,13 +3,11 @@ package game.global;
 import TUIO.TuioClient;
 import game.base.Map;
 import game.base.UsableActor;
-import game.gui.MobilePhoneHandler;
 import game.gui.TouchHandler;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
 import game.players.TouchPlayer;
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +36,6 @@ public class GameManager
     private List<Player> players;
     
     private TuioClient tuioClient;
-    private MobilePhoneHandler mobilePhoneHandler;
     private TouchHandler touchHandler;
     
     /**
@@ -47,11 +44,6 @@ public class GameManager
     private GameManager()
     {
         this.tuioClient = new TuioClient();
-        this.mobilePhoneHandler = new MobilePhoneHandler();
-        this.touchHandler = new TouchHandler();
-        this.tuioClient.addTuioListener( this.mobilePhoneHandler );
-        this.tuioClient.addTuioListener( this.touchHandler );
-        this.tuioClient.connect();
     }
 
     /**

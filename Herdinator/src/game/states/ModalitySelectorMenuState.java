@@ -57,9 +57,11 @@ public class ModalitySelectorMenuState extends MenuState implements ClickAndTouc
         this.buttonExit.addClickAndTouchListener( this );
         
         // Button positions.
-        this.buttonModalityMouseAndTouch.setLocation( ( container.getWidth() - this.buttonModalityMouseAndTouch.getWidth() ) / 2, 260 );
-        this.buttonModalityTangibles.setLocation( ( container.getWidth() - this.buttonModalityTangibles.getWidth() ) / 2, 320 );
-        this.buttonExit.setLocation( ( container.getWidth() - this.buttonExit.getWidth() ) / 2, 380 );       
+        Integer buttonModalityMouseAndTouchY = 200;
+        
+        this.buttonModalityMouseAndTouch.setLocation( ( container.getWidth() - this.buttonModalityMouseAndTouch.getWidth() ) / 2, buttonModalityMouseAndTouchY );
+        this.buttonModalityTangibles.setLocation( ( container.getWidth() - this.buttonModalityTangibles.getWidth() ) / 2, this.buttonModalityMouseAndTouch.getY() + this.buttonModalityMouseAndTouch.getHeight() + MenuState.BUTTON_MARGIN );
+        this.buttonExit.setLocation( ( container.getWidth() - this.buttonExit.getWidth() ) / 2, this.buttonModalityTangibles.getY() + this.buttonModalityTangibles.getHeight() + MenuState.BUTTON_MARGIN );       
     }
 
     @Override

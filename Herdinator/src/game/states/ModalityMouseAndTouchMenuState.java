@@ -22,8 +22,8 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  */
 public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAndTouchListener
 {
-    private static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
-    private static final String BUTTON_BACK = "../Resources/Images/Menu/buttonBack.png";
+    private static final String NUMBER_OF_PLAYERS_STRING = "Number of players:";
+    private static final Integer NUMBER_OF_PLAYERS_FONT_SIZE = 16;
     
     // Number of players buttons.
     private static final String BUTTON_NUMBER_OF_PLAYERS_ONE = "../Resources/Images/Menu/buttonNumberOfPlayersOne.png";
@@ -38,8 +38,8 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
     private static final String BUTTON_NUMBER_OF_PLAYERS_FOUR = "../Resources/Images/Menu/buttonNumberOfPlayersFour.png";
     private static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_FOUR = "../Resources/Images/Menu/buttonActiveNumberOfPlayersFour.png";
     
-    private static final String NUMBER_OF_PLAYERS_STRING = "Number of players:";
-    private static final Integer NUMBER_OF_PLAYERS_FONT_SIZE = 16;
+    private static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
+    private static final String BUTTON_BACK = "../Resources/Images/Menu/buttonBack.png";
     
     private UnicodeFont numberOfPlayersFont;
     
@@ -105,17 +105,19 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         
         // Button positions.
         // Assuming all 'number of players'-buttons have equal width (@TODO: Bit fugly).
-        Integer buttonWidthNumberOfPlayers = this.buttonNumberOfPlayersOne.getWidth();
-        Double buttonMarginNumberOfPlayers = ( this.buttonStart.getWidth() - buttonWidthNumberOfPlayers * 4 ) / 3.0;
-        Double buttonPositionInitial = ( container.getWidth() - buttonWidthNumberOfPlayers * 4 - buttonMarginNumberOfPlayers * 3 ) / 2;
-                
-        this.buttonNumberOfPlayersOne.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 0 ), 260 );
-        this.buttonNumberOfPlayersTwo.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 1 ), 260 );
-        this.buttonNumberOfPlayersThree.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 2 ), 260 );
-        this.buttonNumberOfPlayersFour.setLocation( (int)( buttonPositionInitial + ( buttonWidthNumberOfPlayers + buttonMarginNumberOfPlayers ) * 3 ), 260 );
+        Integer buttonNumberOfPlayersWidth = this.buttonNumberOfPlayersOne.getWidth();
+        Integer buttonNumberOfPlayersHeight = this.buttonNumberOfPlayersOne.getHeight();
+        Integer buttonNumberOfPlayersMargin = ( this.buttonStart.getWidth() - buttonNumberOfPlayersWidth * 4 ) / 3;
+        Integer buttonNumberOfPlayersPositionX = ( container.getWidth() - buttonNumberOfPlayersWidth * 4 - buttonNumberOfPlayersMargin * 3 ) / 2;
+        Integer buttonNumberOfPlayersPositionY = 200;    
         
-        this.buttonStart.setLocation( ( container.getWidth() - this.buttonStart.getWidth() ) / 2, 320 );
-        this.buttonBack.setLocation( ( container.getWidth() - this.buttonBack.getWidth() ) / 2, 380 );
+        this.buttonNumberOfPlayersOne.setLocation( (int)( buttonNumberOfPlayersPositionX + ( buttonNumberOfPlayersWidth + buttonNumberOfPlayersMargin ) * 0 ), buttonNumberOfPlayersPositionY );
+        this.buttonNumberOfPlayersTwo.setLocation( (int)( buttonNumberOfPlayersPositionX + ( buttonNumberOfPlayersWidth + buttonNumberOfPlayersMargin ) * 1 ), buttonNumberOfPlayersPositionY );
+        this.buttonNumberOfPlayersThree.setLocation( (int)( buttonNumberOfPlayersPositionX + ( buttonNumberOfPlayersWidth + buttonNumberOfPlayersMargin ) * 2 ), buttonNumberOfPlayersPositionY );
+        this.buttonNumberOfPlayersFour.setLocation( (int)( buttonNumberOfPlayersPositionX + ( buttonNumberOfPlayersWidth + buttonNumberOfPlayersMargin ) * 3 ), buttonNumberOfPlayersPositionY );
+        
+        this.buttonStart.setLocation( ( container.getWidth() - this.buttonStart.getWidth() ) / 2, buttonNumberOfPlayersPositionY + buttonNumberOfPlayersHeight + MenuState.BUTTON_MARGIN );
+        this.buttonBack.setLocation( ( container.getWidth() - this.buttonBack.getWidth() ) / 2, this.buttonStart.getY() + this.buttonStart.getHeight() + MenuState.BUTTON_MARGIN );
     }
 
     @Override
@@ -123,9 +125,9 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
     {
         super.render( container, game, g );
         
-        // Draw number of players.
+        // Draw 'number of players'-string.
         Integer numberOfPlayersStringX = ( container.getWidth() - this.numberOfPlayersFont.getWidth( ModalityMouseAndTouchMenuState.NUMBER_OF_PLAYERS_STRING ) ) / 2;
-        Integer numberOfPlayersStringY = 230;
+        Integer numberOfPlayersStringY = 170;
         
         this.numberOfPlayersFont.drawString( numberOfPlayersStringX, numberOfPlayersStringY, ModalityMouseAndTouchMenuState.NUMBER_OF_PLAYERS_STRING );
               
