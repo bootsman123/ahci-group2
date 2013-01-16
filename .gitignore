@@ -23,10 +23,12 @@ local.properties
 .DS_Store
 
 # Herdinator.
-/HerdinatorServer/nbproject/private/
-/HerdinatorServer/build/
+/HerdinatorServer/nbproject/private/*
+/HerdinatorServer/build/*
+!/HerdinatorServer/build.xml
 /HerdinatorServer/dist/
 /Herdinator/nbproject/private/
-/Herdinator/build/
+/Herdinator/build/*
+!/Herdinator/build.xml
 #/Herdinator/nbproject/project.properties
 /Herdinator/dist/
