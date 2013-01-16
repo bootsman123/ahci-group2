@@ -7,6 +7,8 @@ import game.gui.ButtonGroup;
 import game.gui.ToggleButton;
 import game.gui.listeners.ClickAndTouchListener;
 import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -179,8 +181,13 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
             
             if( index != -1 )
             {
-                GameManager.getInstance().setNumberOfPlayers( index + 1 ); // @TODO: Fugly.          
-                state = Game.GAME_STATE;
+                try {
+                    GameManager.getInstance().startGame( index + 1 ); // @TODO: Fugly.
+                    state = Game.GAME_STATE;
+                } catch (SlickException ex) {
+                    Logger.getLogger(ModalityMouseAndTouchMenuState.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
         }
         else if( button == this.buttonBack )

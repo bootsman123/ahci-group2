@@ -39,7 +39,7 @@ public class GameState extends BasicGameState
    
     private UnicodeFont scoreFont;
     
-    private UsableActorContainer overlay;
+    
 
     /**
      * Constructor.
@@ -60,9 +60,7 @@ public class GameState extends BasicGameState
     {        
         GameManager.getInstance().init( container, game );
 
-        this.overlay = new UsableActorContainer(container);
-        this.overlay.init( container, game );
-        
+       
         this.timeElapsed = 0;
         
         java.awt.Font font = new java.awt.Font( "Verdana", Font.PLAIN, GameState.SCORE_FONT_SIZE );
@@ -84,7 +82,7 @@ public class GameState extends BasicGameState
     {
         GameManager.getInstance().render( container, game, g );
         
-        this.overlay.render(container, g);
+       
         
         // Draw time left.
         Long timeLeft = TimeUnit.SECONDS.toMillis( GameState.TIME_TO_COMPLETE ) - this.timeElapsed;
@@ -113,7 +111,7 @@ public class GameState extends BasicGameState
         
         GameManager.getInstance().update( container, game, delta );  
         
-        this.overlay.update( container, game, delta );
+        
         
         // Update time elapsed.
         this.timeElapsed += delta;
