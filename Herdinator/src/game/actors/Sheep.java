@@ -125,7 +125,9 @@ public class Sheep extends MovableActor
         return direction;
     }
     
-        
+    public boolean isFinished(){
+        return isFinished;
+    }
     /*
     Iterator<Direction> iterator = directions.iterator();
 

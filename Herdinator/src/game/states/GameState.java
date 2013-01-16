@@ -30,11 +30,15 @@ public class GameState extends BasicGameState
     
     public static final Integer TIME_LEFT_TOP_OFFSET = 10;
     public static final Integer TIME_LEFT_FONT_SIZE = 20;
+    
+    public static final Integer SCORE_LEFT_TOP_OFFSET = 30;
+    public static final Integer SCORE_FONT_SIZE = 20;
         
     // Time elapsed in milliseconds.
     private Integer timeElapsed;
-    
+   
     private UnicodeFont timeLeftFont;
+    private UnicodeFont scoreFont;
     
     private UsableActorContainer overlay;
 
@@ -65,8 +69,13 @@ public class GameState extends BasicGameState
         java.awt.Font font = new java.awt.Font( "Verdana", Font.PLAIN, GameState.TIME_LEFT_FONT_SIZE );
         this.timeLeftFont = new UnicodeFont( font );
         this.timeLeftFont.addAsciiGlyphs();
-        this.timeLeftFont.getEffects().add( new ColorEffect( java.awt.Color.decode( "#db2864" ) ) );
+        this.timeLeftFont.getEffects().add( new ColorEffect( java.awt.Color.decode( "#db2864" ) ) ); //TODO: andere kleur maken
         this.timeLeftFont.loadGlyphs();
+        
+        this.scoreFont = new UnicodeFont( font );
+        this.scoreFont.addAsciiGlyphs();
+        this.scoreFont.getEffects().add( new ColorEffect( java.awt.Color.decode( "#db2864" ) ) );
+        this.scoreFont.loadGlyphs();
     }
     
     /*
@@ -85,11 +94,19 @@ public class GameState extends BasicGameState
         
         // Draw time left.
         Long timeLeft = TimeUnit.SECONDS.toMillis( GameState.TIME_TO_COMPLETE ) - this.timeElapsed;
+        
+        
         String timeLeftString = String.format( "%s %s", "Time left:", ( new SimpleDateFormat( "mm:ss" ) ).format( new Date( timeLeft ) ) );
+        String scoreString = String.format( "%s %s", "Score:", ( new SimpleDateFormat( "mm:ss" ) ).format( new Date( score() ) ) );
         
         this.timeLeftFont.drawString( ( container.getWidth() - this.timeLeftFont.getWidth( timeLeftString ) ) / 2,
                                       GameState.TIME_LEFT_TOP_OFFSET,
                                       timeLeftString );
+        
+         this.scoreFont.drawString( ( container.getWidth() - this.scoreFont.getWidth( scoreString ) ) / 2,
+                                      GameState.SCORE_LEFT_TOP_OFFSET,
+                                      scoreString );
+        
     }
 
     @Override
@@ -110,6 +127,19 @@ public class GameState extends BasicGameState
         this.timeElapsed += delta;
     }
     
+    private int score(){
+        Map map = GameManager.getInstance().getMap();
+        int scoreCounter = 0;
+        
+        for( Sheep sheep : map.getSheeps() )
+        {
+            if( sheep.isFinished() )
+            {
+                scoreCounter +=10;
+            }
+        }
+        return scoreCounter;
+    }
     /**
      * Check whether the game is finished.
      * @return 
