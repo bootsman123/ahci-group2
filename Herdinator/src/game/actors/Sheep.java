@@ -78,7 +78,6 @@ public class Sheep extends MovableActor
     @Override
     public void update( int delta )
     {
-     
         Map map = GameManager.getInstance().getMap();
         if(map.isGoalTile(this.getPosition())){
             isFinished = true;
@@ -86,36 +85,18 @@ public class Sheep extends MovableActor
         }    
         super.update( delta );
         
-        if( !this.isMoving() && !isFinished )
+        if( !this.isMoving()  )
         {
-            // Determine new direction.
+            
             Direction direction = null;
-            List<Direction> directions;
-            if(!isFinished)        
-                 directions = this.directionsToNonCollidableTiles( this.getPosition() );                
-            else{
-                directions = this.directionsToNonCollidableGoalTiles();
-                  // Check for a dog.
-                direction = this.directionAwayFromClosestActorFromList( this, map.getDogs(), directions, Sheep.DOG_DISTANCE, Sheep.DOG_OBEYANCE );
-            }
-
-            if( direction == null )
-            {
-                // Check for love sheep.
-                direction = this.directionTowardsClosestActorFromList( this, map.getLoveSheeps(), directions, Sheep.LOVE_SHEEP_DISTANCE, Sheep.LOVE_SHEEP_OBEYANCE );
-
-                if( direction == null )
-                {
-                    // Check for other sheep.
-                    direction = this.directionTowardsClosestActorFromList( this, map.getSheeps(), directions, Sheep.OTHER_SHEEP_DISTANCE, Sheep.OTHER_SHEEP_OBEYANCE );
-                }
-            }
-
-            if( direction == null )
-            {
-                // Pick a random element.
+            
+            if(isFinished){   
+                List<Direction> directions = this.directionsToNonCollidableGoalTiles( this.getPosition() );
                 Integer r = ( new Random() ).nextInt( directions.size() ); //@TODO: there is a bug here. 
                 direction = directions.get( r );
+            }                   
+            else{
+                direction = chooseDirection(map);
             }
 
             this.currentDirection = direction;
@@ -123,7 +104,30 @@ public class Sheep extends MovableActor
         
         this.move( this.currentDirection );
     }
-        
+    
+    Direction chooseDirection(Map map){
+        List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
+        Direction direction;
+        //als er een hond in de buurt is rent hij daar voor weg
+        direction = this.directionAwayFromClosestActorFromList( this, map.getDogs(), directions, Sheep.DOG_DISTANCE, Sheep.DOG_OBEYANCE );  
+        //als er geen hond in de buurt is gaat hij voor andere dingen checken
+        if(direction == null){
+            //als er een love sheep in de buurt is gaat hij daar naar toe, anders gaat hij voor andere dingen checken etc
+            direction = this.directionTowardsClosestActorFromList( this, map.getLoveSheeps(), directions, Sheep.LOVE_SHEEP_DISTANCE, Sheep.LOVE_SHEEP_OBEYANCE );
+            if(direction == null){
+                direction = this.directionTowardsClosestActorFromList( this, map.getSheeps(), directions, Sheep.OTHER_SHEEP_DISTANCE, Sheep.OTHER_SHEEP_OBEYANCE );
+                if(direction == null){
+                    Integer r = ( new Random() ).nextInt( directions.size() ); //@TODO: there is a bug here.
+                    direction = directions.get( r );
+                }
+            }
+        }
+        return direction;
+    }
+    
+    public boolean isFinished(){
+        return isFinished;
+    }
     /*
     Iterator<Direction> iterator = directions.iterator();
 
