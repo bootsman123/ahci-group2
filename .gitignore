@@ -28,5 +28,5 @@ local.properties
 /HerdinatorServer/dist/*
 /Herdinator/nbproject/private/*
 /Herdinator/build/*
-#/Herdinator/nbproject/project.properties
+/Herdinator/nbproject/project.properties
 /Herdinator/dist/*
