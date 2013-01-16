@@ -5,11 +5,11 @@ import game.base.Map;
 import game.base.UsableActor;
 import game.gui.MobilePhoneHandler;
 import game.gui.TouchHandler;
+import game.gui.interfaces.TouchOverlay;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
 import game.players.TouchPlayer;
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +40,7 @@ public class GameManager
     private TuioClient tuioClient;
     private MobilePhoneHandler mobilePhoneHandler;
     private TouchHandler touchHandler;
+    private TouchOverlay touchOverlay;
     
     /**
      * Hidden constructor.
@@ -61,6 +62,15 @@ public class GameManager
     public static GameManager getInstance()
     {
         return GameManager.instance;
+    }
+    
+    /**
+     * Returns the touchoverlay
+     * @return 
+     */
+    public TouchOverlay getTouchOverlay()
+    {
+        return this.touchOverlay;
     }
     
     /**
@@ -90,6 +100,7 @@ public class GameManager
         colorsForPlayers[2] = Color.red;
         colorsForPlayers[3] = Color.green;
         
+        this.touchOverlay = new TouchOverlay(container);
         /*
         // @TODO: Need to find a place for this. 
         for( Integer i = 0; i < this.numberOfPlayers; i++ )
@@ -211,12 +222,8 @@ public class GameManager
      */
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
-        if( this.map == null )
-        {
-            System.out.println( "Map is NULL" );
-        }
-        
         this.map.render( container, game, g );
+        this.touchOverlay.render(container, g );
     }
     
     /**
