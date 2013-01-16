@@ -4,6 +4,8 @@ import TUIO.TuioClient;
 import game.base.Map;
 import game.base.UsableActor;
 import game.gui.TouchHandler;
+import game.gui.interfaces.TouchOverlay;
+import game.gui.interfaces.UsableActorContainer;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
@@ -32,11 +34,13 @@ public class GameManager
     private List<Map> maps;
     
     // List of all the players.
-    private Integer numberOfPlayers;
     private List<Player> players;
     
     private TuioClient tuioClient;
     private TouchHandler touchHandler;
+    private TouchOverlay touchOverlay;
+    private UsableActorContainer overlay;
+    private Integer numberOfPlayers;
     
     /**
      * Hidden constructor.
@@ -56,6 +60,15 @@ public class GameManager
     }
     
     /**
+     * Returns the touchoverlay
+     * @return 
+     */
+    public TouchOverlay getTouchOverlay()
+    {
+        return this.touchOverlay;
+    }
+    
+    /**
      * Initialize.
      * @param container
      * @param game
@@ -72,7 +85,20 @@ public class GameManager
         this.map = this.maps.get( 0 ); // @TODO: Fugly solution.
         
         this.maps.get( 0 ).init( container, game );
-                
+    
+        this.touchOverlay = new TouchOverlay(container);    
+        this.overlay = new UsableActorContainer(container);
+        this.overlay.init( container, game );
+        
+    }
+    
+    /**
+     * Starts a new game
+     * @param numberOfPlayers 
+     */
+    public void startGame( int numberOfPlayers ) throws SlickException
+    {
+        this.numberOfPlayers = numberOfPlayers;
         // Initialize players.
         this.players = new ArrayList<Player>();
         
@@ -82,16 +108,17 @@ public class GameManager
         colorsForPlayers[2] = Color.red;
         colorsForPlayers[3] = Color.green;
         
-        /*
+        
+        
         // @TODO: Need to find a place for this. 
-        for( Integer i = 0; i < this.numberOfPlayers; i++ )
+        System.out.println("GameManager.startGame: numberOfPlayers; " + numberOfPlayers);
+        for( Integer i = 0; i < numberOfPlayers; i++ )
         {
-            this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
+            this.players.add( new MousePlayer( i, colorsForPlayers[i] ) );
             this.map.addUsableActor( this.players.get( i ).getObject() );
         } 
-        * */
+        this.overlay.startGame();
     }
-    
     /**
      * Update.
      * @param container
@@ -103,7 +130,7 @@ public class GameManager
     {
         // Update map.
         this.map.update( container, game, delta );
-
+        this.overlay.update( container, game, delta );
         // Update players.
         Input input = container.getInput();
         for( Player player : this.getPlayers() )
@@ -119,11 +146,12 @@ public class GameManager
                  */
             }
             else if (player instanceof MousePlayer){
+                //System.out.println("GameManager.update: " + " updated mouseplayer");
                 if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
                     MousePlayer mousePlayer = (MousePlayer) player;
                     if(mousePlayer.isDraggingObject()){
                         //@TODO: make sure to select the right object when dragging
-                        System.out.println("GameManager.update: player is now dragging this object");
+                        
                         player.moveObject( this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
                     }
                     else{
@@ -203,12 +231,9 @@ public class GameManager
      */
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
-        if( this.map == null )
-        {
-            System.out.println( "Map is NULL" );
-        }
-        
         this.map.render( container, game, g );
+        this.touchOverlay.render(container, g );
+        this.overlay.render(container, g);
     }
     
     /**

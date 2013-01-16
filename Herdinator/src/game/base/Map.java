@@ -59,6 +59,7 @@ public class Map implements TileBasedMap
     private List<Cookie> cookies;
     private List<Whistle> whistles;
     
+    
     // Path finder.
     private PathFinder pathFinder;
     
@@ -80,6 +81,7 @@ public class Map implements TileBasedMap
 
         this.cookies = new ArrayList<Cookie>();
         this.whistles = new ArrayList<Whistle>();
+        
     }
     
     /**

@@ -2,6 +2,7 @@ package game.gui.interfaces;
 
 import game.actors.Cookie;
 import game.actors.Whistle;
+import game.base.UsableActor;
 import game.global.GameManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,12 +56,7 @@ public class UsableActorContainer extends AbstractComponent
        this.cookies = new ArrayList<Cookie>();
     }
 
-    
-    public void init( GameContainer container, StateBasedGame game ) throws SlickException
-    {
-       
-        this.horizontalPicker = new Image(UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH);
-        this.verticalPicker = new Image(UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH);
+    public void startGame() throws SlickException{
         System.out.println("UsableActorContainer.init: amount of players: " + GameManager.getInstance().getPlayers().size());
         for(Player p : GameManager.getInstance().getPlayers()){
             if(p instanceof MousePlayer || p instanceof TouchPlayer){
@@ -82,7 +78,14 @@ public class UsableActorContainer extends AbstractComponent
                 this.whistles.add(whistle);
                 whistle.init();
             }
-        }        
+        }  
+    }
+    public void init( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+       
+        this.horizontalPicker = new Image(UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH);
+        this.verticalPicker = new Image(UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH);
+        
     }
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
@@ -96,12 +99,39 @@ public class UsableActorContainer extends AbstractComponent
         int mouseX = mouseInput.getMouseX();
         int mouseY = mouseInput.getMouseY();
 
-        //Point mousePos = GameManager.getInstance().getMap().fromPositionInPixels(new Point2D.Double(mouseX,mouseY));
+        Point mousePos = GameManager.getInstance().getMap().fromPositionInPixels(new Point2D.Double(mouseX,mouseY));
 
-        //mouseX = (int) mousePos.getX();
-       // mouseY = (int) mousePos.getY();
-       
+        mouseX = (int) mousePos.getX();
+        mouseY = (int) mousePos.getY();
         
+        Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
+        int pixelX = (int) pixelPoint.getX();
+        int pixelY = (int) pixelPoint.getY();
+
+        for (UsableActor actor : cookies){
+            
+            int actorTileX = actor.getX();
+            int actorTileY = actor.getY();
+            Point2D.Double positionInPixels = GameManager.getInstance().getMap().toPositionInPixels(actorTileX, actorTileY);
+            double actorPixelX = positionInPixels.getX();
+            double actorPixelY = positionInPixels.getY();
+
+            int actorWidth = actor.getWidth();
+            int actorHeight = actor.getHeight();
+            System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
+            if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
+                System.out.println("GameManager.update: Player is now dragging the object");
+
+                //actor.getOwner().setIsDraggingObject(true);
+                actor.getOwner().setObject(actor);
+                if (actor.getOwner() instanceof MousePlayer){
+                    ((MousePlayer) actor.getOwner()).setIsDraggingObject(true);
+                }
+                GameManager.getInstance().getMap().addUsableActor(actor);
+                cookies.remove(actor);
+                break;
+            }
+        }
     }
 
     @Override
