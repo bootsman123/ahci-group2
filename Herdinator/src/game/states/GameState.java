@@ -28,16 +28,15 @@ public class GameState extends BasicGameState
     // Time to complete a level in seconds.
     public static final Integer TIME_TO_COMPLETE = 120;
     
-    public static final Integer TIME_LEFT_TOP_OFFSET = 10;
-    public static final Integer TIME_LEFT_FONT_SIZE = 20;
-    
-    public static final Integer SCORE_LEFT_TOP_OFFSET = 30;
+    public static final Integer SCORE_LEFT_TOP_OFFSET = 10;
     public static final Integer SCORE_FONT_SIZE = 20;
+    
+    // Score.
+    public static final Integer SCORE_PER_SHEEP = 10;
         
     // Time elapsed in milliseconds.
     private Integer timeElapsed;
    
-    private UnicodeFont timeLeftFont;
     private UnicodeFont scoreFont;
     
     private UsableActorContainer overlay;
@@ -66,12 +65,7 @@ public class GameState extends BasicGameState
         
         this.timeElapsed = 0;
         
-        java.awt.Font font = new java.awt.Font( "Verdana", Font.PLAIN, GameState.TIME_LEFT_FONT_SIZE );
-        this.timeLeftFont = new UnicodeFont( font );
-        this.timeLeftFont.addAsciiGlyphs();
-        this.timeLeftFont.getEffects().add( new ColorEffect( java.awt.Color.decode( "#db2864" ) ) ); //TODO: andere kleur maken
-        this.timeLeftFont.loadGlyphs();
-        
+        java.awt.Font font = new java.awt.Font( "Verdana", Font.PLAIN, GameState.SCORE_FONT_SIZE );
         this.scoreFont = new UnicodeFont( font );
         this.scoreFont.addAsciiGlyphs();
         this.scoreFont.getEffects().add( new ColorEffect( java.awt.Color.decode( "#db2864" ) ) );
@@ -96,17 +90,15 @@ public class GameState extends BasicGameState
         Long timeLeft = TimeUnit.SECONDS.toMillis( GameState.TIME_TO_COMPLETE ) - this.timeElapsed;
         
         
-        String timeLeftString = String.format( "%s %s", "Time left:", ( new SimpleDateFormat( "mm:ss" ) ).format( new Date( timeLeft ) ) );
-        String scoreString = String.format( "%s %s", "Score:", ( new SimpleDateFormat( "mm:ss" ) ).format( new Date( score() ) ) );
-        
-        this.timeLeftFont.drawString( ( container.getWidth() - this.timeLeftFont.getWidth( timeLeftString ) ) / 2,
-                                      GameState.TIME_LEFT_TOP_OFFSET,
-                                      timeLeftString );
-        
-         this.scoreFont.drawString( ( container.getWidth() - this.scoreFont.getWidth( scoreString ) ) / 2,
-                                      GameState.SCORE_LEFT_TOP_OFFSET,
-                                      scoreString );
-        
+        String scoreString = String.format( "%s: %s   %s: %d",
+                                            "Time left",
+                                            ( new SimpleDateFormat( "mm:ss" ) ).format( new Date( timeLeft ) ),
+                                            "Score",
+                                            this.getScore() );
+
+        this.scoreFont.drawString( ( container.getWidth() - this.scoreFont.getWidth( scoreString ) ) / 2,
+                                     GameState.SCORE_LEFT_TOP_OFFSET,
+                                     scoreString );   
     }
 
     @Override
@@ -127,19 +119,6 @@ public class GameState extends BasicGameState
         this.timeElapsed += delta;
     }
     
-    private int score(){
-        Map map = GameManager.getInstance().getMap();
-        int scoreCounter = 0;
-        
-        for( Sheep sheep : map.getSheeps() )
-        {
-            if( sheep.isFinished() )
-            {
-                scoreCounter +=10;
-            }
-        }
-        return scoreCounter;
-    }
     /**
      * Check whether the game is finished.
      * @return 
@@ -151,7 +130,7 @@ public class GameState extends BasicGameState
         // Check if all the sheep are in the goal area.
         for( Sheep sheep : map.getSheeps() )
         {
-            if( !map.isGoalTile( sheep.getPosition() ) )
+            if( !sheep.isInGoalTile() )
             {
                 return Boolean.FALSE;
             }
@@ -167,5 +146,26 @@ public class GameState extends BasicGameState
     private Boolean isTimeLeft()
     {
         return ( this.timeElapsed >= 0 );
+    }
+    
+
+    
+    /**
+     * Returns the current score of the game.
+     * @return 
+     */
+    private Integer getScore()
+    {
+        Map map = GameManager.getInstance().getMap();
+        Integer score = 0;
+        
+        for( Sheep sheep : map.getSheeps() )
+        {
+            if( sheep.isInGoalTile() )
+            {
+                score += GameState.SCORE_PER_SHEEP;
+            }
+        }
+        return score;
     }
 }
