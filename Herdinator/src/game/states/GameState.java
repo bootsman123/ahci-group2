@@ -28,6 +28,7 @@ public class GameState extends BasicGameState
     // Time to complete a level in seconds.
     public static final Integer TIME_TO_COMPLETE = 120;
     
+    public static final Integer TIME_LEFT_TOP_OFFSET = 10;
     public static final Integer TIME_LEFT_FONT_SIZE = 20;
         
     // Time elapsed in milliseconds.
@@ -87,8 +88,8 @@ public class GameState extends BasicGameState
         String timeLeftString = String.format( "%s %s", "Time left:", ( new SimpleDateFormat( "mm:ss" ) ).format( new Date( timeLeft ) ) );
         
         this.timeLeftFont.drawString( ( container.getWidth() - this.timeLeftFont.getWidth( timeLeftString ) ) / 2,
-                                      10,
-                                      timeLeftString ); // @TODO: Fugly constant.
+                                      GameState.TIME_LEFT_TOP_OFFSET,
+                                      timeLeftString );
     }
 
     @Override
