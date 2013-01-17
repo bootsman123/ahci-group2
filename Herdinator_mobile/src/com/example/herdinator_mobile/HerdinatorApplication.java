@@ -5,8 +5,9 @@ import android.graphics.Color;
 
 public class HerdinatorApplication extends Application {
 
-	public Integer[] imageIDs = { R.drawable.cookie, R.drawable.whistle, };
-	public String[] object_strings = { "cookie", "whistle" };
+	public final Integer[] imageIDs = { R.drawable.cookie, R.drawable.whistle, };
+	public final Integer[] soundIDs = {R.raw.cookie_s, R.raw.whistle_s};
+	public final String[] object_strings = { "cookie", "whistle" };
 
 	private String phone_id;
 	private Color overlay_color;
@@ -60,5 +61,9 @@ public class HerdinatorApplication extends Application {
 
 	public String getSelected_string() {
 		return object_strings[selected_object];
+	}
+	
+	public int getSoundID(){
+		return soundIDs[selected_object];
 	}
 }
