@@ -4,7 +4,6 @@ import game.Game;
 import game.actors.Sheep;
 import game.base.Map;
 import game.global.GameManager;
-import game.gui.interfaces.UsableActorContainer;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,9 +79,13 @@ public class GameState extends BasicGameState
     @Override
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
-        GameManager.getInstance().render( container, game, g );
+        // @TODO: Ugly fix to stop rendering when there is no time left or the game if finished.
+        if( !this.isTimeLeft() || this.isFinished() )
+        {
+            return;
+        }
         
-       
+        GameManager.getInstance().render( container, game, g );
         
         // Draw time left.
         Long timeLeft = TimeUnit.SECONDS.toMillis( GameState.TIME_TO_COMPLETE ) - this.timeElapsed;
@@ -109,9 +112,7 @@ public class GameState extends BasicGameState
             return;
         }
         
-        GameManager.getInstance().update( container, game, delta );  
-        
-        
+        GameManager.getInstance().update( container, game, delta );
         
         // Update time elapsed.
         this.timeElapsed += delta;
@@ -143,7 +144,7 @@ public class GameState extends BasicGameState
      */
     private Boolean isTimeLeft()
     {
-        return ( this.timeElapsed >= 0 );
+        return ( TimeUnit.SECONDS.toMillis( GameState.TIME_TO_COMPLETE ) - this.timeElapsed >= 0 );
     }
     
 

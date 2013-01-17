@@ -1,5 +1,6 @@
 package game;
 
+import game.states.GameScoreMenuState;
 import game.states.GameState;
 import game.states.ModalityMouseAndTouchMenuState;
 import game.states.ModalitySelectorMenuState;
@@ -37,17 +38,11 @@ public class Game extends StateBasedGame
         this.addState( new ModalityMouseAndTouchMenuState() );
         this.addState( new ModalityTangiblesMenuState() );
         this.addState( new GameState() );
-        //this.addState( new ScoreMenuState() );
+        this.addState( new GameScoreMenuState() );
     }
 
     @Override
     public void initStatesList( GameContainer container ) throws SlickException
-    {        
-        /*
-        this.getState( Game.MENU_MODALITY_SELECTOR_STATE ).init( container, this );
-        this.getState( Game.MODALITY_MOUSE_AND_TOUCH_MENU_STATE ).init( container, this );
-        this.getState( Game.MODALITY_TANGIBLES_MENU_STATE ).init( container, this );
-        this.getState( Game.GAME_STATE ).init( container, this );
-        */
+    {
     }
 }

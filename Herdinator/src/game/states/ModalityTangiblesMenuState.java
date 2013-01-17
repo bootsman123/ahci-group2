@@ -1,7 +1,6 @@
 package game.states;
 
 import game.Game;
-import game.global.GameManager;
 import game.gui.Button;
 import game.gui.TangibleArea;
 import game.gui.listeners.ClickAndTouchListener;
@@ -24,7 +23,7 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
     private static final String TANGIBLE_AREA_STRING = "Place your mobile phone in one of the areas:";
     private static final Integer TANGIBLE_AREA_FONT_SIZE = 16;
     
-    public static final Integer TANGIBLE_AREA_MARGIN = 20;
+    public static final Integer TANGIBLE_AREA_MARGIN = 30;
     
     private static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
     private static final String BUTTON_BACK = "../Resources/Images/Menu/buttonBack.png";
@@ -111,6 +110,24 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
         
         this.buttonStart.render( container, g );
         this.buttonBack.render( container, g );
+    }
+    
+    @Override
+    public void enter( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+        super.enter( container, game );
+        
+        this.buttonStart.setAcceptingInput( Boolean.TRUE );
+        this.buttonBack.setAcceptingInput( Boolean.TRUE );
+    }
+    
+    @Override
+    public void leave( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+        super.leave( container, game );
+        
+        this.buttonStart.setAcceptingInput( Boolean.FALSE );
+        this.buttonBack.setAcceptingInput( Boolean.FALSE );
     }
 
     @Override

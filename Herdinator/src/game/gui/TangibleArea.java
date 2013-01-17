@@ -21,13 +21,13 @@ import org.newdawn.slick.gui.GUIContext;
  */
 public class TangibleArea extends AbstractComponent implements TuioListener
 {
-    public static final Integer WIDTH = 120;
-    public static final Integer HEIGHT = 160;
+    public static final Integer WIDTH = 160;
+    public static final Integer HEIGHT = 240;
     
     private static final Integer CORNER_RADIUS = 10;
     private static final Integer SEGMENTS = 30;
     
-    private static final Float LINE_WIDTH = 6.0f;
+    private static final Float LINE_WIDTH = 8.0f;
     private static final Color COLOR_DEFAULT = Color.decode( "#db2864" );
     private static final Color COLOR_OBJECT = Color.cyan;
     
