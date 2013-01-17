@@ -38,7 +38,7 @@ public class Sheep extends MovableActor
     
     private Direction currentDirection;
     
-    private Boolean isInGoalTile;
+    private boolean isFinished = false;
 
     /**
      * Constructor.
@@ -73,86 +73,68 @@ public class Sheep extends MovableActor
         
         this.currentDirection = Direction.DOWN;
         this.animation = this.animations.get( this.currentDirection );
-        
-        this.isInGoalTile = Boolean.FALSE;
     }
     
     @Override
     public void update( int delta )
-    {        
-        super.update( delta );
-
-        if( !this.isMoving() )
-        {
-            Map map = GameManager.getInstance().getMap();
-            Direction direction = null;
+    {
+     
+        Map map = GameManager.getInstance().getMap();
+        if(map.isGoalTile(this.getPosition())){
+            isFinished = true;
             
-            // Check if the sheep is in the goal tile.
-            if( map.isGoalTile( this.getPosition() ) )
-            {
-                this.isInGoalTile = Boolean.TRUE;
+        }    
+        super.update( delta );
+        
+        if( !this.isMoving() && !isFinished )
+        {
+            // Determine new direction.
+            Direction direction = null;
+            List<Direction> directions;
+            if(!isFinished)        
+                 directions = this.directionsToNonCollidableTiles( this.getPosition() );                
+            else{
+                directions = this.directionsToNonCollidableGoalTiles();
+                  // Check for a dog.
+                direction = this.directionAwayFromClosestActorFromList( this, map.getDogs(), directions, Sheep.DOG_DISTANCE, Sheep.DOG_OBEYANCE );
             }
 
-            // Determine new direction.
-            if( this.isInGoalTile )
+            if( direction == null )
             {
-                // Make sure the sheep stays within the goal tile.
-                List<Direction> directions = this.directionsToNonCollidableGoalTiles( this.getPosition() );
-                
-                // Check if the sheep can move at all.
-                if( directions.isEmpty() )
+                // Check for love sheep.
+                direction = this.directionTowardsClosestActorFromList( this, map.getLoveSheeps(), directions, Sheep.LOVE_SHEEP_DISTANCE, Sheep.LOVE_SHEEP_OBEYANCE );
+
+                if( direction == null )
                 {
-                    return;
+                    // Check for other sheep.
+                    direction = this.directionTowardsClosestActorFromList( this, map.getSheeps(), directions, Sheep.OTHER_SHEEP_DISTANCE, Sheep.OTHER_SHEEP_OBEYANCE );
                 }
-                
-                Integer r = ( new Random() ).nextInt( directions.size() ); 
+            }
+
+            if( direction == null )
+            {
+                // Pick a random element.
+                Integer r = ( new Random() ).nextInt( directions.size() ); //@TODO: there is a bug here. 
                 direction = directions.get( r );
             }
-            else
-            {
-                List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
-                
-                // Check if the sheep can move at all.
-                if( directions.isEmpty() )
-                {
-                    return;
-                }
-                
-                // Check for dogs.
-                direction = this.directionAwayFromClosestActorFromList( this, map.getDogs(), directions, Sheep.DOG_DISTANCE, Sheep.DOG_OBEYANCE );  
 
-                if( direction == null )
-                {
-                    // Check for love sheeps.
-                    direction = this.directionTowardsClosestActorFromList( this, map.getLoveSheeps(), directions, Sheep.LOVE_SHEEP_DISTANCE, Sheep.LOVE_SHEEP_OBEYANCE );
-
-                    if( direction == null )
-                    {
-                        // Check for other sheep.
-                        direction = this.directionTowardsClosestActorFromList( this, map.getSheeps(), directions, Sheep.OTHER_SHEEP_DISTANCE, Sheep.OTHER_SHEEP_OBEYANCE );
-                    }
-                    
-                }
-                
-                if( direction == null )
-                {
-                    Integer r = ( new Random() ).nextInt( directions.size() );
-                    direction = directions.get( r );
-                }
-            }
-            
             this.currentDirection = direction;
         }
         
         this.move( this.currentDirection );
     }
-    
-    /**
-     * Returns when the sheep is in the goal tile.
-     * @return 
-     */
-    public Boolean isInGoalTile()
+        
+    /*
+    Iterator<Direction> iterator = directions.iterator();
+
+    while( iterator.hasNext() )
     {
-        return this.isInGoalTile;
+        Direction direction = iterator.next();
+
+        if( GameManager.getInstance().getMap().isGoalTile( direction.toPosition( this.getPosition() ) ) )
+        {
+            iterator.remove();
+        }
     }
+    */
 }

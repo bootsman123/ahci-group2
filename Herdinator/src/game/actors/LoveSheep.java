@@ -5,15 +5,15 @@ import game.base.Map;
 import game.base.MovableActor;
 import game.base.listeners.UseListener;
 import game.global.GameManager;
-import game.util.SpriteSheetUtil;
-import java.awt.Point;
-import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import game.util.SpriteSheetUtil;
+import java.awt.Point;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -82,6 +82,7 @@ public class LoveSheep extends MovableActor implements UseListener
             
             // Check for cookies.
             direction = this.directionTowardsClosestActorFromList( this, map.getCookies(), directions, LoveSheep.WHISTLE_DISTANCE, LoveSheep.WHISTLE_OBEYANCE );
+            
             
             if( direction == null )
             {                

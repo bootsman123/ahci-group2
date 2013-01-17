@@ -1,10 +1,12 @@
 package main;
 
 import game.Game;
+import java.awt.Point;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
+import game.util.MathUtil;
 
 /**
  *
