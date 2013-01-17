@@ -5,11 +5,9 @@ import TUIO.TuioListener;
 import TUIO.TuioObject;
 import TUIO.TuioTime;
 import game.base.TouchDot;
-import game.base.UsableActor;
 import game.global.GameManager;
-import game.players.Player;
-import game.players.TouchPlayer;
 import java.awt.Point;
+import game.Game;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -54,13 +52,14 @@ public class TouchHandler implements TuioListener
         
         Point2D pixelPoint = new Point2D.Double(cursor.getX(), cursor.getY());
         
-        int pixelX = (int) pixelPoint.getX();
-        int pixelY = (int) pixelPoint.getY();
+        int pixelX = (int) (pixelPoint.getX()*Game.WIDTH);
+        int pixelY = (int) (pixelPoint.getY()*Game.HEIGHT);
 
+        System.out.println("TouchHandler.addTuioCursor: pixelx " + pixelX + " pixely " + pixelY );
         TouchDot dot = new TouchDot(new Point(pixelX,pixelY), cursor.getCursorID());
         GameManager.getInstance().getTouchOverlay().addTouchDot(dot);
         
-        
+        /*
         for (UsableActor actor : GameManager.getInstance().getMap().getCookies()){
             
             int actorTileX = actor.getX();
@@ -95,7 +94,7 @@ public class TouchHandler implements TuioListener
             double actorPixelY = positionInPixels.getY();
             int actorWidth = actor.getWidth();
             int actorHeight = actor.getHeight();
-            System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
+            System.out.println("TouchHandler.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
             if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
                 System.out.println("GameManager.update: Player is now dragging the object");
                 for (Player player : GameManager.getInstance().getPlayers()){
@@ -109,14 +108,25 @@ public class TouchHandler implements TuioListener
                 }
             }
        }
+       * */
     }
 
     @Override
     public void updateTuioCursor( TuioCursor cursor )
     {
-        Point point = new Point((int)cursor.getX(), (int)cursor.getY());
-        GameManager.getInstance().getTouchOverlay().moveTouchDot(cursor.getCursorID(), point);
         
+        
+        Point2D pixelPoint = new Point2D.Double(cursor.getX(), cursor.getY());
+        
+        int pixelX = (int) (pixelPoint.getX()*Game.WIDTH);
+        int pixelY = (int) (pixelPoint.getY()*Game.HEIGHT);
+
+        System.out.println("TouchHandler.updateTuioCursor: pixelx " + pixelX + " pixely " + pixelY );
+        TouchDot dot = new TouchDot(new Point(pixelX,pixelY), cursor.getCursorID());
+        
+        
+        GameManager.getInstance().getTouchOverlay().moveTouchDot(cursor.getCursorID(), new Point(pixelX, pixelY));
+        /*
         for (TuioCursor oldCursor : currentCursors ){
             if (oldCursor.getCursorID() == cursor.getCursorID()){
                 currentCursors.remove(oldCursor);
@@ -131,6 +141,7 @@ public class TouchHandler implements TuioListener
                 }
             }
         }
+        */
         //System.out.println("Updated cursor: " + );
     }
 
@@ -139,7 +150,9 @@ public class TouchHandler implements TuioListener
     {
         System.out.println("Removed TuioCursor: " + + cursor.getCursorID());
         currentCursors.remove(cursor);
+        
         GameManager.getInstance().getTouchOverlay().removeTouchDot(cursor.getCursorID());
+        /*
         for (Player player : GameManager.getInstance().getPlayers()){
             if (player instanceof TouchPlayer){
                 TouchPlayer touchPlayer = (TouchPlayer)player;
@@ -148,6 +161,7 @@ public class TouchHandler implements TuioListener
                 }
             }
         }
+        * */
         
         
     }

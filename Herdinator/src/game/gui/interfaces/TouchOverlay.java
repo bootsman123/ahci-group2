@@ -7,7 +7,10 @@ package game.gui.interfaces;
 import game.base.TouchDot;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -20,23 +23,36 @@ import org.newdawn.slick.gui.GUIContext;
 public class TouchOverlay extends AbstractComponent{
 
     private List<TouchDot> touchDots;
-    public TouchOverlay(GUIContext container){
+    
+    public TouchOverlay(GUIContext container)
+    {
         super(container);
-        touchDots = new ArrayList<TouchDot>();
+        System.out.println("TouchOverlay started");
+        touchDots = Collections.synchronizedList(new ArrayList<TouchDot>());
+        
     }
     
-    public void addTouchDot( TouchDot dot )
-    {
-        touchDots.add( dot );
-    }
     
     @Override
     public void render( GUIContext container , Graphics g ) throws SlickException 
-    {
-        for (TouchDot dot : touchDots )
-        {
-            dot.render(g);
+    {   
+        synchronized(touchDots){
+        ListIterator<TouchDot> iter = touchDots.listIterator();
+            while(iter.hasNext())
+            {
+                TouchDot dot = iter.next();
+                dot.render(g);
+
+            }
         }
+        /*
+        for (TouchDot dot : touchDots)
+        {
+        //Iterator<TouchDot> iter = this.touchDots.iterator();
+       // while(iter.hasNext()){
+         //   TouchDot dot = iter.next();
+            dot.render(g);
+        }*/
     }
 
     @Override
@@ -75,10 +91,15 @@ public class TouchOverlay extends AbstractComponent{
      */
     public void removeTouchDot(int cursorID) 
     {
-        for (TouchDot dot : touchDots )
-        {
-            if(dot.getCursorID() == cursorID){
-                touchDots.remove(dot);
+        synchronized(touchDots){
+        ListIterator<TouchDot> iter = touchDots.listIterator();
+            while(iter.hasNext())
+            {
+                TouchDot dot = iter.next();
+                if(dot.getCursorID() == cursorID){
+                    iter.remove();
+                }
+
             }
         }
     }
@@ -88,11 +109,32 @@ public class TouchOverlay extends AbstractComponent{
      */
     public void moveTouchDot(int cursorID, Point newPosition ) 
     {
-        for (TouchDot dot : touchDots )
-        {
-           if(dot.getCursorID() == cursorID){
-                dot.setPosition(newPosition);
+        synchronized(touchDots){
+        ListIterator<TouchDot> iter = touchDots.listIterator();
+            while(iter.hasNext())
+            {
+                TouchDot dot = iter.next();
+                if(dot.getCursorID() == cursorID){
+                    dot.setPosition(newPosition);
+                }
+
             }
+        }
+        /*
+        for (TouchDot dot : touchDots)
+        {
+        //Iterator<TouchDot> iter = touchDots.iterator();
+        //while(iter.hasNext()){
+         //   TouchDot dot = iter.next();
+          //  if(dot.getCursorID() == cursorID){
+                dot.setPosition(newPosition);
+           // }
+        }*/
+    }
+
+    public void addTouchDot(TouchDot dot) {
+        synchronized(touchDots){
+            this.touchDots.add(dot);
         }
     }
     
