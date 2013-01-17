@@ -2,6 +2,7 @@ package game.interfaces;
 
 import game.actors.Cookie;
 import game.actors.Whistle;
+import game.base.UsableActor;
 import game.global.GameManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,8 @@ import game.players.Player;
 import game.players.TouchPlayer;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.gui.AbstractComponent;
 
 /**
@@ -55,7 +58,7 @@ public class UsableActorContainer extends AbstractComponent
        this.cookies = new ArrayList<Cookie>();
     }
 
-<<<<<<< HEAD
+
    /**
     * Initialise all usable objects for all player
     * @throws SlickException 
@@ -74,41 +77,12 @@ public class UsableActorContainer extends AbstractComponent
      * @param game
      * @throws SlickException 
      */
-    public void init( GameContainer container, StateBasedGame game ) throws SlickException
+    public void init( GameContainer container, StateBasedGame game ) throws SlickException, SlickException, SlickException, SlickException, SlickException
     {
         this.horizontalPicker = new Image(UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH);
         this.verticalPicker = new Image(UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH);   
-=======
-    
-    public void init( GameContainer container, StateBasedGame game ) throws SlickException
-    {
-       
-        this.horizontalPicker = new Image(UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH);
-        this.verticalPicker = new Image(UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH);
-        System.out.println("UsableActorContainer.init: amount of players: " + GameManager.getInstance().getPlayers().size());
-        for(Player p : GameManager.getInstance().getPlayers()){
-            if(p instanceof MousePlayer || p instanceof TouchPlayer){
-                System.out.println("UsableActorContainer.init: adding object for player!");
-                //Point startingPoint = new Point(UsableActorContainer.MAP_POSITION_X,UsableActorContainer.MAP_POSITION_Y+(p.getId()*NEXT_OBJECT_DIFFERENCE)); //@TODO: set all the locations right
-                Point startingPoint = new Point(0,0);
-                
-                Cookie cookie = new Cookie(startingPoint, p, false);
-                Point2D.Double locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*p.getId()*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET);
-                cookie.setLocationInsideActorContainer(locationInsideContainer);
-                this.cookies.add(cookie);
-                cookie.init();
-
-                //startingPoint = new Point(UsableActorContainer.MAP_POSITION_X,UsableActorContainer.MAP_POSITION_Y+(p.getId()*NEXT_OBJECT_DIFFERENCE)+3); //@TODO: set all the locations right
-                Whistle whistle = new Whistle(startingPoint, p, false);
-
-                locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*p.getId()*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET + PIXEL_DIFFERENCE_NEXT_OBJECT_Y);
-                whistle.setLocationInsideActorContainer(locationInsideContainer);
-                this.whistles.add(whistle);
-                whistle.init();
-            }
-        }        
->>>>>>> d40296627309f3139600a6ffb84965bf1da9c4b1
     }
+    
     
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
@@ -118,7 +92,7 @@ public class UsableActorContainer extends AbstractComponent
         }
 
         Input mouseInput = container.getInput();
-<<<<<<< HEAD
+
         
         Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
         int pixelX = (int) pixelPoint.getX();
@@ -150,7 +124,7 @@ public class UsableActorContainer extends AbstractComponent
                 break;
             }
         }
-=======
+
         int mouseX = mouseInput.getMouseX();
         int mouseY = mouseInput.getMouseY();
 
@@ -160,7 +134,7 @@ public class UsableActorContainer extends AbstractComponent
        // mouseY = (int) mousePos.getY();
        
         
->>>>>>> d40296627309f3139600a6ffb84965bf1da9c4b1
+
     }
 
     @Override

@@ -5,11 +5,12 @@ import game.base.Map;
 import game.base.UsableActor;
 import game.gui.MobilePhoneHandler;
 import game.gui.TouchHandler;
+import game.gui.interfaces.TouchOverlay;
+import game.interfaces.UsableActorContainer;
 import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
 import game.players.TouchPlayer;
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,8 @@ public class GameManager
     private TuioClient tuioClient;
     private MobilePhoneHandler mobilePhoneHandler;
     private TouchHandler touchHandler;
+    private TouchOverlay touchOverlay;
+    private UsableActorContainer overlay;
     
     /**
      * Hidden constructor.
@@ -80,8 +83,7 @@ public class GameManager
         this.map = this.maps.get( 0 ); // @TODO: Fugly solution.
         
         this.maps.get( 0 ).init( container, game );
-<<<<<<< HEAD
-    
+
         this.touchOverlay = new TouchOverlay(container);    
         this.overlay = new UsableActorContainer(container);
         this.overlay.init( container, game );
@@ -98,9 +100,7 @@ public class GameManager
     public void startGame( int numberOfPlayers ) throws SlickException
     {
         this.numberOfPlayers = numberOfPlayers;
-=======
-                
->>>>>>> d40296627309f3139600a6ffb84965bf1da9c4b1
+
         // Initialize players.
         this.players = new ArrayList<Player>();
         
@@ -257,5 +257,9 @@ public class GameManager
     public List<Player> getPlayers()
     {
         return this.players;
+    }
+
+    public TouchOverlay getTouchOverlay() {
+        return this.touchOverlay;
     }
 }

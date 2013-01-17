@@ -4,17 +4,17 @@ import TUIO.TuioCursor;
 import TUIO.TuioListener;
 import TUIO.TuioObject;
 import TUIO.TuioTime;
-<<<<<<< HEAD
+
 import game.base.TouchDot;
 import game.global.GameManager;
 import java.awt.Point;
 import game.Game;
-=======
+
 import game.base.UsableActor;
 import game.global.GameManager;
 import game.players.Player;
 import game.players.TouchPlayer;
->>>>>>> d40296627309f3139600a6ffb84965bf1da9c4b1
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -54,7 +54,7 @@ public class TouchHandler implements TuioListener
     {
         currentCursors.add(cursor);
         Point2D pixelPoint = new Point2D.Double(cursor.getX(), cursor.getY());
-<<<<<<< HEAD
+
         
         int pixelX = (int) (pixelPoint.getX()*Game.WIDTH);
         int pixelY = (int) (pixelPoint.getY()*Game.HEIGHT);
@@ -123,8 +123,7 @@ public class TouchHandler implements TuioListener
     @Override
     public void updateTuioCursor( TuioCursor cursor )
     {
-<<<<<<< HEAD
-        
+  
         
         Point2D pixelPoint = new Point2D.Double(cursor.getX(), cursor.getY());
         
@@ -162,12 +161,10 @@ public class TouchHandler implements TuioListener
     {
         System.out.println("Removed TuioCursor: " + + cursor.getCursorID());
         currentCursors.remove(cursor);
-<<<<<<< HEAD
+
         
         GameManager.getInstance().getTouchOverlay().removeTouchDot(cursor.getCursorID());
         /*
-=======
->>>>>>> d40296627309f3139600a6ffb84965bf1da9c4b1
         for (Player player : GameManager.getInstance().getPlayers()){
             if (player instanceof TouchPlayer){
                 TouchPlayer touchPlayer = (TouchPlayer)player;
