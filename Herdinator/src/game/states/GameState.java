@@ -25,7 +25,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 public class GameState extends BasicGameState
 {
     // Time to complete a level (in seconds).
-    private static final Integer TIME_TO_COMPLETE = 10;
+    private static final Integer TIME_TO_COMPLETE = 120;
     
     private static final Integer SCORE_LEFT_TOP_OFFSET = 10;
     private static final Integer SCORE_FONT_SIZE = 20;
