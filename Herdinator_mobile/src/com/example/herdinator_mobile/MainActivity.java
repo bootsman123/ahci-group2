@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		GridView gridView = (GridView) findViewById(R.id.gridview);
+		gridView.setColumnWidth(1);
 		gridView.setAdapter(new ImageAdapter(this));
 
 		gridView.setOnItemClickListener(new OnItemClickListener() {
@@ -57,8 +58,10 @@ public class MainActivity extends Activity {
 
 				JSONObject map = Connection.getResponse(
 						getApplicationContext(), app.getUrl(), params);
+				if ((Boolean) map.get("success")) {
+					startActivity(intent);
+				}
 
-				startActivity(intent);
 			}
 		});
 	}
@@ -95,8 +98,8 @@ public class MainActivity extends Activity {
 			} else {
 				imageView = (ImageView) convertView;
 			}
-			imageView
-					.setImageResource(((HerdinatorApplication) getApplication()).imageIDs[position]);
+			int imageID = ((HerdinatorApplication) getApplication()).imageIDs[position];
+			imageView.setImageResource(imageID);
 			return imageView;
 		}
 	}
