@@ -24,22 +24,21 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  */
 public class GameState extends BasicGameState
 {
-    // Time to complete a level in seconds.
-    public static final Integer TIME_TO_COMPLETE = 120;
+    // Time to complete a level (in seconds).
+    private static final Integer TIME_TO_COMPLETE = 10;
     
-    public static final Integer SCORE_LEFT_TOP_OFFSET = 10;
-    public static final Integer SCORE_FONT_SIZE = 20;
+    private static final Integer SCORE_LEFT_TOP_OFFSET = 10;
+    private static final Integer SCORE_FONT_SIZE = 20;
     
     // Score.
-    public static final Integer SCORE_PER_SHEEP = 10;
+    private static final Integer SCORE_PER_SHEEP = 10;
+    private static final Integer SCORE_PER_SECOND = 1;
         
     // Time elapsed in milliseconds.
     private Integer timeElapsed;
    
     private UnicodeFont scoreFont;
     
-    
-
     /**
      * Constructor.
      * @throws SlickException 
@@ -58,7 +57,6 @@ public class GameState extends BasicGameState
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {        
         GameManager.getInstance().init( container, game );
-
        
         this.timeElapsed = 0;
         
@@ -68,13 +66,6 @@ public class GameState extends BasicGameState
         this.scoreFont.getEffects().add( new ColorEffect( java.awt.Color.decode( "#db2864" ) ) );
         this.scoreFont.loadGlyphs();
     }
-    
-    /*
-    @Override
-    public void enter( GameContainer container, StateBasedGame game ) throws SlickException
-    {
-    }
-    */
 
     @Override
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
@@ -95,7 +86,7 @@ public class GameState extends BasicGameState
                                             "Time left",
                                             ( new SimpleDateFormat( "mm:ss" ) ).format( new Date( timeLeft ) ),
                                             "Score",
-                                            this.getScore() );
+                                            this.getScoreForSheep() );
 
         this.scoreFont.drawString( ( container.getWidth() - this.scoreFont.getWidth( scoreString ) ) / 2,
                                      GameState.SCORE_LEFT_TOP_OFFSET,
@@ -108,6 +99,7 @@ public class GameState extends BasicGameState
         // Check if there is no time left or the game if finished.
         if( !this.isTimeLeft() || this.isFinished() )
         {
+            //GameManager.getInstance().endGame( this.scoreForSheep() + this.scoreForTime() );
             game.enterState( Game.GAME_SCORE_MENU_STATE, new FadeOutTransition(), new FadeInTransition() );
             return;
         }
@@ -143,17 +135,15 @@ public class GameState extends BasicGameState
      * @return 
      */
     private Boolean isTimeLeft()
-    {
+    { 
         return ( TimeUnit.SECONDS.toMillis( GameState.TIME_TO_COMPLETE ) - this.timeElapsed >= 0 );
     }
-    
-
     
     /**
      * Returns the current score of the game.
      * @return 
      */
-    private Integer getScore()
+    private Integer getScoreForSheep()
     {
         Map map = GameManager.getInstance().getMap();
         Integer score = 0;
@@ -166,5 +156,14 @@ public class GameState extends BasicGameState
             }
         }
         return score;
+    }
+    
+    /**
+     * Returns the score for the time.
+     * @return 
+     */
+    private Integer getScoreForTime()
+    {
+        return (int)( Math.max( 0, GameState.TIME_TO_COMPLETE - TimeUnit.MILLISECONDS.toSeconds( this.timeElapsed ) ) ) * GameState.SCORE_PER_SECOND;
     }
 }

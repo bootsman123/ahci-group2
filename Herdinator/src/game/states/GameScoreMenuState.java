@@ -52,6 +52,22 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
         
         this.buttonBackToMenu.render( container, g );
     }
+    
+    @Override
+    public void enter( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+        super.enter( container, game );
+        
+        this.buttonBackToMenu.setAcceptingInput( Boolean.TRUE );
+    }
+    
+    @Override
+    public void leave( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+        super.leave( container, game );
+        
+        this.buttonBackToMenu.setAcceptingInput( Boolean.FALSE );
+    }
 
     @Override
     public void onClickOrTouch( Button button )
