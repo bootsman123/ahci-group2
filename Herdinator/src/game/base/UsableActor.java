@@ -56,7 +56,7 @@ public abstract class UsableActor extends Actor implements Usable
         else{
             position = this.locationInsideActorContainer;
         }
-        System.out.println("Drawing at this position: " + position.x + " " + position.y + " i am on map:  " + this.isOnMap);
+        //System.out.println("Drawing at this position: " + position.x + " " + position.y + " i am on map:  " + this.isOnMap);
         Shape shape = new Circle( (float)position.x, (float)position.y, (float)(this.animation.getWidth() / 2.0 + UsableActor.OFFSET ) );
 
         g.setColor( this.owner.getColor() );

@@ -195,7 +195,9 @@ public class Map implements TileBasedMap
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );
-        
+        System.out.println("Map has: \n"
+                + this.cookies.size() + " cookies "
+                + this.whistles.size() + " whistles ");
         // Render actors.
         this.renderActors( this.sheeps, g );
         this.renderActors( this.dogs, g );
@@ -286,9 +288,7 @@ public class Map implements TileBasedMap
             {
                 cookie.addUseListener( loveSheep );
             }
-            
             this.cookies.add( cookie );
-            
         }
         else if( object instanceof Whistle )
         {
@@ -300,10 +300,7 @@ public class Map implements TileBasedMap
             {
                 whistle.addUseListener( dog );
             }
-
-            
             this.whistles.add( whistle );
-            
         }
     }
 
@@ -314,15 +311,23 @@ public class Map implements TileBasedMap
     public void removeUsableActor( UsableActor object )
     {
         if (object != null){
+            System.out.println("Did provide an object!");
             object.setIsOnMap(false);
+        
+            if( object instanceof Cookie )
+            {
+                this.cookies.remove( (Cookie)object );
+            }
+            else if( object instanceof Whistle )
+            {
+                this.whistles.remove( (Whistle)object );   
+            }
+            else{
+                System.out.println("Object is not a cookie and not a whistle!");
+            }
         }
-        if( object instanceof Cookie )
-        {
-            this.cookies.remove( (Cookie)object );
-        }
-        else if( object instanceof Whistle )
-        {
-            this.whistles.remove( (Whistle)object );   
+        else{
+            System.out.println("The object provided is equal to null...");
         }
     }
     

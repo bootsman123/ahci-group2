@@ -107,32 +107,34 @@ public class UsableActorContainer extends AbstractComponent
         Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
         int pixelX = (int) pixelPoint.getX();
         int pixelY = (int) pixelPoint.getY();
-
-        for (UsableActor actor : cookies){
-            
+        
+        List<UsableActor> combinedList = new ArrayList<UsableActor>();
+        combinedList.addAll(cookies);
+        combinedList.addAll(whistles);
+        //System.out.println("UsableActorContainer.update: amount of items: " + combinedList.size());
+        for (UsableActor actor : combinedList){
+            /*
             int actorTileX = actor.getX();
             int actorTileY = actor.getY();
             Point2D.Double positionInPixels = GameManager.getInstance().getMap().toPositionInPixels(actorTileX, actorTileY);
             double actorPixelX = positionInPixels.getX();
             double actorPixelY = positionInPixels.getY();
-
+            */
+            double actorPixelX = actor.getLocationInsideActorContainer().getX();
+            double actorPixelY = actor.getLocationInsideActorContainer().getY();
+            
             int actorWidth = actor.getWidth();
             int actorHeight = actor.getHeight();
-            System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
+            //System.out.println("UsableActorContainer.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
             if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                System.out.println("GameManager.update: Player is now dragging the object");
-
-                //actor.getOwner().setIsDraggingObject(true);
-                actor.getOwner().setObject(actor);
-                if (actor.getOwner() instanceof MousePlayer){
-                    ((MousePlayer) actor.getOwner()).setIsDraggingObject(true);
-                }
-                GameManager.getInstance().getMap().addUsableActor(actor);
-                cookies.remove(actor);
+                //System.out.println("UsableActorContainer.update: Player is now dragging the object");
+                pickObject(actor);
+                
                 break;
             }
         }
     }
+    
 
     @Override
     public void render(GUIContext container, Graphics g) throws SlickException {
@@ -171,5 +173,44 @@ public class UsableActorContainer extends AbstractComponent
     @Override
     public int getHeight() {
         return this.pickerHeight;
+    }
+
+    private void pickObject(UsableActor actor) {
+        //actor.getOwner().setIsDraggingObject(true);
+        
+        UsableActor currentObject = actor.getOwner().getObject();
+        if (actor instanceof Cookie){
+            cookies.add((Cookie)actor);
+        }
+        else if (actor instanceof Whistle){
+           whistles.add((Whistle)actor);
+        }
+
+        
+        actor.getOwner().setObject(actor);
+        if (actor.getOwner() instanceof MousePlayer){
+            ((MousePlayer) actor.getOwner()).setIsDraggingObject(true);
+        }
+        
+        
+        if (actor instanceof Cookie){
+            for (int x = 0 ; x < cookies.size(); x++){
+                if (cookies.get(x).equals(actor)){
+                    cookies.remove(x);
+                    break;
+                }
+            }
+            
+            
+        }
+        else if (actor instanceof Whistle){
+           for (int x = 0 ; x < whistles.size(); x++){
+                if (whistles.get(x).equals(actor)){
+                    whistles.remove(x);
+                    break;
+                }
+            }
+        }
+
     }
 }

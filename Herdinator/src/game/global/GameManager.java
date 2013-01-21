@@ -115,7 +115,7 @@ public class GameManager
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
             this.players.add( new MousePlayer( i, colorsForPlayers[i] ) );
-            this.map.addUsableActor( this.players.get( i ).getObject() );
+            //this.map.addUsableActor( this.players.get( i ).getObject() );
         } 
         this.overlay.startGame();
     }
@@ -147,15 +147,14 @@ public class GameManager
             }
             else if (player instanceof MousePlayer){
                 //System.out.println("GameManager.update: " + " updated mouseplayer");
+                /*
                 if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
                     MousePlayer mousePlayer = (MousePlayer) player;
                     if(mousePlayer.isDraggingObject()){
                         //@TODO: make sure to select the right object when dragging
-                        
                         player.moveObject( this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
                     }
-                    else{
-                        
+                    else{   
                         Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
                         int pixelX = (int) pixelPoint.getX();
                         int pixelY = (int) pixelPoint.getY();
@@ -170,16 +169,17 @@ public class GameManager
 
                                 int actorWidth = actor.getWidth();
                                 int actorHeight = actor.getHeight();
-                                System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
+                                //System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY + " actor width: " + actorWidth + " actor height: " + actorHeight);
                                 if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                                    System.out.println("GameManager.update: Player is now dragging the object");
+                                   // System.out.println("GameManager.update: Player is now dragging the object");
                                     
                                     mousePlayer.setIsDraggingObject(true);
                                     mousePlayer.setObject(actor);
                                 }
                             }
                         }
-                       for (UsableActor actor : this.map.getWhistles()){
+                        for(int x = 0 ; x < this.map.getWhistles().size(); x++){
+                            UsableActor actor = this.map.getWhistles().get(x);
                             if (actor.getOwner().equals(player)){
                                 int actorTileX = actor.getX();
                                 int actorTileY = actor.getY();
@@ -188,20 +188,22 @@ public class GameManager
                                 double actorPixelY = positionInPixels.getY();
                                 int actorWidth = actor.getWidth();
                                 int actorHeight = actor.getHeight();
-                                System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
+                               // System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
                                 if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                                    System.out.println("GameManager.update: Player is now dragging the object");
+                                 //   System.out.println("GameManager.update: Player is now dragging the object");
                                     mousePlayer.setIsDraggingObject(true);
                                     mousePlayer.setObject(actor);
+                                    
                                 }
                             }
+
                         }
                     }
                 }
                 else{
                     MousePlayer mousePlayer = ( MousePlayer ) player;
                     mousePlayer.setIsDraggingObject( false );
-                }
+                }*/
             }
             else if (player instanceof TouchPlayer){
                 TouchPlayer touchPlayer = (TouchPlayer) player;
