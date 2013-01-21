@@ -273,6 +273,9 @@ public class Map implements TileBasedMap
      */
     public void addUsableActor( UsableActor object )
     {
+        if(object !=null){
+            object.setIsOnMap(true);
+        }
         if( object instanceof Cookie )
         {
             Cookie cookie = (Cookie)object;
@@ -310,6 +313,9 @@ public class Map implements TileBasedMap
      */
     public void removeUsableActor( UsableActor object )
     {
+        if (object != null){
+            object.setIsOnMap(false);
+        }
         if( object instanceof Cookie )
         {
             this.cookies.remove( (Cookie)object );
