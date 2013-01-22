@@ -189,7 +189,7 @@ public class UsableActorContainer extends AbstractComponent
             }
         }
         
-       // actor.resetPosition();
+        actor.resetPosition();
         actor.getOwner().setObject(actor);
         if (actor.getOwner() instanceof MousePlayer){
             ((MousePlayer) actor.getOwner()).setIsDraggingObject(true);
