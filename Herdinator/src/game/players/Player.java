@@ -30,11 +30,13 @@ public abstract class Player {
      * Set the object to be used by this player
      * @param newObject 
      */
+    
     public void setObject(UsableActor newObject) {
-        GameManager.getInstance().getMap().removeUsableActor(this.object);//@TODO: do not let the player object remove the current object from the map?
-        this.object = newObject;
-        GameManager.getInstance().getMap().addUsableActor(this.object);
-        
+        if (!newObject.equals(this.getObject())){
+            GameManager.getInstance().getMap().removeUsableActor(this.object);//@TODO: do not let the player object remove the current object from the map?
+            this.object = newObject;
+            GameManager.getInstance().getMap().addUsableActor(this.object);
+        }
     }
 
     public UsableActor getObject(){

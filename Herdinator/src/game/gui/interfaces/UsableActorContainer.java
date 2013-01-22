@@ -179,34 +179,36 @@ public class UsableActorContainer extends AbstractComponent
         //actor.getOwner().setIsDraggingObject(true);
         
         UsableActor currentObject = actor.getOwner().getObject();
-        if (actor instanceof Cookie){
-            cookies.add((Cookie)actor);
+        if (currentObject != null){
+            currentObject.resetPosition();
+            if (currentObject instanceof Cookie){
+                this.cookies.add((Cookie) currentObject);
+            }
+            else if (currentObject instanceof Whistle){
+               this.whistles.add((Whistle) currentObject);
+            }
         }
-        else if (actor instanceof Whistle){
-           whistles.add((Whistle)actor);
-        }
-
         
+       // actor.resetPosition();
         actor.getOwner().setObject(actor);
         if (actor.getOwner() instanceof MousePlayer){
             ((MousePlayer) actor.getOwner()).setIsDraggingObject(true);
         }
         
         
+        //Remove the object from the usable actor container
         if (actor instanceof Cookie){
-            for (int x = 0 ; x < cookies.size(); x++){
-                if (cookies.get(x).equals(actor)){
-                    cookies.remove(x);
+            for (int x = 0 ; x < this.cookies.size(); x++){
+                if (this.cookies.get(x).equals(actor)){
+                    this.cookies.remove(x);
                     break;
                 }
-            }
-            
-            
+            }   
         }
         else if (actor instanceof Whistle){
-           for (int x = 0 ; x < whistles.size(); x++){
-                if (whistles.get(x).equals(actor)){
-                    whistles.remove(x);
+           for (int x = 0 ; x < this.whistles.size(); x++){
+                if (this.whistles.get(x).equals(actor)){
+                    this.whistles.remove(x);
                     break;
                 }
             }

@@ -104,6 +104,11 @@ public abstract class UsableActor extends Actor implements Usable
     
     public void setIsOnMap(boolean isOnMap){
         this.isOnMap = isOnMap;
+        
+    }
+    
+    public void resetPosition(){
+       // this.setPosition(GameManager.getInstance().getMap().fromPositionInPixels(locationInsideActorContainer));
     }
     
     public void setLocationInsideActorContainer(Point2D.Double locationInsideActorContainer){
