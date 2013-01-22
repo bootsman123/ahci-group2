@@ -61,8 +61,9 @@ public abstract class UsableActor extends Actor implements Usable
 
         g.setColor( this.owner.getColor() );
         g.fill( shape );
-        if(this.isOnMap)
-            g.setColor( Color.blue );
+        if(this.isOnMap){
+            g.setColor( Color.black );
+        }
         else{
             g.setColor(Color.magenta);
         }

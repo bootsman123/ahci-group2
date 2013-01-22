@@ -195,7 +195,6 @@ public class UsableActorContainer extends AbstractComponent
             ((MousePlayer) actor.getOwner()).setIsDraggingObject(true);
         }
         
-        
         //Remove the object from the usable actor container
         if (actor instanceof Cookie){
             for (int x = 0 ; x < this.cookies.size(); x++){
@@ -213,6 +212,5 @@ public class UsableActorContainer extends AbstractComponent
                 }
             }
         }
-
     }
 }
