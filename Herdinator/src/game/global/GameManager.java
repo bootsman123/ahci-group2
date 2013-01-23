@@ -143,7 +143,7 @@ public class GameManager
         this.map.update( container, game, delta );
         this.overlay.update( container, game, delta );
         // Update players.
-        Input input = container.getInput();
+        
         for( Player player : this.getPlayers() )
         {
             if (player instanceof MobilePhonePlayer){
@@ -156,6 +156,7 @@ public class GameManager
                  */
             }
             else if (player instanceof MousePlayer){
+                Input input = container.getInput();
                 //When the mouse button is down, start dragging objects
                 if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
                     MousePlayer mousePlayer = (MousePlayer) player;
@@ -165,18 +166,11 @@ public class GameManager
                     }
                     else{   
                         Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
-                        //Check if the mouse is trying to drag a cookie
-                        for (int x = 0 ; x < this.map.getCookies().size(); x++){
-                            UsableActor actor = this.map.getCookies().get(x);
-                            if(checkIfTouched(actor,player,pixelPoint))
-                            {
-                                ((MousePlayer)player).setIsDraggingObject(true);
-                                player.setObject(actor);
-                            }
-                        }
-                        //Check if the mouse is trying to drag a whistle
-                        for(int x = 0 ; x < this.map.getWhistles().size(); x++){
-                            UsableActor actor = this.map.getWhistles().get(x);
+                        
+                        //Check if the mouse is touching an object
+                        List<UsableActor> combinedList = getAllUsableObjects();
+                        for (int x = 0 ; x < combinedList.size(); x++){
+                            UsableActor actor = combinedList.get(x);
                             if(checkIfTouched(actor,player,pixelPoint))
                             {
                                 ((MousePlayer)player).setIsDraggingObject(true);
@@ -210,20 +204,10 @@ public class GameManager
                         //Check if there is a touchpoint that touches an object
                         for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
                             Point2D pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
-                            //Check if a cookie is touched
-                            for (int x = 0 ; x < this.map.getCookies().size(); x++){
-                                
-                                UsableActor actor = this.map.getCookies().get(x);
-                                if(checkIfTouched(actor,player,pixelPoint))
-                                {
-                                    ((TouchPlayer)player).setHasFingerOnTable(true);
-                                    ((TouchPlayer)player).setAssignedBlobID(this.touchHandler.getTuioCursors().get(y).getCursorID());
-                                    player.setObject(actor);
-                                }
-                            }
-                            //Check if a whistle is touched
-                            for(int x = 0 ; x < this.map.getWhistles().size(); x++){
-                                UsableActor actor = this.map.getWhistles().get(x);
+                            List<UsableActor> combinedList = getAllUsableObjects();
+                            //Check if an object is touched
+                            for ( int x = 0 ; x < combinedList.size(); x++){
+                                UsableActor actor = combinedList.get(x);
                                 if(checkIfTouched(actor,player,pixelPoint))
                                 {
                                     ((TouchPlayer)player).setHasFingerOnTable(true);
@@ -324,5 +308,12 @@ public class GameManager
             }
         }
         return false;
+    }
+
+    private List<UsableActor> getAllUsableObjects() {
+        List<UsableActor> combinedList = new ArrayList<UsableActor>();
+        combinedList.addAll(this.map.getCookies());
+        combinedList.addAll(this.map.getWhistles());
+        return combinedList;
     }
 }

@@ -72,6 +72,7 @@ public class TouchHandler implements TuioListener
                 break;
             }
         }
+        
         //Add the new cursor
         currentCursors.add(cursor);
         //Change the finger location of the player
