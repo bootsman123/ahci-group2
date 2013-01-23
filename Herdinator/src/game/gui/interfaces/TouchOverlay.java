@@ -22,6 +22,7 @@ public class TouchOverlay extends AbstractComponent{
     private List<TouchDot> touchDots;
     public TouchOverlay(GUIContext container){
         super(container);
+        
         touchDots = new ArrayList<TouchDot>();
     }
     
@@ -33,8 +34,10 @@ public class TouchOverlay extends AbstractComponent{
     @Override
     public void render( GUIContext container , Graphics g ) throws SlickException 
     {
-        for (TouchDot dot : touchDots )
+        
+        for (int x = 0 ; x < touchDots.size(); x++ )
         {
+            TouchDot dot = touchDots.get(x);
             dot.render(g);
         }
     }
@@ -75,10 +78,12 @@ public class TouchOverlay extends AbstractComponent{
      */
     public void removeTouchDot(int cursorID) 
     {
-        for (TouchDot dot : touchDots )
-        {
+        for (int x = 0; x < touchDots.size(); x++){
+            TouchDot dot = touchDots.get(x);
+            
             if(dot.getCursorID() == cursorID){
                 touchDots.remove(dot);
+                break;
             }
         }
     }

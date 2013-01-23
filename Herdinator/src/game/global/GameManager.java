@@ -48,6 +48,12 @@ public class GameManager
     private GameManager()
     {
         this.tuioClient = new TuioClient();
+        
+        
+        this.touchHandler = new TouchHandler();
+        this.tuioClient.addTuioListener(touchHandler);
+        this.tuioClient.connect();
+        
     }
 
     /**
@@ -63,6 +69,7 @@ public class GameManager
      * Returns the touchoverlay
      * @return 
      */
+    
     public TouchOverlay getTouchOverlay()
     {
         return this.touchOverlay;
@@ -114,7 +121,7 @@ public class GameManager
         System.out.println("GameManager.startGame: numberOfPlayers; " + numberOfPlayers);
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
-            this.players.add( new MousePlayer( i, colorsForPlayers[i] ) );
+            this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
             //this.map.addUsableActor( this.players.get( i ).getObject() );
         } 
         this.overlay.startGame();

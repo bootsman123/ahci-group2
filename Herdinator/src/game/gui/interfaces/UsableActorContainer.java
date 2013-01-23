@@ -96,30 +96,15 @@ public class UsableActorContainer extends AbstractComponent
         }
 
         Input mouseInput = container.getInput();
-        int mouseX = mouseInput.getMouseX();
-        int mouseY = mouseInput.getMouseY();
-
-        Point mousePos = GameManager.getInstance().getMap().fromPositionInPixels(new Point2D.Double(mouseX,mouseY));
-
-        mouseX = (int) mousePos.getX();
-        mouseY = (int) mousePos.getY();
-        
-        Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
+        Point2D pixelPoint = new Point2D.Double(mouseInput.getMouseX(), mouseInput.getMouseY());
         int pixelX = (int) pixelPoint.getX();
         int pixelY = (int) pixelPoint.getY();
         
         List<UsableActor> combinedList = new ArrayList<UsableActor>();
-        combinedList.addAll(cookies);
-        combinedList.addAll(whistles);
+        combinedList.addAll(this.cookies);
+        combinedList.addAll(this.whistles);
         //System.out.println("UsableActorContainer.update: amount of items: " + combinedList.size());
         for (UsableActor actor : combinedList){
-            /*
-            int actorTileX = actor.getX();
-            int actorTileY = actor.getY();
-            Point2D.Double positionInPixels = GameManager.getInstance().getMap().toPositionInPixels(actorTileX, actorTileY);
-            double actorPixelX = positionInPixels.getX();
-            double actorPixelY = positionInPixels.getY();
-            */
             double actorPixelX = actor.getLocationInsideActorContainer().getX();
             double actorPixelY = actor.getLocationInsideActorContainer().getY();
             
@@ -129,7 +114,6 @@ public class UsableActorContainer extends AbstractComponent
             if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
                 //System.out.println("UsableActorContainer.update: Player is now dragging the object");
                 pickObject(actor);
-                
                 break;
             }
         }
