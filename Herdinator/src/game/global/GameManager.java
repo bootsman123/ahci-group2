@@ -109,6 +109,7 @@ public class GameManager
         // Initialize players.
         this.players = new ArrayList<Player>();
         
+        // Add colours for the players
         Color[] colorsForPlayers = new Color[4];
         colorsForPlayers[0] = Color.blue;
         colorsForPlayers[1] = Color.pink;
@@ -116,7 +117,7 @@ public class GameManager
         colorsForPlayers[3] = Color.green;
         
         
-        
+        //Add all players
         // @TODO: Need to find a place for this. 
         System.out.println("GameManager.startGame: numberOfPlayers; " + numberOfPlayers);
         for( Integer i = 0; i < numberOfPlayers; i++ )

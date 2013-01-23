@@ -52,8 +52,7 @@ public class TouchDot extends Actor {
     @Override
     public void render(Graphics g) {
         System.out.println("Dot rendering at " + this.getX() + " " + this.getY());
-        Point2D.Double position = GameManager.getInstance().getMap().toPositionInPixels( this.getX(), this.getY() );
-        Shape shape = new Circle( (float)position.x, (float)position.y, (float)(TouchDot.BLOB_WIDTH/ 2.0) );
+        Shape shape = new Circle( this.getX(), this.getY(), (float)(TouchDot.BLOB_WIDTH/2.0) );
 
         g.setColor( Color.black);
         g.fill( shape );

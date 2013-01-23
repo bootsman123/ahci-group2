@@ -6,7 +6,6 @@ import TUIO.TuioObject;
 import TUIO.TuioTime;
 import game.Game;
 import game.base.TouchDot;
-import game.base.UsableActor;
 import game.global.GameManager;
 import game.players.Player;
 import game.players.TouchPlayer;
