@@ -156,15 +156,16 @@ public class GameManager
                  */
             }
             else if (player instanceof MousePlayer){
-                //System.out.println("GameManager.update: " + " updated mouseplayer");
-                
-                if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
+                //When the mouse button is down, start dragging objects
+                if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
                     MousePlayer mousePlayer = (MousePlayer) player;
+                    //When the player is already dragging an object, move this object
                     if(mousePlayer.isDraggingObject()){
                         player.moveObject( this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
                     }
                     else{   
                         Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
+                        //Check if the mouse is trying to drag a cookie
                         for (int x = 0 ; x < this.map.getCookies().size(); x++){
                             UsableActor actor = this.map.getCookies().get(x);
                             if(checkIfTouched(actor,player,pixelPoint))
@@ -173,6 +174,7 @@ public class GameManager
                                 player.setObject(actor);
                             }
                         }
+                        //Check if the mouse is trying to drag a whistle
                         for(int x = 0 ; x < this.map.getWhistles().size(); x++){
                             UsableActor actor = this.map.getWhistles().get(x);
                             if(checkIfTouched(actor,player,pixelPoint))
@@ -184,6 +186,7 @@ public class GameManager
                     }
                 }
                 else{
+                    //Make sure that when there is no mouse press, this player is not dragging
                     MousePlayer mousePlayer = ( MousePlayer ) player;
                     mousePlayer.setIsDraggingObject( false );
                 }
@@ -191,21 +194,23 @@ public class GameManager
             else if (player instanceof TouchPlayer){
                 if(this.touchHandler.getTuioCursors().size() > 0){
                     TouchPlayer touchPlayer = (TouchPlayer) player;
+                    //Check if the player is already dragging
                     if(touchPlayer.hasFingerOnTable()){
-                     //   System.out.println("We are dragging!!!!");
+                        //Select the blob that the player is using
                         for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
                             if (this.touchHandler.getTuioCursors().get(y).getCursorID() == touchPlayer.getAssignedBlobID()){
+                                //Move the object of the player to this position
                                 Point2D.Double pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
                                 player.moveObject( this.map.fromPositionInPixels(pixelPoint));
                             }
                         }
                         
                     }
-                    else{   
-                        
+                    else{ 
+                        //Check if there is a touchpoint that touches an object
                         for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
                             Point2D pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
-                            //System.out.println("Touchpoint x: " + this.touchHandler.getTuioCursors().get(y).getX() + " and y: " + this.touchHandler.getTuioCursors().get(y).getY());
+                            //Check if a cookie is touched
                             for (int x = 0 ; x < this.map.getCookies().size(); x++){
                                 
                                 UsableActor actor = this.map.getCookies().get(x);
@@ -213,20 +218,17 @@ public class GameManager
                                 {
                                     ((TouchPlayer)player).setHasFingerOnTable(true);
                                     ((TouchPlayer)player).setAssignedBlobID(this.touchHandler.getTuioCursors().get(y).getCursorID());
-                                    
                                     player.setObject(actor);
-                                    System.out.println("GameManager.update: We are starting with dragging!");
                                 }
                             }
+                            //Check if a whistle is touched
                             for(int x = 0 ; x < this.map.getWhistles().size(); x++){
                                 UsableActor actor = this.map.getWhistles().get(x);
                                 if(checkIfTouched(actor,player,pixelPoint))
                                 {
                                     ((TouchPlayer)player).setHasFingerOnTable(true);
                                     ((TouchPlayer)player).setAssignedBlobID(this.touchHandler.getTuioCursors().get(y).getCursorID());
-                                    
                                     player.setObject(actor);
-                                    System.out.println("GameManager.update: We are starting with dragging!");
                                 }
                             }
                         }
@@ -297,6 +299,13 @@ public class GameManager
         return this.players;
     }
 
+    /**
+     * Returns whether the given point in pixels touches the given actor. It only works when the owner of the actor is equal to the given player. @TODO: remove this dumb constraint
+     * @param actor
+     * @param player
+     * @param pixelPoint
+     * @return 
+     */
     private boolean checkIfTouched(UsableActor actor, Player player, Point2D pixelPoint) {
         int pixelX = (int) pixelPoint.getX();
         int pixelY = (int) pixelPoint.getY();
@@ -304,13 +313,12 @@ public class GameManager
         if (actor.getOwner().equals(player)){
             int actorTileX = actor.getX();
             int actorTileY = actor.getY();
-            Point2D.Double positionInPixels = map.toPositionInPixels(actorTileX, actorTileY);
+            Point2D.Double positionInPixels = this.map.toPositionInPixels(actorTileX, actorTileY);
             double actorPixelX = positionInPixels.getX();
             double actorPixelY = positionInPixels.getY();
 
             int actorWidth = actor.getWidth();
             int actorHeight = actor.getHeight();
-           // System.out.println("GameManager.checkIfTouched: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY + " actor width: " + actorWidth + " actor height: " + actorHeight);
             if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
                 return true;
             }
