@@ -1,5 +1,6 @@
 package game.gui.interfaces;
 
+import game.Game;
 import game.actors.Cookie;
 import game.actors.Whistle;
 import game.base.UsableActor;
@@ -95,6 +96,8 @@ public class UsableActorContainer extends AbstractComponent
             return;
         }
 
+        
+        //Check mouse touch
         Input mouseInput = container.getInput();
         Point2D pixelPoint = new Point2D.Double(mouseInput.getMouseX(), mouseInput.getMouseY());
         int pixelX = (int) pixelPoint.getX();
@@ -115,6 +118,32 @@ public class UsableActorContainer extends AbstractComponent
                 //System.out.println("UsableActorContainer.update: Player is now dragging the object");
                 pickObject(actor);
                 break;
+            }
+        }
+        
+        
+        //Check touch touch
+        for (int z = 0; z < GameManager.getInstance().getTouchHandler().getTuioCursors().size(); z++){
+            pixelPoint = new Point2D.Double(GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getX()*Game.WIDTH, GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getY()*Game.HEIGHT);
+            pixelX = (int) pixelPoint.getX();
+            pixelY = (int) pixelPoint.getY();
+
+            combinedList = new ArrayList<UsableActor>();
+            combinedList.addAll(this.cookies);
+            combinedList.addAll(this.whistles);
+            //System.out.println("UsableActorContainer.update: amount of items: " + combinedList.size());
+            for (UsableActor actor : combinedList){
+                double actorPixelX = actor.getLocationInsideActorContainer().getX();
+                double actorPixelY = actor.getLocationInsideActorContainer().getY();
+
+                int actorWidth = actor.getWidth();
+                int actorHeight = actor.getHeight();
+                System.out.println("UsableActorContainer.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY + " owner: " + actor.getOwner().getId() + " width: " + actorWidth + " height: " + actorHeight + " touched: " + (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight)));
+                if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
+                    //System.out.println("UsableActorContainer.update: Player has touched the object!!!");
+                    pickObject(actor);
+                    break;
+                }
             }
         }
     }

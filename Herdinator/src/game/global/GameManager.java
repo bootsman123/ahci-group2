@@ -247,6 +247,13 @@ public class GameManager
     }
     
     /**
+     * Returns the touchHandler
+     * @return 
+     */
+    public TouchHandler getTouchHandler(){
+        return this.touchHandler;
+    }
+    /**
      * Render.
      * @param container
      * @param game
@@ -256,8 +263,10 @@ public class GameManager
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( container, game, g );
+        
         this.touchOverlay.render(container, g );
-        this.overlay.render(container, g);
+                this.overlay.render(container, g);
+
     }
     
     /**
@@ -301,7 +310,7 @@ public class GameManager
 
             int actorWidth = actor.getWidth();
             int actorHeight = actor.getHeight();
-            System.out.println("GameManager.checkIfTouched: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY + " actor width: " + actorWidth + " actor height: " + actorHeight);
+           // System.out.println("GameManager.checkIfTouched: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY + " actor width: " + actorWidth + " actor height: " + actorHeight);
             if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
                 return true;
             }
