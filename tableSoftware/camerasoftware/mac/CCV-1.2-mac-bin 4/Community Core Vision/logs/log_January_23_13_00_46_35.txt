@@ -1,0 +1,116 @@
+Video Mode
+
+Calibration: 227.000000, 147.000000
+Calibration: 239.000000, 3.000000
+Calibration: 66.000000, 217.000000
+Calibration: 55.000000, 3.000000
+Calibration is setup!
+
+OF_WARNING: in allocate, reallocating a ofxCvImage
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/absSubtract.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/subtract.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Contrast
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/contrast.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Threshold
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/threshold.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Copy
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/copy.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:GrayScale
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/grayScale.fs
+Starting in standalone mode...
+
+Starting in full mode...
+
+Community Core Vision is setup!
+
+DVFreeThread - CFMachPortCreateWithPort hack = 0x138f1d0, fPowerNotifyPort= 0x138f110
+DVFreeThread - CFMachPortCreateWithPort hack = 0x1394af0, fPowerNotifyPort= 0x1391700
+DVFreeThread - CFMachPortCreateWithPort hack = 0x1394950, fPowerNotifyPort= 0x1390e30
+DVFreeThread - CFMachPortCreateWithPort hack = 0x1395f00, fPowerNotifyPort= 0x1396010
+DVFreeThread - CFMachPortCreateWithPort hack = 0x535500, fPowerNotifyPort= 0x5b08e0
+OF_WARNING: No camera settings to load
+Camera Mode
+Asked for 320 by 240 - actual size is 320 by 240 
+
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+OF_WARNING: in allocate, reallocating a ofxCvImage
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/absSubtract.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/subtract.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Contrast
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/contrast.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Threshold
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/threshold.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Copy
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/copy.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:GrayScale
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/grayScale.fs
+Vision module has exited!
