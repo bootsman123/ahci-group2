@@ -165,11 +165,19 @@ public class GameManager
                         Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
                         for (int x = 0 ; x < this.map.getCookies().size(); x++){
                             UsableActor actor = this.map.getCookies().get(x);
-                            checkIfTouched(actor, player, pixelPoint);
+                            if(checkIfTouched(actor,player,pixelPoint))
+                            {
+                                ((MousePlayer)player).setIsDraggingObject(true);
+                                player.setObject(actor);
+                            }
                         }
                         for(int x = 0 ; x < this.map.getWhistles().size(); x++){
                             UsableActor actor = this.map.getWhistles().get(x);
-                            checkIfTouched(actor,player,pixelPoint);
+                            if(checkIfTouched(actor,player,pixelPoint))
+                            {
+                                ((MousePlayer)player).setIsDraggingObject(true);
+                                player.setObject(actor);
+                            }
                         }
                     }
                 }
@@ -179,15 +187,39 @@ public class GameManager
                 }
             }
             else if (player instanceof TouchPlayer){
-                TouchPlayer touchPlayer = (TouchPlayer) player;
-                if(touchPlayer.hasFingerOnTable()){
-                    //@TODO: make sure to select the right object when dragging
-                    System.out.println("GameManager.update: player is now dragging this object");
-                    Point2D.Double touchPoint = touchPlayer.getFingerLocation();
-                    player.moveObject( this.map.fromPositionInPixels(touchPoint));
+                if(this.touchHandler.getTuioCursors().size() > 0){
+                    TouchPlayer touchPlayer = (TouchPlayer) player;
+                    if(touchPlayer.hasFingerOnTable()){
+                     //   System.out.println("We are dragging!!!!");
+                        //player.moveObject( this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
+                    }
+                    else{   
+                        for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
+                            Point2D pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX(), this.touchHandler.getTuioCursors().get(y).getY());
+                            for (int x = 0 ; x < this.map.getCookies().size(); x++){
+                                UsableActor actor = this.map.getCookies().get(x);
+                                if(checkIfTouched(actor,player,pixelPoint))
+                                {
+                                    ((TouchPlayer)player).setHasFingerOnTable(true);
+                                    player.setObject(actor);
+                                    System.out.println("GameManager.update: We are starting with dragging!");
+                                }
+                            }
+                            for(int x = 0 ; x < this.map.getWhistles().size(); x++){
+                                UsableActor actor = this.map.getWhistles().get(x);
+                                if(checkIfTouched(actor,player,pixelPoint))
+                                {
+                                    ((TouchPlayer)player).setHasFingerOnTable(true);
+                                    player.setObject(actor);
+                                    System.out.println("GameManager.update: We are starting with dragging!");
+                                }
+                            }
+                        }
+                    }
                 }
                 else{
-
+                    TouchPlayer touchPlayer = ( TouchPlayer ) player;
+                    touchPlayer.setHasFingerOnTable( false );
                 }
             }
             else{
@@ -239,7 +271,7 @@ public class GameManager
         return this.players;
     }
 
-    private void checkIfTouched(UsableActor actor, Player player, Point2D pixelPoint) {
+    private boolean checkIfTouched(UsableActor actor, Player player, Point2D pixelPoint) {
         int pixelX = (int) pixelPoint.getX();
         int pixelY = (int) pixelPoint.getY();
 
@@ -252,15 +284,11 @@ public class GameManager
 
             int actorWidth = actor.getWidth();
             int actorHeight = actor.getHeight();
-            System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY + " actor width: " + actorWidth + " actor height: " + actorHeight);
+           // System.out.println("GameManager.checkIfTouched: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY + " actor width: " + actorWidth + " actor height: " + actorHeight);
             if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-               // System.out.println("GameManager.update: Player is now dragging the object");
-                if(player instanceof MousePlayer)
-                {
-                    ((MousePlayer)player).setIsDraggingObject(true);
-                }
-                player.setObject(actor);
+                return true;
             }
         }
+        return false;
     }
 }

@@ -51,15 +51,11 @@ public class TouchDot extends Actor {
 
     @Override
     public void render(Graphics g) {
-        System.out.println("Dot rendering at " + this.getX() + " " + this.getY());
         Shape shape = new Circle( this.getX(), this.getY(), (float)(TouchDot.BLOB_WIDTH/2.0) );
-
         g.setColor( Color.black);
         g.fill( shape );
-        //g.setColor(Color.magenta);
         g.setLineWidth(3f);
         g.draw(shape);
-
     }
     
     

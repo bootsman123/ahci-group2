@@ -62,57 +62,6 @@ public class TouchHandler implements TuioListener
         TouchDot dot = new TouchDot(new Point(pixelX,pixelY), cursor.getCursorID());
         System.out.println("The touchOverlay is existant: " + GameManager.getInstance().getTouchOverlay() ==null);
         GameManager.getInstance().getTouchOverlay().addTouchDot(dot);
-        
-        /*
-        for (UsableActor actor : GameManager.getInstance().getMap().getCookies()){
-            
-            int actorTileX = actor.getX();
-            int actorTileY = actor.getY();
-            Point2D.Double positionInPixels = GameManager.getInstance().getMap().toPositionInPixels(actorTileX, actorTileY);
-            double actorPixelX = positionInPixels.getX();
-            double actorPixelY = positionInPixels.getY();
-
-            int actorWidth = actor.getWidth();
-            int actorHeight = actor.getHeight();
-            System.out.println("TouchHandler.addTuioCursor: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
-            if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                System.out.println("TouchHandler.addTuioCursor: Player is now dragging the object");
-                for (Player player : GameManager.getInstance().getPlayers()){
-                    if (player instanceof TouchPlayer){
-                        TouchPlayer touchPlayer = (TouchPlayer)player;
-                        touchPlayer.setHasFingerOnTable(true);
-                        touchPlayer.setAssignedBlobID(cursor.getCursorID());
-                        touchPlayer.setFingerLocation(new Point2D.Double(cursor.getX(), cursor.getY()));
-                        touchPlayer.setObject(actor);
-                    }
-                }
-            }
-
-        }
-       for (UsableActor actor : GameManager.getInstance().getMap().getWhistles()){
-
-            int actorTileX = actor.getX();
-            int actorTileY = actor.getY();
-            Point2D.Double positionInPixels = GameManager.getInstance().getMap().toPositionInPixels(actorTileX, actorTileY);
-            double actorPixelX = positionInPixels.getX();
-            double actorPixelY = positionInPixels.getY();
-            int actorWidth = actor.getWidth();
-            int actorHeight = actor.getHeight();
-            System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
-            if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                System.out.println("GameManager.update: Player is now dragging the object");
-                for (Player player : GameManager.getInstance().getPlayers()){
-                    if (player instanceof TouchPlayer){
-                        TouchPlayer touchPlayer = (TouchPlayer)player;
-                        touchPlayer.setHasFingerOnTable(true);
-                        touchPlayer.setAssignedBlobID(cursor.getCursorID());
-                        touchPlayer.setFingerLocation(new Point2D.Double(cursor.getX(), cursor.getY()));
-                        touchPlayer.setObject(actor);
-                    }
-                }
-            }
-       }
-       */
     }
 
     @Override
