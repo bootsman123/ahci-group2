@@ -71,7 +71,7 @@ public class UsableActorContainer extends AbstractComponent
             if(p instanceof MousePlayer || p instanceof TouchPlayer){
                 Point startingPoint = new Point(0,0);
                 
-                //Add a cookie for this player
+                //Add a cookie for this player to the list of cookies
                 Cookie cookie = new Cookie(startingPoint, p, false);
                 Point2D.Double locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*p.getId()*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET);
                 cookie.setLocationInsideActorContainer(locationInsideContainer);
@@ -102,6 +102,13 @@ public class UsableActorContainer extends AbstractComponent
         
     }
     
+    /**
+     * Updates the actor container by checking the touch possibilities. 
+     * @param container
+     * @param game
+     * @param delta
+     * @throws SlickException 
+     */
     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
     {
         if( container.isPaused() )
@@ -120,8 +127,10 @@ public class UsableActorContainer extends AbstractComponent
 
     @Override
     public void render(GUIContext container, Graphics g) throws SlickException {
+        //Draw the pickers at their respective places
          this.horizontalPicker.draw(this.pickerStartX, this.pickerStartY, this.pickerWidth, this.pickerHeight);
-
+         
+        //Draw the objects inside the pickers
         for( Whistle whistle : this.whistles )
         {
             whistle.render( g );
@@ -157,7 +166,13 @@ public class UsableActorContainer extends AbstractComponent
         return this.pickerHeight;
     }
 
+    /**
+     * Lets the owner of the given object select this object for use
+     * @param actor 
+     */
     private void pickObject(UsableActor actor) {
+        
+        //Reset the object that the actor currently is using
         UsableActor currentObject = actor.getOwner().getObject();
         if (currentObject != null){
             currentObject.resetPosition();
@@ -169,6 +184,7 @@ public class UsableActorContainer extends AbstractComponent
             }
         }
         
+        //Give the given actor to the owner
         actor.resetPosition();
         actor.getOwner().setObject(actor);
         if (actor.getOwner() instanceof MousePlayer){
@@ -176,33 +192,25 @@ public class UsableActorContainer extends AbstractComponent
         }
         
         //Remove the object from the usable actor container
-        if (actor instanceof Cookie){
-            for (int x = 0 ; x < this.cookies.size(); x++){
-                if (this.cookies.get(x).equals(actor)){
-                    this.cookies.remove(x);
-                    break;
-                }
-            }   
-        }
-        else if (actor instanceof Whistle){
-           for (int x = 0 ; x < this.whistles.size(); x++){
-                if (this.whistles.get(x).equals(actor)){
-                    this.whistles.remove(x);
-                    break;
-                }
-            }
-        }
+        removeObjectFromContainer(actor);
     }
 
+    /**
+     * Checks if the mouse touches (and thus selects) a given object
+     */
     private void checkMouseTouch() {
+        //Get the location of the mouse (in pixels)
         Input mouseInput = container.getInput();
         Point2D pixelPoint = new Point2D.Double(mouseInput.getMouseX(), mouseInput.getMouseY());
         int pixelX = (int) pixelPoint.getX();
         int pixelY = (int) pixelPoint.getY();
         
+        //Combine the lists with actors to one big list
         List<UsableActor> combinedList = new ArrayList<UsableActor>();
         combinedList.addAll(this.cookies);
         combinedList.addAll(this.whistles);
+        
+        //Iterate all actors to check if it is touched
         for (UsableActor actor : combinedList){
             double actorPixelX = actor.getLocationInsideActorContainer().getX();
             double actorPixelY = actor.getLocationInsideActorContainer().getY();
@@ -216,15 +224,21 @@ public class UsableActorContainer extends AbstractComponent
         }
     }
 
+    /**
+     * Checks if a touch point touches (and thus selects) a given object
+     */
     private void checkTouchTouch() {
         for (int z = 0; z < GameManager.getInstance().getTouchHandler().getTuioCursors().size(); z++){
             Point2D pixelPoint = new Point2D.Double(GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getX()*Game.WIDTH, GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getY()*Game.HEIGHT);
             int pixelX = (int) pixelPoint.getX();
             int pixelY = (int) pixelPoint.getY();
 
+            //Combine the lists with actors to one big list
             List<UsableActor> combinedList = new ArrayList<UsableActor>();
             combinedList.addAll(this.cookies);
             combinedList.addAll(this.whistles);
+            
+            //Check for every actor if this touchpoint touches this actor
             for (UsableActor actor : combinedList){
                 double actorPixelX = actor.getLocationInsideActorContainer().getX();
                 double actorPixelY = actor.getLocationInsideActorContainer().getY();
@@ -233,6 +247,29 @@ public class UsableActorContainer extends AbstractComponent
                 int actorHeight = actor.getHeight();
                 if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
                     pickObject(actor);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Removes the given object from the lists of objects. 
+     * @param actor 
+     */
+    private void removeObjectFromContainer(UsableActor actor) {
+        if (actor instanceof Cookie){
+            for (int x = 0 ; x < this.cookies.size(); x++){
+                if (this.cookies.get(x).equals(actor)){
+                    this.cookies.remove(x);
+                    break;
+                }
+            }   
+        }
+        else if (actor instanceof Whistle){
+           for (int x = 0 ; x < this.whistles.size(); x++){
+                if (this.whistles.get(x).equals(actor)){
+                    this.whistles.remove(x);
                     break;
                 }
             }
