@@ -57,35 +57,48 @@ public class UsableActorContainer extends AbstractComponent
        this.cookies = new ArrayList<Cookie>();
     }
 
+    /**
+     * Tell the usableActor container that the game started and that the objects for every player have to be added.
+     * @throws SlickException 
+     */
     public void startGame() throws SlickException{
-        System.out.println("UsableActorContainer.init: amount of players: " + GameManager.getInstance().getPlayers().size());
+        //Add the object pickers to the screen
+        this.horizontalPicker = new Image(UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH);
+        this.verticalPicker = new Image(UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH);
+        
+        //Add the objects for every player
         for(Player p : GameManager.getInstance().getPlayers()){
             if(p instanceof MousePlayer || p instanceof TouchPlayer){
-                System.out.println("UsableActorContainer.init: adding object for player!");
-                //Point startingPoint = new Point(UsableActorContainer.MAP_POSITION_X,UsableActorContainer.MAP_POSITION_Y+(p.getId()*NEXT_OBJECT_DIFFERENCE)); //@TODO: set all the locations right
                 Point startingPoint = new Point(0,0);
                 
+                //Add a cookie for this player
                 Cookie cookie = new Cookie(startingPoint, p, false);
                 Point2D.Double locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*p.getId()*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET);
                 cookie.setLocationInsideActorContainer(locationInsideContainer);
                 this.cookies.add(cookie);
                 cookie.init();
 
-                //startingPoint = new Point(UsableActorContainer.MAP_POSITION_X,UsableActorContainer.MAP_POSITION_Y+(p.getId()*NEXT_OBJECT_DIFFERENCE)+3); //@TODO: set all the locations right
+                //Add a whistle for this player
                 Whistle whistle = new Whistle(startingPoint, p, false);
-
                 locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*p.getId()*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET + PIXEL_DIFFERENCE_NEXT_OBJECT_Y);
                 whistle.setLocationInsideActorContainer(locationInsideContainer);
                 this.whistles.add(whistle);
                 whistle.init();
+                
             }
         }  
     }
+    
+    /**
+     * Initialise the usable actor container.
+     * @param container
+     * @param game
+     * @throws SlickException 
+     */
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
        
-        this.horizontalPicker = new Image(UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH);
-        this.verticalPicker = new Image(UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH);
+        
         
     }
     
@@ -98,54 +111,10 @@ public class UsableActorContainer extends AbstractComponent
 
         
         //Check mouse touch
-        Input mouseInput = container.getInput();
-        Point2D pixelPoint = new Point2D.Double(mouseInput.getMouseX(), mouseInput.getMouseY());
-        int pixelX = (int) pixelPoint.getX();
-        int pixelY = (int) pixelPoint.getY();
-        
-        List<UsableActor> combinedList = new ArrayList<UsableActor>();
-        combinedList.addAll(this.cookies);
-        combinedList.addAll(this.whistles);
-        //System.out.println("UsableActorContainer.update: amount of items: " + combinedList.size());
-        for (UsableActor actor : combinedList){
-            double actorPixelX = actor.getLocationInsideActorContainer().getX();
-            double actorPixelY = actor.getLocationInsideActorContainer().getY();
-            
-            int actorWidth = actor.getWidth();
-            int actorHeight = actor.getHeight();
-            //System.out.println("UsableActorContainer.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
-            if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                //System.out.println("UsableActorContainer.update: Player is now dragging the object");
-                pickObject(actor);
-                break;
-            }
-        }
-        
+        checkMouseTouch();
         
         //Check touch touch
-        for (int z = 0; z < GameManager.getInstance().getTouchHandler().getTuioCursors().size(); z++){
-            pixelPoint = new Point2D.Double(GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getX()*Game.WIDTH, GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getY()*Game.HEIGHT);
-            pixelX = (int) pixelPoint.getX();
-            pixelY = (int) pixelPoint.getY();
-
-            combinedList = new ArrayList<UsableActor>();
-            combinedList.addAll(this.cookies);
-            combinedList.addAll(this.whistles);
-            //System.out.println("UsableActorContainer.update: amount of items: " + combinedList.size());
-            for (UsableActor actor : combinedList){
-                double actorPixelX = actor.getLocationInsideActorContainer().getX();
-                double actorPixelY = actor.getLocationInsideActorContainer().getY();
-
-                int actorWidth = actor.getWidth();
-                int actorHeight = actor.getHeight();
-                System.out.println("UsableActorContainer.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY + " owner: " + actor.getOwner().getId() + " width: " + actorWidth + " height: " + actorHeight + " touched: " + (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight)));
-                if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                    //System.out.println("UsableActorContainer.update: Player has touched the object!!!");
-                    pickObject(actor);
-                    break;
-                }
-            }
-        }
+        checkTouchTouch();
     }
     
 
@@ -189,8 +158,6 @@ public class UsableActorContainer extends AbstractComponent
     }
 
     private void pickObject(UsableActor actor) {
-        //actor.getOwner().setIsDraggingObject(true);
-        
         UsableActor currentObject = actor.getOwner().getObject();
         if (currentObject != null){
             currentObject.resetPosition();
@@ -221,6 +188,51 @@ public class UsableActorContainer extends AbstractComponent
            for (int x = 0 ; x < this.whistles.size(); x++){
                 if (this.whistles.get(x).equals(actor)){
                     this.whistles.remove(x);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void checkMouseTouch() {
+        Input mouseInput = container.getInput();
+        Point2D pixelPoint = new Point2D.Double(mouseInput.getMouseX(), mouseInput.getMouseY());
+        int pixelX = (int) pixelPoint.getX();
+        int pixelY = (int) pixelPoint.getY();
+        
+        List<UsableActor> combinedList = new ArrayList<UsableActor>();
+        combinedList.addAll(this.cookies);
+        combinedList.addAll(this.whistles);
+        for (UsableActor actor : combinedList){
+            double actorPixelX = actor.getLocationInsideActorContainer().getX();
+            double actorPixelY = actor.getLocationInsideActorContainer().getY();
+            
+            int actorWidth = actor.getWidth();
+            int actorHeight = actor.getHeight();
+            if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
+                pickObject(actor);
+                break;
+            }
+        }
+    }
+
+    private void checkTouchTouch() {
+        for (int z = 0; z < GameManager.getInstance().getTouchHandler().getTuioCursors().size(); z++){
+            Point2D pixelPoint = new Point2D.Double(GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getX()*Game.WIDTH, GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getY()*Game.HEIGHT);
+            int pixelX = (int) pixelPoint.getX();
+            int pixelY = (int) pixelPoint.getY();
+
+            List<UsableActor> combinedList = new ArrayList<UsableActor>();
+            combinedList.addAll(this.cookies);
+            combinedList.addAll(this.whistles);
+            for (UsableActor actor : combinedList){
+                double actorPixelX = actor.getLocationInsideActorContainer().getX();
+                double actorPixelY = actor.getLocationInsideActorContainer().getY();
+
+                int actorWidth = actor.getWidth();
+                int actorHeight = actor.getHeight();
+                if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
+                    pickObject(actor);
                     break;
                 }
             }
