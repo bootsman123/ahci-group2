@@ -143,7 +143,6 @@ public class GameManager
         this.map.update( container, game, delta );
         this.overlay.update( container, game, delta );
         // Update players.
-        
         for( Player player : this.getPlayers() )
         {
             if (player instanceof MobilePhonePlayer){
@@ -157,73 +156,10 @@ public class GameManager
             }
             else if (player instanceof MousePlayer){
                 Input input = container.getInput();
-                //When the mouse button is down, start dragging objects
-                if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
-                    MousePlayer mousePlayer = (MousePlayer) player;
-                    //When the player is already dragging an object, move this object
-                    if(mousePlayer.isDraggingObject()){
-                        player.moveObject( this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
-                    }
-                    else{   
-                        Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
-                        
-                        //Check if the mouse is touching an object
-                        List<UsableActor> combinedList = getAllUsableObjects();
-                        for (int x = 0 ; x < combinedList.size(); x++){
-                            UsableActor actor = combinedList.get(x);
-                            if(checkIfTouched(actor,player,pixelPoint))
-                            {
-                                ((MousePlayer)player).setIsDraggingObject(true);
-                                player.setObject(actor);
-                            }
-                        }
-                    }
-                }
-                else{
-                    //Make sure that when there is no mouse press, this player is not dragging
-                    MousePlayer mousePlayer = ( MousePlayer ) player;
-                    mousePlayer.setIsDraggingObject( false );
-                }
+                updateForMousePlayer(player, input);
             }
             else if (player instanceof TouchPlayer){
-                if(this.touchHandler.getTuioCursors().size() > 0){
-                    TouchPlayer touchPlayer = (TouchPlayer) player;
-                    //Check if the player is already dragging
-                    if(touchPlayer.hasFingerOnTable()){
-                        //Select the blob that the player is using
-                        for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
-                            if (this.touchHandler.getTuioCursors().get(y).getCursorID() == touchPlayer.getAssignedBlobID()){
-                                //Move the object of the player to this position
-                                Point2D.Double pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
-                                player.moveObject( this.map.fromPositionInPixels(pixelPoint));
-                            }
-                        }
-                        
-                    }
-                    else{ 
-                        //Check if there is a touchpoint that touches an object
-                        for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
-                            Point2D pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
-                            List<UsableActor> combinedList = getAllUsableObjects();
-                            //Check if an object is touched
-                            for ( int x = 0 ; x < combinedList.size(); x++){
-                                UsableActor actor = combinedList.get(x);
-                                if(checkIfTouched(actor,player,pixelPoint))
-                                {
-                                    ((TouchPlayer)player).setHasFingerOnTable(true);
-                                    ((TouchPlayer)player).setAssignedBlobID(this.touchHandler.getTuioCursors().get(y).getCursorID());
-                                    player.setObject(actor);
-                                }
-                            }
-                        }
-                    }   
-                }
-                else{
-                    //reset all players
-                    TouchPlayer touchPlayer = ( TouchPlayer ) player;
-                    touchPlayer.setHasFingerOnTable( false );
-
-                }
+                updateForTouchPlayer(player);
             }
             else{
                 System.out.println("Player not supported");
@@ -315,5 +251,82 @@ public class GameManager
         combinedList.addAll(this.map.getCookies());
         combinedList.addAll(this.map.getWhistles());
         return combinedList;
+    }
+
+    /**
+     * Checks the input for the mouse player
+     * @param player
+     * @param container 
+     */
+    private void updateForMousePlayer(Player player, Input input) {
+        
+        //When the mouse button is down, start dragging objects
+        if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
+            MousePlayer mousePlayer = (MousePlayer) player;
+            //When the player is already dragging an object, move this object
+            if(mousePlayer.isDraggingObject()){
+                player.moveObject( this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
+            }
+            else{   
+                Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
+
+                //Check if the mouse is touching an object
+                List<UsableActor> combinedList = getAllUsableObjects();
+                for (int x = 0 ; x < combinedList.size(); x++){
+                    UsableActor actor = combinedList.get(x);
+                    if(checkIfTouched(actor,player,pixelPoint))
+                    {
+                        ((MousePlayer)player).setIsDraggingObject(true);
+                        player.setObject(actor);
+                    }
+                }
+            }
+        }
+        else{
+            //Make sure that when there is no mouse press, this player is not dragging
+            MousePlayer mousePlayer = ( MousePlayer ) player;
+            mousePlayer.setIsDraggingObject( false );
+        }
+    }
+
+    private void updateForTouchPlayer(Player player) {
+        if(this.touchHandler.getTuioCursors().size() > 0){
+            TouchPlayer touchPlayer = (TouchPlayer) player;
+            //Check if the player is already dragging
+            if(touchPlayer.hasFingerOnTable()){
+                //Select the blob that the player is using
+                for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
+                    if (this.touchHandler.getTuioCursors().get(y).getCursorID() == touchPlayer.getAssignedBlobID()){
+                        //Move the object of the player to this position
+                        Point2D.Double pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
+                        player.moveObject( this.map.fromPositionInPixels(pixelPoint));
+                    }
+                }
+
+            }
+            else{ 
+                //Check if there is a touchpoint that touches an object
+                for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
+                    Point2D pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
+                    List<UsableActor> combinedList = getAllUsableObjects();
+                    //Check if an object is touched
+                    for ( int x = 0 ; x < combinedList.size(); x++){
+                        UsableActor actor = combinedList.get(x);
+                        if(checkIfTouched(actor,player,pixelPoint))
+                        {
+                            ((TouchPlayer)player).setHasFingerOnTable(true);
+                            ((TouchPlayer)player).setAssignedBlobID(this.touchHandler.getTuioCursors().get(y).getCursorID());
+                            player.setObject(actor);
+                        }
+                    }
+                }
+            }   
+        }
+        else{
+            //reset all players
+            TouchPlayer touchPlayer = ( TouchPlayer ) player;
+            touchPlayer.setHasFingerOnTable( false );
+
+        }
     }
 }
