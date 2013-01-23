@@ -68,7 +68,7 @@ public class TouchHandler implements TuioListener
     public void updateTuioCursor( TuioCursor cursor )
     {
         Point point = new Point((int)(cursor.getX()*Game.WIDTH), (int)(cursor.getY()*Game.HEIGHT));
-        System.out.println("TouchHandler: moved tuiocursor on location " + point.getX() + " " + point.getY());
+       // System.out.println("TouchHandler: moved tuiocursor on location " + point.getX() + " " + point.getY());
         GameManager.getInstance().getTouchOverlay().moveTouchDot(cursor.getCursorID(), point);
         
         for (int x = 0 ; x < currentCursors.size(); x++){
