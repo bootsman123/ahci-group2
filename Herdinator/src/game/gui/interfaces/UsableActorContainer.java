@@ -206,9 +206,7 @@ public class UsableActorContainer extends AbstractComponent
         int pixelY = (int) pixelPoint.getY();
         
         //Combine the lists with actors to one big list
-        List<UsableActor> combinedList = new ArrayList<UsableActor>();
-        combinedList.addAll(this.cookies);
-        combinedList.addAll(this.whistles);
+        List<UsableActor> combinedList = getAllUsableObjects();
         
         //Iterate all actors to check if it is touched
         for (UsableActor actor : combinedList){
@@ -234,9 +232,7 @@ public class UsableActorContainer extends AbstractComponent
             int pixelY = (int) pixelPoint.getY();
 
             //Combine the lists with actors to one big list
-            List<UsableActor> combinedList = new ArrayList<UsableActor>();
-            combinedList.addAll(this.cookies);
-            combinedList.addAll(this.whistles);
+            List<UsableActor> combinedList = getAllUsableObjects();
             
             //Check for every actor if this touchpoint touches this actor
             for (UsableActor actor : combinedList){
@@ -274,5 +270,12 @@ public class UsableActorContainer extends AbstractComponent
                 }
             }
         }
+    }
+    
+    private List<UsableActor> getAllUsableObjects() {
+        List<UsableActor> combinedList = new ArrayList<UsableActor>();
+        combinedList.addAll(this.cookies);
+        combinedList.addAll(this.whistles);
+        return combinedList;
     }
 }

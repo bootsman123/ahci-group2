@@ -231,9 +231,7 @@ public class GameManager
         int pixelY = (int) pixelPoint.getY();
 
         if (actor.getOwner().equals(player)){
-            int actorTileX = actor.getX();
-            int actorTileY = actor.getY();
-            Point2D.Double positionInPixels = this.map.toPositionInPixels(actorTileX, actorTileY);
+            Point2D.Double positionInPixels = this.map.toPositionInPixels(actor.getX(), actor.getY());
             double actorPixelX = positionInPixels.getX();
             double actorPixelY = positionInPixels.getY();
 
@@ -302,7 +300,6 @@ public class GameManager
                         player.moveObject( this.map.fromPositionInPixels(pixelPoint));
                     }
                 }
-
             }
             else{ 
                 //Check if there is a touchpoint that touches an object
