@@ -124,7 +124,8 @@ public class GameManager
         
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
-            this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
+           // this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
+            this.players.add( new MousePlayer( i, colorsForPlayers[i] ) );
             //this.map.addUsableActor( this.players.get( i ).getObject() );
         } 
         //this.players.add(new MousePlayer(numberOfPlayers,colorsForPlayers[numberOfPlayers]));
@@ -283,7 +284,12 @@ public class GameManager
         else{
             //Make sure that when there is no mouse press, this player is not dragging
             MousePlayer mousePlayer = ( MousePlayer ) player;
+            if(mousePlayer.isDraggingObject())
+            {
+                mousePlayer.getObject().use();
+            }
             mousePlayer.setIsDraggingObject( false );
+            
         }
     }
 
@@ -322,6 +328,7 @@ public class GameManager
         else{
             //reset all players
             TouchPlayer touchPlayer = ( TouchPlayer ) player;
+            //touchPlayer.getObject().use();
             touchPlayer.setHasFingerOnTable( false );
 
         }

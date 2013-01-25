@@ -10,6 +10,7 @@ import java.util.List;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
@@ -30,6 +31,8 @@ public abstract class UsableActor extends Actor implements Usable
     private boolean isOnMap;
 
     private Point2D.Double locationInsideActorContainer;
+    
+    protected Sound sound;
     
     /**
      * Constructor.
@@ -127,5 +130,17 @@ public abstract class UsableActor extends Actor implements Usable
     }
     public int getHeight(){
         return this.animation.getHeight();
+    }
+    
+    @Override
+    public void use() {
+        // Play sound.
+        this.sound.play();
+        
+        // Fire listeners.
+        for( UseListener listener : this.useListeners )
+        {
+            listener.onUse( this );
+        }
     }
 }
