@@ -22,7 +22,9 @@ public class Whistle extends UsableActor
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
-    private static final String SOUND_ON_USE = "../Resources/Sounds/simplesheep.aif";
+    private static final String SOUND_ON_USE = "../Resources/Sounds/whistle_s.wav";
+    
+    
     
     /**
      * Constructor.
