@@ -24,7 +24,7 @@ public class Sheep extends MovableActor
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.0005;
+    private static final Double SPEED = 0.0050;
     
     // Distances in Manhatten tiles.
     private static final Integer OTHER_SHEEP_DISTANCE = 6;
