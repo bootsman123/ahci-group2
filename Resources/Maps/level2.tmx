@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="25" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="RPGmakerXPMegaTileset" tilewidth="32" tileheight="32">
+  <image source="../Images/Tilesets/RPGmakerXP1.png" width="256" height="4736"/>
+ </tileset>
+ <tileset firstgid="1185" name="ControlsTileset" tilewidth="32" tileheight="32">
+  <image source="../Images/Tilesets/ControlsTileset.png" width="128" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="Sheep" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Dog" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Wolf" value="1"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="LoveSheep" value="1"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="Collision" value="1"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="Goal" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Controls" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgcYCELZeqXstAH0xIMhB20CBdsdpAClrFgYlLtWETATlLtWEggbrDppYY/hrIdpKYXUtMVCJBabhDjX2rnQWTzFhIIF2rmQVoDWtmB7B9i/U5puA4XAAAqgHbT
+  </data>
+ </layer>
+ <layer name="Underground" width="25" height="20" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxLZGFgSBzFo3gUj+JRPIpH8ZDGAElkxUU=
+  </data>
+ </layer>
+ <layer name="Fences" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYKA9qGahPW6mAy5ioW04lWCxgxphg88OavipZNSOIWcHMWkFBrCpI2QHNcBA2kHNsgmXHdQsmwj5ixYAZEcalcMKW9jVUTmsiAk/SgEtzCTGDgDTxmgM
+  </data>
+ </layer>
+ <layer name="Objects" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAf0KSjXaOAMPAcaAcMUrCEZaBdMApGwcgFk4D5byKN8uBUJPbMYZjPAW80A3g=
+  </data>
+ </layer>
+ <layer name="Foliage" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIx0sHWgHDDIwY6AdMApGwSgYBWQAAJRGAT4=
+  </data>
+ </layer>
+</map>
