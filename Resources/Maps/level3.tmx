@@ -38,27 +38,27 @@
  </tileset>
  <layer name="Controls" width="25" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYKAcLGQZHGaAwFIW6mNsdlATDAY7qBE+xNhBDFjGgorJsWMRAbuIsWMJCyJdkuIGGJ8YOxbiMJeaduAyg5p2LMHjD0J5ipJ0RUm5QWpYUMMOdPdSu4yixM3EhiWyHdQqt9HNxxUftC7bKQW0CA9SAACtVGuH
+   eJxjYKAcLGQZHGZgA0tZEJhWgB52DFZAqb+JCTti7EA3ZxELbjliwRIW1HSJzxxy7UBP97Swgx5gyQC5iZRyYzCUBdQo58jxB7IearoNV/6gNIxxmUMNO5axYGJqgYVQd9HSDhDAZQcAUVc3Ww==
   </data>
  </layer>
  <layer name="Underground" width="25" height="20">
   <data encoding="base64" compression="zlib">
-   eJxLZGFgSBzFIxZ/ZITgLmbsGF09FxMmBukftWPk2UHIHlIwpXaQ6xZq+mEUj+KBxgAFXstl
+   eJxLZGFgSBzFwwYzMkAwseo/MkIwTB86xmU+MgbpHyl24DIf3Q5caujhD0LxT8gOYjEhv5CTbtHNJ9YOUt1CCz+MYuqlAykkTG07pBgw8XCxAwCkhqnP
   </data>
  </layer>
  <layer name="Fences" width="25" height="20">
   <data encoding="base64" compression="zlib">
-   eJzdkLEKgDAMRDP0S9VJnaSTdtJ+uBlLOIlJi6gHD0pJeOSInksXiPrGyIz8NzUkAscC/mqiOby9DeG+w9vbbHB4e4sfcMgdbeYNjpXfmyCJHTRjcez8PgRZ7KAZi8MbzYFut5IUB7rdSlYcrYMctT2VXKW2p5K/5gQXLGDu
+   eJxjYBjewJOZgcELiL2ZaWdHINDsICAOpqEdgxVMZ2FgmMFCvv5/jAwM/4E4iRG3mvlA8xcQsOMkUP8pID6NxRw+oF4eIOalwJ0gcBFo9iUgvozFDjGg2b+B8c9BoR03gWbfAuLbWOwQB5otAcQCFNoxUsFXIP4GxN9paAcrEMsD8Q8a2rEciHmBmANPnkEHr6D4NZSmBFSzIDAy+ATFn6E0JaCZBYGRwS8o/g2lByOYQ4f8icsOAGwIJDw=
   </data>
  </layer>
  <layer name="Objects" width="25" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYKAf0KSyeSksVDYQC8ihgx0ldLADG/AcGGtHNFgyQHE9CkbBUAGTgHlkIh3yycxhmBcBcaAEMw==
+   eJxjYKAf0KSjXaOAMPAcaAeMglEwCkbBKKAaAADgZgBz
   </data>
  </layer>
  <layer name="Foliage" width="25" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYMAOUhlxSEDBHPzSIxKQGiaEwpgWAJudS2lgz3BMH8TE12TaO2PQgOlYxEhJ06SEFTa7kAF6euMj0lxi1VEL0Ns+YgB6nGGLF2z5GSY2GP1EDYAtLaP7dTD4HdmdAMd/Crk=
+   eJxjYMAOUhlxSEDBHPzSIxKQGiaEwpgWAJudS2lgz1BOHzNwiBMTX5Op6pLBDaZjESMlTZMSVtjsQgbo6Y2PSHOJVUctQG/7iAHocYYtXrDlZ5jYYPQTNQC2tIzu18Hgd2R3AgCXTAtR
   </data>
  </layer>
 </map>
