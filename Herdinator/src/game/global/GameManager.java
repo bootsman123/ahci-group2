@@ -29,6 +29,9 @@ public class GameManager
 {
     // Instance variable.
     private static final GameManager instance = new GameManager();
+    public static int MOUSE_PLAYER_MODE = 0;
+    public static int PHONE_PLAYER_MODE = 1;
+    public static int TOUCH_PLAYER_MODE = 2;
     
     // List of all the maps.
     private Map map;
@@ -104,7 +107,7 @@ public class GameManager
      * Starts a new game
      * @param numberOfPlayers 
      */
-    public void startGame( int numberOfPlayers ) throws SlickException
+    public void startGame( int numberOfPlayers, int gameMode) throws SlickException
     {
         this.numberOfPlayers = numberOfPlayers;
         // Initialize players.
@@ -125,7 +128,21 @@ public class GameManager
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
            // this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
-            this.players.add( new MousePlayer( i, colorsForPlayers[i] ) );
+            if (gameMode == GameManager.MOUSE_PLAYER_MODE)
+            {
+                this.players.add( new MousePlayer( i, colorsForPlayers[i] ) );
+            }
+            else if (gameMode == GameManager.PHONE_PLAYER_MODE)
+            {
+                this.players.add( new MobilePhonePlayer( i, colorsForPlayers[i] ) );
+            }
+            else if (gameMode == GameManager.TOUCH_PLAYER_MODE)
+            {
+                this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
+            }
+            else{
+                System.out.println("GameMode not supported"); //@TODO: throw exception?
+            }
             //this.map.addUsableActor( this.players.get( i ).getObject() );
         } 
         //this.players.add(new MousePlayer(numberOfPlayers,colorsForPlayers[numberOfPlayers]));
