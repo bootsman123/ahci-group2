@@ -31,21 +31,39 @@ public class UsableActorContainer extends AbstractComponent
     private static final String HORIZONTAL_PICKER_IMAGE_FILE_PATH = "../Resources/Images/verticalpicker.png";
 
     private static final int IMAGE_OFFSET = 25;
-    private static final int PIXEL_DIFFERENCE_NEXT_OBJECT_Y = 45;
+    
+    private static final int HORIZONTAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_X = 0;
+    private static final int HORIZONTAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_Y = 45;
+    private static final int VERTICAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_X = 45;
+    private static final int VERTICAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_Y = 0;
+    
+    
     private static final int MAP_POSITION_X = 1;
     private static final int MAP_POSITION_Y = 1;
+    private static final int HORIZONTAL_PICKER_HEIGHT = 100;
+    private static final int HORIZONTAL_PICKER_WIDTH = 50;
+    private static final int VERTICAL_PICKER_HEIGHT = 50;
+    private static final int VERTICAL_PICKER_WIDTH = 100;
+    
+    private static final int[] PICKER_START_PIXELS_X = {10, 10, 650, 650};
+    private static final int[] PICKER_START_PIXELS_Y = {10, 550, 10, 550};
+    private static final boolean[] PICKER_DRAWN_HORIZONTAL = {true,false,true,false};
     
     // Dimensions of the picker in pixels.
-    private int pickerStartX = 5;
-    private int pickerStartY = 20;
-    private int pickerWidth = 50;
-    private int pickerHeight = 100;
+    
     
     private Image horizontalPicker = null;
     private Image verticalPicker = null;
     
     private List<Whistle> whistles;
     private List<Cookie> cookies;
+    
+    
+    
+    private int pickerStartX = 0;
+    private int pickerStartY = 0;
+    private int pickerWidth = 0;
+    private int pickerHeight = 0;
 
 
     
@@ -67,26 +85,42 @@ public class UsableActorContainer extends AbstractComponent
         this.verticalPicker = new Image(UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH);
         
         //Add the objects for every player
+        int playerCount = 0; 
         for(Player p : GameManager.getInstance().getPlayers()){
             if(p instanceof MousePlayer || p instanceof TouchPlayer){
                 Point startingPoint = new Point(0,0);
                 
                 //Add a cookie for this player to the list of cookies
                 Cookie cookie = new Cookie(startingPoint, p, false);
-                Point2D.Double locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*p.getId()*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET);
+                Point2D.Double locationInsideContainer;
+                if(UsableActorContainer.PICKER_DRAWN_HORIZONTAL[playerCount])
+                {
+                    locationInsideContainer = new Point2D.Double((UsableActorContainer.PICKER_START_PIXELS_X[playerCount]+UsableActorContainer.IMAGE_OFFSET), UsableActorContainer.PICKER_START_PIXELS_Y[playerCount] + UsableActorContainer.IMAGE_OFFSET);
+                }
+                else{
+                    locationInsideContainer = new Point2D.Double((UsableActorContainer.PICKER_START_PIXELS_X[playerCount]+UsableActorContainer.IMAGE_OFFSET), UsableActorContainer.PICKER_START_PIXELS_Y[playerCount] + UsableActorContainer.IMAGE_OFFSET);
+                }
                 cookie.setLocationInsideActorContainer(locationInsideContainer);
                 this.cookies.add(cookie);
                 cookie.init();
 
                 //Add a whistle for this player
                 Whistle whistle = new Whistle(startingPoint, p, false);
-                locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*p.getId()*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET + PIXEL_DIFFERENCE_NEXT_OBJECT_Y);
+                if(UsableActorContainer.PICKER_DRAWN_HORIZONTAL[playerCount])
+                {
+                    locationInsideContainer = new Point2D.Double((UsableActorContainer.PICKER_START_PIXELS_X[playerCount]+UsableActorContainer.IMAGE_OFFSET + UsableActorContainer.HORIZONTAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_X), UsableActorContainer.PICKER_START_PIXELS_Y[playerCount] + UsableActorContainer.IMAGE_OFFSET + UsableActorContainer.HORIZONTAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_Y);
+                }
+                else{
+                    locationInsideContainer = new Point2D.Double((UsableActorContainer.PICKER_START_PIXELS_X[playerCount]+UsableActorContainer.IMAGE_OFFSET + UsableActorContainer.VERTICAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_X), UsableActorContainer.PICKER_START_PIXELS_Y[playerCount] + UsableActorContainer.IMAGE_OFFSET + UsableActorContainer.VERTICAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_Y);
+                }
                 whistle.setLocationInsideActorContainer(locationInsideContainer);
                 this.whistles.add(whistle);
                 whistle.init();
                 
             }
+            playerCount++;
         }  
+        
     }
     
     /**
@@ -128,8 +162,15 @@ public class UsableActorContainer extends AbstractComponent
     @Override
     public void render(GUIContext container, Graphics g) throws SlickException {
         //Draw the pickers at their respective places
-         this.horizontalPicker.draw(this.pickerStartX, this.pickerStartY, this.pickerWidth, this.pickerHeight);
-         
+         for (int x = 0 ; x < GameManager.getInstance().getPlayers().size(); x++){
+             if (UsableActorContainer.PICKER_DRAWN_HORIZONTAL[x])
+             {
+                this.horizontalPicker.draw(UsableActorContainer.PICKER_START_PIXELS_X[x], UsableActorContainer.PICKER_START_PIXELS_Y[x], UsableActorContainer.HORIZONTAL_PICKER_WIDTH, UsableActorContainer.HORIZONTAL_PICKER_HEIGHT);
+             }
+             else{
+                 this.verticalPicker.draw(UsableActorContainer.PICKER_START_PIXELS_X[x], UsableActorContainer.PICKER_START_PIXELS_Y[x], UsableActorContainer.VERTICAL_PICKER_WIDTH, UsableActorContainer.VERTICAL_PICKER_HEIGHT);
+             }
+         }
         //Draw the objects inside the pickers
         for( Whistle whistle : this.whistles )
         {

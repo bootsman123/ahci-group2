@@ -59,15 +59,12 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
     
     private ToggleButton buttonDebug;
     
-    private boolean startingInTouchMode; 
-    
     /**
      * Constructor.
      */
     public ModalityMouseAndTouchMenuState()
     {
         super();
-        startingInTouchMode = true;
     }
 
     @Override
