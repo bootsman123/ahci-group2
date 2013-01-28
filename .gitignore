@@ -31,4 +31,6 @@ local.properties
 /Herdinator/nbproject/project.properties
 /Herdinator/dist/
 
+# Logs
+/tableSoftware/camerasoftware/mac/CCV-1.2-mac-bin 4/Community Core Vision/logs/
 # Object

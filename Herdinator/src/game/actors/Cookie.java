@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 /**
@@ -20,6 +21,9 @@ public class Cookie extends UsableActor
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
+    private static final String SOUND_ON_USE = "../Resources/Sounds/cookie_s.wav";
+    
+    
     
     /**
      * Constructor.
@@ -43,6 +47,7 @@ public class Cookie extends UsableActor
                                                        Cookie.SPRITE_SHEET_BACKGROUND_COLOR );
 
             this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 0, 0, 150 );
+            this.sound = new Sound( Cookie.SOUND_ON_USE );
         }
         catch( SlickException e )
         {
@@ -50,8 +55,5 @@ public class Cookie extends UsableActor
         }
     }
 
-    @Override
-    public void use() {
-        
-    }
+    
 }

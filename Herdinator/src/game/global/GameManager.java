@@ -1,6 +1,7 @@
 package game.global;
 
 import TUIO.TuioClient;
+import game.Game;
 import game.base.Map;
 import game.base.UsableActor;
 import game.gui.TouchHandler;
@@ -27,6 +28,9 @@ public class GameManager
 {
     // Instance variable.
     private static final GameManager instance = new GameManager();
+    public static int MOUSE_PLAYER_MODE = 0;
+    public static int PHONE_PLAYER_MODE = 1;
+    public static int TOUCH_PLAYER_MODE = 2;
     
     // List of all the maps.
     private Map map;
@@ -102,19 +106,43 @@ public class GameManager
      * Starts a new game
      * @param numberOfPlayers 
      */
-    public void startGame( int numberOfPlayers ) throws SlickException
+    public void startGame( int numberOfPlayers, int gameMode) throws SlickException
     {
         this.numberOfPlayers = numberOfPlayers;
+        
         // Initialize players.
         this.players = new ArrayList<Player>();
         
         // @TODO: Need to find a place for this. 
         System.out.println("GameManager.startGame: numberOfPlayers; " + numberOfPlayers);
+        
+        PlayerManager playerManager = PlayerManager.getInstance();
+        
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
+            
             this.players.add( new TouchPlayer( PlayerManager.PlayerColor.values()[ i ].getColor() ) );
+
+           // this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
+            if (gameMode == GameManager.MOUSE_PLAYER_MODE)
+            {
+                this.players.add( new MousePlayer( PlayerManager.PlayerColor.values()[ i ].getColor() ) );
+            }
+            else if (gameMode == GameManager.PHONE_PLAYER_MODE)
+            {
+                //this.players.add( new TangiblePlayer( PlayerManager.PlayerColor.values()[ i ].getColor() ) );
+            }
+            else if (gameMode == GameManager.TOUCH_PLAYER_MODE)
+            {
+                this.players.add( new TouchPlayer( PlayerManager.PlayerColor.values()[ i ].getColor() ) );
+            }
+            else
+            {
+                System.out.println("GameMode not supported"); //@TODO: throw exception?
+            }
             //this.map.addUsableActor( this.players.get( i ).getObject() );
         } 
+        //this.players.add(new MousePlayer(numberOfPlayers,colorsForPlayers[numberOfPlayers]));
         this.overlay.startGame();
     }
     /**
@@ -129,11 +157,12 @@ public class GameManager
         // Update map.
         this.map.update( container, game, delta );
         this.overlay.update( container, game, delta );
+        
         // Update players.
         Input input = container.getInput();
+        
         for( Player player : this.getPlayers() )
         {
-
             if (player instanceof TangiblePlayer){
                 /*
                 TangiblePlayer currentPlayer = (TangiblePlayer) player;
@@ -146,7 +175,7 @@ public class GameManager
             else if (player instanceof MousePlayer){
                 //System.out.println("GameManager.update: " + " updated mouseplayer");
                 
-                if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
+                if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
                     MousePlayer mousePlayer = (MousePlayer) player;
                     if(mousePlayer.isDraggingObject()){
                         player.getObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
@@ -179,6 +208,11 @@ public class GameManager
                 else{
 
                 }
+
+                updateForMousePlayer(player, input);
+            }
+            else if (player instanceof TouchPlayer){
+                updateForTouchPlayer(player);
             }
             else{
                 System.out.println("Player not supported");
@@ -187,6 +221,13 @@ public class GameManager
 
     }
     
+    /**
+     * Returns the touchHandler
+     * @return 
+     */
+    public TouchHandler getTouchHandler(){
+        return this.touchHandler;
+    }
     /**
      * Render.
      * @param container
@@ -197,8 +238,10 @@ public class GameManager
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( container, game, g );
+        
         this.touchOverlay.render(container, g );
-        this.overlay.render(container, g);
+                this.overlay.render(container, g);
+
     }
     
     /**
@@ -229,28 +272,118 @@ public class GameManager
         return this.players;
     }
 
-    private void checkIfTouched(UsableActor actor, Player player, Point2D pixelPoint) {
+    /**
+     * Returns whether the given point in pixels touches the given actor. It only works when the owner of the actor is equal to the given player. @TODO: remove this dumb constraint
+     * @param actor
+     * @param player
+     * @param pixelPoint
+     * @return 
+     */
+    private boolean checkIfTouched(UsableActor actor, Player player, Point2D pixelPoint) {
         int pixelX = (int) pixelPoint.getX();
         int pixelY = (int) pixelPoint.getY();
 
         if (actor.getOwner().equals(player)){
-            int actorTileX = actor.getX();
-            int actorTileY = actor.getY();
-            Point2D.Double positionInPixels = map.toPositionInPixels(actorTileX, actorTileY);
+            Point2D.Double positionInPixels = this.map.toPositionInPixels(actor.getX(), actor.getY());
             double actorPixelX = positionInPixels.getX();
             double actorPixelY = positionInPixels.getY();
 
             int actorWidth = actor.getWidth();
             int actorHeight = actor.getHeight();
-            System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY + " actor width: " + actorWidth + " actor height: " + actorHeight);
             if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-               // System.out.println("GameManager.update: Player is now dragging the object");
-                if(player instanceof MousePlayer)
-                {
-                    ((MousePlayer)player).setIsDraggingObject(true);
-                }
-                player.setObject(actor);
+                return true;
             }
+        }
+        return false;
+    }
+
+    private List<UsableActor> getAllUsableObjects() {
+        List<UsableActor> combinedList = new ArrayList<UsableActor>();
+        combinedList.addAll(this.map.getCookies());
+        combinedList.addAll(this.map.getWhistles());
+        return combinedList;
+    }
+
+    /**
+     * Checks the input for the mouse player
+     * @param player
+     * @param container 
+     */
+    private void updateForMousePlayer(Player player, Input input) {
+        
+        //When the mouse button is down, start dragging objects
+        if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
+            MousePlayer mousePlayer = (MousePlayer) player;
+            //When the player is already dragging an object, move this object
+            if(mousePlayer.isDraggingObject()){
+                // @TODO: Roland
+                player.getObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
+            }
+            else{   
+                Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
+
+                //Check if the mouse is touching an object
+                List<UsableActor> combinedList = getAllUsableObjects();
+                for (int x = 0 ; x < combinedList.size(); x++){
+                    UsableActor actor = combinedList.get(x);
+                    if(checkIfTouched(actor,player,pixelPoint))
+                    {
+                        ((MousePlayer)player).setIsDraggingObject(true);
+                        player.setObject(actor);
+                    }
+                }
+            }
+        }
+        else{
+            //Make sure that when there is no mouse press, this player is not dragging
+            MousePlayer mousePlayer = ( MousePlayer ) player;
+            if(mousePlayer.isDraggingObject())
+            {
+                mousePlayer.getObject().use();
+            }
+            mousePlayer.setIsDraggingObject( false );
+            
+        }
+    }
+
+    private void updateForTouchPlayer(Player player) {
+        if(this.touchHandler.getTuioCursors().size() > 0){
+            TouchPlayer touchPlayer = (TouchPlayer) player;
+            //Check if the player is already dragging
+            if(touchPlayer.hasFingerOnTable()){
+                //Select the blob that the player is using
+                for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
+                    if (this.touchHandler.getTuioCursors().get(y).getCursorID() == touchPlayer.getAssignedBlobID()){
+                        //Move the object of the player to this position
+                        Point2D.Double pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
+                        player.getObject().setPosition( this.map.fromPositionInPixels(pixelPoint));
+                    }
+                }
+            }
+            else{ 
+                //Check if there is a touchpoint that touches an object
+                for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
+                    Point2D pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
+                    List<UsableActor> combinedList = getAllUsableObjects();
+                    //Check if an object is touched
+                    for ( int x = 0 ; x < combinedList.size(); x++){
+                        UsableActor actor = combinedList.get(x);
+                        if(checkIfTouched(actor,player,pixelPoint))
+                        {
+                            ((TouchPlayer)player).setHasFingerOnTable(true);
+                            ((TouchPlayer)player).setAssignedBlobID(this.touchHandler.getTuioCursors().get(y).getCursorID());
+                            player.setObject(actor);
+                        }
+                    }
+                }
+            }   
+        }
+        else{
+            //reset all players
+            TouchPlayer touchPlayer = ( TouchPlayer ) player;
+            //touchPlayer.getObject().use();
+            touchPlayer.setHasFingerOnTable( false );
+
         }
     }
 }

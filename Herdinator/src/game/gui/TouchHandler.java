@@ -6,7 +6,6 @@ import TUIO.TuioObject;
 import TUIO.TuioTime;
 import game.Game;
 import game.base.TouchDot;
-import game.base.UsableActor;
 import game.global.GameManager;
 import game.players.Player;
 import game.players.TouchPlayer;
@@ -31,7 +30,7 @@ public class TouchHandler implements TuioListener
     @Override
     public void addTuioObject( TuioObject object )
     {
-        System.out.println("TouchHandler: Added tuioobject");
+
     }
 
     @Override
@@ -49,80 +48,23 @@ public class TouchHandler implements TuioListener
     @Override
     public void addTuioCursor( TuioCursor cursor )
     {
-        
+        //Add the cursor to the list
         currentCursors.add(cursor);
-        
-        
-        
-        System.out.println("TouchHandler: Added tuiocursor on location " + cursor.getX() + " " + cursor.getY());
         Point2D pixelPoint = new Point2D.Double((cursor.getX()*Game.WIDTH), (cursor.getY()*Game.HEIGHT));
-        
         int pixelX = (int) pixelPoint.getX();
         int pixelY = (int) pixelPoint.getY();
-        System.out.println("TouchHandler: Added tuiocursor on location after pixelpointed" + pixelPoint.getX() + " " + pixelPoint.getY());
         TouchDot dot = new TouchDot(new Point(pixelX,pixelY), cursor.getCursorID());
-        System.out.println("The touchOverlay is existant: " + GameManager.getInstance().getTouchOverlay() ==null);
+        //Add the cursor to the overlay
         GameManager.getInstance().getTouchOverlay().addTouchDot(dot);
-        
-        /*
-        for (UsableActor actor : GameManager.getInstance().getMap().getCookies()){
-            
-            int actorTileX = actor.getX();
-            int actorTileY = actor.getY();
-            Point2D.Double positionInPixels = GameManager.getInstance().getMap().toPositionInPixels(actorTileX, actorTileY);
-            double actorPixelX = positionInPixels.getX();
-            double actorPixelY = positionInPixels.getY();
-
-            int actorWidth = actor.getWidth();
-            int actorHeight = actor.getHeight();
-            System.out.println("TouchHandler.addTuioCursor: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
-            if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                System.out.println("TouchHandler.addTuioCursor: Player is now dragging the object");
-                for (Player player : GameManager.getInstance().getPlayers()){
-                    if (player instanceof TouchPlayer){
-                        TouchPlayer touchPlayer = (TouchPlayer)player;
-                        touchPlayer.setHasFingerOnTable(true);
-                        touchPlayer.setAssignedBlobID(cursor.getCursorID());
-                        touchPlayer.setFingerLocation(new Point2D.Double(cursor.getX(), cursor.getY()));
-                        touchPlayer.setObject(actor);
-                    }
-                }
-            }
-
-        }
-       for (UsableActor actor : GameManager.getInstance().getMap().getWhistles()){
-
-            int actorTileX = actor.getX();
-            int actorTileY = actor.getY();
-            Point2D.Double positionInPixels = GameManager.getInstance().getMap().toPositionInPixels(actorTileX, actorTileY);
-            double actorPixelX = positionInPixels.getX();
-            double actorPixelY = positionInPixels.getY();
-            int actorWidth = actor.getWidth();
-            int actorHeight = actor.getHeight();
-            System.out.println("GameManager.update: pixelX: " + pixelX + " actorPixelX: " + actorPixelX + " pixelY: " + pixelY + " actorPixelY: " + actorPixelY );
-            if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                System.out.println("GameManager.update: Player is now dragging the object");
-                for (Player player : GameManager.getInstance().getPlayers()){
-                    if (player instanceof TouchPlayer){
-                        TouchPlayer touchPlayer = (TouchPlayer)player;
-                        touchPlayer.setHasFingerOnTable(true);
-                        touchPlayer.setAssignedBlobID(cursor.getCursorID());
-                        touchPlayer.setFingerLocation(new Point2D.Double(cursor.getX(), cursor.getY()));
-                        touchPlayer.setObject(actor);
-                    }
-                }
-            }
-       }
-       */
     }
 
     @Override
     public void updateTuioCursor( TuioCursor cursor )
     {
         Point point = new Point((int)(cursor.getX()*Game.WIDTH), (int)(cursor.getY()*Game.HEIGHT));
-        System.out.println("TouchHandler: moved tuiocursor on location " + point.getX() + " " + point.getY());
         GameManager.getInstance().getTouchOverlay().moveTouchDot(cursor.getCursorID(), point);
         
+        //Remove the old cursor with the same idea
         for (int x = 0 ; x < currentCursors.size(); x++){
             TuioCursor oldCursor = currentCursors.get(x);
             if (oldCursor.getCursorID() == cursor.getCursorID()){
@@ -130,7 +72,10 @@ public class TouchHandler implements TuioListener
                 break;
             }
         }
+        
+        //Add the new cursor
         currentCursors.add(cursor);
+        //Change the finger location of the player
         for (Player player : GameManager.getInstance().getPlayers()){
             if (player instanceof TouchPlayer){
                 TouchPlayer touchPlayer = (TouchPlayer)player;
@@ -139,15 +84,16 @@ public class TouchHandler implements TuioListener
                 }
             }
         }
-        //System.out.println("Updated cursor: " + );
     }
 
     @Override
     public void removeTuioCursor( TuioCursor cursor )
     {
-        System.out.println("Removed TuioCursor: " + + cursor.getCursorID());
+        //Remove the cursor from the list
         currentCursors.remove(cursor);
+        //Remove the cursor from the overlay
         GameManager.getInstance().getTouchOverlay().removeTouchDot(cursor.getCursorID());
+        //Make sure that the player is not dragging anymore
         for (Player player : GameManager.getInstance().getPlayers()){
             if (player instanceof TouchPlayer){
                 TouchPlayer touchPlayer = (TouchPlayer)player;
@@ -166,6 +112,10 @@ public class TouchHandler implements TuioListener
         
     }
 
+    /**
+     * Get the list of cursors. 
+     * @return 
+     */
     public ArrayList<TuioCursor> getTuioCursors(){
         return this.currentCursors;
     }

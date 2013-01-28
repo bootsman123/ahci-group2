@@ -27,7 +27,7 @@ public class Dog extends MovableActor implements UseListener
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.003;
+    private static final Double SPEED = 0.010;
     
     private static final Integer WHISTLE_DISTANCE = 200;
     private static final Double WHISTLE_OBEYANCE = 1.0;

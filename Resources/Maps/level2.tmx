@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="25" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="RPGmakerXPMegaTileset" tilewidth="32" tileheight="32">
+  <image source="../Images/Tilesets/RPGmakerXP1.png" width="256" height="4736"/>
+ </tileset>
+ <tileset firstgid="1185" name="ControlsTileset" tilewidth="32" tileheight="32">
+  <image source="../Images/Tilesets/ControlsTileset.png" width="128" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="Sheep" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Dog" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Wolf" value="1"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="LoveSheep" value="1"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="Collision" value="1"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="Goal" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Controls" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAcLGQZHGaAwFIW6mNsdlATDAY7qBE+xNhBDFjGgorJsWMRAbuIsWMJCyJdkuIGGJ8YOxbiMJeaduAyg5p2LMHjD0J5ipJ0RUm5QWpYUMMOdPdSu4yixM3EhiWyHdQqt9HNxxUftC7bKQW0CA9SAACtVGuH
+  </data>
+ </layer>
+ <layer name="Underground" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxLZGFgSBzFIxZ/ZITgLmbsGF09FxMmBukftWPk2UHIHlIwpXaQ6xZq+mEUj+KBxgAFXstl
+  </data>
+ </layer>
+ <layer name="Fences" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzdkLEKgDAMRDP0S9VJnaSTdtJ+uBlLOIlJi6gHD0pJeOSInksXiPrGyIz8NzUkAscC/mqiOby9DeG+w9vbbHB4e4sfcMgdbeYNjpXfmyCJHTRjcez8PgRZ7KAZi8MbzYFut5IUB7rdSlYcrYMctT2VXKW2p5K/5gQXLGDu
+  </data>
+ </layer>
+ <layer name="Objects" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAf0KSyeSksVDYQC8ihgx0ldLADG/AcGGtHNFgyQHE9CkbBUAGTgHlkIh3yycxhmBcBcaAEMw==
+  </data>
+ </layer>
+ <layer name="Foliage" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAOUhlxSEDBHPzSIxKQGiaEwpgWAJudS2lgz3BMH8TE12TaO2PQgOlYxEhJ06SEFTa7kAF6euMj0lxi1VEL0Ns+YgB6nGGLF2z5GSY2GP1EDYAtLaP7dTD4HdmdAMd/Crk=
+  </data>
+ </layer>
+</map>
