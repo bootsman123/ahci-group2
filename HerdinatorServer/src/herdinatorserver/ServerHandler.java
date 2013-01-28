@@ -25,7 +25,7 @@ public class ServerHandler
         Context context = this.tomcat.addContext( "/", ( new File( "." ) ).getAbsolutePath() );
         context.setReloadable( true );
         
-        Tomcat.addServlet( context, "ServerHandlerServlet", new ServerHandlerServlet() );
+        Tomcat.addServlet( context, "ServerHandlerServlet", ServerHandlerServlet.getInstance() );
         context.addServletMapping( "/*", "ServerHandlerServlet" );
         
         this.tomcat.start();

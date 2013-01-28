@@ -6,14 +6,13 @@ import game.base.UsableActor;
 import game.gui.TouchHandler;
 import game.gui.interfaces.TouchOverlay;
 import game.gui.interfaces.UsableActorContainer;
-import game.players.MobilePhonePlayer;
 import game.players.MousePlayer;
 import game.players.Player;
+import game.players.TangiblePlayer;
 import game.players.TouchPlayer;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -109,19 +108,11 @@ public class GameManager
         // Initialize players.
         this.players = new ArrayList<Player>();
         
-        Color[] colorsForPlayers = new Color[4];
-        colorsForPlayers[0] = Color.blue;
-        colorsForPlayers[1] = Color.pink;
-        colorsForPlayers[2] = Color.red;
-        colorsForPlayers[3] = Color.green;
-        
-        
-        
         // @TODO: Need to find a place for this. 
         System.out.println("GameManager.startGame: numberOfPlayers; " + numberOfPlayers);
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
-            this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
+            this.players.add( new TouchPlayer( PlayerManager.PlayerColor.values()[ i ].getColor() ) );
             //this.map.addUsableActor( this.players.get( i ).getObject() );
         } 
         this.overlay.startGame();
@@ -143,9 +134,9 @@ public class GameManager
         for( Player player : this.getPlayers() )
         {
 
-            if (player instanceof MobilePhonePlayer){
+            if (player instanceof TangiblePlayer){
                 /*
-                MobilePhonePlayer currentPlayer = (MobilePhonePlayer) player;
+                TangiblePlayer currentPlayer = (TangiblePlayer) player;
                 if(currentPlayer.locationTelephone != null && currentPlayer.hasTelephoneOnTable){
                     System.out.println("First location: " + (int)currentPlayer.locationTelephone.getX() + " second location: " + (int)currentPlayer.locationTelephone.getY());
                     this.map.setActingPosition((int)currentPlayer.locationTelephone.getX(), (int)currentPlayer.locationTelephone.getY(), currentPlayer.getPlayerID());
@@ -158,7 +149,7 @@ public class GameManager
                 if(input.isMouseButtonDown(input.MOUSE_LEFT_BUTTON)){
                     MousePlayer mousePlayer = (MousePlayer) player;
                     if(mousePlayer.isDraggingObject()){
-                        player.moveObject( this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
+                        player.getObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
                     }
                     else{   
                         Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
@@ -183,7 +174,7 @@ public class GameManager
                     //@TODO: make sure to select the right object when dragging
                     System.out.println("GameManager.update: player is now dragging this object");
                     Point2D.Double touchPoint = touchPlayer.getFingerLocation();
-                    player.moveObject( this.map.fromPositionInPixels(touchPoint));
+                    player.getObject().setPosition( this.map.fromPositionInPixels(touchPoint));
                 }
                 else{
 

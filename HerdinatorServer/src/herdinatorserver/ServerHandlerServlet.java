@@ -20,11 +20,25 @@ public class ServerHandlerServlet extends HttpServlet
     // Contains a list of all the connected phones.
     private Map<String, MobilePhonePlayer> mobilePhonePlayers;
     
-    public ServerHandlerServlet()
+    // Singleton instance.
+    private static final ServerHandlerServlet INSTANCE = new ServerHandlerServlet();
+    
+    /**
+     * Private constructor.
+     */
+    private ServerHandlerServlet()
     {
         this.mobilePhonePlayers = new HashMap<String, MobilePhonePlayer>();
     }
     
+    /**
+     * Return singleton instance.
+     * @return 
+     */
+    public static ServerHandlerServlet getInstance()
+    {
+        return ServerHandlerServlet.INSTANCE;
+    }
     
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response )

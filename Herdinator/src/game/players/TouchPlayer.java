@@ -17,8 +17,8 @@ public class TouchPlayer extends Player {
     private boolean hasFingerOnTable ;
     private int assignedBlobID;
 
-    public TouchPlayer(int id, Color color) throws SlickException{
-        super(id, color);
+    public TouchPlayer(Color color) throws SlickException{
+        super(color);
         this.hasFingerOnTable = false;
     }
     

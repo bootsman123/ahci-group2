@@ -65,7 +65,7 @@ public class UsableActorContainer extends AbstractComponent
                 Point startingPoint = new Point(0,0);
                 
                 Cookie cookie = new Cookie(startingPoint, p, false);
-                Point2D.Double locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*p.getId()*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET);
+                Point2D.Double locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET);
                 cookie.setLocationInsideActorContainer(locationInsideContainer);
                 this.cookies.add(cookie);
                 cookie.init();
@@ -73,7 +73,7 @@ public class UsableActorContainer extends AbstractComponent
                 //startingPoint = new Point(UsableActorContainer.MAP_POSITION_X,UsableActorContainer.MAP_POSITION_Y+(p.getId()*NEXT_OBJECT_DIFFERENCE)+3); //@TODO: set all the locations right
                 Whistle whistle = new Whistle(startingPoint, p, false);
 
-                locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*p.getId()*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET + PIXEL_DIFFERENCE_NEXT_OBJECT_Y);
+                locationInsideContainer = new Point2D.Double((this.pickerStartX+UsableActorContainer.IMAGE_OFFSET)*3, this.pickerStartY + UsableActorContainer.IMAGE_OFFSET + PIXEL_DIFFERENCE_NEXT_OBJECT_Y);
                 whistle.setLocationInsideActorContainer(locationInsideContainer);
                 this.whistles.add(whistle);
                 whistle.init();

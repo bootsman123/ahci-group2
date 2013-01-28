@@ -4,6 +4,8 @@ import game.actors.Whistle;
 import game.base.UsableActor;
 import game.global.GameManager;
 import java.awt.Point;
+import java.util.Random;
+import java.util.UUID;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 
@@ -11,26 +13,32 @@ import org.newdawn.slick.SlickException;
  *
  * @author roland
  */
-public abstract class Player {
-    private UsableActor object;
-    private int id;
+public abstract class Player
+{
+    // Id of the player.
+    private Integer id;
+    
+    // Color of the player.
     private Color color;
-
-    public Player( int id, Color color ) throws SlickException {
-        this.id = id;
-        Point startingPoint = new Point(0,0);
+    
+    // Current object of the player.
+    private UsableActor object;
+    
+    /**
+     * Constructor.
+     * @param color 
+     */
+    public Player( Color color )
+    {
         this.color = color;
-    }
-
-    public Integer getId(){
-        return this.id;
+        this.id = ( new Random() ).nextInt();        
+        this.object = null;
     }
 
     /**
      * Set the object to be used by this player
      * @param newObject 
      */
-    
     public void setObject(UsableActor newObject) {
         if (!newObject.equals(this.getObject())){
             GameManager.getInstance().getMap().removeUsableActor(this.object);//@TODO: do not let the player object remove the current object from the map?
@@ -38,22 +46,31 @@ public abstract class Player {
             GameManager.getInstance().getMap().addUsableActor(this.object);
         }
     }
-
-    public UsableActor getObject(){
-        return object;
-    }
-
-    public void moveObject(Point newPoint){
-        if(object !=null){
-            this.object.setPosition(newPoint);
-        }
-        else{
-            System.err.println("Player.moveObject: object == null");
-        }
+    
+    /**
+     * Return the id.
+     * @return 
+     */
+    public Integer getId()
+    {
+        return this.id;
     }
     
-    public Color getColor(){
+    /**
+     * Returns the color.
+     * @return 
+     */
+    public Color getColor()
+    {
         return this.color;
     }
     
+    /**
+     * Return the object.
+     * @return 
+     */
+    public UsableActor getObject()
+    {
+        return this.object;
+    }
 }
