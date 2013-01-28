@@ -12,11 +12,10 @@ public class MousePlayer extends Player
     
     /**
      * Constructor.
-     * @param color 
      */
-    public MousePlayer( Color color )
+    public MousePlayer()
     {
-        super( color );
+        super();
         
         this.isDraggingObject = Boolean.FALSE;
     }

@@ -155,8 +155,7 @@ public class ServerServlet extends HttpServlet
         }  
             
         // Create a new player.
-        Color color = PlayerManager.PlayerColor.values()[ playerManager.numberOfPlayers() ].getColor();
-        TangiblePlayer tangiblePlayer = new TangiblePlayer( color, markId );
+        TangiblePlayer tangiblePlayer = new TangiblePlayer( markId );
         
         // Add player.
         playerManager.addPlayer( tangiblePlayer );

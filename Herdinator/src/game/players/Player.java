@@ -1,13 +1,10 @@
 package game.players;
 
-import game.actors.Whistle;
 import game.base.UsableActor;
 import game.global.GameManager;
-import java.awt.Point;
+import game.global.PlayerManager;
 import java.util.Random;
-import java.util.UUID;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.SlickException;
 
 /**
  *
@@ -28,9 +25,9 @@ public abstract class Player
      * Constructor.
      * @param color 
      */
-    public Player( Color color )
+    public Player()
     {
-        this.color = color;
+        this.color = PlayerManager.PlayerColor.values()[ PlayerManager.getInstance().numberOfPlayers() ].getColor();
         this.id = ( new Random() ).nextInt();        
         this.object = null;
     }

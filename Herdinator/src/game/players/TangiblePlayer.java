@@ -1,7 +1,6 @@
 package game.players;
 
 import java.awt.geom.Point2D;
-import org.newdawn.slick.Color;
 
 /**
  * Mobile Players
@@ -16,9 +15,9 @@ public class TangiblePlayer extends Player
      * Constructor.
      * @param color 
      */
-    public TangiblePlayer( Color color, Integer markId )
+    public TangiblePlayer( Integer markId )
     {
-        super( color );
+        super();
         
         this.markId = markId;        
         this.tangibleLocation = null;

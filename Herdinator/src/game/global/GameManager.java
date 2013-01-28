@@ -121,12 +121,12 @@ public class GameManager
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
             
-            this.players.add( new TouchPlayer( PlayerManager.PlayerColor.values()[ i ].getColor() ) );
+            this.players.add( new TouchPlayer() );
 
            // this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
             if (gameMode == GameManager.MOUSE_PLAYER_MODE)
             {
-                this.players.add( new MousePlayer( PlayerManager.PlayerColor.values()[ i ].getColor() ) );
+                this.players.add( new MousePlayer() );
             }
             else if (gameMode == GameManager.PHONE_PLAYER_MODE)
             {
@@ -134,7 +134,7 @@ public class GameManager
             }
             else if (gameMode == GameManager.TOUCH_PLAYER_MODE)
             {
-                this.players.add( new TouchPlayer( PlayerManager.PlayerColor.values()[ i ].getColor() ) );
+                this.players.add( new TouchPlayer() );
             }
             else
             {
