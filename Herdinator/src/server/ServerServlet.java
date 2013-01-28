@@ -5,20 +5,17 @@ import game.actors.Whistle;
 import game.base.Map;
 import game.base.UsableActor;
 import game.global.GameManager;
-import game.global.PlayerManager;
 import game.players.Player;
 import game.players.TangiblePlayer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -60,11 +57,8 @@ public class ServerServlet extends HttpServlet
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException
     {
-        // Players.
-        List<Player> players = GameManager.getInstance().getPlayers();
-        
         // Create a new JSON object.
-        JSONObject json = null;
+        JSONObject json;
         
         // Check which action has been performed.
         String action = request.getParameter( "action" );
@@ -128,43 +122,20 @@ public class ServerServlet extends HttpServlet
             return json;
         }
         
-        PlayerManager playerManager = PlayerManager.getInstance();
+        GameManager gameManager = GameManager.getInstance();
         Integer markId = Integer.valueOf( markIdString );
-        
-        // @TODO: Bas.
-        
+                
         // Check if a player, with the same mark id, already exists.
         // If so, remove the player.
-        Player player = playerManager.getPlayer( markId );
+        Player player = gameManager.getPlayer( markId );
         
         if( player != null )
         {
-            playerManager.removePlayer( player );
+            gameManager.removePlayer( player );
         }
-        
-        /*
-        ListIterator<Player> playerListIterator = playerManager.getPlayers().listIterator();
-               
-        while( playerListIterator.hasNext() )
-        {
-            Player player = playerListIterator.next();
-            
-            // @TODO: This should not be necessary.
-            if( player instanceof TangiblePlayer )
-            {
-                TangiblePlayer tangiblePlayer = (TangiblePlayer)player;
-                
-                if( tangiblePlayer.getMarkId() == markId )
-                {
-                    playerListIterator.remove();
-                }
-                
-            }
-        }
-        */
         
         // Check if a player can still connect.
-        if( !playerManager.hasReachedPlayerLimit() )
+        if( !gameManager.hasReachedPlayerLimit() )
         {
             return json;
         }  
@@ -173,7 +144,7 @@ public class ServerServlet extends HttpServlet
         TangiblePlayer tangiblePlayer = new TangiblePlayer( markId );
         
         // Add player.
-        playerManager.addPlayer( tangiblePlayer );
+        gameManager.addPlayer( tangiblePlayer );
         
         json.put( "success", Boolean.TRUE );
         json.put( "phoneId", tangiblePlayer.getId().toString() );
@@ -194,35 +165,14 @@ public class ServerServlet extends HttpServlet
         // Check the phone id.
         if( phoneIdString != null )
         {
-            PlayerManager playerManager = PlayerManager.getInstance();
-            Player player = playerManager.getPlayer( Integer.valueOf( phoneIdString ) );
+            GameManager gameManager = GameManager.getInstance();
+            Player player = gameManager.getPlayer( Integer.valueOf( phoneIdString ) );
             
             if( player != null )
             {
-                playerManager.removePlayer( player );
+                gameManager.removePlayer( player );
                 json.put( "success", Boolean.TRUE );
             }
-            
-            /*
-            ListIterator<Player> playerListIterator = PlayerManager.getInstance().getPlayers().listIterator();
-
-            while( playerListIterator.hasNext() )
-            {
-                Player player = playerListIterator.next();
-
-                // @TODO: This should not be necessary.
-                if( player instanceof TangiblePlayer )
-                {
-                    TangiblePlayer tangiblePlayer = (TangiblePlayer)player;
-
-                    if( tangiblePlayer.getId() == phoneId )
-                    {
-                        playerListIterator.remove();
-                        json.put( "success", Boolean.TRUE );
-                    }
-
-                }
-            }*/
         }
                     
         return json;
@@ -259,13 +209,15 @@ public class ServerServlet extends HttpServlet
         // Check the phone id.
         if( phoneIdString != null )
         {
-            Player player = PlayerManager.getInstance().getPlayer( Integer.valueOf( phoneIdString ) );
-            TangiblePlayer tangiblePlayer = (TangiblePlayer)player;
+            GameManager gameManager = GameManager.getInstance();
             
+            Player player = gameManager.getPlayer( Integer.valueOf( phoneIdString ) );
+            TangiblePlayer tangiblePlayer = (TangiblePlayer)player; 
+            
+            Map map = gameManager.getMap();
+
             if( player != null )
             {
-                Map map = GameManager.getInstance().getMap();
-                
                 try
                 {
                     if( "whistle".equalsIgnoreCase( itemString ) )
@@ -308,7 +260,7 @@ public class ServerServlet extends HttpServlet
         // Check the phone id.
         if( phoneIdString != null )
         {
-            Player player = PlayerManager.getInstance().getPlayer( Integer.valueOf( phoneIdString ) );
+            Player player = GameManager.getInstance().getPlayer( Integer.valueOf( phoneIdString ) );
             
             if( player != null )
             {

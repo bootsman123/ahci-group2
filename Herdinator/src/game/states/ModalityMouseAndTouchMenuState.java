@@ -42,8 +42,10 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
     
     private static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
     private static final String BUTTON_BACK = "../Resources/Images/Menu/buttonBack.png";
-    private static final String BUTTON_DEBUG = "../Resources/Images/Menu/buttonMouse.png";
-    private static final String ACTIVE_BUTTON_DEBUG = "../Resources/Images/Menu/buttonMouseActive.png";
+    
+    //@TODO: Roland. Remove?
+    //private static final String BUTTON_DEBUG = "../Resources/Images/Menu/buttonMouse.png";
+    //private static final String ACTIVE_BUTTON_DEBUG = "../Resources/Images/Menu/buttonMouseActive.png";
     
     private UnicodeFont numberOfPlayersFont;
     
@@ -109,9 +111,10 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         this.buttonBack.setAcceptingInput( Boolean.FALSE );
         this.buttonBack.addClickAndTouchListener( this );
         
-        this.buttonDebug = new ToggleButton( container, ModalityMouseAndTouchMenuState.BUTTON_DEBUG, ModalityMouseAndTouchMenuState.ACTIVE_BUTTON_DEBUG );
-        this.buttonDebug.setAcceptingInput( Boolean.FALSE );
-        this.buttonDebug.addClickAndTouchListener( this );
+        //@TODO: Roland. Remove?
+        //this.buttonDebug = new ToggleButton( container, ModalityMouseAndTouchMenuState.BUTTON_DEBUG, ModalityMouseAndTouchMenuState.ACTIVE_BUTTON_DEBUG );
+        //this.buttonDebug.setAcceptingInput( Boolean.FALSE );
+        //this.buttonDebug.addClickAndTouchListener( this );
         
         // Button positions.
         // Assuming all 'number of players'-buttons have equal width (@TODO: Bit fugly).
@@ -128,7 +131,7 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         
         this.buttonStart.setLocation( ( container.getWidth() - this.buttonStart.getWidth() ) / 2, buttonNumberOfPlayersPositionY + buttonNumberOfPlayersHeight + MenuState.BUTTON_MARGIN );
         this.buttonBack.setLocation( ( container.getWidth() - this.buttonBack.getWidth() ) / 2, this.buttonStart.getY() + this.buttonStart.getHeight() + MenuState.BUTTON_MARGIN );
-        this.buttonDebug.setLocation( ( container.getWidth() - this.buttonDebug.getWidth() ) / 2, this.buttonStart.getY() + this.buttonStart.getHeight() + this.buttonBack.getHeight() + 2*MenuState.BUTTON_MARGIN );
+        //this.buttonDebug.setLocation( ( container.getWidth() - this.buttonDebug.getWidth() ) / 2, this.buttonStart.getY() + this.buttonStart.getHeight() + this.buttonBack.getHeight() + 2*MenuState.BUTTON_MARGIN );
     }
 
     @Override
@@ -150,7 +153,7 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         
         this.buttonStart.render( container, g );
         this.buttonBack.render( container, g );
-        this.buttonDebug.render( container, g );
+        //this.buttonDebug.render( container, g );
     }
     
     @Override
@@ -165,7 +168,7 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         
         this.buttonStart.setAcceptingInput( Boolean.TRUE );
         this.buttonBack.setAcceptingInput( Boolean.TRUE );
-        this.buttonDebug.setAcceptingInput( Boolean.TRUE );
+        //this.buttonDebug.setAcceptingInput( Boolean.TRUE );
     }
     
     @Override
@@ -180,7 +183,7 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         
         this.buttonStart.setAcceptingInput( Boolean.FALSE );
         this.buttonBack.setAcceptingInput( Boolean.FALSE );
-        this.buttonDebug.setAcceptingInput( Boolean.FALSE );
+        //this.buttonDebug.setAcceptingInput( Boolean.FALSE );
     } 
 
     @Override
@@ -197,10 +200,10 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
             {
                 try {
                     if (!this.buttonDebug.isToggled()){
-                        GameManager.getInstance().startGame( index + 1, GameManager.TOUCH_PLAYER_MODE ); // @TODO: Fugly.
+                        GameManager.getInstance().startGame( index + 1, GameManager.Mode.TOUCH ); // @TODO: Fugly.
                     }
                     else{
-                        GameManager.getInstance().startGame( index + 1, GameManager.MOUSE_PLAYER_MODE ); // @TODO: Fugly.
+                        GameManager.getInstance().startGame( index + 1, GameManager.Mode.MOUSE ); // @TODO: Fugly.
                     }
                     
                     state = Game.GAME_STATE;
@@ -214,13 +217,6 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         {
             state = Game.MENU_MODALITY_SELECTOR_STATE;
         }
-        /*else if( button == this.buttonDebug )
-        {
-            this.startingInTouchMode = !this.startingInTouchMode;
-            this.buttonDebug.setIsToggled(startingInTouchMode);
-            System.out.println("Toggling");
-            
-        }*/
         
         if( state != -1 )
         {

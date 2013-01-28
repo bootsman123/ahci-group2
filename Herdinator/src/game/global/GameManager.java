@@ -26,11 +26,15 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class GameManager
 {
+    public enum Mode
+    {
+        MOUSE, TOUCH;
+    }
+    
+    private static final Integer MAXIMUM_NUMBER_OF_PLAYERS = 4;
+    
     // Instance variable.
     private static final GameManager instance = new GameManager();
-    public static int MOUSE_PLAYER_MODE = 0;
-    public static int PHONE_PLAYER_MODE = 1;
-    public static int TOUCH_PLAYER_MODE = 2;
     
     // List of all the maps.
     private Map map;
@@ -43,7 +47,6 @@ public class GameManager
     private TouchHandler touchHandler;
     private TouchOverlay touchOverlay;
     private UsableActorContainer overlay;
-    private Integer numberOfPlayers;
     
     /**
      * Hidden constructor.
@@ -106,43 +109,30 @@ public class GameManager
      * Starts a new game
      * @param numberOfPlayers 
      */
-    public void startGame( int numberOfPlayers, int gameMode) throws SlickException
+    public void startGame( int numberOfPlayers, Mode mode ) throws SlickException
     {
-        this.numberOfPlayers = numberOfPlayers;
-        
         // Initialize players.
         this.players = new ArrayList<Player>();
-        
-        // @TODO: Need to find a place for this. 
-        System.out.println("GameManager.startGame: numberOfPlayers; " + numberOfPlayers);
-        
-        PlayerManager playerManager = PlayerManager.getInstance();
-        
+                        
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
+            Player player;
             
-            this.players.add( new TouchPlayer() );
-
-           // this.players.add( new TouchPlayer( i, colorsForPlayers[i] ) );
-            if (gameMode == GameManager.MOUSE_PLAYER_MODE)
+            switch( mode )
             {
-                this.players.add( new MousePlayer() );
+                case TOUCH:
+                    player = new TouchPlayer();
+                    break;
+                    
+                case MOUSE:
+                default:
+                    player = new TouchPlayer();
+                    break;
             }
-            else if (gameMode == GameManager.PHONE_PLAYER_MODE)
-            {
-                //this.players.add( new TangiblePlayer( PlayerManager.PlayerColor.values()[ i ].getColor() ) );
-            }
-            else if (gameMode == GameManager.TOUCH_PLAYER_MODE)
-            {
-                this.players.add( new TouchPlayer() );
-            }
-            else
-            {
-                System.out.println("GameMode not supported"); //@TODO: throw exception?
-            }
-            //this.map.addUsableActor( this.players.get( i ).getObject() );
+            
+            this.addPlayer( player );
         } 
-        //this.players.add(new MousePlayer(numberOfPlayers,colorsForPlayers[numberOfPlayers]));
+
         this.overlay.startGame();
     }
     /**
@@ -245,16 +235,6 @@ public class GameManager
     }
     
     /**
-     * Set the number of players playing the game.
-     * @param numberOfPlayers 
-     */
-    public void setNumberOfPlayers( Integer numberOfPlayers )
-    {
-        System.out.println("GameManager.setNumberOfPlayers: amount of players: " + numberOfPlayers);
-        this.numberOfPlayers = numberOfPlayers;
-    }
-    
-    /**
      * Returns the current map.
      * @return 
      */
@@ -264,12 +244,66 @@ public class GameManager
     }
 
     /**
-     * Returns the list of players.
+     * Return a list of players.
      * @return 
      */
     public List<Player> getPlayers()
     {
         return this.players;
+    }
+    
+    /**
+     * Returns a player by id.
+     * @param id
+     * @return 
+     */
+    public Player getPlayer( Integer id )
+    {
+        for( Player player : this.players )
+        {
+            if( id == player.getId() )
+            {
+                return player;
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Add a player.
+     * @param player 
+     */
+    public void addPlayer( Player player )
+    {
+        this.players.add( player );
+    }
+    
+    /**
+     * Remove a player.
+     * @param player 
+     */
+    public void removePlayer( Player player )
+    {
+        this.players.remove( player );
+    }
+        
+    /**
+     * Return the number of players.
+     * @return 
+     */
+    public Integer getNumberOfPlayers()
+    {
+        return this.players.size();
+    }
+    
+    /**
+     * Returns true if the player limit has been reached, false otherwise.
+     * @return 
+     */
+    public Boolean hasReachedPlayerLimit()
+    {
+        return this.getNumberOfPlayers() == GameManager.MAXIMUM_NUMBER_OF_PLAYERS;
     }
 
     /**

@@ -2,7 +2,6 @@ package game.players;
 
 import game.base.UsableActor;
 import game.global.GameManager;
-import game.global.PlayerManager;
 import java.util.Random;
 import org.newdawn.slick.Color;
 
@@ -11,7 +10,34 @@ import org.newdawn.slick.Color;
  * @author roland
  */
 public abstract class Player
-{
+{    
+    //@TODO: Star Craft colors:
+    //Red, Blue, Teal, Purple, Yellow, Orange, Green, Pink, Grey, Light Blue, Dark Green, Brown
+    public enum PlayerColor
+    {
+        RED( Color.red ),
+        BLUE( Color.blue ),
+        YELLOW( Color.yellow ),
+        PINK( Color.pink ),
+        GRAY( Color.gray );
+        
+        private Color color;
+                
+        /**
+         * Constructor.
+         * @param color 
+         */
+        PlayerColor( Color color )
+        {
+            this.color = color;
+        }
+        
+        public Color getColor()
+        {
+            return this.color;
+        }
+    }
+    
     // Id of the player.
     private Integer id;
     
@@ -27,7 +53,7 @@ public abstract class Player
      */
     public Player()
     {
-        this.color = PlayerManager.PlayerColor.values()[ PlayerManager.getInstance().numberOfPlayers() ].getColor();
+        this.color = PlayerColor.values()[ GameManager.getInstance().getNumberOfPlayers() ].getColor();
         this.id = ( new Random() ).nextInt();        
         this.object = null;
     }
