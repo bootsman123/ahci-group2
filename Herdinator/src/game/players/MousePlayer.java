@@ -1,7 +1,5 @@
 package game.players;
 
-import org.newdawn.slick.Color;
-
 /**
  *
  * @author roland

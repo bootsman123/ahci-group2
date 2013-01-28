@@ -335,10 +335,10 @@ public class Map implements TileBasedMap
      * @param position
      * @return 
      */
-    public Point fromPositionInPixels( Point2D.Double position )
+    public Point fromPositionInPixels( Point2D position )
     {
-        return new Point( (int)( position.x / this.map.getTileWidth() ),
-                          (int)( position.y / this.map.getTileHeight() ) );
+        return new Point( (int)( position.getX() / this.map.getTileWidth() ),
+                          (int)( position.getY() / this.map.getTileHeight() ) );
     }
     
     /**
@@ -347,7 +347,7 @@ public class Map implements TileBasedMap
      * @param y
      * @return 
      */
-    public Point2D.Double toPositionInPixels( int x, int y )
+    public Point2D.Double toPositionInPixels( Integer x, Integer y )
     {
         Point2D.Double position =  new Point2D.Double( x * this.map.getTileWidth(),
                                                        y * this.map.getTileHeight() );
@@ -362,7 +362,7 @@ public class Map implements TileBasedMap
      * @param position
      * @return 
      */
-    private boolean isValidTile( Point position )
+    private Boolean isValidTile( Point position )
     {
         return ( position.x >= 0 && position.x < this.map.getWidth() &&
                  position.y >= 0 && position.y < this.map.getHeight() );
@@ -570,8 +570,6 @@ public class Map implements TileBasedMap
     {
         return this.loveSheeps;
     }
-    
-   
     
     /**
      * Returns a list of all the whistles.

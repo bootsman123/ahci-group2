@@ -1,7 +1,6 @@
 package game.actors;
 
 import game.base.UsableActor;
-import game.base.listeners.UseListener;
 import game.players.Player;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;

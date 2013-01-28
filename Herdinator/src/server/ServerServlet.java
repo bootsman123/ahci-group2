@@ -1,5 +1,8 @@
 package server;
 
+import game.actors.Cookie;
+import game.actors.Whistle;
+import game.base.Map;
 import game.base.UsableActor;
 import game.global.GameManager;
 import game.global.PlayerManager;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.SlickException;
 
 /**
  *
@@ -127,8 +131,18 @@ public class ServerServlet extends HttpServlet
         PlayerManager playerManager = PlayerManager.getInstance();
         Integer markId = Integer.valueOf( markIdString );
         
+        // @TODO: Bas.
+        
         // Check if a player, with the same mark id, already exists.
         // If so, remove the player.
+        Player player = playerManager.getPlayer( markId );
+        
+        if( player != null )
+        {
+            playerManager.removePlayer( player );
+        }
+        
+        /*
         ListIterator<Player> playerListIterator = playerManager.getPlayers().listIterator();
                
         while( playerListIterator.hasNext() )
@@ -147,6 +161,7 @@ public class ServerServlet extends HttpServlet
                 
             }
         }
+        */
         
         // Check if a player can still connect.
         if( !playerManager.hasReachedPlayerLimit() )
@@ -245,14 +260,34 @@ public class ServerServlet extends HttpServlet
         if( phoneIdString != null )
         {
             Player player = PlayerManager.getInstance().getPlayer( Integer.valueOf( phoneIdString ) );
+            TangiblePlayer tangiblePlayer = (TangiblePlayer)player;
             
             if( player != null )
             {
-                //String item = request.getParameter( "item" );
-                //TangiblePlayer.MobilePhoneObject object = TangiblePlayer.MobilePhoneObject.fromName( item );
-                //player.setObject( ... );
+                Map map = GameManager.getInstance().getMap();
                 
-                json.put( "success", Boolean.TRUE );
+                try
+                {
+                    if( "whistle".equalsIgnoreCase( itemString ) )
+                    {
+                        player.setObject( new Whistle( map.fromPositionInPixels( tangiblePlayer.getTangibleLocation() ),
+                                                       tangiblePlayer,
+                                                       Boolean.FALSE ) );                
+                        
+                        json.put( "success", Boolean.TRUE );
+                    }
+                    else if( "cookie".equalsIgnoreCase( itemString ) )
+                    {
+                        player.setObject( new Cookie( map.fromPositionInPixels( tangiblePlayer.getTangibleLocation() ),
+                                                      tangiblePlayer,
+                                                      Boolean.FALSE ) );
+                        
+                        json.put( "success", Boolean.TRUE );
+                    }
+                }
+                catch( SlickException e )
+                {
+                }
             }
         }
         
