@@ -6,6 +6,7 @@ import TUIO.TuioListener;
 import TUIO.TuioObject;
 import TUIO.TuioPoint;
 import TUIO.TuioTime;
+import game.Game;
 import game.global.GameManager;
 import game.players.Player;
 import game.util.MathUtil;
@@ -60,12 +61,18 @@ public class TangibleArea extends AbstractComponent implements TuioListener
     @Override
     public void render( GUIContext container, Graphics g ) throws SlickException
     {
-        g.setColor( ( this.tangible != null ) ? TangibleArea.COLOR_DEFAULT : TangibleArea.COLOR_TANGIBLE );
+        g.setColor( ( this.tangible == null ) ? TangibleArea.COLOR_DEFAULT : TangibleArea.COLOR_TANGIBLE );
         
         // Draw surrounding area.
         g.setLineWidth( TangibleArea.LINE_WIDTH );
         g.draw( this.area );
         
+        if (this.tangible != null){
+            System.out.println("TangibleArea.render: drawing object at: " + tangible.getX()*Game.WIDTH + " " + tangible.getY()*Game.HEIGHT );
+            g.setColor(Color.red);
+            g.drawRect(tangible.getX()*Game.WIDTH, tangible.getY()*Game.HEIGHT, 20, 20);
+            
+        }
         // Draw inner area.
         // @TODO: Draw inner area.
     }
@@ -123,19 +130,22 @@ public class TangibleArea extends AbstractComponent implements TuioListener
     {        
         // Check if a player exists with the id.
         Player player = GameManager.getInstance().getPlayer( o.getSymbolID() );
-        
+        System.out.println("TangibleArea.render: adding general object at: " + o.getX()*Game.WIDTH + " " + o.getY()*Game.HEIGHT );
+        /*
         if( player == null )
         {
             return;
-        }
+        }*/
         
         if( this.tangible == null )
         {
             TuioPoint position = o.getPosition();
 
-            if( this.contains( (int)position.getX(), (int)position.getY() ) )
+            if( this.contains( (int)(position.getX()*Game.WIDTH), (int)(position.getY()*Game.HEIGHT) ) )
             {
+             
                 this.tangible = o;
+                   System.out.println("TangibleArea.render: adding object at: " + tangible.getX()*Game.WIDTH + " " + tangible.getY()*Game.HEIGHT );
             }
         }
     }
@@ -147,10 +157,11 @@ public class TangibleArea extends AbstractComponent implements TuioListener
         
         if( this.tangible != null )
         {
-            if( this.tangible.getSymbolID() == o.getSymbolID() &&
-                !this.contains( (int)position.getX(), (int)position.getY() ) )
+            if( this.tangible.getSymbolID() == o.getSymbolID() && !this.contains( (int)(position.getX()*Game.WIDTH), (int)(position.getY()*Game.HEIGHT) ) )
             {
+                
                 this.tangible = null;
+                System.out.println("TangibleArea.render: updating object at: " + tangible.getX()*Game.WIDTH + " " + tangible.getY()*Game.HEIGHT );
             }
         }
         else
@@ -166,6 +177,7 @@ public class TangibleArea extends AbstractComponent implements TuioListener
         {
             if( this.tangible.getSymbolID() == o.getSymbolID() )
             {
+                System.out.println("TangibleArea.render: removing object at: " + tangible.getX()*Game.WIDTH + " " + tangible.getY()*Game.HEIGHT );
                 this.tangible = null;
             }
         }
