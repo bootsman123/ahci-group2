@@ -1,5 +1,6 @@
 package game.gui;
 
+import TUIO.TuioClient;
 import TUIO.TuioCursor;
 import TUIO.TuioListener;
 import TUIO.TuioObject;
@@ -20,7 +21,7 @@ import org.newdawn.slick.gui.GUIContext;
  * @author Bas Bootsma
  */
 public class TangibleArea extends AbstractComponent implements TuioListener
-{
+{   
     public static final Integer WIDTH = 160;
     public static final Integer HEIGHT = 240;
     
@@ -34,7 +35,8 @@ public class TangibleArea extends AbstractComponent implements TuioListener
     public static final Double DISTANCE_TO_CENTER = 20.0;
 
     private Shape area;
-    
+        
+    private TuioClient tuioClient;
     private TuioObject object;
 
     /**
@@ -44,6 +46,10 @@ public class TangibleArea extends AbstractComponent implements TuioListener
     public TangibleArea( GUIContext context )
     {
         super( context );
+        
+        this.tuioClient = new TuioClient();
+        this.tuioClient.addTuioListener( this );
+        this.tuioClient.connect();
         
         this.area = new RoundedRectangle( 0, 0, TangibleArea.WIDTH, TangibleArea.HEIGHT, TangibleArea.CORNER_RADIUS, TangibleArea.SEGMENTS );
         this.object = null;
@@ -113,6 +119,8 @@ public class TangibleArea extends AbstractComponent implements TuioListener
     @Override
     public void addTuioObject( TuioObject o )
     {
+        System.out.println( "Adding TUIO object: " + o.getSymbolID() );
+        
         TuioPoint position = o.getPosition();
         
         if( this.contains( (int)position.getX(), (int)position.getY() ) )
