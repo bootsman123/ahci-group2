@@ -103,7 +103,7 @@ public abstract class MovableActor extends Actor implements Movable
         }
     }
     */
-    
+        
     @Override
     public void move( Direction direction )
     {

@@ -3,6 +3,7 @@ package game.states;
 import game.Game;
 import game.gui.Button;
 import game.gui.TangibleArea;
+import game.gui.interfaces.TangibleOverlay;
 import game.gui.listeners.ClickAndTouchListener;
 import java.awt.Font;
 import org.newdawn.slick.GameContainer;
@@ -37,7 +38,9 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
     
     private Button buttonStart;
     private Button buttonBack;
-        
+    
+    private TangibleOverlay tangibleOverlay;
+    
     /**
      * Constructor.
      */
@@ -90,6 +93,8 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
    
         this.buttonStart.setLocation( ( container.getWidth() - this.buttonStart.getWidth() ) / 2, tangibleAreaPositionY + tangibleAreaHeight + MenuState.BUTTON_MARGIN );
         this.buttonBack.setLocation( ( container.getWidth() - this.buttonBack.getWidth() ) / 2, this.buttonStart.getY() + this.buttonStart.getHeight() + MenuState.BUTTON_MARGIN );
+    
+        this.tangibleOverlay = new TangibleOverlay( container );
     }
     
     @Override
@@ -110,6 +115,8 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
         
         this.buttonStart.render( container, g );
         this.buttonBack.render( container, g );
+    
+        this.tangibleOverlay.render( container, g );
     }
     
     @Override
