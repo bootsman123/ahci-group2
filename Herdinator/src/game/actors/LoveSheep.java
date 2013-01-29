@@ -105,7 +105,9 @@ public class LoveSheep extends MovableActor implements UseListener
     @Override
     public void onUse( Actor actor )
     {
-        // It's a cookie, so:
-        // Cookie cookie = (Cookie)actor;
+        // A cookie has been pressed.
+        //this.hasReachedPathDestination = Boolean.FALSE;
+        //this.path = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
+        //this.pathIndex = 0;
     }
 }

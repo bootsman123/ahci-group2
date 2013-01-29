@@ -141,7 +141,8 @@ public class TangibleArea extends AbstractComponent implements TuioListener
         {
             TuioPoint position = o.getPosition();
 
-            if( this.contains( (int)(position.getX()*Game.WIDTH), (int)(position.getY()*Game.HEIGHT) ) )
+
+            if( this.contains( (int)( position.getX() * Game.WIDTH ), (int)( position.getY() * Game.HEIGHT ) ) ) // @TODO: Fugly.
             {
              
                 this.tangible = o;
@@ -157,7 +158,9 @@ public class TangibleArea extends AbstractComponent implements TuioListener
         
         if( this.tangible != null )
         {
-            if( this.tangible.getSymbolID() == o.getSymbolID() && !this.contains( (int)(position.getX()*Game.WIDTH), (int)(position.getY()*Game.HEIGHT) ) )
+
+            if( this.tangible.getSymbolID() == o.getSymbolID() &&
+                !this.contains( (int)( position.getX() * Game.WIDTH ), (int)( position.getY() * Game.HEIGHT ) ) ) // @TODO: Fugly.
             {
                 
                 this.tangible = null;
