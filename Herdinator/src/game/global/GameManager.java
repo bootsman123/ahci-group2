@@ -72,7 +72,7 @@ public class GameManager
     }
     
     /**
-     * Returns the touchoverlay
+     * Returns the touch overlay.
      * @return 
      */
     
@@ -106,8 +106,9 @@ public class GameManager
     }
     
     /**
-     * Starts a new game
-     * @param numberOfPlayers 
+     * Starts a new game.
+     * @param numberOfPlayers
+     * @param mode
      */
     public void startGame( int numberOfPlayers, Mode mode ) throws SlickException
     {
@@ -133,6 +134,19 @@ public class GameManager
 
         this.overlay.startGame();
     }
+    
+    /**
+     * End the current game.
+     * @param score 
+     */
+    public void endGame( Integer score )
+    {
+        //this.score = score;
+        
+        // Remove all players from the game.
+        this.players.clear();
+    }
+    
     /**
      * Update.
      * @param container
@@ -217,6 +231,7 @@ public class GameManager
     {
         return this.touchHandler;
     }
+    
     /**
      * Render.
      * @param container

@@ -6,6 +6,8 @@ import TUIO.TuioListener;
 import TUIO.TuioObject;
 import TUIO.TuioPoint;
 import TUIO.TuioTime;
+import game.global.GameManager;
+import game.players.Player;
 import game.util.MathUtil;
 import java.awt.Point;
 import org.newdawn.slick.Color;
@@ -30,14 +32,14 @@ public class TangibleArea extends AbstractComponent implements TuioListener
     
     private static final Float LINE_WIDTH = 8.0f;
     private static final Color COLOR_DEFAULT = Color.decode( "#db2864" );
-    private static final Color COLOR_OBJECT = Color.cyan;
+    private static final Color COLOR_TANGIBLE = Color.cyan;
     
     public static final Double DISTANCE_TO_CENTER = 20.0;
 
     private Shape area;
         
     private TuioClient tuioClient;
-    private TuioObject object;
+    private TuioObject tangible;
 
     /**
      * Constructor.
@@ -50,15 +52,15 @@ public class TangibleArea extends AbstractComponent implements TuioListener
         this.tuioClient = new TuioClient();
         this.tuioClient.addTuioListener( this );
         this.tuioClient.connect();
-        
+                
         this.area = new RoundedRectangle( 0, 0, TangibleArea.WIDTH, TangibleArea.HEIGHT, TangibleArea.CORNER_RADIUS, TangibleArea.SEGMENTS );
-        this.object = null;
+        this.tangible = null;
     }
 
     @Override
     public void render( GUIContext container, Graphics g ) throws SlickException
     {
-        g.setColor( ( this.object == null ) ? TangibleArea.COLOR_DEFAULT : TangibleArea.COLOR_OBJECT );
+        g.setColor( ( this.tangible != null ) ? TangibleArea.COLOR_DEFAULT : TangibleArea.COLOR_TANGIBLE );
         
         // Draw surrounding area.
         g.setLineWidth( TangibleArea.LINE_WIDTH );
@@ -118,15 +120,24 @@ public class TangibleArea extends AbstractComponent implements TuioListener
 
     @Override
     public void addTuioObject( TuioObject o )
-    {
-        System.out.println( "Adding TUIO object: " + o.getSymbolID() );
+    {        
+        // Check if a player exists with the id.
+        Player player = GameManager.getInstance().getPlayer( o.getSymbolID() );
         
-        TuioPoint position = o.getPosition();
-        
-        if( this.contains( (int)position.getX(), (int)position.getY() ) )
+        if( player == null )
         {
-            this.object = o;
-        }   
+            return;
+        }
+        
+        if( this.tangible == null )
+        {
+            TuioPoint position = o.getPosition();
+
+            if( this.contains( (int)position.getX(), (int)position.getY() ) )
+            {
+                this.tangible = o;
+            }
+        }
     }
 
     @Override
@@ -134,24 +145,29 @@ public class TangibleArea extends AbstractComponent implements TuioListener
     {            
         TuioPoint position = o.getPosition();
         
-        if( this.object == o &&
-            !this.contains( (int)position.getX(), (int)position.getY() ) )
+        if( this.tangible != null )
         {
-            this.object = null;
+            if( this.tangible.getSymbolID() == o.getSymbolID() &&
+                !this.contains( (int)position.getX(), (int)position.getY() ) )
+            {
+                this.tangible = null;
+            }
         }
-        else if( this.object == null &&
-                 this.contains( (int)position.getX(), (int)position.getY() ) )
+        else
         {
-            this.object = o;
+            this.addTuioObject( o );
         }
     }
 
     @Override
     public void removeTuioObject( TuioObject o )
     {
-        if( this.object == o )
+        if( this.tangible != null )
         {
-            this.object = null;
+            if( this.tangible.getSymbolID() == o.getSymbolID() )
+            {
+                this.tangible = null;
+            }
         }
     }
 

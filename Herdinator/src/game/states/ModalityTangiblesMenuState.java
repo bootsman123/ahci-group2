@@ -1,6 +1,5 @@
 package game.states;
 
-import TUIO.TuioClient;
 import game.Game;
 import game.gui.Button;
 import game.gui.TangibleArea;
