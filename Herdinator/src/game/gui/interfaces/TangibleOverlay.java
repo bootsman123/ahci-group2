@@ -37,7 +37,7 @@ public class TangibleOverlay extends AbstractComponent implements TuioListener
         super( container );
         
         // Fullscreen.
-        this.area = new Rectangle( 0, 0, Game.WIDTH, Game.HEIGHT );
+        this.area = new Rectangle( 0, 0, container.getWidth(), container.getHeight() );
         
         this.tuioObjects = new ArrayList<TuioObject>();
         this.tuioClient = new TuioClient();
@@ -81,7 +81,11 @@ public class TangibleOverlay extends AbstractComponent implements TuioListener
         
         for( TuioObject tuioObject : this.tuioObjects )
         {
-            g.fillRect( tuioObject.getX(), tuioObject.getY(), 20, 20 );
+            Float x = tuioObject.getX() * container.getWidth();
+            Float y = tuioObject.getY() * container.getHeight();
+            
+            g.fillRect( x, y, 20, 20 );
+            g.drawString( String.valueOf( tuioObject.getSymbolID() ), x, y );
         }
     }
 
