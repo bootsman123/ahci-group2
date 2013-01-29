@@ -1,11 +1,14 @@
 package game.states;
 
 import game.Game;
+import game.global.GameManager;
 import game.gui.Button;
 import game.gui.TangibleArea;
 import game.gui.interfaces.TangibleOverlay;
 import game.gui.listeners.ClickAndTouchListener;
 import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -144,6 +147,13 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
         
         if( button == this.buttonStart )
         {         
+            try { 
+                int[] playerIDs = {20,2,3,4};//@TODO: add the player ID's
+                this.tangibleOverlay.disconnect();
+                GameManager.getInstance().startTangibleGame(playerIDs);
+            } catch (SlickException ex) {
+                Logger.getLogger(ModalityTangiblesMenuState.class.getName()).log(Level.SEVERE, null, ex);
+            }
             state = Game.GAME_STATE;
         }
         else if( button == this.buttonBack )

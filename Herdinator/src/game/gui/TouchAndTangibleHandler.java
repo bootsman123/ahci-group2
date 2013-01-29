@@ -8,6 +8,7 @@ import game.Game;
 import game.base.TouchDot;
 import game.global.GameManager;
 import game.players.Player;
+import game.players.TangiblePlayer;
 import game.players.TouchPlayer;
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -17,12 +18,12 @@ import java.util.ArrayList;
  *
  * @author bootsman
  */
-public class TouchHandler implements TuioListener
+public class TouchAndTangibleHandler implements TuioListener
 {
     
     private ArrayList<TuioCursor> currentCursors ;
     
-    public TouchHandler()
+    public TouchAndTangibleHandler()
     {
         currentCursors = new ArrayList<TuioCursor>();
     }
@@ -30,13 +31,23 @@ public class TouchHandler implements TuioListener
     @Override
     public void addTuioObject( TuioObject object )
     {
-
+        
     }
 
     @Override
     public void updateTuioObject( TuioObject object )
     {
         
+        for (Player p : GameManager.getInstance().getPlayers()){
+            if (p instanceof TangiblePlayer){
+                TangiblePlayer player = (TangiblePlayer) p;
+                if (player.getMarkId() == object.getSymbolID()){
+                    System.out.println("Updating the TUIO object: " + object.getSymbolID());
+                    player.setTangibleLocation(new Point2D.Double(object.getX()*Game.WIDTH, object.getY()*Game.HEIGHT));
+                }
+            }
+
+        }
     }
 
     @Override

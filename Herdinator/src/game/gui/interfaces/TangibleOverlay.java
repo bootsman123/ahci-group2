@@ -42,6 +42,9 @@ public class TangibleOverlay extends AbstractComponent implements TuioListener
         this.tuioObjects = new ArrayList<TuioObject>();
         this.tuioClient = new TuioClient();
         this.tuioClient.addTuioListener( this );
+        this.tuioClient.connect();
+        
+        //System.out.println("Connected the tuioClient!");
     }
     
     @Override
@@ -77,7 +80,7 @@ public class TangibleOverlay extends AbstractComponent implements TuioListener
     @Override
     public void render( GUIContext container, Graphics g ) throws SlickException
     {
-        System.out.printf( "[TangibleOverlay]: rendering %d tangibles.\n", this.tuioObjects.size() );
+        //System.out.printf( "[TangibleOverlay]: rendering %d tangibles.\n", this.tuioObjects.size() );
         
         g.setColor( Color.red );
         
@@ -132,5 +135,8 @@ public class TangibleOverlay extends AbstractComponent implements TuioListener
     @Override
     public void refresh( TuioTime t )
     {
+    }
+    public void disconnect(){
+        this.tuioClient.disconnect();
     }
 }

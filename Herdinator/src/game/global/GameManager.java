@@ -2,15 +2,17 @@ package game.global;
 
 import TUIO.TuioClient;
 import game.Game;
+import game.actors.Cookie;
 import game.base.Map;
 import game.base.UsableActor;
-import game.gui.TouchHandler;
+import game.gui.TouchAndTangibleHandler;
 import game.gui.interfaces.TouchOverlay;
 import game.gui.interfaces.UsableActorContainer;
 import game.players.MousePlayer;
 import game.players.Player;
 import game.players.TangiblePlayer;
 import game.players.TouchPlayer;
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class GameManager
 {
     public enum Mode
     {
-        MOUSE, TOUCH;
+        MOUSE, TOUCH, PHONE;
     }
     
     private static final Integer MAXIMUM_NUMBER_OF_PLAYERS = 4;
@@ -44,9 +46,10 @@ public class GameManager
     private List<Player> players;
     
     private TuioClient tuioClient;
-    private TouchHandler touchHandler;
+    private TouchAndTangibleHandler touchHandler;
     private TouchOverlay touchOverlay;
     private UsableActorContainer overlay;
+    private Mode gameMode; 
     
     /**
      * Hidden constructor.
@@ -55,9 +58,8 @@ public class GameManager
     {
         this.tuioClient = new TuioClient();
         
-        this.touchHandler = new TouchHandler();
+        this.touchHandler = new TouchAndTangibleHandler();
         this.tuioClient.addTuioListener(touchHandler);
-        this.tuioClient.connect();
         
         this.players = new ArrayList<Player>();
     }
@@ -106,12 +108,13 @@ public class GameManager
     }
     
     /**
-     * Starts a new game.
+     * Starts a new touch or mouse game.
      * @param numberOfPlayers
      * @param mode
      */
     public void startGame( int numberOfPlayers, Mode mode ) throws SlickException
     {
+        this.gameMode = mode;
         // Initialize players.                        
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
@@ -131,9 +134,38 @@ public class GameManager
             
             this.addPlayer( player );
         } 
-
+        
+        System.out.println("Starting to connect the tuioclient in the gamemanager");
+        this.tuioClient.connect();
+        System.out.println("Finished connecting the tuioclient in the gamemanager");
         this.overlay.startGame();
     }
+    
+    /**
+     * Starts a new interactive tangible objects game.
+     * @param numberOfPlayers
+     * @param mode
+     */
+    public void startTangibleGame( int[] playerIDs ) throws SlickException
+    {
+        this.gameMode = GameManager.Mode.PHONE;
+        System.out.println("Total amount of players: " + playerIDs.length);
+        // Initialize players.                        
+        for( Integer i = 0; i < playerIDs.length; i++ )
+        {
+            System.out.println("Amount of players now: " + this.getPlayers().size());
+            Player player = new TangiblePlayer(playerIDs[i]);
+            player.setObject(new Cookie(new Point(0,0), player, true));
+            this.addPlayer( player );
+        } 
+        
+        System.out.println("Starting to connect the tuioclient in the gamemanager");
+        this.tuioClient.connect();
+        System.out.println("Finished connecting the tuioclient in the gamemanager");
+        
+        //this.overlay.startGame();
+    }
+    
     
     /**
      * End the current game.
@@ -166,13 +198,13 @@ public class GameManager
         for( Player player : this.getPlayers() )
         {
             if (player instanceof TangiblePlayer){
-                /*
+                
                 TangiblePlayer currentPlayer = (TangiblePlayer) player;
-                if(currentPlayer.locationTelephone != null && currentPlayer.hasTelephoneOnTable){
-                    System.out.println("First location: " + (int)currentPlayer.locationTelephone.getX() + " second location: " + (int)currentPlayer.locationTelephone.getY());
-                    this.map.setActingPosition((int)currentPlayer.locationTelephone.getX(), (int)currentPlayer.locationTelephone.getY(), currentPlayer.getPlayerID());
+                if(currentPlayer.getTangibleLocation() != null && currentPlayer.isTangibleOnTable()){
+                    System.out.println("First location: " + (int)currentPlayer.getTangibleLocation().getX() + " second location: " + (int)currentPlayer.getTangibleLocation() .getY());
+                    
+                    currentPlayer.getObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY())));//this.map.setActingPosition((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY(), currentPlayer.getMarkId());
                 }
-                 */
             }
             else if (player instanceof MousePlayer){
                 //System.out.println("GameManager.update: " + " updated mouseplayer");
@@ -227,7 +259,7 @@ public class GameManager
      * Returns the touchHandler
      * @return 
      */
-    public TouchHandler getTouchHandler()
+    public TouchAndTangibleHandler getTouchHandler()
     {
         return this.touchHandler;
     }
@@ -244,7 +276,10 @@ public class GameManager
         this.map.render( container, game, g );
         
         this.touchOverlay.render(container, g );
-        this.overlay.render(container, g);
+        if (this.gameMode != GameManager.Mode.PHONE)
+        {
+            this.overlay.render(container, g);
+        }
     }
     
     /**
