@@ -26,7 +26,7 @@ public class LoveSheep extends MovableActor implements UseListener
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.010;
+    private static final Double SPEED = 0.0075;
     
     private static final Integer WHISTLE_DISTANCE = 200;
     private static final Double WHISTLE_OBEYANCE = 0.8;
@@ -76,10 +76,16 @@ public class LoveSheep extends MovableActor implements UseListener
         if( !this.isMoving() )
         {            
             // Determine new direction.
+            Map map = GameManager.getInstance().getMap();            
             Direction direction;
             List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
-            Map map = GameManager.getInstance().getMap();
             
+            // Check if the love sheep can move at all.
+            if( directions.isEmpty() )
+            {
+                return;
+            }
+
             // Check for cookies.
             direction = this.directionTowardsClosestActorFromList( this, map.getCookies(), directions, LoveSheep.WHISTLE_DISTANCE, LoveSheep.WHISTLE_OBEYANCE );
             

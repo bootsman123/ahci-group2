@@ -52,11 +52,17 @@ public class Connection implements Runnable {
 
 			JSONParser parser = new JSONParser();
 
+			JSONObject map = null;
 			l.log(Level.WARNING, "err " + s);
-			JSONObject map = (JSONObject) parser.parse(s);
+			try {
+				map = (JSONObject) parser.parse(s);
+			} catch (Exception e) {
+				l.log(Level.WARNING, "err Not a SJON object!");
+			}
 
 			return map;
 		} catch (Exception e) {
+			l.log(Level.WARNING, "err Exception");
 			l.log(Level.WARNING, "err Exception " + e.toString());
 			l.log(Level.WARNING, "err Exception " + e.getLocalizedMessage());
 			StackTraceElement[] stack = e.getStackTrace();
@@ -68,12 +74,17 @@ public class Connection implements Runnable {
 
 	@Override
 	public void run() {
+		Logger l = Logger.getLogger(SettingsActivity.class.getName());
 		try {
 			response = httpClient.execute(httpGet);
 		} catch (ClientProtocolException e) {
+			l.log(Level.WARNING, "err ClientProtocolException");
 			e.printStackTrace();
 		} catch (IOException e) {
+			l.log(Level.WARNING, "err IOException");
 			e.printStackTrace();
+		} catch (Exception e){
+			l.log(Level.WARNING, "err IOException");
 		}
 	}
 }

@@ -24,7 +24,7 @@ public class Sheep extends MovableActor
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.0050;
+    private static final Double SPEED = 0.0030;
     
     // Distances in Manhatten tiles.
     private static final Integer OTHER_SHEEP_DISTANCE = 6;
@@ -85,10 +85,11 @@ public class Sheep extends MovableActor
         if( !this.isMoving() )
         {
             Map map = GameManager.getInstance().getMap();
-            Direction direction = null;
+            Direction direction;
             
             // Check if the sheep is in the goal tile.
-            if( map.isGoalTile( this.getPosition() ) )
+            // With lazy evaluations the right-hand does not have to be evaluated.
+            if( !this.isInGoalTile && map.isGoalTile( this.getPosition() ) )
             {
                 this.isInGoalTile = Boolean.TRUE;
             }

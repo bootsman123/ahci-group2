@@ -126,7 +126,7 @@ public class GameManager
                     
                 case MOUSE:
                 default:
-                    player = new TouchPlayer();
+                    player = new MousePlayer();
                     break;
             }
             

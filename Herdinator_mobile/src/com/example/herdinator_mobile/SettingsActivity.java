@@ -24,10 +24,10 @@ public class SettingsActivity extends Activity {
 		setContentView(R.layout.settings_layout);
 
 		// Network url
-		// String default_url = "http://wlan-133-119.wlan.ru.nl:8080";
+		String default_url = "http://fsw204200.socsci.ru.nl:8080";
 
 		// AVD url
-		String default_url = "http://10.0.2.2:8080";
+		// String default_url = "http://10.0.2.2:8080";
 
 		EditText server_adress = (EditText) findViewById(R.id.server_adress);
 		server_adress.setText(default_url);
@@ -80,19 +80,27 @@ public class SettingsActivity extends Activity {
 			params.add(new BasicNameValuePair("action", "connect"));
 			params.add(new BasicNameValuePair("markId", String.valueOf(markID)));
 
-			JSONObject map = Connection.getResponse(getApplicationContext(),
-					urlString, params);
+			JSONObject map = null;
+			try {
+				map = Connection.getResponse(getApplicationContext(),
+						urlString, params);
+			} finally {
+				if (map == null) {
+					error.setText("Unable to connect to server...");
+					progress.setVisibility(View.INVISIBLE);
+				} else if ((Boolean) map.get("success")) {
+					HerdinatorApplication app = (HerdinatorApplication) getApplication();
+					app.setPhone_id((String) map.get("phoneId"));
+					app.setConnected(true);
+					app.setUrl(urlString);
 
-			if ((Boolean) map.get("success")) {
-				HerdinatorApplication app = (HerdinatorApplication) getApplication();
-				app.setPhone_id((String) map.get("phoneId"));
-				app.setConnected(true);
-				app.setUrl(urlString);
-
-				Intent intent = new Intent(getBaseContext(), MainActivity.class);
-				startActivity(intent);
-			} else {
-				error.setText("Unable to connect to server...");
+					Intent intent = new Intent(getBaseContext(),
+							MainActivity.class);
+					startActivity(intent);
+				} else {
+					error.setText("Unable to connect to server...");
+					progress.setVisibility(View.INVISIBLE);
+				}
 			}
 
 		}
