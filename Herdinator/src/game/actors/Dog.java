@@ -17,8 +17,8 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.util.pathfinding.Path;
 
 /**
- *
- * @author bootsman
+ * Dog implementation.
+ * @author Bas Bootsma
  */
 public class Dog extends MovableActor implements UseListener
 {
@@ -29,13 +29,14 @@ public class Dog extends MovableActor implements UseListener
     
     private static final Double SPEED = 0.010;
     
-    private static final Integer WHISTLE_DISTANCE = 200;
-    private static final Double WHISTLE_OBEYANCE = 1.0;
+    //private static final Integer WHISTLE_DISTANCE = 200;
+    //private static final Double WHISTLE_OBEYANCE = 1.0;
     
     private Direction currentDirection;
     
-    private Path currentPath;
-    private Integer currentPathStepIndex;
+    private Boolean hasReachedPathDestination;
+    private Path path;
+    private Integer pathIndex;
 
     /**
      * Constructor.
@@ -71,8 +72,9 @@ public class Dog extends MovableActor implements UseListener
         this.currentDirection = Direction.DOWN;
         this.animation = this.animations.get( this.currentDirection );
         
-        this.currentPath = null;
-        this.currentPathStepIndex = 0;
+        this.hasReachedPathDestination = Boolean.FALSE;
+        this.path = null;
+        this.pathIndex = 0;
     }
     
     @Override
@@ -83,41 +85,41 @@ public class Dog extends MovableActor implements UseListener
         if( !this.isMoving() )
         {           
             // Check if there is a path to be followed.
-            if( this.currentPath != null )
+            if( this.path != null && !this.hasReachedPathDestination )
             {
-                // Check if there are still steps left.
-                if( this.currentPathStepIndex < this.currentPath.getLength() )
-                {
-                    Path.Step step = this.currentPath.getStep( this.currentPathStepIndex );
-                    this.currentPathStepIndex++;
+                Path.Step step = this.path.getStep( this.pathIndex );
+                this.pathIndex++;
 
-                    // Check if the step is still valid.
-                    Map map = GameManager.getInstance().getMap();
-                                        
-                    if( map.isBlocked( new Point( step.getX(), step.getY() ) ) )
-                    {
-                        // Calculate a new path.
-                        Path.Step finalStep = this.currentPath.getStep( this.currentPath.getLength() - 1 );
-                        Point finalPosition = new Point( finalStep.getX(), finalStep.getY() );
-                                
-                        this.currentPath = map.pathTo( this.getPosition(), finalPosition );
-                        this.currentPathStepIndex = 0;
-                    }
-                    
-                    // Determine the direction.
-                    
+                // Check if the step is still valid.
+                Map map = GameManager.getInstance().getMap();
+
+                if( map.isBlocked( new Point( step.getX(), step.getY() ) ) )
+                {
+                    // Calculate a new path.
+                    Path.Step finalStep = this.path.getStep( this.path.getLength() - 1 );
+                    Point finalPosition = new Point( finalStep.getX(), finalStep.getY() );
+
+                    this.path = map.pathTo( this.getPosition(), finalPosition );
+                    this.pathIndex = 0;
                 }
+
+                // Determine the direction.
+
+                // @TODO: ...
             }
             
-            
             // Determine new direction.
-            Direction direction;
+            Direction direction = null;         
             List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
-            Map map = GameManager.getInstance().getMap();
+
+            // Check if the dog can move at all.
+            if( directions.isEmpty() )
+            {
+                return;
+            }
             
             // Check whistles.
-            direction = this.directionTowardsClosestActorFromList( this, map.getWhistles(), directions, Dog.WHISTLE_DISTANCE, Dog.WHISTLE_OBEYANCE );
-            
+            //direction = this.directionTowardsClosestActorFromList( this, map.getWhistles(), directions, Dog.WHISTLE_DISTANCE, Dog.WHISTLE_OBEYANCE );
             
             if( direction == null )
             {                
@@ -136,7 +138,8 @@ public class Dog extends MovableActor implements UseListener
     public void onUse( Actor actor )
     {
         // A whistle has been pressed.
-        this.currentPath = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
-        this.currentPathStepIndex = 0;
+        this.hasReachedPathDestination = Boolean.FALSE;
+        this.path = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
+        this.pathIndex = 0;
     }
 }

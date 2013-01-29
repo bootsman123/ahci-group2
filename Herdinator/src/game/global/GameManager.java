@@ -55,11 +55,11 @@ public class GameManager
     {
         this.tuioClient = new TuioClient();
         
-        
         this.touchHandler = new TouchHandler();
         this.tuioClient.addTuioListener(touchHandler);
         this.tuioClient.connect();
         
+        this.players = new ArrayList<Player>();
     }
 
     /**
@@ -111,9 +111,7 @@ public class GameManager
      */
     public void startGame( int numberOfPlayers, Mode mode ) throws SlickException
     {
-        // Initialize players.
-        this.players = new ArrayList<Player>();
-                        
+        // Initialize players.                        
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
             Player player;
@@ -215,7 +213,8 @@ public class GameManager
      * Returns the touchHandler
      * @return 
      */
-    public TouchHandler getTouchHandler(){
+    public TouchHandler getTouchHandler()
+    {
         return this.touchHandler;
     }
     /**
@@ -230,8 +229,7 @@ public class GameManager
         this.map.render( container, game, g );
         
         this.touchOverlay.render(container, g );
-                this.overlay.render(container, g);
-
+        this.overlay.render(container, g);
     }
     
     /**

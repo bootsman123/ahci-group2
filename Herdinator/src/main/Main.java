@@ -3,8 +3,10 @@ package main;
 import game.Game;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.catalina.LifecycleException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
+import server.Server;
 
 /**
  *
@@ -12,6 +14,8 @@ import org.newdawn.slick.SlickException;
  */
 public class Main
 {
+    public static final Logger LOGGER = Logger.getLogger( Main.class.getName() );
+    
     /**
      * Main function.
      * @param args Command line arguments.
@@ -20,15 +24,24 @@ public class Main
     {
         try
         {
+            // Server.
+            Server server = new Server();
+            server.start();
+            
+            // Game.
             AppGameContainer app = new AppGameContainer( new Game() );
             app.setDisplayMode( Game.WIDTH, Game.HEIGHT, false );
             //app.setTargetFrameRate( 60 );
             //app.setSmoothDeltas( true );
             app.start();
         }
-        catch( SlickException ex )
+        catch( LifecycleException e )
         {
-            Logger.getLogger( Main.class.getName() ).log( Level.SEVERE, null, ex );
+            LOGGER.log( Level.SEVERE, null, e );
+        }
+        catch( SlickException e )
+        {
+            LOGGER.log( Level.SEVERE, null, e );
         }
     }
 }

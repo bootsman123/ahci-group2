@@ -14,8 +14,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
     
 /**
- *
- * @author bootsman
+ * Sheep implementation.
+ * @author Bas Bootsma
  */
 public class Sheep extends MovableActor
 {

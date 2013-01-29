@@ -13,11 +13,14 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
 /**
- *
- * @author bootsman
+ * Abstract movable actor class.
+ * @author Bas Bootsma
  */
 public abstract class MovableActor extends Actor implements Movable
 {
+    // Logger.
+    private static final Logger LOGGER = Logger.getLogger( MovableActor.class.getName() );
+    
     private Double speed;
     
     // Map of all directions to animations.
@@ -83,6 +86,23 @@ public abstract class MovableActor extends Actor implements Movable
         float y = (float)( this.movingPositionCurrent.y - 0.5 * this.animation.getHeight() );
         this.animation.draw( x, y );
     }
+
+    /*
+    @Override
+    public void update( int delta )
+    {
+        super.update( delta );
+        
+        if( !this.isMoving() )
+        {
+            // Check if there is a path.
+            Path path = this.getPath();
+            
+            Direction direction = this.getDirection();
+            this.move( direction );
+        }
+    }
+    */
     
     @Override
     public void move( Direction direction )
@@ -117,7 +137,7 @@ public abstract class MovableActor extends Actor implements Movable
             // Check if the tile in the direction is unoccupied.
             if( map.isBlocked( positionTarget ) )
             {
-                Logger.getLogger( MovableActor.class.getName() ).log( Level.INFO, "Collidable direction given." );
+                LOGGER.log( Level.WARNING, "Collidable direction given." );
                 return;
             }
             
@@ -207,23 +227,33 @@ public abstract class MovableActor extends Actor implements Movable
         
         return directions;
     }
-        
-        
+    
     /**
      * Returns the best direction from actor a1 to actor a2.
+     * @param a1
+     * @param a2
+     * @return 
+     */
+    protected Direction directionTowardsActor( Actor a1, Actor a2 )
+    {
+        return this.directionTowardsPosition( a1.getPosition(), a2.getPosition() );
+    }
+        
+    /**
+     * Returns the best direction from position p1 to position p2.
      * @param p1
      * @param p2
      * @return 
      */
-    protected Direction directionTowardsActor( Actor a1, Actor a2 )
-    {        
-        Integer absX = java.lang.Math.abs( a1.getX() - a2.getX() );
-        Integer absY = java.lang.Math.abs( a1.getY() - a2.getY() );
+    protected Direction directionTowardsPosition( Point p1, Point p2 )
+    {
+        Integer absX = java.lang.Math.abs( p1.x - p2.x );
+        Integer absY = java.lang.Math.abs( p1.y - p2.y  );
 
         // Move closer on the x-axis.
         if( absX > absY )
         {
-            if( a1.getX() > a2.getX() )
+            if( p1.x > p2.x )
             {
                 return Direction.RIGHT;
             }
@@ -235,7 +265,7 @@ public abstract class MovableActor extends Actor implements Movable
         // Move closer on the y-axis.
         else
         {
-            if( a1.getY() > a2.getY() )
+            if( p1.y > p2.y )
             {
                 return Direction.UP;
             }

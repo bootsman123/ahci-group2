@@ -54,28 +54,4 @@ public class Wolf extends MovableActor
             Logger.getLogger( Dog.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
         }
     }  
-
-    /**
-     * Returns the location of the closest sheep
-     * @return
-     */
-    /*
-    private Point2D.Double locationClosestSheep(){
-        Point2D.Double locationClosestSheep = new Point2D.Double(0,0); //to make Netbeans happy
-        double distanceToNearestSheep = Math.pow(10, 9); //should start higher than anything
-        for(Point2D.Double sheepLocation:sheepLocations){
-            if(euclideanDistance(sheepLocation, this.getPosition()) < distanceToNearestSheep){
-                locationClosestSheep = sheepLocation;
-                distanceToNearestSheep = euclideanDistance(sheepLocation, this.getPosition());        
-            }     
-        }
-        return locationClosestSheep;
-
-    }
-    * */
-    
 }
-
-    
-
-
