@@ -35,8 +35,8 @@ public class GameManager
     
     private static final Integer MAXIMUM_NUMBER_OF_PLAYERS = 4;
     
-    // Instance variable.
-    private static final GameManager instance = new GameManager();
+    // Singleton instance variable.
+    private static final GameManager INSTANCE = new GameManager();
     
     // List of all the maps.
     private Map map;
@@ -45,7 +45,6 @@ public class GameManager
     // List of all the players.
     private List<Player> players;
     
-    private TuioClient tuioClient;
     private TouchAndTangibleHandler touchHandler;
     private TouchOverlay touchOverlay;
     private UsableActorContainer overlay;
@@ -56,10 +55,8 @@ public class GameManager
      */
     private GameManager()
     {
-        this.tuioClient = new TuioClient();
-        
         this.touchHandler = new TouchAndTangibleHandler();
-        this.tuioClient.addTuioListener(touchHandler);
+        TuioManager.getInstance().addTuioListener( this.touchHandler );
         
         this.players = new ArrayList<Player>();
     }
@@ -70,7 +67,7 @@ public class GameManager
      */
     public static GameManager getInstance()
     {
-        return GameManager.instance;
+        return GameManager.INSTANCE;
     }
     
     /**
@@ -115,6 +112,7 @@ public class GameManager
     public void startGame( int numberOfPlayers, Mode mode ) throws SlickException
     {
         this.gameMode = mode;
+        
         // Initialize players.                        
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
@@ -135,9 +133,9 @@ public class GameManager
             this.addPlayer( player );
         } 
         
-        System.out.println("Starting to connect the tuioclient in the gamemanager");
-        this.tuioClient.connect();
-        System.out.println("Finished connecting the tuioclient in the gamemanager");
+        //System.out.println("Starting to connect the tuioclient in the gamemanager");
+        //this.tuioClient.connect();
+        //System.out.println("Finished connecting the tuioclient in the gamemanager");
         this.overlay.startGame();
     }
     
@@ -145,7 +143,7 @@ public class GameManager
      * Starts a new interactive tangible objects game.
      * @param numberOfPlayers
      * @param mode
-     */
+     *
     public void startTangibleGame( int[] playerIDs ) throws SlickException
     {
         this.gameMode = GameManager.Mode.PHONE;
@@ -164,7 +162,7 @@ public class GameManager
         System.out.println("Finished connecting the tuioclient in the gamemanager");
         
         //this.overlay.startGame();
-    }
+    }*/
     
     
     /**
@@ -275,8 +273,9 @@ public class GameManager
     {
         this.map.render( container, game, g );
         
-        this.touchOverlay.render(container, g );
-        if (this.gameMode != GameManager.Mode.PHONE)
+        this.touchOverlay.render( container, g );
+        
+        if( this.gameMode != GameManager.Mode.PHONE )
         {
             this.overlay.render(container, g);
         }

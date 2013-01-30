@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package game.gui.interfaces;
 
 import TUIO.TuioClient;
@@ -10,7 +5,7 @@ import TUIO.TuioCursor;
 import TUIO.TuioListener;
 import TUIO.TuioObject;
 import TUIO.TuioTime;
-import game.Game;
+import game.global.TuioManager;
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.Color;
@@ -30,7 +25,6 @@ public class TangibleOverlay extends AbstractComponent implements TuioListener
     private Shape area;
     
     private List<TuioObject> tuioObjects;
-    private TuioClient tuioClient;
     
     public TangibleOverlay( GUIContext container )
     {
@@ -40,11 +34,7 @@ public class TangibleOverlay extends AbstractComponent implements TuioListener
         this.area = new Rectangle( 0, 0, container.getWidth(), container.getHeight() );
         
         this.tuioObjects = new ArrayList<TuioObject>();
-        this.tuioClient = new TuioClient();
-        this.tuioClient.addTuioListener( this );
-        this.tuioClient.connect();
-        
-        //System.out.println("Connected the tuioClient!");
+        TuioManager.getInstance().addTuioListener( this );
     }
     
     @Override
@@ -135,8 +125,5 @@ public class TangibleOverlay extends AbstractComponent implements TuioListener
     @Override
     public void refresh( TuioTime t )
     {
-    }
-    public void disconnect(){
-        this.tuioClient.disconnect();
     }
 }

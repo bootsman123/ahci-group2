@@ -2,6 +2,7 @@ package game.states;
 
 import game.Game;
 import game.global.GameManager;
+import game.global.TuioManager;
 import game.gui.Button;
 import game.gui.TangibleArea;
 import game.gui.interfaces.TangibleOverlay;
@@ -127,6 +128,12 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
     {
         super.enter( container, game );
         
+        TuioManager tuioManager = TuioManager.getInstance();
+        tuioManager.addTuioListener( this.tangibleAreaOne );
+        tuioManager.addTuioListener( this.tangibleAreaTwo );
+        tuioManager.addTuioListener( this.tangibleAreaThree );
+        tuioManager.addTuioListener( this.tangibleAreaFour );
+        
         this.buttonStart.setAcceptingInput( Boolean.TRUE );
         this.buttonBack.setAcceptingInput( Boolean.TRUE );
     }
@@ -138,6 +145,12 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
         
         this.buttonStart.setAcceptingInput( Boolean.FALSE );
         this.buttonBack.setAcceptingInput( Boolean.FALSE );
+        
+        TuioManager tuioManager = TuioManager.getInstance();
+        tuioManager.removeTuioListener( this.tangibleAreaOne );
+        tuioManager.removeTuioListener( this.tangibleAreaTwo );
+        tuioManager.removeTuioListener( this.tangibleAreaThree );
+        tuioManager.removeTuioListener( this.tangibleAreaFour );
     }
 
     @Override
@@ -146,14 +159,17 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
         Integer state = -1;
         
         if( button == this.buttonStart )
-        {         
+        {
+            /*
             try { 
                 int[] playerIDs = {20,2,3,4};//@TODO: add the player ID's
-                this.tangibleOverlay.disconnect();
                 GameManager.getInstance().startTangibleGame(playerIDs);
             } catch (SlickException ex) {
                 Logger.getLogger(ModalityTangiblesMenuState.class.getName()).log(Level.SEVERE, null, ex);
             }
+            * */
+            //GameManager.getInstance().startGame( 0, GameManager.Mode.MOUSE );
+            
             state = Game.GAME_STATE;
         }
         else if( button == this.buttonBack )
