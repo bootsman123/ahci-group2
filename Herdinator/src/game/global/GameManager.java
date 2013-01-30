@@ -1,5 +1,6 @@
 package game.global;
 
+import TUIO.TuioCursor;
 import game.Game;
 import game.base.Map;
 import game.base.UsableActor;
@@ -455,8 +456,9 @@ public class GameManager
             }
             else{ 
                 //Check if there is a touchpoint that touches an object
-                for(int y = 0; y < this.touchHandler.getTuioCursors().size(); y++){
-                    Point2D pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
+                ArrayList<TuioCursor> cursors = this.touchHandler.getTuioCursors();
+                for(int y = 0; y < cursors.size(); y++){
+                    Point2D pixelPoint = new Point2D.Double(cursors.get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
                     List<UsableActor> combinedList = getAllUsableObjects();
                     //Check if an object is touched
                     for ( int x = 0 ; x < combinedList.size(); x++){
@@ -464,7 +466,7 @@ public class GameManager
                         if(checkIfTouched(actor,player,pixelPoint))
                         {
                             ((TouchPlayer)player).setHasFingerOnTable(true);
-                            ((TouchPlayer)player).setAssignedBlobID(this.touchHandler.getTuioCursors().get(y).getCursorID());
+                            ((TouchPlayer)player).setAssignedBlobID(cursors.get(y).getCursorID());
                             player.selectObject(actor);
                         }
                     }

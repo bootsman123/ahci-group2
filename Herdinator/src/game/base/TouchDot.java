@@ -4,9 +4,7 @@
  */
 package game.base;
 
-import game.global.GameManager;
 import java.awt.Point;
-import java.awt.geom.Point2D;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
@@ -52,7 +50,7 @@ public class TouchDot extends Actor {
     @Override
     public void render(Graphics g) {
         Shape shape = new Circle( this.getX(), this.getY(), (float)(TouchDot.BLOB_WIDTH/2.0) );
-        g.setColor( Color.black);
+        g.setColor( Color.green);
         g.fill( shape );
         g.setLineWidth(3f);
         g.draw(shape);

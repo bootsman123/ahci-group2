@@ -268,28 +268,34 @@ public class UsableActorContainer extends AbstractComponent
     private void checkTouchTouch() {
         ArrayList<TuioCursor> cursors = GameManager.getInstance().getTouchHandler().getTuioCursors();
         for (int z = 0; z < cursors.size(); z++){
-            Point2D pixelPoint = new Point2D.Double(cursors.get(z).getX()*Game.WIDTH, cursors.get(z).getY()*Game.HEIGHT);
-            int pixelX = (int) pixelPoint.getX();
-            int pixelY = (int) pixelPoint.getY();
+            try{
+                Point2D pixelPoint = new Point2D.Double(cursors.get(z).getX()*Game.WIDTH, cursors.get(z).getY()*Game.HEIGHT);
+                int pixelX = (int) pixelPoint.getX();
+                int pixelY = (int) pixelPoint.getY();
 
-            //Combine the lists with actors to one big list
-            List<UsableActor> combinedList = getAllUsableObjects();
-            
-            //Check for every actor if this touchpoint touches this actor
-            for (UsableActor actor : combinedList){
-                double actorPixelX = actor.getLocationInsideActorContainer().getX();
-                double actorPixelY = actor.getLocationInsideActorContainer().getY();
+                //Combine the lists with actors to one big list
+                List<UsableActor> combinedList = getAllUsableObjects();
 
-                int actorWidth = actor.getWidth();
-                int actorHeight = actor.getHeight();
-                
-                actorPixelX -= actorWidth/2; 
-                actorPixelY -= actorWidth/2;
-                
-                if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
-                    pickObject(actor);
-                    break;
+                //Check for every actor if this touchpoint touches this actor
+                for (UsableActor actor : combinedList){
+                    double actorPixelX = actor.getLocationInsideActorContainer().getX();
+                    double actorPixelY = actor.getLocationInsideActorContainer().getY();
+
+                    int actorWidth = actor.getWidth();
+                    int actorHeight = actor.getHeight();
+
+                    actorPixelX -= actorWidth/2; 
+                    actorPixelY -= actorWidth/2;
+
+                    if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
+                        pickObject(actor);
+                        break;
+                    }
                 }
+            }
+            catch(Exception e)
+            {
+            
             }
         }
     }

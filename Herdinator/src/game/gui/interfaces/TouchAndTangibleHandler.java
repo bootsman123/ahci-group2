@@ -73,6 +73,7 @@ public class TouchAndTangibleHandler implements TuioListener
     public void updateTuioCursor( TuioCursor cursor )
     {
         Point point = new Point((int)(cursor.getX()*Game.WIDTH), (int)(cursor.getY()*Game.HEIGHT));
+        System.out.println("Touchoverlay: " + GameManager.getInstance().getTouchOverlay() == null);
         GameManager.getInstance().getTouchOverlay().moveTouchDot(cursor.getCursorID(), point);
         
         //Remove the old cursor with the same idea
