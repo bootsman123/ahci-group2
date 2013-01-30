@@ -46,7 +46,9 @@ public class GameManager
     private TouchAndTangibleHandler touchHandler;
     private TouchOverlay touchOverlay;
     private UsableActorContainer overlay;
-    private Mode gameMode; 
+    private Mode gameMode;
+    
+    private Integer lastScore;
     
     /**
      * Hidden constructor.
@@ -109,8 +111,11 @@ public class GameManager
     public void startGame( int numberOfPlayers, Mode mode ) throws SlickException
     {
         this.gameMode = mode;
+        this.lastScore = 0;
+        
+        // Initialize players.           
         this.players = new ArrayList<Player>();
-        // Initialize players.                        
+                     
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
             Player player;
@@ -148,7 +153,7 @@ public class GameManager
      */
     public void endGame( Integer score )
     {
-        //this.score = score;
+        this.lastScore = score;
         
         // Remove all players from the game.
         this.players.clear();
@@ -445,5 +450,14 @@ public class GameManager
             touchPlayer.setHasFingerOnTable( false );
 
         }
+    }
+    
+    /**
+     * Return the last score received.
+     * @return 
+     */
+    public Integer getLastScore()
+    {
+        return this.lastScore;
     }
 }

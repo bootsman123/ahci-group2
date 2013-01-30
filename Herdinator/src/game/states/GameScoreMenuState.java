@@ -1,13 +1,17 @@
 package game.states;
 
 import game.Game;
+import game.global.GameManager;
 import game.global.ResourceManager;
 import game.global.TuioManager;
 import game.gui.Button;
 import game.gui.listeners.ClickAndTouchListener;
+import java.awt.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -18,10 +22,17 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  */
 public class GameScoreMenuState extends MenuState implements ClickAndTouchListener
 {
+    public static final Integer SCORE_FONT_SIZE = 16;
+    
     public static final String BUTTON_BACK_TO_MENU = "../Resources/Images/Menu/buttonBackToMenu.png";
-    
-    private Button buttonBackToMenu;
-    
+        
+    private UnicodeFont scoreFont;
+
+    private Button buttonBackToMenu; 
+
+    /**
+     * Constructor.
+     */
     public GameScoreMenuState()
     {
         super();
@@ -40,6 +51,13 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
         
         ResourceManager resourceManager = ResourceManager.getInstance();
         
+        // Font.
+        java.awt.Font font = new java.awt.Font( "Verdana", Font.BOLD, GameScoreMenuState.SCORE_FONT_SIZE );
+        this.scoreFont = new UnicodeFont( font );
+        this.scoreFont.addAsciiGlyphs();
+        this.scoreFont.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
+        this.scoreFont.loadGlyphs();
+        
         // Buttons.
         this.buttonBackToMenu = new Button( container,
                                             resourceManager.getImage( GameScoreMenuState.BUTTON_BACK_TO_MENU ),
@@ -55,6 +73,13 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         super.render( container, game, g );
+        
+        // Draw score.
+        String scoreString = String.format( "Total score: %d", GameManager.getInstance().getLastScore() );
+        Integer scoreStringX = ( container.getWidth() - this.scoreFont.getWidth( scoreString ) ) / 2;
+        Integer scoreStringY = 200;
+        
+        this.scoreFont.drawString( scoreStringX, scoreStringY, scoreString );
         
         this.buttonBackToMenu.render( container, g );
     }

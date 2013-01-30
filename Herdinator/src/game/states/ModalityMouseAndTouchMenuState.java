@@ -194,6 +194,8 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         this.buttonNumberOfPlayersFour.setAcceptingInput( Boolean.TRUE );
         tuioManager.addTuioListener( this.buttonNumberOfPlayersFour );
         
+        this.buttonNumberOfPlayers.setButtonToggledOn( 0 );
+        
         this.buttonStart.setAcceptingInput( Boolean.TRUE );
         tuioManager.addTuioListener( this.buttonStart );
         this.buttonBack.setAcceptingInput( Boolean.TRUE );

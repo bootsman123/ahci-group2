@@ -5,6 +5,7 @@ import TUIO.TuioListener;
 import TUIO.TuioObject;
 import TUIO.TuioPoint;
 import TUIO.TuioTime;
+import game.Game;
 import game.gui.listeners.ClickAndTouchListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -245,10 +246,12 @@ public class Button extends AbstractComponent implements TuioListener
     public void addTuioCursor( TuioCursor c )
     {
         // @TODO: Hacky and fugly.
+        /*
         if( !this.isAcceptingInput() )
         {
             return;
         }
+        */
         
         this.updateTuioCursor( c );
     }
@@ -257,14 +260,16 @@ public class Button extends AbstractComponent implements TuioListener
     public void updateTuioCursor( TuioCursor c )
     {
         // @TODO: Hacky and fugly.
+        /*
         if( !this.isAcceptingInput() )
         {
             return;
         }
+        */
         
         TuioPoint point = c.getPosition();
         
-        if( this.area.contains( point.getX(), point.getY() ) )
+        if( this.area.contains( ( point.getX() * Game.WIDTH ), ( point.getY() * Game.HEIGHT ) ) )
         {
             this.isDown = Boolean.TRUE;        
             this.notifyClickAndTouchListeners();
