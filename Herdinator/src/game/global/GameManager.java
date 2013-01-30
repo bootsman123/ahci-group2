@@ -157,6 +157,7 @@ public class GameManager
         
         // Remove all players from the game.
         this.players.clear();
+        this.map.removeAllActors();
     }
     
     /**
@@ -181,51 +182,13 @@ public class GameManager
                 
                 TangiblePlayer currentPlayer = (TangiblePlayer) player;
                 if(currentPlayer.getTangibleLocation() != null && currentPlayer.isTangibleOnTable()){
-                    System.out.println("First location: " + (int)currentPlayer.getTangibleLocation().getX() + " second location: " + (int)currentPlayer.getTangibleLocation() .getY());
-                    
                     currentPlayer.getCurrentObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY())));//this.map.setActingPosition((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY(), currentPlayer.getMarkId());
                 }
             }
             else if (player instanceof MousePlayer){
-                //System.out.println("GameManager.update: " + " updated mouseplayer");
-                
-                if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
-                    MousePlayer mousePlayer = (MousePlayer) player;
-                    if(mousePlayer.isDraggingObject()){
-                        player.getCurrentObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
-                    }
-                    else{   
-                        Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
-                        for (int x = 0 ; x < this.map.getCookies().size(); x++){
-                            UsableActor actor = this.map.getCookies().get(x);
-                            checkIfTouched(actor, player, pixelPoint);
-                        }
-                        for(int x = 0 ; x < this.map.getWhistles().size(); x++){
-                            UsableActor actor = this.map.getWhistles().get(x);
-                            checkIfTouched(actor,player,pixelPoint);
-                        }
-                    }
-                }
-                else{
-                    MousePlayer mousePlayer = ( MousePlayer ) player;
-                    mousePlayer.setIsDraggingObject( false );
-                }
+                updateForMousePlayer(player,input);   
             }
-            /*
-            else if (player instanceof TouchPlayer){
-                TouchPlayer touchPlayer = (TouchPlayer) player;
-                if(touchPlayer.hasFingerOnTable()){
-                    //@TODO: make sure to select the right object when dragging
-                    System.out.println("GameManager.update: player is now dragging this object");
-                    Point2D.Double touchPoint = touchPlayer.getFingerLocation();
-                    player.getCurrentObject().setPosition( this.map.fromPositionInPixels(touchPoint));
-                }
-                else{
 
-                }
-
-                updateForTouchPlayer(player, input);
-            }*/
             else if (player instanceof TouchPlayer){
                 updateForTouchPlayer(player);
             }
@@ -354,6 +317,9 @@ public class GameManager
 
             int actorWidth = actor.getWidth();
             int actorHeight = actor.getHeight();
+            
+            actorPixelX -= actorWidth/2;
+            actorPixelY -= actorWidth/2;
             if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
                 return true;
             }

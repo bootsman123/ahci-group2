@@ -67,7 +67,7 @@ public class SettingsActivity extends Activity {
 			EditText marker_id = (EditText) findViewById(R.id.marker_id);
 			String markString = marker_id.getText().toString();
 			final int markID;
-			if (markString.isEmpty()) {
+			if ( "".equals( markString ) ) {
 				error.setText("Enter marker ID");
 				return;
 			}

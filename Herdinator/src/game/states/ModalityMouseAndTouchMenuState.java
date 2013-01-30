@@ -244,7 +244,6 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
             {
                 try {
                     if (!this.buttonDebug.isToggled()){
-                        System.out.println("ModalityMouseAndTouchMenuState: Starting game: " + GameManager.getInstance().getNumberOfPlayers());
                         GameManager.getInstance().startGame( index + 1, GameManager.Mode.TOUCH ); // @TODO: Fugly.
                     }
                     else{

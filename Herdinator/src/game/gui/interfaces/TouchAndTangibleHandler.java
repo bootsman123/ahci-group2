@@ -41,7 +41,6 @@ public class TouchAndTangibleHandler implements TuioListener
             if (p instanceof TangiblePlayer){
                 TangiblePlayer player = (TangiblePlayer) p;
                 if (player.getMarkId() == object.getSymbolID()){
-                    System.out.println("Updating the TUIO object: " + object.getSymbolID());
                     player.setTangibleLocation(new Point2D.Double(object.getX()*Game.WIDTH, object.getY()*Game.HEIGHT));
                 }
             }
@@ -65,7 +64,6 @@ public class TouchAndTangibleHandler implements TuioListener
         int pixelY = (int) pixelPoint.getY();
         TouchDot dot = new TouchDot(new Point(pixelX,pixelY), cursor.getCursorID());
         //Add the cursor to the overlay
-        System.out.println("Touchoverlay: " + GameManager.getInstance().getTouchOverlay() == null);
         GameManager.getInstance().getTouchOverlay().addTouchDot(dot);
     }
 
@@ -73,7 +71,6 @@ public class TouchAndTangibleHandler implements TuioListener
     public void updateTuioCursor( TuioCursor cursor )
     {
         Point point = new Point((int)(cursor.getX()*Game.WIDTH), (int)(cursor.getY()*Game.HEIGHT));
-        System.out.println("Touchoverlay: " + GameManager.getInstance().getTouchOverlay() == null);
         GameManager.getInstance().getTouchOverlay().moveTouchDot(cursor.getCursorID(), point);
         
         //Remove the old cursor with the same idea

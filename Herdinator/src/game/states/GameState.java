@@ -71,7 +71,7 @@ public class GameState extends BasicGameState
         this.scoreFont = new UnicodeFont( font );
         this.scoreFont.addAsciiGlyphs();
         this.scoreFont.getEffects().add( new ColorEffect( java.awt.Color.decode( "#db2864" ) ) );
-        this.scoreFont.loadGlyphs();        
+        this.scoreFont.loadGlyphs();
         
         this.timeElapsed = 0;
     }
@@ -108,14 +108,16 @@ public class GameState extends BasicGameState
         super.enter( container, game );
         
         this.sound.play();
+
     }
     
     @Override
     public void leave( GameContainer container, StateBasedGame game ) throws SlickException
     {
         super.enter( container, game );
-        
+
         this.sound.stop();        
+
         this.timeElapsed = 0;
     }
 
