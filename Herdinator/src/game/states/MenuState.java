@@ -48,7 +48,7 @@ public abstract class MenuState extends BasicGameState
         "Imported from soviet Russia",
         "As foretold by Nostradamus",
         "Add sugar and spices to your own taste",
-        "Back from the future",
+        "Back from the fluture",
         "Sheep are cuter than dogs",
         "Dogs are curer than sheep",
         "May contain traces of nuts",
@@ -66,7 +66,14 @@ public abstract class MenuState extends BasicGameState
         "Do not take accept sweets from strangers",
         "Please like and subscribe to our channel",
         "TODO: remove this string",
-        "Anno 1856"
+        "Anno 1856",
+        "Underwaterhockey owns",
+        "Oppa gangherd style",
+        "Unfortunately peanutbutter",
+        "Knackebrod",
+        "I'm blue dabadiedabadai",
+        "How much is the fish",
+        "It's nice to be important, but more important to be nice"
     };
     
     private static final String SUB_TITLE_FONT_FILE_PATH = "../Resources/Fonts/simplicity.ttf";

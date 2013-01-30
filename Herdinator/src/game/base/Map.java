@@ -84,7 +84,7 @@ public class Map implements TileBasedMap
      * @throws SlickException 
      */
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
-    {   
+    {
         // Initialize.
         this.collisions = new HashMap<Point, Boolean>();
         this.goals = new HashMap<Point, Boolean>();

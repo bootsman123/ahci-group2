@@ -108,12 +108,12 @@ public class GameManager
     public void startGame( int numberOfPlayers, Mode mode ) throws SlickException
     {
         this.gameMode = mode;
-        
+        this.players = new ArrayList<Player>();
         // Initialize players.                        
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
             Player player;
-            
+            System.out.println("GameManager, amount of players now: " + GameManager.getInstance().getNumberOfPlayers()); 
             switch( mode )
             {
                 case TOUCH:
