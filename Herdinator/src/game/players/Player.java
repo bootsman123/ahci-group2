@@ -65,6 +65,7 @@ public abstract class Player
     public Player()
     {
 
+        
         System.out.println("Player.Player(): amount of players now: " + GameManager.getInstance().getNumberOfPlayers() );
 
         this.color = PlayerColor.values()[ GameManager.getInstance().getNumberOfPlayers() ].getColor();

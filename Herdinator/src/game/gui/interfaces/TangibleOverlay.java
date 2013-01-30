@@ -70,8 +70,6 @@ public class TangibleOverlay extends AbstractComponent implements TuioListener
     @Override
     public void render( GUIContext container, Graphics g ) throws SlickException
     {
-        //System.out.printf( "[TangibleOverlay]: rendering %d tangibles.\n", this.tuioObjects.size() );
-        
         g.setColor( Color.red );
         
         for( TuioObject tuioObject : this.tuioObjects )
