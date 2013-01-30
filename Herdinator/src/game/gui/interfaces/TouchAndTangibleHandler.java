@@ -110,7 +110,7 @@ public class TouchAndTangibleHandler implements TuioListener
             if (player instanceof TouchPlayer){
                 TouchPlayer touchPlayer = (TouchPlayer)player;
                 if (touchPlayer.hasFingerOnTable() && touchPlayer.getAssignedBlobID() == cursor.getCursorID()){
-                    touchPlayer.getObject().use();
+                    touchPlayer.getCurrentObject().use();
                     touchPlayer.setHasFingerOnTable(false);
                 }
             }

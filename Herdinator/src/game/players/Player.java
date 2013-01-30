@@ -64,44 +64,30 @@ public abstract class Player
      */
     public Player()
     {
+
         System.out.println("Player.Player(): amount of players now: " + GameManager.getInstance().getNumberOfPlayers() );
+
         this.color = PlayerColor.values()[ GameManager.getInstance().getNumberOfPlayers() ].getColor();
         this.id = ( new Random() ).nextInt( Integer.MAX_VALUE );
         
         this.objects = new EnumMap<PlayerObject, UsableActor>( PlayerObject.class );
         this.currentObject = null;
-    }
-    
-    
-    /**
-     * Set the object to be used by this player
-     * @param newObject 
-     */
-    /*public void setObject(UsableActor newObject) {
-        if (!newObject.equals(this.getObject())){
-            GameManager.getInstance().getMap().removeUsableActor(this.object);//@TODO: do not let the player object remove the current object from the map?
-            this.object = newObject;
-            GameManager.getInstance().getMap().addUsableActor(this.object);
+        
+        try
+        {
+            // Add objects.
+            Cookie cookie = new Cookie( this, Boolean.FALSE );
+            cookie.init();
+
+            Whistle whistle = new Whistle( this, Boolean.FALSE );
+            whistle.init();
+
+            this.objects.put( PlayerObject.COOKIE, cookie );
+            this.objects.put( PlayerObject.WHISTLE, whistle );  
         }
-    }*/
-    
-    /**
-     * Initialize.
-     * @param container
-     * @param game
-     * @throws SlickException 
-     */
-    public void init(/* GameContainer container, StateBasedGame game */) throws SlickException
-    {
-        // Add objects.
-        Cookie cookie = new Cookie( this, Boolean.FALSE );
-        cookie.init();
-        
-        Whistle whistle = new Whistle( this, Boolean.FALSE );
-        whistle.init();
-        
-        this.objects.put( PlayerObject.COOKIE, cookie );
-        this.objects.put( PlayerObject.WHISTLE, whistle );
+        catch( SlickException e )
+        {
+        }    
     }
     
     /**
@@ -111,10 +97,11 @@ public abstract class Player
     public void selectObject( PlayerObject object )
     {
         UsableActor newObject = this.objects.get( object );
+
         
         System.out.println( "Player.selectObject: " + object );
         System.out.println( "Player.selectObject: " + newObject );
-        
+
         if( newObject == null )
         {
             return;
@@ -137,7 +124,7 @@ public abstract class Player
      * @param actor 
      */
     public void selectObject( UsableActor actor )
-    {        
+    {
         if( !actor.equals( this.currentObject ) )
         {
             // Remove old object.
@@ -151,9 +138,19 @@ public abstract class Player
     
     /**
      * Return the object.
+     * @param object
      * @return 
      */
-    public UsableActor getObject()
+    public UsableActor getObject( PlayerObject object )
+    {
+        return this.objects.get( object );
+    }
+    
+    /**
+     * Return the current object.
+     * @return 
+     */
+    public UsableActor getCurrentObject()
     {
         return this.currentObject;
     }

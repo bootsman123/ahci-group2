@@ -130,9 +130,6 @@ public class GameManager
             this.addPlayer( player );
         } 
         
-        //System.out.println("Starting to connect the tuioclient in the gamemanager");
-        //this.tuioClient.connect();
-        //System.out.println("Finished connecting the tuioclient in the gamemanager");
         this.overlay.startGame();
     }
     
@@ -142,40 +139,8 @@ public class GameManager
      */
     public void startGame() throws SlickException
     {
-        // Initialize players.
-        for( Player player : this.players )
-        {
-            player.init();
-        }
-        
         this.overlay.startGame();
     }
-    
-    /**
-     * Starts a new interactive tangible objects game.
-     * @param numberOfPlayers
-     * @param mode
-     *
-    public void startTangibleGame( int[] playerIDs ) throws SlickException
-    {
-        this.gameMode = GameManager.Mode.PHONE;
-        System.out.println("Total amount of players: " + playerIDs.length);
-        // Initialize players.                        
-        for( Integer i = 0; i < playerIDs.length; i++ )
-        {
-            System.out.println("Amount of players now: " + this.getPlayers().size());
-            Player player = new TangiblePlayer(playerIDs[i]);
-            player.setObject(new Cookie(new Point(0,0), player, true));
-            this.addPlayer( player );
-        } 
-        
-        System.out.println("Starting to connect the tuioclient in the gamemanager");
-        this.tuioClient.connect();
-        System.out.println("Finished connecting the tuioclient in the gamemanager");
-        
-        //this.overlay.startGame();
-    }*/
-    
     
     /**
      * End the current game.
@@ -213,12 +178,13 @@ public class GameManager
                 
                 TangiblePlayer currentPlayer = (TangiblePlayer) player;
                 if(currentPlayer.getTangibleLocation() != null && currentPlayer.isTangibleOnTable()){
-                    currentPlayer.getObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY())));//this.map.setActingPosition((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY(), currentPlayer.getMarkId());
+                    currentPlayer.getCurrentObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY())));//this.map.setActingPosition((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY(), currentPlayer.getMarkId());
                 }
             }
             else if (player instanceof MousePlayer){
                 updateForMousePlayer(player,input);   
             }
+
             else if (player instanceof TouchPlayer){
                 updateForTouchPlayer(player);
             }
@@ -377,7 +343,7 @@ public class GameManager
             //When the player is already dragging an object, move this object
             if(mousePlayer.isDraggingObject()){
                 // @TODO: Roland
-                player.getObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
+                player.getCurrentObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double(input.getMouseX(), input.getMouseY())));
             }
             else{   
                 Point2D pixelPoint = new Point2D.Double(input.getMouseX(), input.getMouseY());
@@ -399,7 +365,7 @@ public class GameManager
             MousePlayer mousePlayer = ( MousePlayer ) player;
             if(mousePlayer.isDraggingObject())
             {
-                mousePlayer.getObject().use();
+                mousePlayer.getCurrentObject().use();
             }
             mousePlayer.setIsDraggingObject( false );
             
@@ -416,7 +382,7 @@ public class GameManager
                     if (this.touchHandler.getTuioCursors().get(y).getCursorID() == touchPlayer.getAssignedBlobID()){
                         //Move the object of the player to this position
                         Point2D.Double pixelPoint = new Point2D.Double(this.touchHandler.getTuioCursors().get(y).getX()*Game.WIDTH, this.touchHandler.getTuioCursors().get(y).getY()*Game.HEIGHT);
-                        player.getObject().setPosition( this.map.fromPositionInPixels(pixelPoint));
+                        player.getCurrentObject().setPosition( this.map.fromPositionInPixels(pixelPoint));
                     }
                 }
             }
@@ -442,7 +408,7 @@ public class GameManager
         else{
             //reset all players
             TouchPlayer touchPlayer = ( TouchPlayer ) player;
-            //touchPlayer.getObject().use();
+            //touchPlayer.getCurrentObject().use();
             touchPlayer.setHasFingerOnTable( false );
 
         }

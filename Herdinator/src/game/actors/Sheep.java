@@ -8,8 +8,6 @@ import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -25,7 +23,7 @@ public class Sheep extends MovableActor
     public static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     public static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.0030;
+    private static final Double SPEED = 0.003;
     
     // Distances in Manhatten tiles.
     private static final Integer OTHER_SHEEP_DISTANCE = 6;

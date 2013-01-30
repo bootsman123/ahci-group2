@@ -26,7 +26,7 @@ public class LoveSheep extends MovableActor implements UseListener
     public static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     public static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.0075;
+    private static final Double SPEED = 0.006;
     
     private Boolean hasReachedPathDestination;
     private Path path;

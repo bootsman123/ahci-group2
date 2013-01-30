@@ -108,15 +108,16 @@ public class GameState extends BasicGameState
         super.enter( container, game );
         
         this.sound.play();
-        
+
     }
     
     @Override
     public void leave( GameContainer container, StateBasedGame game ) throws SlickException
     {
         super.enter( container, game );
-        
-        this.sound.stop();
+
+        this.sound.stop();        
+
         this.timeElapsed = 0;
     }
 
