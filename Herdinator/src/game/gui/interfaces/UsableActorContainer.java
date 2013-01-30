@@ -1,5 +1,6 @@
 package game.gui.interfaces;
 
+import TUIO.TuioCursor;
 import game.Game;
 import game.actors.Cookie;
 import game.actors.Whistle;
@@ -268,8 +269,9 @@ public class UsableActorContainer extends AbstractComponent
      * Checks if a touch point touches (and thus selects) a given object
      */
     private void checkTouchTouch() {
-        for (int z = 0; z < GameManager.getInstance().getTouchHandler().getTuioCursors().size(); z++){
-            Point2D pixelPoint = new Point2D.Double(GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getX()*Game.WIDTH, GameManager.getInstance().getTouchHandler().getTuioCursors().get(z).getY()*Game.HEIGHT);
+        ArrayList<TuioCursor> cursors = GameManager.getInstance().getTouchHandler().getTuioCursors();
+        for (int z = 0; z < cursors.size(); z++){
+            Point2D pixelPoint = new Point2D.Double(cursors.get(z).getX()*Game.WIDTH, cursors.get(z).getY()*Game.HEIGHT);
             int pixelX = (int) pixelPoint.getX();
             int pixelY = (int) pixelPoint.getY();
 

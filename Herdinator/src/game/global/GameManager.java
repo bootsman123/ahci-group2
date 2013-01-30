@@ -240,6 +240,7 @@ public class GameManager
                     mousePlayer.setIsDraggingObject( false );
                 }
             }
+            /*
             else if (player instanceof TouchPlayer){
                 TouchPlayer touchPlayer = (TouchPlayer) player;
                 if(touchPlayer.hasFingerOnTable()){
@@ -252,8 +253,8 @@ public class GameManager
 
                 }
 
-                updateForMousePlayer(player, input);
-            }
+                updateForTouchPlayer(player, input);
+            }*/
             else if (player instanceof TouchPlayer){
                 updateForTouchPlayer(player);
             }
