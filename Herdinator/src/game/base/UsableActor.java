@@ -49,6 +49,7 @@ public abstract class UsableActor extends Actor implements Usable
     public void render( Graphics g )
     {
         Point2D.Double position = null;
+        
         if( this.isOnMap )
         {
             position = GameManager.getInstance().getMap().toPositionInPixels( this.getX(), this.getY() ); 

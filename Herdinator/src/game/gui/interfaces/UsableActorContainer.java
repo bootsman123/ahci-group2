@@ -6,8 +6,10 @@ import game.actors.Cookie;
 import game.actors.Whistle;
 import game.base.UsableActor;
 import game.global.GameManager;
+import game.global.ResourceManager;
 import game.players.MousePlayer;
 import game.players.Player;
+import game.players.Player.PlayerObject;
 import game.players.TouchPlayer;
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -28,8 +30,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class UsableActorContainer extends AbstractComponent
 {
-    private static final String VERTICAL_PICKER_IMAGE_FILE_PATH = "../Resources/Images/verticalpicker.png";
-    private static final String HORIZONTAL_PICKER_IMAGE_FILE_PATH = "../Resources/Images/verticalpicker.png";
+    public static final String VERTICAL_PICKER_IMAGE_FILE_PATH = "../Resources/Images/verticalpicker.png";
+    public static final String HORIZONTAL_PICKER_IMAGE_FILE_PATH = "../Resources/Images/verticalpicker.png";
 
     private static final int IMAGE_OFFSET = 25;
     
@@ -46,29 +48,26 @@ public class UsableActorContainer extends AbstractComponent
     private static final int[] PICKER_START_PIXELS_X = {10, 60, 700, 500};
     private static final int[] PICKER_START_PIXELS_Y = {110, 580, 110, 580};
     private static final boolean[] PICKER_DRAWN_HORIZONTAL = {true,false,true,false};
-    
-    // Dimensions of the picker in pixels.
-    
-    
+        
     private Image horizontalPicker = null;
     private Image verticalPicker = null;
     
     private List<Whistle> whistles;
     private List<Cookie> cookies;
     
-    
-    
     private int pickerStartX = 0;
     private int pickerStartY = 0;
     private int pickerWidth = 0;
     private int pickerHeight = 0;
-
-
     
-   
-   public UsableActorContainer(GUIContext container)
+    /**
+     * Constructor.
+     * @param container 
+     */
+    public UsableActorContainer( GUIContext container )
     {
-       super(container);
+       super( container );
+       
        this.whistles = new ArrayList<Whistle>();
        this.cookies = new ArrayList<Cookie>();
     }
@@ -77,49 +76,72 @@ public class UsableActorContainer extends AbstractComponent
      * Tell the usableActor container that the game started and that the objects for every player have to be added.
      * @throws SlickException 
      */
-    public void startGame() throws SlickException{
-        //Add the object pickers to the screen
-        this.horizontalPicker = new Image(UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH);
-        this.verticalPicker = new Image(UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH);
+    public void startGame() throws SlickException
+    {
+        //Add the object pickers to the screen.        
+        GameManager gameManager = GameManager.getInstance();
+        ResourceManager resourceManager = ResourceManager.getInstance();
         
-        //Add the objects for every player
+        this.horizontalPicker = resourceManager.getImage(UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH);
+        this.verticalPicker = resourceManager.getImage(UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH);
+        
+        // Add the objects for every player.
         int playerCount = 0; 
-        for(Player p : GameManager.getInstance().getPlayers()){
-            if(p instanceof MousePlayer || p instanceof TouchPlayer){
-                Point startingPoint = new Point(0,0);
-                
-                //Add a cookie for this player to the list of cookies
-                Cookie cookie = new Cookie(startingPoint, p, false);
+        
+        for( Player player : gameManager.getPlayers() )
+        {
+            if( player instanceof MousePlayer || player instanceof TouchPlayer )
+            {
+                UsableActor actor;
                 Point2D.Double locationInsideContainer;
-                if(UsableActorContainer.PICKER_DRAWN_HORIZONTAL[playerCount])
+                
+                // Initialize cookie.                      
+                if( UsableActorContainer.PICKER_DRAWN_HORIZONTAL[ playerCount ] )
                 {
                     locationInsideContainer = new Point2D.Double((UsableActorContainer.PICKER_START_PIXELS_X[playerCount]+UsableActorContainer.IMAGE_OFFSET), UsableActorContainer.PICKER_START_PIXELS_Y[playerCount] + UsableActorContainer.IMAGE_OFFSET);
                 }
-                else{
+                else
+                {
                     locationInsideContainer = new Point2D.Double((UsableActorContainer.PICKER_START_PIXELS_X[playerCount]+UsableActorContainer.IMAGE_OFFSET), UsableActorContainer.PICKER_START_PIXELS_Y[playerCount] + UsableActorContainer.IMAGE_OFFSET);
                 }
-                cookie.setLocationInsideActorContainer(locationInsideContainer);
-                this.cookies.add(cookie);
+                 
+                /*
+                actor = player.getObject( PlayerObject.COOKIE );
+                actor.setIsOnMap( Boolean.FALSE );
+                actor.setLocationInsideActorContainer( locationInsideContainer );
+                gameManager.getMap().addUsableActor( actor );
+                */
+                
+                Cookie cookie = new Cookie( player, Boolean.FALSE );
                 cookie.init();
-
-                //Add a whistle for this player
-                Whistle whistle = new Whistle(startingPoint, p, false);
-
+                cookie.setLocationInsideActorContainer( locationInsideContainer );
+                this.cookies.add( cookie );
+ 
+                // Initialize whistle.
                 if(UsableActorContainer.PICKER_DRAWN_HORIZONTAL[playerCount])
                 {
                     locationInsideContainer = new Point2D.Double((UsableActorContainer.PICKER_START_PIXELS_X[playerCount]+UsableActorContainer.IMAGE_OFFSET + UsableActorContainer.HORIZONTAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_X), UsableActorContainer.PICKER_START_PIXELS_Y[playerCount] + UsableActorContainer.IMAGE_OFFSET + UsableActorContainer.HORIZONTAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_Y);
                 }
-                else{
+                else
+                {
                     locationInsideContainer = new Point2D.Double((UsableActorContainer.PICKER_START_PIXELS_X[playerCount]+UsableActorContainer.IMAGE_OFFSET + UsableActorContainer.VERTICAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_X), UsableActorContainer.PICKER_START_PIXELS_Y[playerCount] + UsableActorContainer.IMAGE_OFFSET + UsableActorContainer.VERTICAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_Y);
                 }
-                whistle.setLocationInsideActorContainer(locationInsideContainer);
-                this.whistles.add(whistle);
-                whistle.init();
                 
+                /*
+                actor = player.getObject( PlayerObject.WHISTLE );
+                actor.setIsOnMap( Boolean.FALSE );
+                actor.setLocationInsideActorContainer( locationInsideContainer );
+                gameManager.getMap().addUsableActor( actor );
+                */
+                
+                Whistle whistle = new Whistle( player, Boolean.FALSE );
+                whistle.init();
+                whistle.setLocationInsideActorContainer( locationInsideContainer );
+                this.whistles.add( whistle );
             }
+            
             playerCount++;
-        }  
-        
+        } 
     }
     
     /**
@@ -149,7 +171,6 @@ public class UsableActorContainer extends AbstractComponent
             return;
         }
 
-        
         //Check mouse touch
         checkMouseTouch();
         
@@ -170,6 +191,8 @@ public class UsableActorContainer extends AbstractComponent
                  this.verticalPicker.draw(UsableActorContainer.PICKER_START_PIXELS_X[x], UsableActorContainer.PICKER_START_PIXELS_Y[x], UsableActorContainer.VERTICAL_PICKER_WIDTH, UsableActorContainer.VERTICAL_PICKER_HEIGHT);
              }
          }
+         
+         
         //Draw the objects inside the pickers
         for( Whistle whistle : this.whistles )
         {
@@ -178,6 +201,7 @@ public class UsableActorContainer extends AbstractComponent
         for(Cookie cookie : this.cookies){
             cookie.render(g);
         }
+        
     }
 
     @Override
@@ -187,22 +211,26 @@ public class UsableActorContainer extends AbstractComponent
     }
 
     @Override
-    public int getX() {
+    public int getX()
+    {
         return this.pickerStartX;
     }
 
     @Override
-    public int getY() {
+    public int getY()
+    {
         return this.pickerStartY;
     }
 
     @Override
-    public int getWidth() {
+    public int getWidth()
+    {
         return this.pickerWidth;
     }
 
     @Override
-    public int getHeight() {
+    public int getHeight()
+    {
         return this.pickerHeight;
     }
 
@@ -213,7 +241,7 @@ public class UsableActorContainer extends AbstractComponent
     private void pickObject(UsableActor actor) {
         
         //Reset the object that the actor currently is using
-        UsableActor currentObject = actor.getOwner().getObject();
+        UsableActor currentObject = actor.getOwner().getCurrentObject();
         if (currentObject != null){
             currentObject.resetPosition();
             if (currentObject instanceof Cookie){

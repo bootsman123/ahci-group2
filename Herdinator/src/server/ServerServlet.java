@@ -256,41 +256,6 @@ public class ServerServlet extends HttpServlet
                                                player.getId(),
                                                object ) );
         
-/*
-        TangiblePlayer tangiblePlayer = (TangiblePlayer)player; 
-        Map map = gameManager.getMap();
-
-        try
-        {
-            if( "whistle".equalsIgnoreCase( itemString ) )
-            {
-                player.setObject( new Whistle( new Point( 0, 0 ),
-                                               tangiblePlayer,
-                                               Boolean.FALSE ) );
-                json.put( "success", Boolean.TRUE );
-             
-                LOGGER.log( Level.INFO, String.format( "[%s]: Player (%d) selected WHISTLE.",
-                                               "ServerServlet",
-                                               player.getId() ) );
-            }
-            else if( "cookie".equalsIgnoreCase( itemString ) )
-            {
-                player.setObject( new Cookie( new Point( 0, 0 ),
-                                              tangiblePlayer,
-                                              Boolean.FALSE ) );
-                json.put( "success", Boolean.TRUE );
-             
-                LOGGER.log( Level.INFO, String.format( "[%s]: Player (%d) selected COOKIE.",
-                                               "ServerServlet",
-                                               player.getId() ) );
-            }
-        }
-        catch( SlickException e )
-        {
-            e.printStackTrace();
-        }
-        */
-        
         return json;
     }
     
@@ -318,7 +283,7 @@ public class ServerServlet extends HttpServlet
             return json;
         }
         
-        UsableActor object = player.getObject();
+        UsableActor object = player.getCurrentObject();
         
         System.out.println( "Object: " + object );
 

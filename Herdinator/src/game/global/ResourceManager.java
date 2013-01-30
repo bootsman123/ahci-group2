@@ -5,6 +5,7 @@ import game.actors.Dog;
 import game.actors.LoveSheep;
 import game.actors.Sheep;
 import game.actors.Whistle;
+import game.gui.interfaces.UsableActorContainer;
 import game.states.GameScoreMenuState;
 import game.states.GameState;
 import game.states.MenuState;
@@ -103,6 +104,10 @@ public class ResourceManager
         
         // GameScoreMenuState.
         this.images.put( GameScoreMenuState.BUTTON_BACK_TO_MENU, new Image( GameScoreMenuState.BUTTON_BACK_TO_MENU ) );
+        
+        // UsableActorContainer.
+        this.images.put( UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH, new Image( UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH ) );
+        this.images.put( UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH, new Image( UsableActorContainer.VERTICAL_PICKER_IMAGE_FILE_PATH ) );
         
         // Load spritesheets.
         this.spriteSheets.put( Cookie.SPRITE_SHEET_FILE_PATH, new SpriteSheet( Cookie.SPRITE_SHEET_FILE_PATH,
