@@ -27,17 +27,29 @@ public class Whistle extends UsableActor
     /**
      * Constructor.
      * @param position
+     * @param owner
+     * @param isOnMap
      * @throws SlickException 
      */
-    public Whistle( Point position, Player owner, boolean isOnMap ) throws SlickException
+    public Whistle( Point position, Player owner, Boolean isOnMap ) throws SlickException
     {
         super( position, owner, isOnMap );
+    }
+    
+    /**
+     * Constructor.
+     * @param ower
+     * @param isOnMap
+     * @throws SlickException 
+     */
+    public Whistle( Player owner, Boolean isOnMap ) throws SlickException
+    {
+        this( new Point( 0, 0 ), owner, isOnMap );
     }
     
     @Override
     public void init()
     {
-        
         try
         {
             // Setup animations.

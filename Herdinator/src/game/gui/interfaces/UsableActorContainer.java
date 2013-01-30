@@ -228,7 +228,7 @@ public class UsableActorContainer extends AbstractComponent
         
         //Give the given actor to the owner
         actor.resetPosition();
-        actor.getOwner().setObject(actor);
+        actor.getOwner().selectObject(actor);
         if (actor.getOwner() instanceof MousePlayer){
             ((MousePlayer) actor.getOwner()).setIsDraggingObject(true);
         }

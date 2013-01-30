@@ -1,8 +1,6 @@
 package game.global;
 
-import TUIO.TuioClient;
 import game.Game;
-import game.actors.Cookie;
 import game.base.Map;
 import game.base.UsableActor;
 import game.gui.TouchAndTangibleHandler;
@@ -12,7 +10,6 @@ import game.players.MousePlayer;
 import game.players.Player;
 import game.players.TangiblePlayer;
 import game.players.TouchPlayer;
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,8 +97,7 @@ public class GameManager
     
         this.touchOverlay = new TouchOverlay(container);    
         this.overlay = new UsableActorContainer(container);
-        this.overlay.init( container, game );
-        
+        this.overlay.init( container, game );  
     }
     
     /**
@@ -136,6 +132,21 @@ public class GameManager
         //System.out.println("Starting to connect the tuioclient in the gamemanager");
         //this.tuioClient.connect();
         //System.out.println("Finished connecting the tuioclient in the gamemanager");
+        this.overlay.startGame();
+    }
+    
+    /**
+     * Called by a tangible game.
+     * @throws SlickException 
+     */
+    public void startGame() throws SlickException
+    {
+        // Initialize players.
+        for( Player player : this.players )
+        {
+            player.init();
+        }
+        
         this.overlay.startGame();
     }
     
@@ -306,13 +317,9 @@ public class GameManager
      */
     public Player getPlayer( Integer id )
     {
-        System.out.println( "[GameManager]: Player: " + id );
-        
         for( Player player : this.players )
-        {
-            System.out.println( "id: " + player.getId() );
-            
-            if( id == player.getId() )
+        {   
+            if( id.equals( player.getId() ) )
             {
                 return player;
             }
@@ -414,7 +421,7 @@ public class GameManager
                     if(checkIfTouched(actor,player,pixelPoint))
                     {
                         ((MousePlayer)player).setIsDraggingObject(true);
-                        player.setObject(actor);
+                        player.selectObject(actor);
                     }
                 }
             }
@@ -457,7 +464,7 @@ public class GameManager
                         {
                             ((TouchPlayer)player).setHasFingerOnTable(true);
                             ((TouchPlayer)player).setAssignedBlobID(this.touchHandler.getTuioCursors().get(y).getCursorID());
-                            player.setObject(actor);
+                            player.selectObject(actor);
                         }
                     }
                 }

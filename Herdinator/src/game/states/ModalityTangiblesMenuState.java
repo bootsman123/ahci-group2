@@ -170,6 +170,14 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
             * */
             //GameManager.getInstance().startGame( 0, GameManager.Mode.MOUSE );
             
+            try
+            {
+                GameManager.getInstance().startGame();
+            }
+            catch( SlickException e )
+            {
+            }
+            
             state = Game.GAME_STATE;
         }
         else if( button == this.buttonBack )

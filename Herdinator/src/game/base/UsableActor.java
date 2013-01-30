@@ -27,9 +27,7 @@ public abstract class UsableActor extends Actor implements Usable
     protected Animation animation;
     
     private Player owner;
-
     private boolean isOnMap;
-
     private Point2D.Double locationInsideActorContainer;
     
     protected Sound sound;
@@ -38,25 +36,25 @@ public abstract class UsableActor extends Actor implements Usable
      * Constructor.
      * @param position 
      */
-    public UsableActor( Point position, Player owner, boolean isOnMap )
+    public UsableActor( Point position, Player owner, Boolean isOnMap )
     {
         super( position );
+        
         this.owner = owner;
         this.isOnMap = isOnMap;
         this.useListeners = new ArrayList<UseListener>();
     }
 
-    
-
     @Override
     public void render( Graphics g )
     {
         Point2D.Double position = null;
-        if(this.isOnMap){
-            position = GameManager.getInstance().getMap().toPositionInPixels( this.getX(), this.getY() );
-            
+        if( this.isOnMap )
+        {
+            position = GameManager.getInstance().getMap().toPositionInPixels( this.getX(), this.getY() ); 
         }
-        else{
+        else
+        {
             position = this.locationInsideActorContainer;
         }
         //System.out.println("Drawing at this position: " + position.x + " " + position.y + " i am on map:  " + this.isOnMap);
@@ -102,7 +100,8 @@ public abstract class UsableActor extends Actor implements Usable
         return this.owner;
     }
 
-    public boolean getIsOnMap(){
+    public Boolean getIsOnMap()
+    {
         return this.isOnMap;
     }
     
@@ -133,7 +132,8 @@ public abstract class UsableActor extends Actor implements Usable
     }
     
     @Override
-    public void use() {
+    public void use()
+    {
         // Play sound.
         this.sound.play();
         

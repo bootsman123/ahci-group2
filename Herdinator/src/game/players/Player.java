@@ -1,9 +1,14 @@
 package game.players;
 
+import game.actors.Cookie;
+import game.actors.Whistle;
 import game.base.UsableActor;
 import game.global.GameManager;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Random;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.SlickException;
 
 /**
  *
@@ -36,7 +41,12 @@ public abstract class Player
         {
             return this.color;
         }
-    }
+    };
+    
+    public enum PlayerObject
+    {
+        WHISTLE, COOKIE;
+    };
     
     // Id of the player.
     private Integer id;
@@ -44,8 +54,9 @@ public abstract class Player
     // Color of the player.
     private Color color;
     
-    // Current object of the player.
-    private UsableActor object;
+    // Objects of the player.
+    private Map<PlayerObject, UsableActor> objects;
+    private UsableActor currentObject;
     
     /**
      * Constructor.
@@ -54,20 +65,70 @@ public abstract class Player
     public Player()
     {
         this.color = PlayerColor.values()[ GameManager.getInstance().getNumberOfPlayers() ].getColor();
-        this.id = ( new Random() ).nextInt( Integer.MAX_VALUE );        
-        this.object = null;
+        this.id = ( new Random() ).nextInt( Integer.MAX_VALUE );
+        
+        this.objects = new EnumMap<PlayerObject, UsableActor>( PlayerObject.class );
+        this.currentObject = null;
     }
-
+    
+    
     /**
      * Set the object to be used by this player
      * @param newObject 
      */
-    public void setObject(UsableActor newObject) {
+    /*public void setObject(UsableActor newObject) {
         if (!newObject.equals(this.getObject())){
             GameManager.getInstance().getMap().removeUsableActor(this.object);//@TODO: do not let the player object remove the current object from the map?
             this.object = newObject;
             GameManager.getInstance().getMap().addUsableActor(this.object);
         }
+    }*/
+    
+    /**
+     * Initialize.
+     * @param container
+     * @param game
+     * @throws SlickException 
+     */
+    public void init(/* GameContainer container, StateBasedGame game */) throws SlickException
+    {
+        // Add objects.
+        Cookie cookie = new Cookie( this, Boolean.FALSE );
+        cookie.init();
+        
+        Whistle whistle = new Whistle( this, Boolean.FALSE );
+        whistle.init();
+        
+        this.objects.put( PlayerObject.COOKIE, cookie );
+        this.objects.put( PlayerObject.WHISTLE, whistle );
+    }
+    
+    /**
+     * Select an object.
+     * @param object 
+     */
+    public void selectObject( PlayerObject object )
+    {
+        this.currentObject = this.objects.get( object );
+    }
+    
+    /**
+     * Select an object.
+     * @deprecated 
+     * @param actor 
+     */
+    public void selectObject( UsableActor actor )
+    {
+        this.currentObject = actor;
+    }
+    
+    /**
+     * Return the object.
+     * @return 
+     */
+    public UsableActor getObject()
+    {
+        return this.currentObject;
     }
     
     /**
@@ -86,14 +147,5 @@ public abstract class Player
     public Color getColor()
     {
         return this.color;
-    }
-    
-    /**
-     * Return the object.
-     * @return 
-     */
-    public UsableActor getObject()
-    {
-        return this.object;
     }
 }

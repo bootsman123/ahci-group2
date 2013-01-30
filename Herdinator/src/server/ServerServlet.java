@@ -6,7 +6,9 @@ import game.base.Map;
 import game.base.UsableActor;
 import game.global.GameManager;
 import game.players.Player;
+import game.players.Player.PlayerObject;
 import game.players.TangiblePlayer;
+import java.awt.Point;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -236,14 +238,30 @@ public class ServerServlet extends HttpServlet
         // Check if the player exists.
         GameManager gameManager = GameManager.getInstance();
         Player player = gameManager.getPlayer( Integer.valueOf( phoneIdString ) );
-        
-        System.out.println( "Player: " + player );
-        
+                
         if( player == null )
         {
             return json;
         }
         
+        // Select the object.
+        PlayerObject object = PlayerObject.valueOf( itemString.toUpperCase() );
+        
+        if( object == null )
+        {
+            return json;
+        }
+        
+        player.selectObject( object );
+
+        json.put( "success", Boolean.TRUE );
+
+        LOGGER.log( Level.INFO, String.format( "[%s]: Player (%d) selected %s.",
+                                               "ServerServlet",
+                                               player.getId(),
+                                               object ) );
+        
+/*
         TangiblePlayer tangiblePlayer = (TangiblePlayer)player; 
         Map map = gameManager.getMap();
 
@@ -251,7 +269,7 @@ public class ServerServlet extends HttpServlet
         {
             if( "whistle".equalsIgnoreCase( itemString ) )
             {
-                player.setObject( new Whistle( map.fromPositionInPixels( tangiblePlayer.getTangibleLocation() ),
+                player.setObject( new Whistle( new Point( 0, 0 ),
                                                tangiblePlayer,
                                                Boolean.FALSE ) );
                 json.put( "success", Boolean.TRUE );
@@ -262,7 +280,7 @@ public class ServerServlet extends HttpServlet
             }
             else if( "cookie".equalsIgnoreCase( itemString ) )
             {
-                player.setObject( new Cookie( map.fromPositionInPixels( tangiblePlayer.getTangibleLocation() ),
+                player.setObject( new Cookie( new Point( 0, 0 ),
                                               tangiblePlayer,
                                               Boolean.FALSE ) );
                 json.put( "success", Boolean.TRUE );
@@ -276,6 +294,7 @@ public class ServerServlet extends HttpServlet
         {
             e.printStackTrace();
         }
+        */
         
         return json;
     }
