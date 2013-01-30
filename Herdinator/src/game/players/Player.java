@@ -128,8 +128,16 @@ public abstract class Player
      * @param actor 
      */
     public void selectObject( UsableActor actor )
-    {
-        this.currentObject = actor;
+    {        
+        if( !actor.equals( this.currentObject ) )
+        {
+            // Remove old object.
+            GameManager.getInstance().getMap().removeUsableActor( this.currentObject );
+            
+            // Add new object.
+            this.currentObject = actor;
+            GameManager.getInstance().getMap().addUsableActor( this.currentObject );
+        }
     }
     
     /**
