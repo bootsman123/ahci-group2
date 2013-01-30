@@ -273,32 +273,34 @@ public class Map implements TileBasedMap
      */
     public void addUsableActor( UsableActor object )
     {
-        if(object !=null){
-            object.setIsOnMap(true);
-        }
-        if( object instanceof Cookie )
+        if( object != null )
         {
-            Cookie cookie = (Cookie)object;
-            cookie.init();
+            object.setIsOnMap( Boolean.TRUE );
             
-            // Add listeners.
-            for( LoveSheep loveSheep : this.loveSheeps )
+            if( object instanceof Cookie )
             {
-                cookie.addUseListener( loveSheep );
+                Cookie cookie = (Cookie)object;
+
+                // Add listeners.
+                for( LoveSheep loveSheep : this.loveSheeps )
+                {
+                    cookie.addUseListener( loveSheep );
+                }
+
+                this.cookies.add( cookie );
             }
-            this.cookies.add( cookie );
-        }
-        else if( object instanceof Whistle )
-        {
-            Whistle whistle = (Whistle)object;
-            whistle.init();
-            
-            // Add listeners.
-            for( Dog dog : this.dogs )
+            else if( object instanceof Whistle )
             {
-                whistle.addUseListener( dog );
+                Whistle whistle = (Whistle)object;
+
+                // Add listeners.
+                for( Dog dog : this.dogs )
+                {
+                    whistle.addUseListener( dog );
+                }
+
+                this.whistles.add( whistle );
             }
-            this.whistles.add( whistle );
         }
     }
 
@@ -309,24 +311,34 @@ public class Map implements TileBasedMap
     
     public void removeUsableActor( UsableActor object )
     {
-        if (object != null){
-            System.out.println("Did provide an object!");
-            object.setIsOnMap(false);
+        if( object != null )
+        {
+            object.setIsOnMap( Boolean.FALSE );
         
             if( object instanceof Cookie )
             {
+                Cookie cookie = (Cookie)object;
+                
+                // Remove listeners.
+                for( LoveSheep loveSheep : this.loveSheeps )
+                {
+                    cookie.removeUseListener( loveSheep );
+                }
+                
                 this.cookies.remove( (Cookie)object );
             }
             else if( object instanceof Whistle )
             {
+                Whistle whistle = (Whistle)object;
+
+                // Remove listeners.
+                for( Dog dog : this.dogs )
+                {
+                    whistle.removeUseListener( dog );
+                }
+                
                 this.whistles.remove( (Whistle)object );   
             }
-            else{
-                System.out.println("Object is not a cookie and not a whistle!");
-            }
-        }
-        else{
-            System.out.println("The object provided is equal to null...");
         }
     }
     

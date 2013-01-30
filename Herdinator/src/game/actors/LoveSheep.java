@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.util.pathfinding.Path;
 
 /**
  * Love sheep implementation.
@@ -28,8 +29,9 @@ public class LoveSheep extends MovableActor implements UseListener
     
     private static final Double SPEED = 0.0075;
     
-    private static final Integer WHISTLE_DISTANCE = 200;
-    private static final Double WHISTLE_OBEYANCE = 0.8;
+    private Boolean hasReachedPathDestination;
+    private Path path;
+    private Integer pathIndex;
     
     private Direction currentDirection;
 
@@ -66,6 +68,10 @@ public class LoveSheep extends MovableActor implements UseListener
         
         this.currentDirection = Direction.DOWN;
         this.animation = this.animations.get( this.currentDirection );
+        
+        this.hasReachedPathDestination = Boolean.FALSE;
+        this.path = null;
+        this.pathIndex = 0;
     }
     
     @Override
@@ -74,26 +80,58 @@ public class LoveSheep extends MovableActor implements UseListener
         super.update( delta );
 
         if( !this.isMoving() )
-        {            
+        {
             // Determine new direction.
-            Map map = GameManager.getInstance().getMap();            
-            Direction direction;
-            List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
+            Direction direction = null;         
             
-            // Check if the love sheep can move at all.
-            if( directions.isEmpty() )
+            // Check if there is a path to be followed.
+            if( this.path != null &&
+                !this.hasReachedPathDestination )
             {
-                return;
-            }
+                Path.Step step = this.path.getStep( this.pathIndex );
+                
+                // Check if the step is still valid.
+                Map map = GameManager.getInstance().getMap();
 
-            // Check for cookies.
-            direction = this.directionTowardsClosestActorFromList( this, map.getCookies(), directions, LoveSheep.WHISTLE_DISTANCE, LoveSheep.WHISTLE_OBEYANCE );
-            
-            if( direction == null )
-            {                
-                // Pick a random element.
-                Integer r = ( new Random() ).nextInt( directions.size() );
-                direction = directions.get( r ); 
+                if( map.isBlocked( new Point( step.getX(), step.getY() ) ) )
+                {
+                    // We just wait.
+                    return;
+                }
+                else
+                {
+                    this.pathIndex++;
+                    
+                    // Determine new direction.
+                    direction = this.directionTowardsPosition( this, new Point( step.getX(), step.getY() ) );
+                    
+                    // Check if the destination has been reached.
+                    if( this.path.getLength() == this.pathIndex )
+                    {
+                        this.hasReachedPathDestination = Boolean.TRUE;
+                        this.path = null;
+                        this.pathIndex = 0;
+                    }
+                }
+            }
+            else
+            {
+                // Determine new direction.
+                Map map = GameManager.getInstance().getMap();            
+                List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
+
+                // Check if the love sheep can move at all.
+                if( directions.isEmpty() )
+                {
+                    return;
+                }
+
+                if( direction == null )
+                {                
+                    // Pick a random element.
+                    Integer r = ( new Random() ).nextInt( directions.size() );
+                    direction = directions.get( r ); 
+                }
             }
             
             this.currentDirection = direction;
@@ -106,8 +144,8 @@ public class LoveSheep extends MovableActor implements UseListener
     public void onUse( Actor actor )
     {
         // A cookie has been pressed.
-        //this.hasReachedPathDestination = Boolean.FALSE;
-        //this.path = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
-        //this.pathIndex = 0;
+        this.hasReachedPathDestination = Boolean.FALSE;
+        this.path = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
+        this.pathIndex = 0;
     }
 }

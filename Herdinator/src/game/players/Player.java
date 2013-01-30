@@ -109,7 +109,17 @@ public abstract class Player
      */
     public void selectObject( PlayerObject object )
     {
-        this.currentObject = this.objects.get( object );
+        UsableActor newObject = this.objects.get( object );
+        
+        if( !newObject.equals( this.currentObject ) )
+        {
+            // Remove old object.
+            GameManager.getInstance().getMap().removeUsableActor( this.currentObject );
+            
+            // Add new object.
+            this.currentObject = newObject;
+            GameManager.getInstance().getMap().addUsableActor( this.currentObject );
+        }
     }
     
     /**
