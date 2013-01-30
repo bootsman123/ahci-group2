@@ -127,7 +127,7 @@ public class GameState extends BasicGameState
         // Check if there is no time left or the game if finished.
         if( !this.isTimeLeft() || this.isFinished() )
         {
-            //GameManager.getInstance().endGame( this.scoreForSheep() + this.scoreForTime() );
+            GameManager.getInstance().endGame( this.getScoreForSheep() + this.getScoreForTime() );
             game.enterState( Game.GAME_SCORE_MENU_STATE, new FadeOutTransition(), new FadeInTransition() );
             return;
         }

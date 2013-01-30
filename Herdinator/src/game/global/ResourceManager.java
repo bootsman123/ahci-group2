@@ -8,10 +8,12 @@ import game.actors.Whistle;
 import game.gui.interfaces.UsableActorContainer;
 import game.states.GameScoreMenuState;
 import game.states.GameState;
+import game.states.LoadingState;
 import game.states.MenuState;
 import game.states.ModalityMouseAndTouchMenuState;
 import game.states.ModalitySelectorMenuState;
 import game.states.ModalityTangiblesMenuState;
+import java.awt.Font;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +22,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
 
 /**
  *
@@ -141,7 +144,7 @@ public class ResourceManager
         this.sounds.put( GameState.AMBIANCE_SOUND_FILE_PATH, new Sound( GameState.AMBIANCE_SOUND_FILE_PATH ) );
         
         // Load fonts.
-        // @TODO.
+        // @TODO
         
         this.isLoaded = Boolean.TRUE;
     }

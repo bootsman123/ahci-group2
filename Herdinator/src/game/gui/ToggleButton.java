@@ -1,5 +1,8 @@
 package game.gui;
 
+import TUIO.TuioCursor;
+import TUIO.TuioPoint;
+import game.Game;
 import game.gui.listeners.ToggleListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +105,36 @@ public class ToggleButton extends Button
     {
         super.mouseReleased( button, x, y );
                
+        if( this.isToggled )
+        {
+            this.isDown = Boolean.TRUE;
+        }
+    }
+    
+    @Override
+    public void updateTuioCursor( TuioCursor c )
+    {
+        super.updateTuioCursor( c );
+        
+        TuioPoint point = c.getPosition();
+        
+        if( this.area.contains( ( point.getX() * Game.WIDTH ), ( point.getY() * Game.HEIGHT ) ) )
+        {
+            this.isToggled = !this.isToggled;
+
+            // Notify listeners.
+            for( ToggleListener listenerToggle : this.listenersToggle )
+            {
+                listenerToggle.onToggle( this );
+            }
+        }
+    }
+    
+    @Override
+    public void removeTuioCursor( TuioCursor c )
+    {
+        super.removeTuioCursor( c );
+        
         if( this.isToggled )
         {
             this.isDown = Boolean.TRUE;

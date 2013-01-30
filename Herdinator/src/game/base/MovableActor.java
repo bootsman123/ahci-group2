@@ -193,11 +193,12 @@ public abstract class MovableActor extends Actor implements Movable
     protected List<Direction> directionsToNonCollidableTiles( Point position )
     {    
         // Fill a list with possible positions.
+        Map map = GameManager.getInstance().getMap();
         List<Direction> directions = new ArrayList<Direction>();
 
         for( Direction direction : Direction.values() )
         {
-            if( !GameManager.getInstance().getMap().isBlocked( direction.toPosition( position ) ) )
+            if( !map.isBlocked( direction.toPosition( position ) ) )
             {
                 directions.add( direction );
             }
@@ -218,8 +219,8 @@ public abstract class MovableActor extends Actor implements Movable
 
         for( Direction direction : Direction.values() )
         {
-            if( !map.isBlocked( direction.toPosition( getPosition() ) ) &&
-                map.isGoalTile( getPosition() ) )
+            if( !map.isBlocked( direction.toPosition( position ) ) &&
+                map.isGoalTile( position ) )
             {
                 directions.add( direction );
             }
