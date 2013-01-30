@@ -282,6 +282,10 @@ public class UsableActorContainer extends AbstractComponent
 
                 int actorWidth = actor.getWidth();
                 int actorHeight = actor.getHeight();
+                
+                actorPixelX -= actorWidth/2; 
+                actorPixelY -= actorWidth/2;
+                
                 if (( pixelX >= actorPixelX && pixelX <= actorPixelX + actorWidth) && ( pixelY >= actorPixelY && pixelY <= actorPixelY + actorHeight) ){
                     pickObject(actor);
                     break;
