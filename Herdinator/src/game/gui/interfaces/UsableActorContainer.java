@@ -34,20 +34,17 @@ public class UsableActorContainer extends AbstractComponent
     private static final int IMAGE_OFFSET = 25;
     
     private static final int HORIZONTAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_X = 0;
-    private static final int HORIZONTAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_Y = 45;
-    private static final int VERTICAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_X = 45;
+    private static final int HORIZONTAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_Y = 170;
+    private static final int VERTICAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_X = 170;
     private static final int VERTICAL_PICKER_PIXEL_DIFFERENCE_NEXT_OBJECT_Y = 0;
     
-    
-    private static final int MAP_POSITION_X = 1;
-    private static final int MAP_POSITION_Y = 1;
-    private static final int HORIZONTAL_PICKER_HEIGHT = 100;
+    private static final int HORIZONTAL_PICKER_HEIGHT = 220;
     private static final int HORIZONTAL_PICKER_WIDTH = 50;
     private static final int VERTICAL_PICKER_HEIGHT = 50;
-    private static final int VERTICAL_PICKER_WIDTH = 100;
+    private static final int VERTICAL_PICKER_WIDTH = 230;
     
-    private static final int[] PICKER_START_PIXELS_X = {10, 10, 650, 650};
-    private static final int[] PICKER_START_PIXELS_Y = {10, 550, 10, 550};
+    private static final int[] PICKER_START_PIXELS_X = {10, 60, 700, 500};
+    private static final int[] PICKER_START_PIXELS_Y = {110, 580, 110, 580};
     private static final boolean[] PICKER_DRAWN_HORIZONTAL = {true,false,true,false};
     
     // Dimensions of the picker in pixels.

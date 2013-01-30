@@ -60,6 +60,7 @@ public class Cookie extends UsableActor
 
             this.animation = SpriteSheetUtil.getAnimation( spriteSheet, 0, 0, 0, 150 );
             this.sound = new Sound( Cookie.SOUND_ON_USE );
+            //this.sound.play();
         }
         catch( SlickException e )
         {

@@ -65,6 +65,7 @@ public class TouchAndTangibleHandler implements TuioListener
         int pixelY = (int) pixelPoint.getY();
         TouchDot dot = new TouchDot(new Point(pixelX,pixelY), cursor.getCursorID());
         //Add the cursor to the overlay
+        System.out.println("Touchoverlay: " + GameManager.getInstance().getTouchOverlay() == null);
         GameManager.getInstance().getTouchOverlay().addTouchDot(dot);
     }
 
@@ -108,6 +109,7 @@ public class TouchAndTangibleHandler implements TuioListener
             if (player instanceof TouchPlayer){
                 TouchPlayer touchPlayer = (TouchPlayer)player;
                 if (touchPlayer.hasFingerOnTable() && touchPlayer.getAssignedBlobID() == cursor.getCursorID()){
+                    touchPlayer.getObject().use();
                     touchPlayer.setHasFingerOnTable(false);
                 }
             }
