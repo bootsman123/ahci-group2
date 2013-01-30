@@ -4,6 +4,7 @@ import game.Game;
 import game.actors.Sheep;
 import game.base.Map;
 import game.global.GameManager;
+import game.global.ResourceManager;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -24,6 +26,8 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  */
 public class GameState extends BasicGameState
 {
+    public static final String AMBIANCE_SOUND_FILE_PATH = "../Resources/Sounds/farmambiance.wav";
+    
     // Time to complete a level (in seconds).
     private static final Integer TIME_TO_COMPLETE = 120;
     
@@ -33,7 +37,9 @@ public class GameState extends BasicGameState
     // Score.
     private static final Integer SCORE_PER_SHEEP = 10;
     private static final Integer SCORE_PER_SECOND = 1;
-        
+    
+    private Sound sound;
+    
     // Time elapsed in milliseconds.
     private Integer timeElapsed;
    
@@ -57,9 +63,10 @@ public class GameState extends BasicGameState
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {        
         GameManager.getInstance().init( container, game );
-       
-        this.timeElapsed = 0;
         
+        // Initialize sound.
+        this.sound = ResourceManager.getInstance().getSound( GameState.AMBIANCE_SOUND_FILE_PATH );
+               
         java.awt.Font font = new java.awt.Font( "Verdana", Font.PLAIN, GameState.SCORE_FONT_SIZE );
         this.scoreFont = new UnicodeFont( font );
         this.scoreFont.addAsciiGlyphs();
@@ -91,6 +98,23 @@ public class GameState extends BasicGameState
         this.scoreFont.drawString( ( container.getWidth() - this.scoreFont.getWidth( scoreString ) ) / 2,
                                      GameState.SCORE_LEFT_TOP_OFFSET,
                                      scoreString );   
+    }
+    
+    @Override
+    public void enter( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+        super.enter( container, game );
+        
+        this.sound.play();
+        this.timeElapsed = 0;
+    }
+    
+    @Override
+    public void leave( GameContainer container, StateBasedGame game ) throws SlickException
+    {
+        super.enter( container, game );
+        
+        this.sound.stop();
     }
 
     @Override

@@ -112,6 +112,14 @@ public abstract class Player
     {
         UsableActor newObject = this.objects.get( object );
         
+        System.out.println( object );
+        System.out.println( newObject );
+        
+        if( newObject == null )
+        {
+            return;
+        }
+                
         if( !newObject.equals( this.currentObject ) )
         {
             // Remove old object.

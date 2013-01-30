@@ -3,6 +3,7 @@ package game.gui;
 import game.gui.listeners.ToggleListener;
 import java.util.ArrayList;
 import java.util.List;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
@@ -26,7 +27,7 @@ public class ToggleButton extends Button
      * @param y
      * @throws SlickException 
      */
-    public ToggleButton( GUIContext context, String imageUp, String imageDown ) throws SlickException
+    public ToggleButton( GUIContext context, Image imageUp, Image imageDown ) throws SlickException
     {
         super( context, imageUp, imageDown );
         

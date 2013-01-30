@@ -2,8 +2,6 @@ package game.global;
 
 import TUIO.TuioClient;
 import TUIO.TuioListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

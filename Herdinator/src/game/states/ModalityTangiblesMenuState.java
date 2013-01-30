@@ -2,14 +2,13 @@ package game.states;
 
 import game.Game;
 import game.global.GameManager;
+import game.global.ResourceManager;
 import game.global.TuioManager;
 import game.gui.Button;
 import game.gui.TangibleArea;
 import game.gui.interfaces.TangibleOverlay;
 import game.gui.listeners.ClickAndTouchListener;
 import java.awt.Font;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -30,8 +29,8 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
     
     public static final Integer TANGIBLE_AREA_MARGIN = 30;
     
-    private static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
-    private static final String BUTTON_BACK = "../Resources/Images/Menu/buttonBack.png";
+    public static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
+    public static final String BUTTON_BACK = "../Resources/Images/Menu/buttonBack.png";
     
     private TangibleArea tangibleAreaOne;
     private TangibleArea tangibleAreaTwo;
@@ -64,6 +63,8 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
     {
         super.init( container, game );
         
+        ResourceManager resourceManager = ResourceManager.getInstance();
+        
         java.awt.Font font = new java.awt.Font( "Verdana", Font.BOLD, ModalityTangiblesMenuState.TANGIBLE_AREA_FONT_SIZE );
         this.tangibleAreaFont = new UnicodeFont( font );
         this.tangibleAreaFont.addAsciiGlyphs();
@@ -77,10 +78,14 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
         this.tangibleAreaFour = new TangibleArea( container );
         
         // Buttons.
-        this.buttonStart = new Button( container, ModalityTangiblesMenuState.BUTTON_START, ModalityTangiblesMenuState.BUTTON_START );
+        this.buttonStart = new Button( container,
+                                       resourceManager.getImage( ModalityTangiblesMenuState.BUTTON_START ),
+                                       resourceManager.getImage( ModalityTangiblesMenuState.BUTTON_START ) );
         this.buttonStart.setAcceptingInput( Boolean.FALSE );
         this.buttonStart.addClickAndTouchListener( this );
-        this.buttonBack = new Button( container, ModalityTangiblesMenuState.BUTTON_BACK, ModalityTangiblesMenuState.BUTTON_BACK );
+        this.buttonBack = new Button( container,
+                                      resourceManager.getImage( ModalityTangiblesMenuState.BUTTON_BACK ),
+                                      resourceManager.getImage( ModalityTangiblesMenuState.BUTTON_BACK ) );
         this.buttonBack.setAcceptingInput( Boolean.FALSE );
         this.buttonBack.addClickAndTouchListener( this );
         

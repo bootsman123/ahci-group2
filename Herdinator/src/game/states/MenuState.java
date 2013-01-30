@@ -1,5 +1,6 @@
 package game.states;
 
+import game.global.ResourceManager;
 import game.util.FontUtil;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,7 +22,7 @@ public abstract class MenuState extends BasicGameState
 {
     public static final Integer BUTTON_MARGIN = 20;
     
-    private static final String BACKGROUND_FILE_PATH = "../Resources/Images/Menu/background.jpg";
+    public static final String BACKGROUND_FILE_PATH = "../Resources/Images/Menu/background.jpg";
 
     // Titles.
     private static final String TITLE_STRING = "Herdinator";
@@ -74,6 +75,7 @@ public abstract class MenuState extends BasicGameState
         "How much is the fish",
         "It's nice to be important, but more important to be nice"
     };
+    
     private static final String SUB_TITLE_FONT_FILE_PATH = "../Resources/Fonts/simplicity.ttf";
     private static final Integer SUB_TITLE_FONT_SIZE = 30;
     
@@ -98,7 +100,7 @@ public abstract class MenuState extends BasicGameState
     @Override
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {        
-        this.background = new Image( MenuState.BACKGROUND_FILE_PATH );
+        this.background = ResourceManager.getInstance().getImage( MenuState.BACKGROUND_FILE_PATH );
         
         // Fonts.
         HieroSettings titleSettings = new HieroSettings();

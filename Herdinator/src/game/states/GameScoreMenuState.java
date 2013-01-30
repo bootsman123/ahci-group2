@@ -1,6 +1,7 @@
 package game.states;
 
 import game.Game;
+import game.global.ResourceManager;
 import game.global.TuioManager;
 import game.gui.Button;
 import game.gui.listeners.ClickAndTouchListener;
@@ -37,8 +38,12 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
     {
         super.init( container, game );
         
+        ResourceManager resourceManager = ResourceManager.getInstance();
+        
         // Buttons.
-        this.buttonBackToMenu = new Button( container, GameScoreMenuState.BUTTON_BACK_TO_MENU, GameScoreMenuState.BUTTON_BACK_TO_MENU );
+        this.buttonBackToMenu = new Button( container,
+                                            resourceManager.getImage( GameScoreMenuState.BUTTON_BACK_TO_MENU ),
+                                            resourceManager.getImage( GameScoreMenuState.BUTTON_BACK_TO_MENU ) );
         this.buttonBackToMenu.setAcceptingInput( Boolean.FALSE );
         this.buttonBackToMenu.addClickAndTouchListener( this );
         
