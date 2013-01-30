@@ -175,7 +175,6 @@ public class GameManager
         for( Player player : this.getPlayers() )
         {
             if (player instanceof TangiblePlayer){
-                
                 TangiblePlayer currentPlayer = (TangiblePlayer) player;
                 if(currentPlayer.getTangibleLocation() != null && currentPlayer.isTangibleOnTable()){
                     currentPlayer.getCurrentObject().setPosition(this.map.fromPositionInPixels(new Point2D.Double((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY())));//this.map.setActingPosition((int)currentPlayer.getTangibleLocation().getX(), (int)currentPlayer.getTangibleLocation().getY(), currentPlayer.getMarkId());
@@ -336,7 +335,6 @@ public class GameManager
      * @param container 
      */
     private void updateForMousePlayer(Player player, Input input) {
-        
         //When the mouse button is down, start dragging objects
         if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
             MousePlayer mousePlayer = (MousePlayer) player;

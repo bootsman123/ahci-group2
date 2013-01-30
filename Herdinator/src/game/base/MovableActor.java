@@ -255,11 +255,11 @@ public abstract class MovableActor extends Actor implements Movable
         {
             if( a.getX() > p.x )
             {
-                return Direction.RIGHT;
+                return Direction.LEFT;
             }
             else
             {
-                return Direction.LEFT;
+                return Direction.RIGHT;
             }
         }
         // Move closer on the y-axis.

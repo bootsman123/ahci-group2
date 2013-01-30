@@ -26,7 +26,7 @@ public class Dog extends MovableActor implements UseListener
     public static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     public static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.007;
+    private static final Double SPEED = 0.0007;
     
     private Direction currentDirection;
     
@@ -85,6 +85,7 @@ public class Dog extends MovableActor implements UseListener
                 if( map.isBlocked( new Point( step.getX(), step.getY() ) ) )
                 {
                     // We just wait.
+                   // System.out.println("The path for the dog is blocked!");
                     return;
                     
                     /*
@@ -99,7 +100,10 @@ public class Dog extends MovableActor implements UseListener
                 else
                 {
                     this.pathIndex++;
-                    
+                    System.out.println("Now at: " + step.getX() + " " + step.getY());
+                    for (int x = pathIndex ; x < this.path.getLength(); x++){
+                        System.out.println("After this going towards: " + this.path.getStep(x).getX() + " " + this.path.getStep(x).getY());
+                    }
                     // Determine new direction.
                     direction = this.directionTowardsPosition( this, new Point( step.getX(), step.getY() ) );
                     
@@ -114,6 +118,7 @@ public class Dog extends MovableActor implements UseListener
             }
             else
             {
+                System.out.println("Going for a random direction!");
                 // Determine new direction.
                 List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
 
@@ -143,9 +148,27 @@ public class Dog extends MovableActor implements UseListener
     @Override
     public void onUse( Actor actor )
     {
+        System.out.println("Dog.onUse: Going to search a new path from " 
+                + this.getPosition().getX() + "," + this.getPosition().getY()
+                + " to: " + actor.getPosition().getX() + " , " + actor.getPosition().getY());
         // A whistle has been pressed.
         this.hasReachedPathDestination = Boolean.FALSE;
+        
         this.path = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
-        this.pathIndex = 0;
+        if (path != null){
+            for (int x = 0 ; x < this.path.getLength(); x++){
+                System.out.println("Calculated taking step towards: " + this.path.getStep(x).getX() + " " + this.path.getStep(x).getY());
+            }
+            this.pathIndex = 1;
+        }
+        else
+        {
+            this.pathIndex = 0;
+        }       
+        
+    }
+    
+    public Path getPath(){
+        return this.path;
     }
 }

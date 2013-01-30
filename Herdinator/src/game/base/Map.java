@@ -12,9 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
@@ -175,13 +178,24 @@ public class Map implements TileBasedMap
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );
-        System.out.println("Map.render: Amount of cookies: " + cookies.size() + " whistles: " + whistles.size());
+     //   System.out.println("Map.render: Amount of cookies: " + cookies.size() + " whistles: " + whistles.size());
         // Render actors.
         this.renderActors( this.sheeps, g );
         this.renderActors( this.dogs, g );
         this.renderActors( this.loveSheeps, g );
         this.renderActors( this.cookies, g );
         this.renderActors( this.whistles, g );
+        
+        Path path = this.dogs.get(0).getPath();
+        if (path != null){
+            for (int x = 0 ; x < path.getLength(); x++){
+                Point2D.Double position = this.toPositionInPixels(path.getStep(x).getX(), path.getStep(x).getY());
+                
+                Shape shape = new Circle( (float)position.x, (float)position.y, 10 );
+                g.setColor( Color.red );
+                g.fill( shape );    
+            }
+        }
     }
 
     /**
