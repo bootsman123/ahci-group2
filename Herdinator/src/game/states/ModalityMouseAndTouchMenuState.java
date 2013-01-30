@@ -2,6 +2,7 @@ package game.states;
 
 import game.Game;
 import game.global.GameManager;
+import game.global.ResourceManager;
 import game.global.TuioManager;
 import game.gui.Button;
 import game.gui.ButtonGroup;
@@ -29,24 +30,24 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
     private static final Integer NUMBER_OF_PLAYERS_FONT_SIZE = 16;
     
     // Number of players buttons.
-    private static final String BUTTON_NUMBER_OF_PLAYERS_ONE = "../Resources/Images/Menu/buttonNumberOfPlayersOne.png";
-    private static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE = "../Resources/Images/Menu/buttonActiveNumberOfPlayersOne.png";
+    public static final String BUTTON_NUMBER_OF_PLAYERS_ONE = "../Resources/Images/Menu/buttonNumberOfPlayersOne.png";
+    public static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE = "../Resources/Images/Menu/buttonActiveNumberOfPlayersOne.png";
     
-    private static final String BUTTON_NUMBER_OF_PLAYERS_TWO = "../Resources/Images/Menu/buttonNumberOfPlayersTwo.png";
-    private static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_TWO = "../Resources/Images/Menu/buttonActiveNumberOfPlayersTwo.png";
+    public static final String BUTTON_NUMBER_OF_PLAYERS_TWO = "../Resources/Images/Menu/buttonNumberOfPlayersTwo.png";
+    public static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_TWO = "../Resources/Images/Menu/buttonActiveNumberOfPlayersTwo.png";
 
-    private static final String BUTTON_NUMBER_OF_PLAYERS_THREE = "../Resources/Images/Menu/buttonNumberOfPlayersThree.png";
-    private static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_THREE = "../Resources/Images/Menu/buttonActiveNumberOfPlayersThree.png";
+    public static final String BUTTON_NUMBER_OF_PLAYERS_THREE = "../Resources/Images/Menu/buttonNumberOfPlayersThree.png";
+    public static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_THREE = "../Resources/Images/Menu/buttonActiveNumberOfPlayersThree.png";
 
-    private static final String BUTTON_NUMBER_OF_PLAYERS_FOUR = "../Resources/Images/Menu/buttonNumberOfPlayersFour.png";
-    private static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_FOUR = "../Resources/Images/Menu/buttonActiveNumberOfPlayersFour.png";
+    public static final String BUTTON_NUMBER_OF_PLAYERS_FOUR = "../Resources/Images/Menu/buttonNumberOfPlayersFour.png";
+    public static final String BUTTON_ACTIVE_NUMBER_OF_PLAYERS_FOUR = "../Resources/Images/Menu/buttonActiveNumberOfPlayersFour.png";
     
-    private static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
-    private static final String BUTTON_BACK = "../Resources/Images/Menu/buttonBack.png";
+    public static final String BUTTON_START = "../Resources/Images/Menu/buttonStart.png";
+    public static final String BUTTON_BACK = "../Resources/Images/Menu/buttonBack.png";
     
     //@TODO: Roland. Remove?
-    private static final String BUTTON_DEBUG = "../Resources/Images/Menu/buttonMouse.png";
-    private static final String ACTIVE_BUTTON_DEBUG = "../Resources/Images/Menu/buttonMouseActive.png";
+    public static final String BUTTON_DEBUG = "../Resources/Images/Menu/buttonMouse.png";
+    public static final String ACTIVE_BUTTON_DEBUG = "../Resources/Images/Menu/buttonMouseActive.png";
     
     private UnicodeFont numberOfPlayersFont;
     
@@ -81,6 +82,8 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
     {
         super.init( container, game );
         
+        ResourceManager resourceManager = ResourceManager.getInstance();
+        
         java.awt.Font font = new java.awt.Font( "Verdana", Font.BOLD, ModalityMouseAndTouchMenuState.NUMBER_OF_PLAYERS_FONT_SIZE );
         this.numberOfPlayersFont = new UnicodeFont( font );
         this.numberOfPlayersFont.addAsciiGlyphs();
@@ -88,13 +91,21 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         this.numberOfPlayersFont.loadGlyphs();
         
         // Buttons.        
-        this.buttonNumberOfPlayersOne = new ToggleButton( container, ModalityMouseAndTouchMenuState.BUTTON_NUMBER_OF_PLAYERS_ONE, ModalityMouseAndTouchMenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE );
+        this.buttonNumberOfPlayersOne = new ToggleButton( container,
+                                                          resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_NUMBER_OF_PLAYERS_ONE ),
+                                                          resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_ONE ) );
         this.buttonNumberOfPlayersOne.setAcceptingInput( Boolean.FALSE );
-        this.buttonNumberOfPlayersTwo = new ToggleButton( container, ModalityMouseAndTouchMenuState.BUTTON_NUMBER_OF_PLAYERS_TWO, ModalityMouseAndTouchMenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_TWO );
+        this.buttonNumberOfPlayersTwo = new ToggleButton( container,
+                                                          resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_NUMBER_OF_PLAYERS_TWO ),
+                                                          resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_TWO ) );
         this.buttonNumberOfPlayersTwo.setAcceptingInput( Boolean.FALSE );
-        this.buttonNumberOfPlayersThree = new ToggleButton( container, ModalityMouseAndTouchMenuState.BUTTON_NUMBER_OF_PLAYERS_THREE, ModalityMouseAndTouchMenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_THREE );
+        this.buttonNumberOfPlayersThree = new ToggleButton( container,
+                                                            resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_NUMBER_OF_PLAYERS_THREE ),
+                                                            resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_THREE ) );
         this.buttonNumberOfPlayersThree.setAcceptingInput( Boolean.FALSE );
-        this.buttonNumberOfPlayersFour = new ToggleButton( container, ModalityMouseAndTouchMenuState.BUTTON_NUMBER_OF_PLAYERS_FOUR, ModalityMouseAndTouchMenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_FOUR );
+        this.buttonNumberOfPlayersFour = new ToggleButton( container,
+                                                           resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_NUMBER_OF_PLAYERS_FOUR ),
+                                                           resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_ACTIVE_NUMBER_OF_PLAYERS_FOUR ) );
         this.buttonNumberOfPlayersFour.setAcceptingInput( Boolean.FALSE );
         
         // Create a button group.
@@ -105,15 +116,21 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
         this.buttonNumberOfPlayers.add( this.buttonNumberOfPlayersFour );
         this.buttonNumberOfPlayers.setButtonToggledOn( 0 );
         
-        this.buttonStart = new Button( container, ModalityMouseAndTouchMenuState.BUTTON_START, ModalityMouseAndTouchMenuState.BUTTON_START );
+        this.buttonStart = new Button( container,
+                                       resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_START ),
+                                       resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_START ) );
         this.buttonStart.setAcceptingInput( Boolean.FALSE );
         this.buttonStart.addClickAndTouchListener( this );
-        this.buttonBack = new Button( container, ModalityMouseAndTouchMenuState.BUTTON_BACK, ModalityMouseAndTouchMenuState.BUTTON_BACK );
+        this.buttonBack = new Button( container,
+                                      resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_BACK ),
+                                      resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_BACK ) );
         this.buttonBack.setAcceptingInput( Boolean.FALSE );
         this.buttonBack.addClickAndTouchListener( this );
         
         //@TODO: Roland. Remove?
-        this.buttonDebug = new ToggleButton( container, ModalityMouseAndTouchMenuState.BUTTON_DEBUG, ModalityMouseAndTouchMenuState.ACTIVE_BUTTON_DEBUG );
+        this.buttonDebug = new ToggleButton( container,
+                                             resourceManager.getImage( ModalityMouseAndTouchMenuState.BUTTON_DEBUG ),
+                                             resourceManager.getImage( ModalityMouseAndTouchMenuState.ACTIVE_BUTTON_DEBUG ) );
         this.buttonDebug.setAcceptingInput( Boolean.FALSE );
         this.buttonDebug.addClickAndTouchListener( this );
         

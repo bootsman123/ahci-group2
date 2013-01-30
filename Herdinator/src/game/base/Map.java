@@ -5,7 +5,6 @@ import game.actors.Dog;
 import game.actors.LoveSheep;
 import game.actors.Sheep;
 import game.actors.Whistle;
-import game.actors.Wolf;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
@@ -31,12 +29,9 @@ import org.newdawn.slick.util.pathfinding.TileBasedMap;
  * @author Roland Meertens
  */
 public class Map implements TileBasedMap
-{
+{    
     private static final String CONTROLS_LAYER = "Controls";
-    private static final String FARM_AMBIANCE_SOUND_PATH = "../Resources/Sounds/farmambiance.wav";
-    
-    private Sound sound;
-    
+        
     // Tiled map.
     private TiledMap map;
     
@@ -53,7 +48,6 @@ public class Map implements TileBasedMap
     // Lists of all the actors.    
     private List<Sheep> sheeps;
     private List<Dog> dogs; 
-    private List<Wolf> wolves;
     private List<LoveSheep> loveSheeps;
     
     private List<Cookie> cookies;
@@ -76,7 +70,6 @@ public class Map implements TileBasedMap
         
         this.sheeps = new ArrayList<Sheep>();
         this.dogs = new ArrayList<Dog>();
-        this.wolves = new ArrayList<Wolf>();
         this.loveSheeps = new ArrayList<LoveSheep>();
 
         this.cookies = new ArrayList<Cookie>();
@@ -91,11 +84,7 @@ public class Map implements TileBasedMap
      * @throws SlickException 
      */
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
-    {
-        // Initialize sound.
-        //this.sound = new Sound( Map.FARM_AMBIANCE_SOUND_PATH );
-        //this.sound.play();
-        
+    {   
         // Initialize.
         this.collisions = new HashMap<Point, Boolean>();
         this.goals = new HashMap<Point, Boolean>();
@@ -152,15 +141,6 @@ public class Map implements TileBasedMap
                     continue;
                 }
                 
-                // Check "Wolf".
-                String wolfString = this.map.getTileProperty( tileId, "Wolf", null );
-                
-                if( wolfString != null )
-                {
-                    this.wolves.add( new Wolf( new Point( x, y ) ) );
-                    continue;
-                }
-                
                 // Check "LoveSheep".
                 String loveSheepString = this.map.getTileProperty( tileId, "LoveSheep", null );
                 
@@ -175,7 +155,6 @@ public class Map implements TileBasedMap
         // Initialize actors.
         this.initActors( this.sheeps );
         this.initActors( this.dogs );
-        this.initActors( this.wolves );
         this.initActors( this.loveSheeps );
         //this.initActors( this.cookies );
         //this.initActors( this.whistles );
@@ -195,11 +174,10 @@ public class Map implements TileBasedMap
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );
-        //System.out.println("The map has: " + this.cookies.size() + " cookies and " + this.whistles.size() + " whistles");
+
         // Render actors.
         this.renderActors( this.sheeps, g );
         this.renderActors( this.dogs, g );
-        this.renderActors( this.wolves, g );
         this.renderActors( this.loveSheeps, g );
         this.renderActors( this.cookies, g );
         this.renderActors( this.whistles, g );
@@ -222,11 +200,9 @@ public class Map implements TileBasedMap
         // Update actors.
         this.updateActors( this.sheeps, delta );
         this.updateActors( this.dogs, delta );
-        this.updateActors( this.wolves, delta );
         this.updateActors( this.loveSheeps, delta );
         this.updateActors( this.cookies, delta );
         this.updateActors( this.whistles, delta );
-        
     }
     
     /**
@@ -426,7 +402,6 @@ public class Map implements TileBasedMap
         // Check collisions with actors.
         return ( this.isBlockedByActors( this.sheeps, position ) ||
                  this.isBlockedByActors( this.dogs, position ) ||
-                 this.isBlockedByActors( this.wolves, position ) ||
                  this.isBlockedByActors( this.loveSheeps, position ) );
     }
     
@@ -563,15 +538,6 @@ public class Map implements TileBasedMap
     public List<Dog> getDogs()
     {
         return this.dogs;
-    }
-    
-    /**
-     * Returns a list of all the wolves.
-     * @return 
-     */
-    public List<Wolf> getWolves()
-    {
-        return this.wolves;
     }
     
     /**

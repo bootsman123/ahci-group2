@@ -5,12 +5,11 @@ import game.base.Map;
 import game.base.MovableActor;
 import game.base.listeners.UseListener;
 import game.global.GameManager;
+import game.global.ResourceManager;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -22,10 +21,10 @@ import org.newdawn.slick.util.pathfinding.Path;
  */
 public class LoveSheep extends MovableActor implements UseListener
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/sheeps_animation.png";
-    private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
-    private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
-    private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
+    public static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/sheeps_animation.png";
+    public static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
+    public static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
+    public static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
     private static final Double SPEED = 0.0075;
     
@@ -48,23 +47,13 @@ public class LoveSheep extends MovableActor implements UseListener
     @Override
     public void init()
     {      
-        try
-        {
-            // Setup animations.
-            SpriteSheet spriteSheet = new SpriteSheet( LoveSheep.SPRITE_SHEET_FILE_PATH,
-                                                       LoveSheep.SPRITE_SHEET_SPRITE_WIDTH,
-                                                       LoveSheep.SPRITE_SHEET_SPRITE_HEIGHT,
-                                                       LoveSheep.SPRITE_SHEET_BACKGROUND_COLOR );
+        // Setup animations.
+        SpriteSheet spriteSheet = ResourceManager.getInstance().getSpriteSheet( LoveSheep.SPRITE_SHEET_FILE_PATH );
 
-            this.animations.put( Direction.UP, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 3, 150 ) );
-            this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 2, 150 ) );
-            this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 ) );
-            this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 1, 150 ) );
-        }
-        catch( SlickException e )
-        {
-            Logger.getLogger( LoveSheep.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
-        }
+        this.animations.put( Direction.UP, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 3, 150 ) );
+        this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 2, 150 ) );
+        this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 0, 150 ) );
+        this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 6, 8, 1, 150 ) );
         
         this.currentDirection = Direction.DOWN;
         this.animation = this.animations.get( this.currentDirection );

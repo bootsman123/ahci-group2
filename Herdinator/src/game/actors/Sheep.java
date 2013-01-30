@@ -3,6 +3,7 @@ package game.actors;
 import game.base.Map;
 import game.base.MovableActor;
 import game.global.GameManager;
+import game.global.ResourceManager;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.util.List;
@@ -19,10 +20,10 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class Sheep extends MovableActor
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/sheeps_animation.png";
-    private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
-    private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
-    private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
+    public static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/sheeps_animation.png";
+    public static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
+    public static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
+    public static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
     private static final Double SPEED = 0.0030;
     
@@ -52,24 +53,14 @@ public class Sheep extends MovableActor
     
     @Override
     public void init()
-    {    
-        try
-        {
-            // Setup animations.
-            SpriteSheet spriteSheet = new SpriteSheet( Sheep.SPRITE_SHEET_FILE_PATH,
-                                                       Sheep.SPRITE_SHEET_SPRITE_WIDTH,
-                                                       Sheep.SPRITE_SHEET_SPRITE_HEIGHT,
-                                                       Sheep.SPRITE_SHEET_BACKGROUND_COLOR );
+    {
+        // Setup animations.
+        SpriteSheet spriteSheet = ResourceManager.getInstance().getSpriteSheet( Sheep.SPRITE_SHEET_FILE_PATH );
 
-            this.animations.put( Direction.UP, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 3, 150 ) );
-            this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 2, 150 ) );
-            this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 0, 150 ) );
-            this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 1, 150 ) );
-        }
-        catch( SlickException e )
-        {
-            Logger.getLogger( Sheep.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
-        }
+        this.animations.put( Direction.UP, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 3, 150 ) );
+        this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 2, 150 ) );
+        this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 0, 150 ) );
+        this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 1, 150 ) );
         
         this.currentDirection = Direction.DOWN;
         this.animation = this.animations.get( this.currentDirection );

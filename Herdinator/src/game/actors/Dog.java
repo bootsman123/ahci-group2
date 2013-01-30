@@ -5,12 +5,11 @@ import game.base.Map;
 import game.base.MovableActor;
 import game.base.listeners.UseListener;
 import game.global.GameManager;
+import game.global.ResourceManager;
 import game.util.SpriteSheetUtil;
 import java.awt.Point;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -22,15 +21,12 @@ import org.newdawn.slick.util.pathfinding.Path;
  */
 public class Dog extends MovableActor implements UseListener
 {
-    private static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/dogs_animation.png";
-    private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
-    private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
-    private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
+    public static final String SPRITE_SHEET_FILE_PATH = "../Resources/Images/Animations/dogs_animation.png";
+    public static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
+    public static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
+    public static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
-    private static final Double SPEED = 0.010;
-    
-    //private static final Integer WHISTLE_DISTANCE = 200;
-    //private static final Double WHISTLE_OBEYANCE = 1.0;
+    private static final Double SPEED = 0.008;
     
     private Direction currentDirection;
     
@@ -51,23 +47,13 @@ public class Dog extends MovableActor implements UseListener
     @Override
     public void init()
     {    
-        try
-        {
-            // Setup animations.
-            SpriteSheet spriteSheet = new SpriteSheet( Dog.SPRITE_SHEET_FILE_PATH,
-                                                       Dog.SPRITE_SHEET_SPRITE_WIDTH,
-                                                       Dog.SPRITE_SHEET_SPRITE_HEIGHT,
-                                                       Dog.SPRITE_SHEET_BACKGROUND_COLOR );
+        // Setup animations.
+        SpriteSheet spriteSheet = ResourceManager.getInstance().getSpriteSheet( Dog.SPRITE_SHEET_FILE_PATH );
 
-            this.animations.put( Direction.UP, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 3, 100 ) );
-            this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 2, 100 ) );
-            this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 0, 100 ) );
-            this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 1, 100 ) );
-        }
-        catch( SlickException e )
-        {
-            Logger.getLogger( Dog.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
-        }
+        this.animations.put( Direction.UP, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 3, 100 ) );
+        this.animations.put( Direction.RIGHT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 2, 100 ) );
+        this.animations.put( Direction.DOWN, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 0, 100 ) );
+        this.animations.put( Direction.LEFT, SpriteSheetUtil.getAnimation( spriteSheet, 0, 2, 1, 100 ) );
         
         this.currentDirection = Direction.DOWN;
         this.animation = this.animations.get( this.currentDirection );

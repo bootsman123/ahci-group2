@@ -1,6 +1,7 @@
 package game.states;
 
 import game.Game;
+import game.global.ResourceManager;
 import game.global.TuioManager;
 import game.gui.Button;
 import game.gui.listeners.ClickAndTouchListener;
@@ -17,9 +18,9 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  */
 public class ModalitySelectorMenuState extends MenuState implements ClickAndTouchListener
 {
-    private static final String BUTTON_MODALITY_MOUSE_AND_TOUCH = "../Resources/Images/Menu/buttonModalityMouseAndTouch.png";
-    private static final String BUTTON_MODALITY_TANGIBLES = "../Resources/Images/Menu/buttonModalityTangibles.png";
-    private static final String BUTTON_EXIT = "../Resources/Images/Menu/buttonExit.png";
+    public static final String BUTTON_MODALITY_MOUSE_AND_TOUCH = "../Resources/Images/Menu/buttonModalityMouseAndTouch.png";
+    public static final String BUTTON_MODALITY_TANGIBLES = "../Resources/Images/Menu/buttonModalityTangibles.png";    
+    public static final String BUTTON_EXIT = "../Resources/Images/Menu/buttonExit.png";
     
     private Button buttonModalityMouseAndTouch;
     private Button buttonModalityTangibles;
@@ -44,16 +45,24 @@ public class ModalitySelectorMenuState extends MenuState implements ClickAndTouc
     {
         super.init( container, game );
         
+        ResourceManager resourceManager = ResourceManager.getInstance();
+        
         // Buttons.
-        this.buttonModalityMouseAndTouch = new Button( container, ModalitySelectorMenuState.BUTTON_MODALITY_MOUSE_AND_TOUCH, ModalitySelectorMenuState.BUTTON_MODALITY_MOUSE_AND_TOUCH );
+        this.buttonModalityMouseAndTouch = new Button( container,
+                                                       resourceManager.getImage( ModalitySelectorMenuState.BUTTON_MODALITY_MOUSE_AND_TOUCH ),
+                                                       resourceManager.getImage( ModalitySelectorMenuState.BUTTON_MODALITY_MOUSE_AND_TOUCH ) );
         this.buttonModalityMouseAndTouch.setAcceptingInput( Boolean.FALSE );
         this.buttonModalityMouseAndTouch.addClickAndTouchListener( this );
         
-        this.buttonModalityTangibles = new Button( container, ModalitySelectorMenuState.BUTTON_MODALITY_TANGIBLES, ModalitySelectorMenuState.BUTTON_MODALITY_TANGIBLES );
+        this.buttonModalityTangibles = new Button( container,
+                                                   resourceManager.getImage( ModalitySelectorMenuState.BUTTON_MODALITY_TANGIBLES ),
+                                                   resourceManager.getImage( ModalitySelectorMenuState.BUTTON_MODALITY_TANGIBLES ) );
         this.buttonModalityTangibles.setAcceptingInput( Boolean.FALSE );
         this.buttonModalityTangibles.addClickAndTouchListener( this );
         
-        this.buttonExit = new Button( container, ModalitySelectorMenuState.BUTTON_EXIT, ModalitySelectorMenuState.BUTTON_EXIT );
+        this.buttonExit = new Button( container,
+                                      resourceManager.getImage( ModalitySelectorMenuState.BUTTON_EXIT ),
+                                      resourceManager.getImage( ModalitySelectorMenuState.BUTTON_EXIT ) );
         this.buttonExit.setAcceptingInput( Boolean.FALSE );
         this.buttonExit.addClickAndTouchListener( this );
         

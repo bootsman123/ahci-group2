@@ -1,14 +1,10 @@
 package server;
 
-import game.actors.Cookie;
-import game.actors.Whistle;
-import game.base.Map;
 import game.base.UsableActor;
 import game.global.GameManager;
 import game.players.Player;
 import game.players.Player.PlayerObject;
 import game.players.TangiblePlayer;
-import java.awt.Point;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
-import org.newdawn.slick.SlickException;
 
 /**
  *

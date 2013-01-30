@@ -71,23 +71,9 @@ public class Button extends AbstractComponent implements TuioListener
      * @param context
      * @param imageUp
      * @param imageDown
-     * @param x
-     * @param y
      * @throws SlickException 
      */
-    public Button( GUIContext context, String imageUp, String imageDown, Integer x, Integer y ) throws SlickException
-    {
-        this( context, new Image( imageUp ), new Image( imageDown ), x, y );
-    }
-    
-    /**
-     * Constructor.
-     * @param context
-     * @param imageUp
-     * @param imageDown
-     * @throws SlickException 
-     */
-    public Button( GUIContext context, String imageUp, String imageDown ) throws SlickException
+    public Button( GUIContext context, Image imageUp, Image imageDown ) throws SlickException
     {
         this( context, imageUp, imageDown, 0, 0 );
     }
