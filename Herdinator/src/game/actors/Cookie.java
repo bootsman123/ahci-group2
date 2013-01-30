@@ -21,18 +21,30 @@ public class Cookie extends UsableActor
     private static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     private static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     private static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
+    
     private static final String SOUND_ON_USE = "../Resources/Sounds/cookie_s.wav";
-    
-    
     
     /**
      * Constructor.
      * @param position
+     * @param owner
+     * @param isOnMap
      * @throws SlickException 
      */
-    public Cookie( Point position, Player owner, boolean isOnMap ) throws SlickException
+    public Cookie( Point position, Player owner, Boolean isOnMap ) throws SlickException
     {
         super( position, owner, isOnMap );
+    }
+    
+    /**
+     * Constructor.
+     * @param owner
+     * @param isOnMap
+     * @throws SlickException 
+     */
+    public Cookie( Player owner, Boolean isOnMap ) throws SlickException
+    {
+        this( new Point( 0, 0 ), owner, isOnMap );
     }
 
     @Override
