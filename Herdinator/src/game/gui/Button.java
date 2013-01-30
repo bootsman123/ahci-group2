@@ -288,7 +288,7 @@ public class Button extends AbstractComponent implements TuioListener
     @Override
     public void removeTuioCursor( TuioCursor c )
     {
-        TuioPoint point = c.getPosition();
+        //TuioPoint point = c.getPosition();
         
         this.isDown = Boolean.FALSE;
     }

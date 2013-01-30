@@ -135,7 +135,9 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
         tuioManager.addTuioListener( this.tangibleAreaFour );
         
         this.buttonStart.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonStart );
         this.buttonBack.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonBack );
     }
     
     @Override
@@ -143,14 +145,16 @@ public class ModalityTangiblesMenuState extends MenuState implements ClickAndTou
     {
         super.leave( container, game );
         
-        this.buttonStart.setAcceptingInput( Boolean.FALSE );
-        this.buttonBack.setAcceptingInput( Boolean.FALSE );
-        
         TuioManager tuioManager = TuioManager.getInstance();
         tuioManager.removeTuioListener( this.tangibleAreaOne );
         tuioManager.removeTuioListener( this.tangibleAreaTwo );
         tuioManager.removeTuioListener( this.tangibleAreaThree );
         tuioManager.removeTuioListener( this.tangibleAreaFour );
+        
+        this.buttonStart.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonStart );
+        this.buttonBack.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonBack );
     }
 
     @Override

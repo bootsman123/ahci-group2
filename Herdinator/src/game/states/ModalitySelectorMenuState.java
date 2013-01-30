@@ -1,6 +1,7 @@
 package game.states;
 
 import game.Game;
+import game.global.TuioManager;
 import game.gui.Button;
 import game.gui.listeners.ClickAndTouchListener;
 import org.newdawn.slick.GameContainer;
@@ -79,9 +80,14 @@ public class ModalitySelectorMenuState extends MenuState implements ClickAndTouc
     {
         super.enter( container, game );
         
+        TuioManager tuioManager = TuioManager.getInstance();
+        
         this.buttonModalityMouseAndTouch.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonModalityMouseAndTouch );
         this.buttonModalityTangibles.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonModalityTangibles );
         this.buttonExit.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonExit );
     }
     
     @Override
@@ -89,9 +95,14 @@ public class ModalitySelectorMenuState extends MenuState implements ClickAndTouc
     {
         super.leave( container, game );
         
+        TuioManager tuioManager = TuioManager.getInstance();
+        
         this.buttonModalityMouseAndTouch.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonModalityMouseAndTouch );
         this.buttonModalityTangibles.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonModalityTangibles );
         this.buttonExit.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonExit );
     }
 
     @Override

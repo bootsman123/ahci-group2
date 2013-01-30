@@ -1,6 +1,7 @@
 package game.states;
 
 import game.Game;
+import game.global.TuioManager;
 import game.gui.Button;
 import game.gui.listeners.ClickAndTouchListener;
 import org.newdawn.slick.GameContainer;
@@ -58,7 +59,10 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
     {
         super.enter( container, game );
         
+        TuioManager tuioManager = TuioManager.getInstance();
+        
         this.buttonBackToMenu.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonBackToMenu );
     }
     
     @Override
@@ -66,7 +70,10 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
     {
         super.leave( container, game );
         
+        TuioManager tuioManager = TuioManager.getInstance();
+        
         this.buttonBackToMenu.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonBackToMenu );
     }
 
     @Override
