@@ -309,7 +309,7 @@ public class ServerServlet extends HttpServlet
     {
         JSONObject json = new JSONObject();
         json.put( "success", Boolean.FALSE );
-        
+                
         // Check the phone id.
         if( phoneIdString == null )
         {
@@ -317,13 +317,15 @@ public class ServerServlet extends HttpServlet
         }
             
         Player player = GameManager.getInstance().getPlayer( Integer.valueOf( phoneIdString ) );
-        
+                
         if( player == null )
         {
             return json;
         }
         
         UsableActor object = player.getObject();
+        
+        System.out.println( "Object: " + object );
 
         if( object == null )
         {
@@ -336,7 +338,7 @@ public class ServerServlet extends HttpServlet
         LOGGER.log( Level.INFO, String.format( "[%s]: Player (%d) used %s.",
                                                "ServerServlet",
                                                player.getId(),
-                                               object.toString() ) );
+                                               object.toString().toUpperCase() ) );
         
         return json;
     }

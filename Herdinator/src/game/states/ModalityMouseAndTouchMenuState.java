@@ -2,6 +2,7 @@ package game.states;
 
 import game.Game;
 import game.global.GameManager;
+import game.global.TuioManager;
 import game.gui.Button;
 import game.gui.ButtonGroup;
 import game.gui.ToggleButton;
@@ -165,13 +166,21 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
     {
         super.enter( container, game );
         
+        TuioManager tuioManager = TuioManager.getInstance();
+        
         this.buttonNumberOfPlayersOne.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonNumberOfPlayersOne );
         this.buttonNumberOfPlayersTwo.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonNumberOfPlayersTwo );
         this.buttonNumberOfPlayersThree.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonNumberOfPlayersThree );
         this.buttonNumberOfPlayersFour.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonNumberOfPlayersFour );
         
         this.buttonStart.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonStart );
         this.buttonBack.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonBack );
         
         // @TODO: Roland. Remove?
         this.buttonDebug.setAcceptingInput( Boolean.TRUE );
@@ -182,13 +191,21 @@ public class ModalityMouseAndTouchMenuState extends MenuState implements ClickAn
     {
         super.leave( container, game );
         
+        TuioManager tuioManager = TuioManager.getInstance();
+        
         this.buttonNumberOfPlayersOne.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonNumberOfPlayersOne );
         this.buttonNumberOfPlayersTwo.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonNumberOfPlayersTwo );
         this.buttonNumberOfPlayersThree.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonNumberOfPlayersThree );
         this.buttonNumberOfPlayersFour.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonNumberOfPlayersFour );
         
         this.buttonStart.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonStart );
         this.buttonBack.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonBack );
         
         // @TODO: Roland. Remove?
         this.buttonDebug.setAcceptingInput( Boolean.FALSE );

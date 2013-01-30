@@ -1,4 +1,4 @@
-package game.gui;
+package game.gui.interfaces;
 
 import TUIO.TuioCursor;
 import TUIO.TuioListener;
@@ -20,8 +20,7 @@ import java.util.ArrayList;
  */
 public class TouchAndTangibleHandler implements TuioListener
 {
-    
-    private ArrayList<TuioCursor> currentCursors ;
+    private ArrayList<TuioCursor> currentCursors;
     
     public TouchAndTangibleHandler()
     {

@@ -3,7 +3,7 @@ package game.global;
 import game.Game;
 import game.base.Map;
 import game.base.UsableActor;
-import game.gui.TouchAndTangibleHandler;
+import game.gui.interfaces.TouchAndTangibleHandler;
 import game.gui.interfaces.TouchOverlay;
 import game.gui.interfaces.UsableActorContainer;
 import game.players.MousePlayer;
