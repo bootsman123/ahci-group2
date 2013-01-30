@@ -29,7 +29,7 @@ public class Main
             // Server.
             Server server = new Server();
             server.start();
-            
+                       
             // Game.
             AppGameContainer app = new AppGameContainer( new Game() );
             app.setDisplayMode( Game.WIDTH, Game.HEIGHT, false );

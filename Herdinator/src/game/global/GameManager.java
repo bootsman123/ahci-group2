@@ -306,8 +306,12 @@ public class GameManager
      */
     public Player getPlayer( Integer id )
     {
+        System.out.println( "[GameManager]: Player: " + id );
+        
         for( Player player : this.players )
         {
+            System.out.println( "id: " + player.getId() );
+            
             if( id == player.getId() )
             {
                 return player;

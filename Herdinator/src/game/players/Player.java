@@ -54,7 +54,7 @@ public abstract class Player
     public Player()
     {
         this.color = PlayerColor.values()[ GameManager.getInstance().getNumberOfPlayers() ].getColor();
-        this.id = ( new Random() ).nextInt();        
+        this.id = ( new Random() ).nextInt( Integer.MAX_VALUE );        
         this.object = null;
     }
 

@@ -83,49 +83,69 @@ public class Dog extends MovableActor implements UseListener
         super.update( delta );
         
         if( !this.isMoving() )
-        {           
+        {
+            // Determine new direction.
+            Direction direction = null;         
+            
             // Check if there is a path to be followed.
-            if( this.path != null && !this.hasReachedPathDestination )
+            if( this.path != null &&
+                !this.hasReachedPathDestination )
             {
                 Path.Step step = this.path.getStep( this.pathIndex );
-                this.pathIndex++;
-
+                
                 // Check if the step is still valid.
                 Map map = GameManager.getInstance().getMap();
 
                 if( map.isBlocked( new Point( step.getX(), step.getY() ) ) )
                 {
+                    // We just wait.
+                    return;
+                    
+                    /*
                     // Calculate a new path.
                     Path.Step finalStep = this.path.getStep( this.path.getLength() - 1 );
                     Point finalPosition = new Point( finalStep.getX(), finalStep.getY() );
 
                     this.path = map.pathTo( this.getPosition(), finalPosition );
                     this.pathIndex = 0;
+                    */
+                }
+                else
+                {
+                    this.pathIndex++;
+                    
+                    // Determine new direction.
+                    direction = this.directionTowardsPosition( this, new Point( step.getX(), step.getY() ) );
+                    
+                    // Check if the destination has been reached.
+                    if( this.path.getLength() == this.pathIndex )
+                    {
+                        this.hasReachedPathDestination = Boolean.TRUE;
+                        this.path = null;
+                        this.pathIndex = 0;
+                    }
+                }
+            }
+            else
+            {
+                // Determine new direction.
+                List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
+
+                // Check if the dog can move at all.
+                if( directions.isEmpty() )
+                {
+                    return;
                 }
 
-                // Determine the direction.
+                // Check whistles.
+                //direction = this.directionTowardsClosestActorFromList( this, map.getWhistles(), directions, Dog.WHISTLE_DISTANCE, Dog.WHISTLE_OBEYANCE );
 
-                // @TODO: ...
-            }
-            
-            // Determine new direction.
-            Direction direction = null;         
-            List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
-
-            // Check if the dog can move at all.
-            if( directions.isEmpty() )
-            {
-                return;
-            }
-            
-            // Check whistles.
-            //direction = this.directionTowardsClosestActorFromList( this, map.getWhistles(), directions, Dog.WHISTLE_DISTANCE, Dog.WHISTLE_OBEYANCE );
-            
-            if( direction == null )
-            {                
-                // Pick a random element.
-                Integer r = ( new Random() ).nextInt( directions.size() );
-                direction = directions.get( r ); 
+                if( direction == null )
+                {                
+                    // Pick a random element.
+                    Integer r = ( new Random() ).nextInt( directions.size() );
+                    direction = directions.get( r ); 
+                }
             }
             
             this.currentDirection = direction;

@@ -53,5 +53,11 @@ public class Whistle extends UsableActor
         {
             Logger.getLogger( Whistle.class.getName() ).log( Level.SEVERE, e.getLocalizedMessage() );
         }
-    }    
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "Whistle";
+    }
 }

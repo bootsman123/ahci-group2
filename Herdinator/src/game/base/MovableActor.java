@@ -236,24 +236,24 @@ public abstract class MovableActor extends Actor implements Movable
      */
     protected Direction directionTowardsActor( Actor a1, Actor a2 )
     {
-        return this.directionTowardsPosition( a1.getPosition(), a2.getPosition() );
+        return this.directionTowardsPosition( a1, a2.getPosition() );
     }
         
     /**
-     * Returns the best direction from position p1 to position p2.
+     * Returns the best direction from actor a to position p.
      * @param p1
      * @param p2
      * @return 
      */
-    protected Direction directionTowardsPosition( Point p1, Point p2 )
+    protected Direction directionTowardsPosition( Actor a, Point p )
     {
-        Integer absX = java.lang.Math.abs( p1.x - p2.x );
-        Integer absY = java.lang.Math.abs( p1.y - p2.y  );
+        Integer absX = java.lang.Math.abs( a.getX() - p.x );
+        Integer absY = java.lang.Math.abs( a.getY() - p.y  );
 
         // Move closer on the x-axis.
         if( absX > absY )
         {
-            if( p1.x > p2.x )
+            if( a.getX() > p.x )
             {
                 return Direction.RIGHT;
             }
@@ -265,7 +265,7 @@ public abstract class MovableActor extends Actor implements Movable
         // Move closer on the y-axis.
         else
         {
-            if( p1.y > p2.y )
+            if( a.getY() > p.y )
             {
                 return Direction.UP;
             }

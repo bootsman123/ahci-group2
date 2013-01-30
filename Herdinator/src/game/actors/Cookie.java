@@ -55,5 +55,9 @@ public class Cookie extends UsableActor
         }
     }
 
-    
+    @Override
+    public String toString()
+    {
+        return "Cookie";
+    }
 }

@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,9 @@ import org.newdawn.slick.SlickException;
  */
 public class ServerServlet extends HttpServlet
 {
+    // Logger.
+    private static final Logger LOGGER = Logger.getLogger( ServerServlet.class.getName() );
+    
     // @TODO: Currently not being used.
     private List<ServerListener> serverListeners;
     
@@ -65,7 +70,7 @@ public class ServerServlet extends HttpServlet
         
         // Action: connect.
         if( "connect".equalsIgnoreCase( action ) )
-        {
+        {            
             json = this.handleConnect( request.getParameter( "markId" ) );
         }
         // Action: disconnect.
@@ -115,7 +120,7 @@ public class ServerServlet extends HttpServlet
     {
         JSONObject json = new JSONObject();
         json.put( "success", Boolean.FALSE );
-        
+
         // Check if a valid mark id has been given.
         if( markIdString == null )
         {
@@ -135,19 +140,24 @@ public class ServerServlet extends HttpServlet
         }
         
         // Check if a player can still connect.
-        if( !gameManager.hasReachedPlayerLimit() )
+        if( gameManager.hasReachedPlayerLimit() )
         {
             return json;
-        }  
+        }
             
         // Create a new player.
         TangiblePlayer tangiblePlayer = new TangiblePlayer( markId );
-        
+                
         // Add player.
         gameManager.addPlayer( tangiblePlayer );
         
         json.put( "success", Boolean.TRUE );
         json.put( "phoneId", tangiblePlayer.getId().toString() );
+        
+        LOGGER.log( Level.INFO, String.format( "[%s]: Connected player (%d) with mark id %d.",
+                                               "ServerServlet",
+                                               tangiblePlayer.getId(),
+                                               tangiblePlayer.getMarkId() ) );
         
         return json;
     }
@@ -163,17 +173,27 @@ public class ServerServlet extends HttpServlet
         json.put( "success", Boolean.FALSE );
         
         // Check the phone id.
-        if( phoneIdString != null )
+        if( phoneIdString == null )
         {
-            GameManager gameManager = GameManager.getInstance();
-            Player player = gameManager.getPlayer( Integer.valueOf( phoneIdString ) );
-            
-            if( player != null )
-            {
-                gameManager.removePlayer( player );
-                json.put( "success", Boolean.TRUE );
-            }
+            return json;
         }
+        
+        // Check if the player exists.
+        GameManager gameManager = GameManager.getInstance();
+        Player player = gameManager.getPlayer( Integer.valueOf( phoneIdString ) );
+           
+        if( player == null )
+        {
+            return json;
+        }
+        
+        // Remove player.
+        gameManager.removePlayer( player );
+        json.put( "success", Boolean.TRUE );
+        
+        LOGGER.log( Level.INFO, String.format( "[%s]: Disconnected player (%d).",
+                                       "ServerServlet",
+                                       player.getId() ) );
                     
         return json;
     }
@@ -192,6 +212,7 @@ public class ServerServlet extends HttpServlet
             String phoneId = request.getParameter( "phoneId" );
             TangiblePlayer player = this.mobilePhonePlayers.get( phoneId );
             */
+        
      
         return json;
     }
@@ -205,42 +226,55 @@ public class ServerServlet extends HttpServlet
     {
         JSONObject json = new JSONObject();
         json.put( "success", Boolean.FALSE );
-
+        
         // Check the phone id.
-        if( phoneIdString != null )
+        if( phoneIdString == null )
         {
-            GameManager gameManager = GameManager.getInstance();
-            
-            Player player = gameManager.getPlayer( Integer.valueOf( phoneIdString ) );
-            TangiblePlayer tangiblePlayer = (TangiblePlayer)player; 
-            
-            Map map = gameManager.getMap();
+            return json;
+        }
+         
+        // Check if the player exists.
+        GameManager gameManager = GameManager.getInstance();
+        Player player = gameManager.getPlayer( Integer.valueOf( phoneIdString ) );
+        
+        System.out.println( "Player: " + player );
+        
+        if( player == null )
+        {
+            return json;
+        }
+        
+        TangiblePlayer tangiblePlayer = (TangiblePlayer)player; 
+        Map map = gameManager.getMap();
 
-            if( player != null )
+        try
+        {
+            if( "whistle".equalsIgnoreCase( itemString ) )
             {
-                try
-                {
-                    if( "whistle".equalsIgnoreCase( itemString ) )
-                    {
-                        player.setObject( new Whistle( map.fromPositionInPixels( tangiblePlayer.getTangibleLocation() ),
-                                                       tangiblePlayer,
-                                                       Boolean.FALSE ) );                
-                        
-                        json.put( "success", Boolean.TRUE );
-                    }
-                    else if( "cookie".equalsIgnoreCase( itemString ) )
-                    {
-                        player.setObject( new Cookie( map.fromPositionInPixels( tangiblePlayer.getTangibleLocation() ),
-                                                      tangiblePlayer,
-                                                      Boolean.FALSE ) );
-                        
-                        json.put( "success", Boolean.TRUE );
-                    }
-                }
-                catch( SlickException e )
-                {
-                }
+                player.setObject( new Whistle( map.fromPositionInPixels( tangiblePlayer.getTangibleLocation() ),
+                                               tangiblePlayer,
+                                               Boolean.FALSE ) );
+                json.put( "success", Boolean.TRUE );
+             
+                LOGGER.log( Level.INFO, String.format( "[%s]: Player (%d) selected WHISTLE.",
+                                               "ServerServlet",
+                                               player.getId() ) );
             }
+            else if( "cookie".equalsIgnoreCase( itemString ) )
+            {
+                player.setObject( new Cookie( map.fromPositionInPixels( tangiblePlayer.getTangibleLocation() ),
+                                              tangiblePlayer,
+                                              Boolean.FALSE ) );
+                json.put( "success", Boolean.TRUE );
+             
+                LOGGER.log( Level.INFO, String.format( "[%s]: Player (%d) selected COOKIE.",
+                                               "ServerServlet",
+                                               player.getId() ) );
+            }
+        }
+        catch( SlickException e )
+        {
+            e.printStackTrace();
         }
         
         return json;
@@ -258,21 +292,32 @@ public class ServerServlet extends HttpServlet
         json.put( "success", Boolean.FALSE );
         
         // Check the phone id.
-        if( phoneIdString != null )
+        if( phoneIdString == null )
         {
-            Player player = GameManager.getInstance().getPlayer( Integer.valueOf( phoneIdString ) );
-            
-            if( player != null )
-            {
-                UsableActor object = player.getObject();
-                
-                if( object != null )
-                {
-                    object.use();
-                    json.put( "success", Boolean.TRUE );
-                }
-            }
+            return json;
         }
+            
+        Player player = GameManager.getInstance().getPlayer( Integer.valueOf( phoneIdString ) );
+        
+        if( player == null )
+        {
+            return json;
+        }
+        
+        UsableActor object = player.getObject();
+
+        if( object == null )
+        {
+            return json;
+        }
+        
+        object.use();
+        json.put( "success", Boolean.TRUE );
+             
+        LOGGER.log( Level.INFO, String.format( "[%s]: Player (%d) used %s.",
+                                               "ServerServlet",
+                                               player.getId(),
+                                               object.toString() ) );
         
         return json;
     }
