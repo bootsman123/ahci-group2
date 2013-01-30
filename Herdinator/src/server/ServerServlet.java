@@ -320,7 +320,7 @@ public class ServerServlet extends HttpServlet
         
         UsableActor object = player.getObject();
         
-        System.out.println( "Object: " + object );
+        System.out.println( "Servlet.JSONObject: Object: " + object );
 
         if( object == null )
         {

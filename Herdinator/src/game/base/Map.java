@@ -64,6 +64,7 @@ public class Map implements TileBasedMap
      */
     public Map( String filePath ) throws SlickException
     {
+        
         this.map = new TiledMap( filePath );        
         this.widthInPixels = this.map.getWidth() * this.map.getTileWidth();
         this.heightInPixels = this.map.getHeight() * this.map.getTileHeight();
@@ -174,7 +175,7 @@ public class Map implements TileBasedMap
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );
-
+        System.out.println("Map.render: Amount of cookies: " + cookies.size() + " whistles: " + whistles.size());
         // Render actors.
         this.renderActors( this.sheeps, g );
         this.renderActors( this.dogs, g );
@@ -565,5 +566,11 @@ public class Map implements TileBasedMap
     public List<Cookie> getCookies()
     {
         return this.cookies;
+    }
+
+    public void removeAllActors() {
+        System.out.println("Map.removeAllActors: removed all actors!");
+        this.cookies = new ArrayList<Cookie>();
+        this.whistles = new ArrayList<Whistle>();
     }
 }

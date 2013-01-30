@@ -64,7 +64,7 @@ public abstract class Player
      */
     public Player()
     {
-        System.out.println("amount of players now: " + GameManager.getInstance().getNumberOfPlayers() );
+        System.out.println("Player.Player(): amount of players now: " + GameManager.getInstance().getNumberOfPlayers() );
         this.color = PlayerColor.values()[ GameManager.getInstance().getNumberOfPlayers() ].getColor();
         this.id = ( new Random() ).nextInt( Integer.MAX_VALUE );
         
@@ -112,8 +112,8 @@ public abstract class Player
     {
         UsableActor newObject = this.objects.get( object );
         
-        System.out.println( object );
-        System.out.println( newObject );
+        System.out.println( "Player.selectObject: " + object );
+        System.out.println( "Player.selectObject: " + newObject );
         
         if( newObject == null )
         {
