@@ -113,7 +113,7 @@ public class GameManager
         for( Integer i = 0; i < numberOfPlayers; i++ )
         {
             Player player;
-            
+            System.out.println("GameManager, amount of players now: " + GameManager.getInstance().getNumberOfPlayers()); 
             switch( mode )
             {
                 case TOUCH:

@@ -64,6 +64,7 @@ public abstract class Player
      */
     public Player()
     {
+        System.out.println("amount of players now: " + GameManager.getInstance().getNumberOfPlayers() );
         this.color = PlayerColor.values()[ GameManager.getInstance().getNumberOfPlayers() ].getColor();
         this.id = ( new Random() ).nextInt( Integer.MAX_VALUE );
         
