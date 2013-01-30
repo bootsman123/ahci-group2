@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.util.pathfinding.Path;
 
 /**
  * Abstract movable actor class.
@@ -385,4 +386,6 @@ public abstract class MovableActor extends Actor implements Movable
         
         return null;
     }
+    
+    
 }

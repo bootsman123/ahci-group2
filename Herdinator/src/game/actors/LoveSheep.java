@@ -135,6 +135,15 @@ public class LoveSheep extends MovableActor implements UseListener
         // A cookie has been pressed.
         this.hasReachedPathDestination = Boolean.FALSE;
         this.path = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
-        this.pathIndex = 0;
+        if (this.path != null){
+            this.pathIndex = 1;
+        }
+        else{
+            this.pathIndex = 0;
+        }
+    }
+    
+    public Path getPath(){
+        return this.path;
     }
 }

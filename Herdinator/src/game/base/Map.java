@@ -196,6 +196,17 @@ public class Map implements TileBasedMap
                 g.fill( shape );    
             }
         }
+        
+        path = this.loveSheeps.get(0).getPath();
+        if (path != null){
+            for (int x = 0 ; x < path.getLength(); x++){
+                Point2D.Double position = this.toPositionInPixels(path.getStep(x).getX(), path.getStep(x).getY());
+                
+                Shape shape = new Circle( (float)position.x, (float)position.y, 10 );
+                g.setColor( Color.blue );
+                g.fill( shape );    
+            }
+        }
     }
 
     /**

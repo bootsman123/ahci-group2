@@ -48,7 +48,7 @@ public class LoadingState extends BasicGameState
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
         // Font.
-        this.loadingFont = ResourceManager.getInstance().getFont( "" );
+        //this.loadingFont = ResourceManager.getInstance().getFont( "" );
         
         this.nextResource = null;
     }
@@ -58,10 +58,10 @@ public class LoadingState extends BasicGameState
     {
         // Font.
         String loadingString = "Loading...";
-        Integer loadingStringX = ( container.getWidth() - this.loadingFont.getWidth( loadingString ) ) / 2;
-        Integer loadingStringY = ( container.getHeight() - this.loadingFont.getHeight( loadingString ) ) / 2;
+        Integer loadingStringX = 20;//@TODO: fix this //( container.getWidth() - this.loadingFont.getWidth( loadingString ) ) / 2;
+        Integer loadingStringY = 20;//@TODO: fix this //( container.getHeight() - this.loadingFont.getHeight( loadingString ) ) / 2;
         
-        this.loadingFont.drawString( loadingStringX, loadingStringY, loadingString );
+       // this.loadingFont.drawString( loadingStringX, loadingStringY, loadingString );
     }
 
     @Override
