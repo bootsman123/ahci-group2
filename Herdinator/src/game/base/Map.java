@@ -299,6 +299,7 @@ public class Map implements TileBasedMap
     {
         if( object != null )
         {
+            System.out.println("Just added a usable object");
             object.setIsOnMap( Boolean.TRUE );
             
             if( object instanceof Cookie )

@@ -240,6 +240,7 @@ public class UsableActorContainer extends AbstractComponent
      */
     private void pickObject(UsableActor actor) {
         
+        System.out.println("USABLEACTORCONTAINER.Picking object");
         //Reset the object that the actor currently is using
         UsableActor currentObject = actor.getOwner().getCurrentObject();
         if (currentObject != null){
