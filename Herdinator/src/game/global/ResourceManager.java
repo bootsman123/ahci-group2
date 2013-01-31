@@ -106,7 +106,8 @@ public class ResourceManager
         this.images.put( ModalityTangiblesMenuState.BUTTON_BACK, new Image( ModalityTangiblesMenuState.BUTTON_BACK ) );
         
         // GameScoreMenuState.
-        this.images.put( GameScoreMenuState.BUTTON_BACK_TO_MENU, new Image( GameScoreMenuState.BUTTON_BACK_TO_MENU ) );
+        //this.images.put( GameScoreMenuState.BUTTON_BACK_TO_MENU, new Image( GameScoreMenuState.BUTTON_BACK_TO_MENU ) );
+        this.images.put( GameScoreMenuState.BUTTON_EXIT, new Image( GameScoreMenuState.BUTTON_EXIT ) );
         
         // UsableActorContainer.
         this.images.put( UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH, new Image( UsableActorContainer.HORIZONTAL_PICKER_IMAGE_FILE_PATH ) );

@@ -13,8 +13,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 /**
  *
@@ -24,11 +22,13 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
 {
     public static final Integer SCORE_FONT_SIZE = 32;
     
-    public static final String BUTTON_BACK_TO_MENU = "../Resources/Images/Menu/buttonBackToMenu.png";
-        
+    //public static final String BUTTON_BACK_TO_MENU = "../Resources/Images/Menu/buttonBackToMenu.png";
+    public static final String BUTTON_EXIT = "../Resources/Images/Menu/buttonExit.png";  
+    
     private UnicodeFont scoreFont;
 
-    private Button buttonBackToMenu; 
+    //private Button buttonBackToMenu;
+    private Button buttonExit;
 
     /**
      * Constructor.
@@ -59,6 +59,7 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
         this.scoreFont.loadGlyphs();
         
         // Buttons.
+        /*
         this.buttonBackToMenu = new Button( container,
                                             resourceManager.getImage( GameScoreMenuState.BUTTON_BACK_TO_MENU ),
                                             resourceManager.getImage( GameScoreMenuState.BUTTON_BACK_TO_MENU ) );
@@ -67,6 +68,16 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
         
         // Buttons locations.
         this.buttonBackToMenu.setLocation( ( container.getWidth() - this.buttonBackToMenu.getWidth() ) / 2, 260 );
+        */
+    
+        this.buttonExit = new Button( container,
+                                      resourceManager.getImage( GameScoreMenuState.BUTTON_EXIT ),
+                                      resourceManager.getImage( GameScoreMenuState.BUTTON_EXIT ) );
+        this.buttonExit.setAcceptingInput( Boolean.FALSE );
+        this.buttonExit.addClickAndTouchListener( this );
+        
+        // Button locations.
+        this.buttonExit.setLocation( ( container.getWidth() - this.buttonExit.getWidth() ) / 2, 260 );
     }
     
     @Override
@@ -81,7 +92,8 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
         
         this.scoreFont.drawString( scoreStringX, scoreStringY, scoreString );
         
-        this.buttonBackToMenu.render( container, g );
+        //this.buttonBackToMenu.render( container, g );
+        this.buttonExit.render( container, g );
     }
     
     @Override
@@ -91,8 +103,11 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
         
         TuioManager tuioManager = TuioManager.getInstance();
         
-        this.buttonBackToMenu.setAcceptingInput( Boolean.TRUE );
-        tuioManager.addTuioListener( this.buttonBackToMenu );
+        //this.buttonBackToMenu.setAcceptingInput( Boolean.TRUE );
+        //tuioManager.addTuioListener( this.buttonBackToMenu );
+    
+        this.buttonExit.setAcceptingInput( Boolean.TRUE );
+        tuioManager.addTuioListener( this.buttonExit );
     }
     
     @Override
@@ -102,8 +117,11 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
         
         TuioManager tuioManager = TuioManager.getInstance();
         
-        this.buttonBackToMenu.setAcceptingInput( Boolean.FALSE );
-        tuioManager.removeTuioListener( this.buttonBackToMenu );
+        //this.buttonBackToMenu.setAcceptingInput( Boolean.FALSE );
+        //tuioManager.removeTuioListener( this.buttonBackToMenu );
+    
+        this.buttonExit.setAcceptingInput( Boolean.FALSE );
+        tuioManager.removeTuioListener( this.buttonExit );
     }
 
     @Override
@@ -111,14 +129,23 @@ public class GameScoreMenuState extends MenuState implements ClickAndTouchListen
     {
         Integer state = -1;
         
+        /*
         if( button == this.buttonBackToMenu )
         {         
             state = Game.MENU_MODALITY_SELECTOR_STATE;
         }
+        */
         
+        if( button == this.buttonExit )
+        {
+            this.container.exit();
+        }
+        
+        /*
         if( state != -1 )
         {
             this.game.enterState( state, new FadeOutTransition(), new FadeInTransition() );
         }
+        */
     }
 }
