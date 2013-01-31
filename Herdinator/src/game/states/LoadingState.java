@@ -1,12 +1,10 @@
 package game.states;
 
 import game.Game;
-import game.global.ResourceManager;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -48,7 +46,11 @@ public class LoadingState extends BasicGameState
     public void init( GameContainer container, StateBasedGame game ) throws SlickException
     {
         // Font.
-        //this.loadingFont = ResourceManager.getInstance().getFont( "" );
+        java.awt.Font font = new java.awt.Font( "Verdana", Font.BOLD, GameScoreMenuState.SCORE_FONT_SIZE );
+        this.loadingFont = new UnicodeFont( font );
+        this.loadingFont.addAsciiGlyphs();
+        this.loadingFont.getEffects().add( new ColorEffect( java.awt.Color.WHITE ) );
+        this.loadingFont.loadGlyphs();
         
         this.nextResource = null;
     }
@@ -58,10 +60,10 @@ public class LoadingState extends BasicGameState
     {
         // Font.
         String loadingString = "Loading...";
-        Integer loadingStringX = 20;//@TODO: fix this //( container.getWidth() - this.loadingFont.getWidth( loadingString ) ) / 2;
-        Integer loadingStringY = 20;//@TODO: fix this //( container.getHeight() - this.loadingFont.getHeight( loadingString ) ) / 2;
+        Integer loadingStringX = ( container.getWidth() - this.loadingFont.getWidth( loadingString ) ) / 2;
+        Integer loadingStringY = ( container.getHeight() - this.loadingFont.getHeight( loadingString ) ) / 2;
         
-       // this.loadingFont.drawString( loadingStringX, loadingStringY, loadingString );
+        this.loadingFont.drawString( loadingStringX, loadingStringY, loadingString );
     }
 
     @Override
