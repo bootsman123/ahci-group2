@@ -167,4 +167,13 @@ public class Dog extends MovableActor implements UseListener
     {
         return this.path;
     }
+    
+    /**
+     * Return the path index.
+     * @return 
+     */
+    public Integer getPathIndex()
+    {
+        return this.pathIndex;
+    }
 }

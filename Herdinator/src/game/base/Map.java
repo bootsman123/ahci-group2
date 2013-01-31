@@ -192,21 +192,17 @@ public class Map implements TileBasedMap
         // Draw the paths.
         for( Dog dog : this.dogs )
         {
-            Path path = dog.getPath();
-            
-            if( path != null )
+            if( dog.getPath() != null )
             {
-                this.renderPath( path, g );
+                this.renderPath( dog.getPath(), dog.getPathIndex(), g );
             }
         }
         
         for( LoveSheep loveSheep : this.loveSheeps )
         {
-            Path path = loveSheep.getPath();
-            
-            if( path != null )
+            if( loveSheep.getPath() != null )
             {
-                this.renderPath( path, g );
+                this.renderPath( loveSheep.getPath(), loveSheep.getPathIndex(), g );
             }
         }
     }
@@ -263,9 +259,9 @@ public class Map implements TileBasedMap
      * @param renderables
      * @param g 
      */
-    private void renderPath( Path path, Graphics g )
+    private void renderPath( Path path, Integer pathIndex, Graphics g )
     {
-        for( Integer i = 0; i < path.getLength(); i++ )
+        for( Integer i = pathIndex; i < path.getLength(); i++ )
         {
             Step step = path.getStep( i );
             Point2D.Double position = this.toPositionInPixels( step.getX(), step.getY() );
