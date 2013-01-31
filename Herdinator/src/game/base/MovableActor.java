@@ -221,7 +221,7 @@ public abstract class MovableActor extends Actor implements Movable
         for( Direction direction : Direction.values() )
         {
             if( !map.isBlocked( direction.toPosition( position ) ) &&
-                map.isGoalTile( position ) )
+                map.isGoalTile( direction.toPosition( position ) ) )
             {
                 directions.add( direction );
             }

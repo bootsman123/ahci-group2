@@ -22,7 +22,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  */
 public class GameScoreMenuState extends MenuState implements ClickAndTouchListener
 {
-    public static final Integer SCORE_FONT_SIZE = 16;
+    public static final Integer SCORE_FONT_SIZE = 32;
     
     public static final String BUTTON_BACK_TO_MENU = "../Resources/Images/Menu/buttonBackToMenu.png";
         
