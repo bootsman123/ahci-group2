@@ -22,6 +22,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Path;
+import org.newdawn.slick.util.pathfinding.Path.Step;
 import org.newdawn.slick.util.pathfinding.PathFinder;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
@@ -178,7 +179,9 @@ public class Map implements TileBasedMap
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );
+
         System.out.println("Map.render: Amount of cookies: " + cookies.size() + " whistles: " + whistles.size());
+
         // Render actors.
         this.renderActors( this.sheeps, g );
         this.renderActors( this.dogs, g );
@@ -186,25 +189,24 @@ public class Map implements TileBasedMap
         this.renderActors( this.cookies, g );
         this.renderActors( this.whistles, g );
         
-        Path path = this.dogs.get(0).getPath();
-        if (path != null){
-            for (int x = 0 ; x < path.getLength(); x++){
-                Point2D.Double position = this.toPositionInPixels(path.getStep(x).getX(), path.getStep(x).getY());
-                
-                Shape shape = new Circle( (float)position.x, (float)position.y, 10 );
-                g.setColor( Color.red );
-                g.fill( shape );    
+        // Draw the paths.
+        for( Dog dog : this.dogs )
+        {
+            Path path = dog.getPath();
+            
+            if( path != null )
+            {
+                this.renderPath( path, g );
             }
         }
         
-        path = this.loveSheeps.get(0).getPath();
-        if (path != null){
-            for (int x = 0 ; x < path.getLength(); x++){
-                Point2D.Double position = this.toPositionInPixels(path.getStep(x).getX(), path.getStep(x).getY());
-                
-                Shape shape = new Circle( (float)position.x, (float)position.y, 10 );
-                g.setColor( Color.blue );
-                g.fill( shape );    
+        for( LoveSheep loveSheep : this.loveSheeps )
+        {
+            Path path = loveSheep.getPath();
+            
+            if( path != null )
+            {
+                this.renderPath( path, g );
             }
         }
     }
@@ -253,6 +255,26 @@ public class Map implements TileBasedMap
         for( Renderable r : renderables )
         {
             r.render( g );
+        }
+    }
+    
+    /**
+     * Render the path of the actors.
+     * @param renderables
+     * @param g 
+     */
+    private void renderPath( Path path, Graphics g )
+    {
+        for( Integer i = 0; i < path.getLength(); i++ )
+        {
+            Step step = path.getStep( i );
+            Point2D.Double position = this.toPositionInPixels( step.getX(), step.getY() );
+            
+            Shape shape = new Circle( (float)position.x, (float)position.y, 6 );
+            g.setColor( Color.darkGray );
+            g.draw( shape );
+            g.setColor( Color.lightGray );
+            g.fill( shape );
         }
     }
    

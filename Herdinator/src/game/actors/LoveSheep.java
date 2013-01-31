@@ -60,7 +60,7 @@ public class LoveSheep extends MovableActor implements UseListener
         
         this.hasReachedPathDestination = Boolean.FALSE;
         this.path = null;
-        this.pathIndex = 0;
+        this.pathIndex = -1;
     }
     
     @Override
@@ -99,14 +99,13 @@ public class LoveSheep extends MovableActor implements UseListener
                     {
                         this.hasReachedPathDestination = Boolean.TRUE;
                         this.path = null;
-                        this.pathIndex = 0;
+                        this.pathIndex = -1;
                     }
                 }
             }
             else
             {
                 // Determine new direction.
-                Map map = GameManager.getInstance().getMap();            
                 List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
 
                 // Check if the love sheep can move at all.
@@ -135,15 +134,24 @@ public class LoveSheep extends MovableActor implements UseListener
         // A cookie has been pressed.
         this.hasReachedPathDestination = Boolean.FALSE;
         this.path = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
-        if (this.path != null){
-            this.pathIndex = 1;
-        }
-        else{
-            this.pathIndex = 0;
+        this.pathIndex = 1;
+        
+        // Check if the path is valid.
+        if( this.path != null )
+        {
+            if( this.path.getLength() == 1 )
+            {
+                this.path = null;
+            }
         }
     }
     
-    public Path getPath(){
+    /**
+     * Returns the path.
+     * @return 
+     */
+    public Path getPath()
+    {
         return this.path;
     }
 }

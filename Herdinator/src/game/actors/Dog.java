@@ -25,10 +25,8 @@ public class Dog extends MovableActor implements UseListener
     public static final Integer SPRITE_SHEET_SPRITE_WIDTH = 32;
     public static final Integer SPRITE_SHEET_SPRITE_HEIGHT = 32;
     public static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
-    
-
+   
     private static final Double SPEED = 0.006;
-
     
     private Direction currentDirection;
     
@@ -62,7 +60,7 @@ public class Dog extends MovableActor implements UseListener
         
         this.hasReachedPathDestination = Boolean.FALSE;
         this.path = null;
-        this.pathIndex = 0;
+        this.pathIndex = -1;
     }
     
     @Override
@@ -102,10 +100,7 @@ public class Dog extends MovableActor implements UseListener
                 else
                 {
                     this.pathIndex++;
-                    System.out.println("Now at: " + step.getX() + " " + step.getY());
-                    for (int x = pathIndex ; x < this.path.getLength(); x++){
-                        System.out.println("After this going towards: " + this.path.getStep(x).getX() + " " + this.path.getStep(x).getY());
-                    }
+     
                     // Determine new direction.
                     direction = this.directionTowardsPosition( this, new Point( step.getX(), step.getY() ) );
                     
@@ -114,13 +109,12 @@ public class Dog extends MovableActor implements UseListener
                     {
                         this.hasReachedPathDestination = Boolean.TRUE;
                         this.path = null;
-                        this.pathIndex = 0;
+                        this.pathIndex = -1;
                     }
                 }
             }
             else
             {
-                System.out.println("Going for a random direction!");
                 // Determine new direction.
                 List<Direction> directions = this.directionsToNonCollidableTiles( this.getPosition() );
 
@@ -150,26 +144,27 @@ public class Dog extends MovableActor implements UseListener
     @Override
     public void onUse( Actor actor )
     {
-        System.out.println("Dog.onUse: Going to search a new path from " 
-                + this.getPosition().getX() + "," + this.getPosition().getY()
-                + " to: " + actor.getPosition().getX() + " , " + actor.getPosition().getY());
         // A whistle has been pressed.
         this.hasReachedPathDestination = Boolean.FALSE;
-        
         this.path = GameManager.getInstance().getMap().pathTo( this.getPosition(), actor.getPosition() );
-        if (path != null){
-            for (int x = 0 ; x < this.path.getLength(); x++){
-                System.out.println("Calculated taking step towards: " + this.path.getStep(x).getX() + " " + this.path.getStep(x).getY());
-            }
-            this.pathIndex = 1;
-        }
-        else
-        {
-            this.pathIndex = 0;
-        }       
+        this.pathIndex = 1;
         
+        // Check if the path is valid.
+        if( this.path != null )
+        {
+            if( this.path.getLength() == 1 )
+            {
+                this.path = null;
+            }
+        }
     }
-    public Path getPath(){
+    
+    /**
+     * Returns the path.
+     * @return
+     */
+    public Path getPath()
+    {
         return this.path;
     }
 }
