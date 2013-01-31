@@ -20,7 +20,7 @@ import org.newdawn.slick.geom.Shape;
  */
 public abstract class UsableActor extends Actor implements Usable
 {
-    private static final double OFFSET = 30.0;
+    private static final double OFFSET = 15.0;
 
     protected List<UseListener> useListeners;
     

@@ -178,7 +178,7 @@ public class Map implements TileBasedMap
     public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException
     {
         this.map.render( 0, 0 );
-     //   System.out.println("Map.render: Amount of cookies: " + cookies.size() + " whistles: " + whistles.size());
+        System.out.println("Map.render: Amount of cookies: " + cookies.size() + " whistles: " + whistles.size());
         // Render actors.
         this.renderActors( this.sheeps, g );
         this.renderActors( this.dogs, g );

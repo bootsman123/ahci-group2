@@ -128,6 +128,7 @@ public abstract class Player
     {
         if( !actor.equals( this.currentObject ) )
         {
+            System.out.println("Removing one actor");
             // Remove old object.
             GameManager.getInstance().getMap().removeUsableActor( this.currentObject );
             
