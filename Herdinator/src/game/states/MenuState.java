@@ -73,7 +73,11 @@ public abstract class MenuState extends BasicGameState
         "Knackebrod",
         "I'm blue dabadiedabadai",
         "How much is the fish",
-        "It's nice to be important, but more important to be nice"
+        "It's nice to be important, but more important to be nice",
+        "Enjoy but herd with mate",
+        "Everybody herds.... sometime",
+        "Interactive tangibles are sooooo 2012",
+        "Oh yeah baby, touch me",
     };
     
     private static final String SUB_TITLE_FONT_FILE_PATH = "../Resources/Fonts/simplicity.ttf";
