@@ -78,6 +78,10 @@ public abstract class MenuState extends BasicGameState
         "Everybody herds.... sometime",
         "Interactive tangibles are sooooo 2012",
         "Oh yeah baby, touch me",
+        "Double the pixels for half the price",
+        "Hakuna matatouchtable",
+        "Please insert your own joke",
+        "If you are happy and you know it clap your hands"
     };
     
     private static final String SUB_TITLE_FONT_FILE_PATH = "../Resources/Fonts/simplicity.ttf";
