@@ -24,6 +24,7 @@ public class Sheep extends MovableActor
     public static final Color SPRITE_SHEET_BACKGROUND_COLOR = new Color( 123, 198, 132 );
     
     private static final Double SPEED = 0.0025;
+    private static final Double SPEED_IN_GOAL = 0.001;
     
     // Distances in Manhatten tiles.
     private static final Integer OTHER_SHEEP_DISTANCE = 6;
@@ -81,6 +82,7 @@ public class Sheep extends MovableActor
             if( !this.isInGoalTile && map.isGoalTile( this.getPosition() ) )
             {
                 this.isInGoalTile = Boolean.TRUE;
+                this.setSpeed( Sheep.SPEED_IN_GOAL );
             }
 
             // Determine new direction.
