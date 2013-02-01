@@ -25,8 +25,8 @@ public class Main
         try
         {
             // Server.
-            Server server = new Server();
-            server.start();
+            //Server server = new Server();
+            //server.start();
                        
             // Game.
             AppGameContainer app = new AppGameContainer( new Game() );
@@ -35,10 +35,10 @@ public class Main
             //app.setSmoothDeltas( true );
             app.start();
         }
-        catch( LifecycleException e )
-        {
-            LOGGER.log( Level.SEVERE, null, e );
-        }
+        //catch( LifecycleException e )
+        //{
+        //    LOGGER.log( Level.SEVERE, null, e );
+        //}
         catch( SlickException e )
         {
             LOGGER.log( Level.SEVERE, null, e );
