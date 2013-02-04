@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt]{report}
+\documentclass[a4paper,10pt]{article}
 
 % Language.
 \usepackage[english]{babel}
@@ -25,11 +25,11 @@
 % With nice images ofcourse!
 
 
-\appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % System Architecture
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{System Architecture}	
+\section{System Architecture}
+\label{sec:system-architecture}
 % Technical description of the system.
 In the following section we will give an overview of the architecture of the system and the individual components.
 The components are divided into three categories, namely hardware components, software components and the interaction between hardware and software components.
@@ -47,12 +47,24 @@ The components are divided into three categories, namely hardware components, so
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\subsection{Software Components}
+	\label{sec:software-components}
+	In the following section an overview is given of the individual software components, namely the \emph{game}, the \emph{server} and the \emph{Android application}.
+	In section~\ref{sec:communication-protocol} an overview is given on how the server and the Android application communicate with each other.
 	% Even nicer images here.
 
 		\subsubsection{Game}
 		
+		
 		\subsubsection{Server}
-
+		For the server a portable version of Tomcat was used which is started at runtime everytime the game starts.
+		On the server we ran a single servlet which would handle all the communication between the server and the Android application.
+		This setup is very flexible, since no one has to have Tomcat installed and configured on their system.
+		Furthermore it allows for a tight coupling between the game and the server application.
+		On the one hand a tight coupling can be seen as a disadvantage since it becomes difficult to seperate the server from the game.
+		On the other hand it also saves a lot of time trying to built a suitable interface between the server and the game.
+				
+		Since the server is tightly couple with the game it is able to access all the components of the game through the \emph{GameManager}.
+		
 		\subsubsection{Android Application}
 		
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
@@ -60,14 +72,26 @@ The components are divided into three categories, namely hardware components, so
 	% Best images over here!
 	
 		\subsubsection{TUIO Protocol}
+		%Roland: Hier moet je het over je touchdingen hebben.
 		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Communication Protocol
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 \section{Communication Protocol}
-In order for the server and the Android Application to exchange information with each other we had to design a protocol.
-...
-In the following sections the ...
+\label{sec:communication-protocol}
+In order for the server and the Android application to exchange information with each other we had to design a protocol.
+Using certain commands the Android application is able to let the server "know" a certain action is required.
 
+In the following sections an overview of the protocol is given.
+
+@TODO: On every return section only the successful case is given. On an unsuccessful case \texttt{\{success:false\}} is returned.
+
+\subsection{Connect}
+Request: \texttt{?action=connect\&markId=[INTEGER]} \\
+Returns: \texttt{\{success:true, phoneId:[INTEGER]\}} \\
+
+\noindent Using the \emph{connect}-command the Android application is able to connect itself with the server.
+The parameter \texttt{markId} is required and should contain the id which corresponds with the mark on the back of the phone.
+If the request is successful a unique \texttt{phoneId} is returned which should be used for every other request made.
 
 \end{document}
