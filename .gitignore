@@ -34,3 +34,13 @@ local.properties
 # Logs
 /tableSoftware/camerasoftware/mac/CCV-1.2-mac-bin 4/Community Core Vision/logs/
 # Object
+
+# LaTeX files.
+*.log
+*.aux
+*.bbl
+*.blg
+*.tcp
+*.tps
+makefile
+*.pdf
