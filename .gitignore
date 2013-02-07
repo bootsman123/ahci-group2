@@ -44,3 +44,6 @@ local.properties
 *.tps
 makefile
 *.pdf
+/Test/nbproject/private/
+/Test/build/
+/OOAssignment1/nbproject/private/
