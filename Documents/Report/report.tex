@@ -52,6 +52,19 @@ The components are divided into three categories, namely hardware components, so
 	% Even nicer images here.
 
 		\subsubsection{Game}
+		The game itself is written in Java and is built using the open source game platform Slick2D \cite{Slick2D}.
+		Slick2D is primarely a wrapper around LWJGL \cite{LWJGL} and provides certain functionality to make it easier to develop games.
+		
+		The game is divided into several parts, each containing many different objects of which most are not very important nor interesting to discuss.
+		Therefor we will only discuss to the most important parts to get an overview of the workings of the game.
+		
+		
+		\subsubsubsection{LWJGL}
+		LWJGL is primarely intented to allow developers to be able to get 
+		
+		functionality to other libraries, namely OpenGL, OpenCL and OpenAL, 
+		
+		and on itself it is not very suited to develop games with.
 		
 		
 		\subsubsection{Server}
@@ -144,16 +157,30 @@ The parameter \texttt{phoneId} is required and denotes the unique identifier whi
 After a successful request any subsequent request with the given \texttt{phoneId} will fail.
 
 \subsection{Select}
-Request: \texttt{?action=select&phoneId=[INTEGER]&item=[STRING]} \\
+Request: \texttt{?action=select\&phoneId=[INTEGER]\&item=[STRING]} \\
 Returns: \texttt{\{success:true\}} \\
 
 \noindent Using the \emph{select}-command the Android application is able to select an item.
 The parameter \texttt{phoneId} is required and denotes the unique identifier which is returned on a successful connect.
-The parameter \textt{item} is required and denotes the item to be selected. The supported items are: \emph{whistle} and \emph{cookie}.
+The parameter \texttt{item} is required and denotes the item to be selected. The supported items are: \emph{whistle} and \emph{cookie}.
 
+\subsection{Use}
+Request: \texttt{?action=use\&phoneId=[INTEGER]} \\
+Returns: \texttt{\{success:true\}} \\
 
-
+\noindent Using the \emph{use}-command the Android application is able to use the selected item.
+The parameter \texttt{phoneId} is required and denotes the unique identifier which is returned on a successful connect.
+If an item is successfully selected using the \emph{select}-command the item will appear in the game, which makes it possible for actors to respond accordingly.
 
 \bibliographystyle{apalike}
 \bibliography{report}
 \end{document}
+
+
+
+
+%@misc{Slick2D,
+%title={Slick2D},
+%howpublished={\url{http://www.slick2d.org/}},
+%note={Last accessed: 07-02-2013}
+%}
