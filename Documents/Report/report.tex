@@ -9,7 +9,7 @@
 \usepackage{amsmath}
 
 % Smaller margins.
-\usepackage[margin=0.5in]{geometry}
+%\usepackage[margin=0.5in]{geometry}
 
 % Monospace font.
 \usepackage{inconsolata}
@@ -51,23 +51,32 @@ The components are divided into three categories, namely hardware components, so
 	In section~\ref{sec:communication-protocol} an overview is given on how the server and the Android application communicate with each other.
 	% Even nicer images here.
 
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		\subsubsection{Game}
 		The game itself is written in Java and is built using the open source game platform Slick2D \cite{Slick2D}.
 		Slick2D is primarely a wrapper around LWJGL \cite{LWJGL} and provides certain functionality to make it easier to develop games.
+		LWJGL is primarely intended to allow developers easy access to certain libraries, like OpenGL, OpenCL, OpenAL, etc., to be used effectively and efficiently in Java.
+		On itself LWJGL is not very suited to develop games with, however Slick2D adds extra functionality on top of LWJGL, like a game loop, a state switching mechanism, animations, etc.
 		
-		The game is divided into several parts, each containing many different objects of which most are not very important nor interesting to discuss.
-		Therefor we will only discuss to the most important parts to get an overview of the workings of the game.
+		The game itself is divided into several parts, each containing many different objects of which most are not very important nor interesting to discuss.
+		Therefor we will only discuss the core parts, which are the different states, the \emph{GameManager}-object and the \emph{Map}-object to to get reasonable overview of the game.
 		
-		
-		\subsubsubsection{LWJGL}
-		LWJGL is primarely intented to allow developers to be able to get 
-		
-		functionality to other libraries, namely OpenGL, OpenCL and OpenAL, 
-		
-		and on itself it is not very suited to develop games with.
+		\paragraph{States}
 		
 		
+		
+		\paragraph{GameManager}
+		For holding player information and communcation with the server.
+		
+		
+		\paragraph{Map}
+		Actors, both movable and usable.
+		
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		\subsubsection{Server}
+		The server has a key role in our setup.
+		It handles the communcation between the Android application and the game.
 		For the server a portable version of Tomcat was used which is started at runtime every time the game starts.
 		On the server we ran a single servlet which would handle all the communication between the server and the Android application.
 		This setup is very flexible, since no one has to have Tomcat installed and configured on their system.
@@ -78,11 +87,13 @@ The components are divided into three categories, namely hardware components, so
 		Since the server is tightly couple with the game it is able to access all the components of the game through the \emph{GameManager}.
 		
 		\subsubsection{Android Application}
+		The 
 		
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
 	\subsection{Interaction Between Hardware and Software Components}
 	% Using the title 'Interaction Between Hardware and Software Components' (or something similar) is more consistent with the rest.
 	% So first you could give an overview of the different components needed for this and then how it is all tied together.
+	
 
 		\subsubsection{reacTIVision}
 		\label{sec:reactivision}
@@ -133,44 +144,67 @@ The components are divided into three categories, namely hardware components, so
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 \section{Communication Protocol}
 \label{sec:communication-protocol}
-In order for the server and the Android application to exchange information with each other we had to design a protocol.
-Using certain commands the Android application is able to let the server "know" a certain action is required.
+In order for the server and the Android application to exchange information with each other we had to design a communication protocol.
+The communication protocol is used by the Android application to execute certain commands to let the game "know" a certain action has to be performed.
 
-In the following sections an overview of the protocol is given.
+The Android application exchange information through a request-response paradigm.
+The Android application sends a specific HTTP request which is interpreted by the server after which the server responds with JSON-formatted messages.
+In order to read and write the messages the JSON.simple~\cite{JSONsimple} library is used.
+Since both the Android application and the server use the same JSON library to read and write the messages there would be no problems in exchanging them.
+Using JSON-formatted messages has several advantages:
+\begin{itemize}
+	\item
+		\textbf{Easy to read and write programmatically}:
+		Even though in our case a library handles most of the work, other formats, like XML, require more effort to get working.
+	\item
+		\textbf{Easy to read}:
+		JSON-formatted messages are clear and concise making it easy to understand en verify the messages by hand, which helps in debugging.
+	\item
+		\textbf{Easy to expand}:
+		The current setup makes it easy to add extra information to the messages, for example an error message when the request is unsuccessful.
+\end{itemize}
 
-@TODO: On every return section only the successful case is given. On an unsuccessful case \texttt{\{success:false\}} is returned.
+For each request-response the Android application initiates the communication by sending one of the predefined requests as can be found below.
+The server handles the request and responds either successfully, of which the specification can be found below, or unsuccessfully.
+The message for an unsuccessful response is simply: \texttt{\{success:false\}}.
 
-\subsection{Connect}
-Request: \texttt{?action=connect\&markId=[INTEGER]} \\
-Returns: \texttt{\{success:true, phoneId:[INTEGER]\}} \\
+\subsection{Commands}
+Below a list of all the accepted requests is given.
+In general a certain order is required in executing the request.
+For example, first one has to execute the \emph{connect}-command before one can execute the \emph{select}-command and only after a successful \emph{select}-command one can execute the \emph{use}-command.
+No specific overview of the possible orders in which they can be executed is given, since it should follow from the specification.
+	
+	\subsubsection{Connect}
+	Request: \texttt{?action=connect\&markId=[INTEGER]} \\
+	Returns: \texttt{\{success:true, phoneId:[INTEGER]\}} \\
 
-\noindent Using the \emph{connect}-command the Android application is able to connect itself with the server.
-The parameter \texttt{markId} is required and should contain the id which corresponds with the mark on the back of the phone.
-If the request is successful a unique identifier \texttt{phoneId} is returned which should be used for every other request made.
+	\noindent Using the \emph{connect}-command the Android application is able to connect itself with the server.
+	The parameter \texttt{markId} is required and should contain the id which corresponds with the mark on the back of the phone.
+	If the request is successful a unique identifier \texttt{phoneId} is returned which should be used for every other request made.
 
-\subsection{Disconnect}
-Request: \texttt{?action=disconnect\&phoneId=[INTEGER]} \\
-Returns: \texttt{\{success:true\}} \\
+	\subsubsection{Disconnect}
+	Request: \texttt{?action=disconnect\&phoneId=[INTEGER]} \\
+	Returns: \texttt{\{success:true\}} \\
 
-\noindent Using the \emph{disconnect}-command the Android application is able to disconnect itself with the server.
-The parameter \texttt{phoneId} is required and denotes the unique identifier which is returned on a successful connect.
-After a successful request any subsequent request with the given \texttt{phoneId} will fail.
+	\noindent Using the \emph{disconnect}-command the Android application is able to disconnect itself with the server.
+	The parameter \texttt{phoneId} is required and denotes the unique identifier which is returned on a successful connect.
+	After a successful request any subsequent request with the given \texttt{phoneId} will fail.
 
-\subsection{Select}
-Request: \texttt{?action=select\&phoneId=[INTEGER]\&item=[STRING]} \\
-Returns: \texttt{\{success:true\}} \\
+	\subsubsection{Select}
+	Request: \texttt{?action=select\&phoneId=[INTEGER]\&item=[STRING]} \\
+	Returns: \texttt{\{success:true\}} \\
 
-\noindent Using the \emph{select}-command the Android application is able to select an item.
-The parameter \texttt{phoneId} is required and denotes the unique identifier which is returned on a successful connect.
-The parameter \texttt{item} is required and denotes the item to be selected. The supported items are: \emph{whistle} and \emph{cookie}.
+	\noindent Using the \emph{select}-command the Android application is able to select an item.
+	The parameter \texttt{phoneId} is required and denotes the unique identifier which is returned on a successful connect.
+	The parameter \texttt{item} is required and denotes the item to be selected. The supported items are: \emph{whistle} and \emph{cookie}.
 
-\subsection{Use}
-Request: \texttt{?action=use\&phoneId=[INTEGER]} \\
-Returns: \texttt{\{success:true\}} \\
+	\subsubsection{Use}
+	Request: \texttt{?action=use\&phoneId=[INTEGER]} \\
+	Returns: \texttt{\{success:true\}} \\
 
-\noindent Using the \emph{use}-command the Android application is able to use the selected item.
-The parameter \texttt{phoneId} is required and denotes the unique identifier which is returned on a successful connect.
-If an item is successfully selected using the \emph{select}-command the item will appear in the game, which makes it possible for actors to respond accordingly.
+	\noindent Using the \emph{use}-command the Android application is able to use the selected item.
+	The parameter \texttt{phoneId} is required and denotes the unique identifier which is returned on a successful connect.
+	If an item is successfully selected using the \emph{select}-command the item will appear in the game, which makes it possible for actors to respond accordingly.
 
 \bibliographystyle{apalike}
 \bibliography{report}
@@ -182,5 +216,17 @@ If an item is successfully selected using the \emph{select}-command the item wil
 %@misc{Slick2D,
 %title={Slick2D},
 %howpublished={\url{http://www.slick2d.org/}},
+%note={Last accessed: 07-02-2013}
+%}
+
+%@misc{LWJGL,
+%title={Lightweight Java Game Library (LWJGL)},
+%howpublished={\url{http://www.lwjgl.org/}},
+%note={Last accessed: 07-02-2013}
+%}
+
+%@misc{JSONsimple,
+%title={JSON.simple},
+%howpublished={\url{http://code.google.com/p/json-simple/}},
 %note={Last accessed: 07-02-2013}
 %}
