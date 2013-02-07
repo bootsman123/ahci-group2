@@ -73,8 +73,9 @@ The components are divided into three categories, namely hardware components, so
 
 		\subsubsection{reacTIVision}
 		\label{sec:reactivision}
-		reactTIVision is a software component that is able to detect both finger touches on a screen and is able to recognize specific markers. 
-		Using the xxx algorithm it is able to detect at what position each marker is placed, and what the ID of this marker is. 
+		reactTIVision is a software component that is able to detect both finger touches on a screen and specific markers. 
+		The source image (taken from the webcam under the table) is first converted to a black and white image with an adaptive thresholding algoritm. 
+		This image is converted into black and white regions, which is searched for unique sequences encoded into the fiducial symbols. \cite{reactivision}.
 		At every frame it detects what markers are present and sends the corresponding event as described in section \ref{sec:tuioprotocol}
 		
 		\subsubsection{Community Core Vision}
@@ -89,6 +90,30 @@ The components are divided into three categories, namely hardware components, so
 		As soon as a blob or a marker is detected the xxxxx function is called. 
 		As soon as a marker is detected the xxxxxx function is called. 
 		At every timeframe a blob or marker is updated the update() function is called with an according TUIO Point.
+		Community Core Vision (CCV) is a computer vision program that takes our video input stream (taken from the webcam under the table) and outputs tracking data. \cite{ccv}.
+		Several features of CCV include several filters, input and output switchers and a calibration mode. 
+		Using image processing CCV checks for the blobs that represent the tops of the fingers of the user. 
+		The locations and ID's of these blobs are send using the TUIO protocol described in section \ref{sec:tuioprotocol}.
+		
+		
+		\subsubsection{TUIO Protocol}
+		\label{sec:tuioprotocol}
+		The TUIO Protocol consists of a series of event-based communication using OSC messages over port 3333. \cite{tuioProtocol}. 
+		Using a JAVA library our program catches these messages and calls an event every time a:
+		\begin{enumerate}
+			\item finger is added to the screen
+			\item finger is removed from the screen
+			\item finger moved on the screen
+			\item marker is added to the screen
+			\item marker is removed from the screen
+			\item marker is moved on the screen
+		\end{enumerate}
+		These events also include a TUIOPoint object that contains among other the:
+		\begin{enumerate}
+			\item Location of the finger or marker
+			\item ID of the finger or marker
+		\end{enumerate}
+		Using these events the objects in our game are updated to their locations respective to the game on the screen as described in section \ref{waar wordts dit uitgelegd?}.
 		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Communication Protocol
@@ -128,4 +153,7 @@ The parameter \textt{item} is required and denotes the item to be selected. The 
 
 
 
+
+\bibliographystyle{apalike}
+\bibliography{report}
 \end{document}
