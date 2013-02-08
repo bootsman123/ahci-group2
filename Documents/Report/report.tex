@@ -36,148 +36,136 @@
 In the following section we will give an overview of the architecture of the system and the individual components.
 The components are divided into three categories, namely hardware components, software components and the interaction between hardware and software components.
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Hardware Components}
-	% Nice image here.
-		
-		\subsubsection{Tabletop}
-		The tabletop consists of a table where we replaced the table top with a glass plate with a layer of tracing paper on top.
-		Underneath the glass plate a huge mirror is placed that reflects the projects image by the beamer. 
-		Besides the mirror there is a small webcam that records everything that happens on the screen and everything that is visibile through the tracing paper. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Hardware Components}
+% Nice image here.
 
-		\begin{figure}[h!]
-		  \caption{The tabletop}
-		  \centering
-		  \includegraphics[width=0.5\textwidth]{images/tabletop}
-		\end{figure}
+\subsubsection{Tabletop}
+The tabletop consists of a table where we replaced the table top with a glass plate with a layer of tracing paper on top.
+Underneath the glass plate a huge mirror is placed that reflects the projects image by the beamer. 
+Besides the mirror there is a small webcam that records everything that happens on the screen and everything that is visibile through the tracing paper. 
 
-		\subsubsection{Beamer}
-		The beamer that projects an image on the tabletop is borrowed from our department and is a small portable beamer.
-		The image that is projected is sharp enough for the user to get an accurate idea of what is happening on the screen. 
-		As the projected image is not projected very wide the mirror in the tabletop is used. 
+\begin{figure}[h!]
+\caption{The tabletop}
+\centering
+\includegraphics[width=0.5\textwidth]{images/tabletop}
+\end{figure}
 
-		\begin{figure}[h!]
-		  \caption{The tabletop}
-		  \centering
-		  \includegraphics[width=0.5\textwidth]{images/beamer}
-		\end{figure}
+\subsubsection{Beamer}
+The beamer that projects an image on the tabletop is borrowed from our department and is a small portable beamer.
+The image that is projected is sharp enough for the user to get an accurate idea of what is happening on the screen. 
+As the projected image is not projected very wide the mirror in the tabletop is used. 
 
-		\subsubsection{Webcam}
-		The webcam used for our project is a simple consumer Microsoft Livecam. 
-		Our webcam records in a medium quality high enough for our simple application. 
-		Of course, using a better webcam would have improved our application but our current results were already acceptable. 
+\begin{figure}[h!]
+\caption{The tabletop}
+\centering
+\includegraphics[width=0.5\textwidth]{images/beamer}
+\end{figure}
 
-		\begin{figure}[h!]
-		  \caption{The webcam}
-		  \centering
-		  \includegraphics[width=0.5\textwidth]{images/webcam}
-		\end{figure}
+\subsubsection{Webcam}
+The webcam used for our project is a simple consumer Microsoft Livecam. 
+Our webcam records in a medium quality high enough for our simple application. 
+Of course, using a better webcam would have improved our application but our current results were already acceptable. 
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\subsection{Software Components}
-	\label{sec:software-components}
-	In the following section an overview is given of the individual software components, namely the \emph{game}, the \emph{server} and the \emph{Android application}.
-	In section~\ref{sec:communication-protocol} an overview is given on how the server and the Android application communicate with each other.
-	% Even nicer images here.
+\begin{figure}[h!]
+\caption{The webcam}
+\centering
+\includegraphics[width=0.5\textwidth]{images/webcam}
+\end{figure}
 
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		\subsubsection{Game}
-		The game itself is written in Java and is built using the open source game platform Slick2D \cite{Slick2D}.
-		Slick2D is primarely a wrapper around LWJGL \cite{LWJGL} and provides certain functionality to make it easier to develop games.
-		LWJGL is primarely intended to allow developers easy access to certain libraries, like OpenGL, OpenCL, OpenAL, etc., to be used effectively and efficiently in Java.
-		On itself LWJGL is not very suited to develop games with, however Slick2D adds extra functionality on top of LWJGL, like a game loop, a state switching mechanism, animations, etc.
-		
-		The game itself is divided into several parts, each containing many different objects of which most are not very important nor interesting to discuss.
-		Therefore we will only discuss the core parts, which are the different states, the \emph{GameManager}-object and the \emph{Map}-object to to get reasonable overview of the game.
-		
-		\paragraph{States}
-		A small, but usefull, feature of Slick2D is that it contains a state switching mechanism.
-		This allowed us to create several states from which you can switch to any state.
-		In figure~\ref{fig:game-state-diagram} an overview is given of the different states and in what way one can switch to another state through the normal usage of the game.
-		The game starts in the \emph{LoadingState} after which it automatically transition to the \emph{ModalitySelectorMenuState}.
-		In this state the user is able to select, via buttons on the screen, which modality it wants to use to play the game with.
-		If the mouse/touch modality is choosen the game will transition to the \emph{ModalityMouseAndTouchMenuState}.
-		If the tangible modality is choosen the game will transition to the \emph{ModalityTangiblesMenuState}.
-		In both states the user is either able to go back or start the game after the appropiate preperations have been made.
-		In the \emph{GameState} the actual game is run.
-		If one of the two ending conditions, namely herding all the sheep or no more time left, has been reached the game will transition to the \emph{GameScoreMenuState}.
-		In this state the user is presented with the score and given the only possibility to exit the game.
-		There used to be the possibility of going back to the \emph{ModalitySelectorMenuState}, however there were some issues in resetting the game properly, thus we have removed this feature.
-		
-		\begin{figure}
-			\includegraphics[width=\columnwidth]{images/game-state-diagram.png}
-			\caption{Overview of the different states in the game.}
-			\label{fig:game-state-diagram}
-		\end{figure}
-		
-		\paragraph{GameManager}
-		With the state switching mechanism of Slick2D it is not possible to transfer information between different states.
-		Therefor we have created the \emph{GameManager}-object.
-		The \emph{GameManager}-object allows the game to store 
-		
-		The \emph{GameManager} object is a global object designed to hold inf
-		
-		For holding player information and communcation with the server.
-		
-		
-		\paragraph{Map}
-		Actors, both movable and usable.
-		
-		
-		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		\subsubsection{Server}
-		The server has a key role in our setup.
-		It handles the communcation between the Android application and the game.
-		For the server a portable version of Tomcat was used which is started at runtime every time the game starts.
-		On the server we ran a single servlet which would handle all the communication between the server and the Android application.
-		This setup is very flexible, since no one has to have Tomcat installed and configured on their system.
-		Furthermore it allows for a tight coupling between the game and the server application.
-		On the one hand a tight coupling can be seen as a disadvantage since it becomes difficult to separate the server from the game.
-		On the other hand it also saves a lot of time trying to built a suitable interface between the server and the game.
-				
-		Since the server is tightly couple with the game it is able to access all the components of the game through the \emph{GameManager}.
-		
-		\subsubsection{Android Application}
-		The Android application is used as a tangible ...
-		
-		
-		
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
-	\subsection{Interaction Between Hardware and Software Components}
-	% Using the title 'Interaction Between Hardware and Software Components' (or something similar) is more consistent with the rest.
-	% So first you could give an overview of the different components needed for this and then how it is all tied together.
-	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Software Components}
+\label{sec:software-components}
+In the following section an overview is given of the individual software components, namely the \emph{game}, the \emph{server} and the \emph{Android application}.
+In section~\ref{sec:communication-protocol} an overview is given on how the server and the Android application communicate with each other.
+% Even nicer images here.
 
-		\subsubsection{reacTIVision}
-		\label{sec:reactivision}
-		reactTIVision is a software component that is able to detect both finger touches on a screen and specific markers. 
-		The source image (taken from the webcam under the table) is first converted to a black and white image with an adaptive thresholding algoritm. 
-		This image is converted into black and white regions, which is searched for unique sequences encoded into the fiducial symbols. \cite{reactivision}.
-		At every frame it detects what markers are present and sends the corresponding event as described in section \ref{sec:tuioprotocol}
-		
-		\subsubsection{Community Core Vision}
-		\label{sec:communitycorevision}	
-		Community core vision is a very advanced program that does a lot of neat image processing. 
-		It detects so called "blobs" using a webcam image. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Game}
+The game itself is written in Java and is built using the open source game platform Slick2D \cite{Slick2D}.
+Slick2D is primarely a wrapper around LWJGL \cite{LWJGL} and provides certain functionality to make it easier to develop games.
+LWJGL is primarely intended to allow developers easy access to certain libraries, like OpenGL, OpenCL, OpenAL, etc., to be used effectively and efficiently in Java.
+On itself LWJGL is not very suited to develop games with, however Slick2D adds extra functionality on top of LWJGL, like a game loop, a state switching mechanism, animations, etc.
 
+The game itself is divided into several parts, each containing many different objects of which most are not very important nor interesting to discuss.
+Therefore we will only discuss the core parts, which are the different states, the \emph{GameManager}-object and the \emph{Map}-object to to get reasonable overview of the game.
+
+\paragraph{States}
+A small, but usefull, feature of Slick2D is that it contains a state switching mechanism.
+This allowed us to create several states from which you can switch to any state.
+In figure~\ref{fig:game-state-diagram} an overview is given of the different states and in what way one can switch to another state through the normal usage of the game.
+The game starts in the \emph{LoadingState} after which it automatically transition to the \emph{ModalitySelectorMenuState}.
+In this state the user is able to select, via buttons on the screen, which modality it wants to use to play the game with.
+If the mouse/touch modality is choosen the game will transition to the \emph{ModalityMouseAndTouchMenuState}.
+If the tangible modality is choosen the game will transition to the \emph{ModalityTangiblesMenuState}.
+In both states the user is either able to go back or start the game after the appropiate preperations have been made.
+In the \emph{GameState} the actual game is run.
+If one of the two ending conditions, namely herding all the sheep or no more time left, has been reached the game will transition to the \emph{GameScoreMenuState}.
+In this state the user is presented with the score and given the only possibility to exit the game.
+There used to be the possibility of going back to the \emph{ModalitySelectorMenuState}, however there were some issues in resetting the game properly, thus we have removed this feature.
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{images/game-state-diagram.png}
+\caption{Overview of the different states in the game.}
+\label{fig:game-state-diagram}
+\end{figure}
+
+\paragraph{GameManager}
+With the state switching mechanism of Slick2D it is not possible to transfer information between different states.
+Therefor we have created the \emph{GameManager}-object.
+The \emph{GameManager}-object allows the game to store 
+
+The \emph{GameManager} object is a global object designed to hold inf
+
+For holding player information and communcation with the server.
+
+
+\paragraph{Map}
+Actors, both movable and usable.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Server}
+The server has a key role in our setup.
+It handles the communcation between the Android application and the game.
+For the server a portable version of Tomcat was used which is started at runtime every time the game starts.
+On the server we ran a single servlet which would handle all the communication between the server and the Android application.
+This setup is very flexible, since no one has to have Tomcat installed and configured on their system.
+Furthermore it allows for a tight coupling between the game and the server application.
+On the one hand a tight coupling can be seen as a disadvantage since it becomes difficult to separate the server from the game.
+On the other hand it also saves a lot of time trying to built a suitable interface between the server and the game.
+
+Since the server is tightly couple with the game it is able to access all the components of the game through the \emph{GameManager}.
+
+\subsubsection{Android Application}
+The Android application is used as a tangible ...
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\subsection{Interaction Between Hardware and Software Components}
+% Using the title 'Interaction Between Hardware and Software Components' (or something similar) is more consistent with the rest.
+% So first you could give an overview of the different components needed for this and then how it is all tied together.
+
+
+\subsubsection{reacTIVision}
+\label{sec:reactivision}
+reactTIVision is a software component that is able to detect both finger touches on a screen and specific markers. 
+The source image (taken from the webcam under the table) is first converted to a black and white image with an adaptive thresholding algoritm. 
+This image is converted into black and white regions, which is searched for unique sequences encoded into the fiducial symbols. \cite{reactivision}.
+At every frame it detects what markers are present and sends the corresponding event as described in section \ref{sec:tuioprotocol}
+
+\subsubsection{Community Core Vision}
+\label{sec:communitycorevision}	
+		Community Core Vision (CCV) is a computer vision program that takes our video input stream (taken from the webcam under the table) and outputs tracking data. \cite{ccv}.
+	    	Several features of CCV include several filters, input and output switchers and a calibration mode. 
+		Using image processing CCV checks for the blobs that represent the tops of the fingers of the user. 
+		The locations and ID's of these blobs are send using the TUIO protocol described in section \ref{sec:tuioprotocol}.
 		\begin{figure}[h!]
 		  \caption{The game}
 		  \centering
 		  \includegraphics[width=0.5\textwidth]{images/tafelgebruik}
 		\end{figure}
-
-		\subsubsection{TUIO Protocol}
-		\label{sec:tuioprotocol}
-		The TUIO Protocol consists of a series of event-based communication over port xxxxxxxx. 
-		Everytime a message comes in a few action-based events are called.  
-		As soon as a blob or a marker is detected the xxxxx function is called. 
-		As soon as a marker is detected the xxxxxx function is called. 
-		At every timeframe a blob or marker is updated the update() function is called with an according TUIO Point.
-		Community Core Vision (CCV) is a computer vision program that takes our video input stream (taken from the webcam under the table) and outputs tracking data. \cite{ccv}.
-		Several features of CCV include several filters, input and output switchers and a calibration mode. 
-		Using image processing CCV checks for the blobs that represent the tops of the fingers of the user. 
-		The locations and ID's of these blobs are send using the TUIO protocol described in section \ref{sec:tuioprotocol}.
-		
 		
 		\subsubsection{TUIO Protocol}
 		\label{sec:tuioprotocol}
