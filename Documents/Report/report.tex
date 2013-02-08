@@ -20,14 +20,6 @@
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Specification
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Specification}
-% Conceptual description of the sytem.
-% For Thomas.
-% With nice images ofcourse!
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % System Architecture
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System Architecture}
@@ -57,22 +49,22 @@ The components are divided into three categories, namely hardware components, so
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		\subsubsection{Game}
 		The game itself is written in Java and is built using the open source game platform Slick2D \cite{Slick2D}.
-		Slick2D is primarely a wrapper around LWJGL \cite{LWJGL} and provides certain functionality to make it easier to develop games.
-		LWJGL is primarely intended to allow developers easy access to certain libraries, like OpenGL, OpenCL, OpenAL, etc., to be used effectively and efficiently in Java.
+		Slick2D is primarily a wrapper around LWJGL \cite{LWJGL} and provides certain functionality to make it easier to develop games.
+		LWJGL is primarily intended to allow developers easy access to certain libraries, like OpenGL, OpenCL, OpenAL, etc., to be used effectively and efficiently in Java.
 		On itself LWJGL is not very suited to develop games with, however Slick2D adds extra functionality on top of LWJGL, like a game loop, a state switching mechanism, animations, etc.
 		
 		The game itself is divided into several parts, each containing many different objects of which most are not very important nor interesting to discuss.
 		Therefor we will only discuss the core parts, which are the different states, the \emph{GameManager}-object and the \emph{Map}-object to to get reasonable overview of the game.
 		
 		\paragraph{States}
-		A small, but usefull, feature of Slick2D is that it contains a state switching mechanism.
+		A small, but useful, feature of Slick2D is that it contains a state switching mechanism.
 		This allowed us to create several states from which you can switch to any state.
 		In figure~\ref{fig:game-state-diagram} an overview is given of the different states and in what way one can switch to another state through the normal usage of the game.
 		The game starts in the \emph{LoadingState} after which it automatically transition to the \emph{ModalitySelectorMenuState}.
 		In this state the user is able to select, via buttons on the screen, which modality it wants to use to play the game with.
-		If the mouse/touch modality is choosen the game will transition to the \emph{ModalityMouseAndTouchMenuState}.
-		If the tangible modality is choosen the game will transition to the \emph{ModalityTangiblesMenuState}.
-		In both states the user is either able to go back or start the game after the appropiate preperations have been made.
+		If the mouse/touch modality is chosen the game will transition to the \emph{ModalityMouseAndTouchMenuState}.
+		If the tangible modality is chosen the game will transition to the \emph{ModalityTangiblesMenuState}.
+		In both states the user is either able to go back or start the game after the appropriate preparations have been made.
 		In the \emph{GameState} the actual game is run.
 		If one of the two ending conditions, namely herding all the sheep or no more time left, has been reached the game will transition to the \emph{GameScoreMenuState}.
 		In this state the user is presented with the score and given the only possibility to exit the game.
@@ -86,22 +78,22 @@ The components are divided into three categories, namely hardware components, so
 		
 		\paragraph{GameManager}
 		With the state switching mechanism of Slick2D it is not possible to transfer information between different states.
+		Furthermore it is very practical to have a global object which can hold global information such that it is not necessary for each class to hold 
 		Therefor we have created the \emph{GameManager}-object.
-		The \emph{GameManager}-object allows the game to store 
-		
-		The \emph{GameManager} object is a global object designed to hold inf
-		
-		For holding player information and communcation with the server.
-		
+		\emph{GameManager} is a global singleton-object, meaning only a single instance of the object is available.
+		Each object of the game can read and write specific information from and to the \emph{GameManager}.
+		For example, \emph{GameManager} holds information about the current map being played and which players are currently playing the game.		
 		
 		\paragraph{Map}
-		Actors, both movable and usable.
-		
+		Arguably the most important object of the game is the \emph{Map}-object.
+		\emph{Map} is primarily a container-object, holding many other objects, like sheep, dogs, cookies, etc.
+		Furthermore it also contains functionality with which it is possible to perform correct moving and pathfinding behavior.
+		Since \emph{Map} is one of the objects many other objects need to be aware of, it is also available through \emph{GameManager}.		
 		
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		\subsubsection{Server}
 		The server has a key role in our setup.
-		It handles the communcation between the Android application and the game.
+		It handles the communication between the Android application and the game.
 		For the server a portable version of Tomcat was used which is started at runtime every time the game starts.
 		On the server we ran a single servlet which would handle all the communication between the server and the Android application.
 		This setup is very flexible, since no one has to have Tomcat installed and configured on their system.
@@ -109,12 +101,45 @@ The components are divided into three categories, namely hardware components, so
 		On the one hand a tight coupling can be seen as a disadvantage since it becomes difficult to separate the server from the game.
 		On the other hand it also saves a lot of time trying to built a suitable interface between the server and the game.
 				
-		Since the server is tightly couple with the game it is able to access all the components of the game through the \emph{GameManager}.
+		Since the server is tightly couple with the game it is able to access all the components of the game through \emph{GameManager}.
+		Using \emph{GameManager} the server is able to add and remove players which connect respectively disconnect themselves.
+		@TODO: ... 
 		
 		\subsubsection{Android Application}
-		The Android application is used as a tangible ...
+		In our experiment the Android application with the mobile phone is used as a tangible object.
+		The Android application is used to communicate with the game via commands send to the server.
+		The Android application consists of three screens, namely a \emph{login}-screen~\ref{fig:android-application-screen1}, a \emph{select object}-screen~\ref{fig:android-application-screen2} and a \emph{use selected object}-screen~\ref{fig:android-application-screen3}.
+		In the \emph{login}-screen the user has to fill in the details of the server and the mark id which is on the back of the mobile phone.
+		If the Android application is able to successfully connect to the server it switches to the \emph{select object}-screen.
+		In the \emph{select object}-screen the user is able to select which object it wants to use.
+		In our case there are only two objects to choose from, namely a whistle and a cookie.
+		Once the user has selected an object the Android application switches to the \emph{use selected object}-screen.
+		In the \emph{use selected object}-screen the user is able to use the object, by pressing it.
+		If the object is used and the mobile phone is placed on the interactive table it will be registered by the game and actors can act accordingly.
+		If the user wants to select a different object it can perform a horizontal backwards swipe to return to the \emph{select object}-screen.
 		
-		
+		\begin{figure}[ht]
+			\begin{minipage}[b]{0.30\linewidth}
+				\centering
+				\includegraphics[width=\textwidth]{android-application-screen1.png}
+				\caption{\emph{Login}-screen}
+				\label{fig:android-applications-sreen1}
+			\end{minipage}
+			\hspace{0.1cm}
+			\begin{minipage}[b]{0.30\linewidth}
+				\centering
+				\includegraphics[width=\textwidth]{android-application-screen2.png}
+				\caption{\emph{Select object}-screen}
+				\label{fig:android-application-screen2}
+			\end{minipage}
+			\hspace{0.1cm}
+			\begin{minipage}[b]{0.30\linewidth]
+				\centering
+				\includegraphics[width=\textwidth]{android-application-screen3.png}
+				\caption{\emph{Use selected object}-screen}
+				\label{fig:android-application-screen3}
+			\end{minipage}
+		\end{figure}
 		
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
 	\subsection{Interaction Between Hardware and Software Components}
