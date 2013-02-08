@@ -31,13 +31,38 @@ The components are divided into three categories, namely hardware components, so
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\subsection{Hardware Components}
 	% Nice image here.
-		
-		\subsubsection{Tabletop}
-		
-		\subsubsection{Beamer}
-		
-		\subsubsection{Webcam}
+	\subsubsection{Tabletop}
+	The tabletop consists of a table where we replaced the table top with a glass plate with a layer of tracing paper on top.
+	Underneath the glass plate a huge mirror is placed that reflects the projects image by the beamer. 
+	Besides the mirror there is a small webcam that records everything that happens on the screen and everything that is visible through the tracing paper. 
 
+	\begin{figure}[h!]
+	\caption{The tabletop}
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/tabletop}
+	\end{figure}
+
+	\subsubsection{Beamer}
+	The beamer that projects an image on the tabletop is borrowed from our department and is a small portable beamer.
+	The image that is projected is sharp enough for the user to get an accurate idea of what is happening on the screen. 
+	As the projected image is not projected very wide the mirror in the tabletop is used. 
+
+	\begin{figure}[h!]
+	\caption{The tabletop}
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/beamer}
+	\end{figure}
+
+	\subsubsection{Webcam}
+	The webcam used for our project is a simple consumer Microsoft Livecam. 
+	Our webcam records in a medium quality high enough for our simple application. 
+	Of course, using a better webcam would have improved our application but our current results were already acceptable. 
+
+	\begin{figure}[h!]
+	\caption{The webcam}
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/webcam}
+	\end{figure}
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\subsection{Software Components}
@@ -133,7 +158,7 @@ The components are divided into three categories, namely hardware components, so
 				\label{fig:android-application-screen2}
 			\end{minipage}
 			\hspace{0.1cm}
-			\begin{minipage}[b]{0.30\linewidth]
+			\begin{minipage}[b]{0.30\linewidth}
 				\centering
 				\includegraphics[width=\textwidth]{android-application-screen3.png}
 				\caption{\emph{Use selected object}-screen}
@@ -145,51 +170,44 @@ The components are divided into three categories, namely hardware components, so
 	\subsection{Interaction Between Hardware and Software Components}
 	% Using the title 'Interaction Between Hardware and Software Components' (or something similar) is more consistent with the rest.
 	% So first you could give an overview of the different components needed for this and then how it is all tied together.
-	
 
-		\subsubsection{reacTIVision}
-		\label{sec:reactivision}
-		reactTIVision is a software component that is able to detect both finger touches on a screen and specific markers. 
-		The source image (taken from the webcam under the table) is first converted to a black and white image with an adaptive thresholding algoritm. 
-		This image is converted into black and white regions, which is searched for unique sequences encoded into the fiducial symbols. \cite{reactivision}.
-		At every frame it detects what markers are present and sends the corresponding event as described in section \ref{sec:tuioprotocol}
-		
-		\subsubsection{Community Core Vision}
-		\label{sec:communitycorevision}	
-		Community core vision is a very advanced program that does a lot of neat image processing. 
-		It detects so called "blobs" using a webcam image. 
+	\subsubsection{reacTIVision}
+	\label{sec:reactivision}
+	reactTIVision is a software component that is able to detect both finger touches on a screen and specific markers. 
+	The source image (taken from the webcam under the table) is first converted to a black and white image with an adaptive thresholding algoritm. 
+	This image is converted into black and white regions, which is searched for unique sequences encoded into the fiducial symbols. \cite{reactivision}.
+	At every frame it detects what markers are present and sends the corresponding event as described in section \ref{sec:tuioprotocol}
 
-		\subsubsection{TUIO Protocol}
-		\label{sec:tuioprotocol}
-		The TUIO Protocol consists of a series of event-based communication over port xxxxxxxx. 
-		Everytime a message comes in a few action-based events are called.  
-		As soon as a blob or a marker is detected the xxxxx function is called. 
-		As soon as a marker is detected the xxxxxx function is called. 
-		At every timeframe a blob or marker is updated the update() function is called with an according TUIO Point.
-		Community Core Vision (CCV) is a computer vision program that takes our video input stream (taken from the webcam under the table) and outputs tracking data. \cite{ccv}.
-		Several features of CCV include several filters, input and output switchers and a calibration mode. 
-		Using image processing CCV checks for the blobs that represent the tops of the fingers of the user. 
-		The locations and ID's of these blobs are send using the TUIO protocol described in section \ref{sec:tuioprotocol}.
+	\subsubsection{Community Core Vision}
+	\label{sec:communitycorevision}	
+			Community Core Vision (CCV) is a computer vision program that takes our video input stream (taken from the webcam under the table) and outputs tracking data. \cite{ccv}.
+		    	Several features of CCV include several filters, input and output switchers and a calibration mode. 
+			Using image processing CCV checks for the blobs that represent the tops of the fingers of the user. 
+			The locations and ID's of these blobs are send using the TUIO protocol described in section \ref{sec:tuioprotocol}.
+			\begin{figure}[h!]
+			  \caption{The game}
+			  \centering
+			  \includegraphics[width=0.5\textwidth]{images/tafelgebruik}
+			\end{figure}
 		
-		
-		\subsubsection{TUIO Protocol}
-		\label{sec:tuioprotocol}
-		The TUIO Protocol consists of a series of event-based communication using OSC messages over port 3333. \cite{tuioProtocol}. 
-		Using a JAVA library our program catches these messages and calls an event every time a:
-		\begin{enumerate}
-			\item finger is added to the screen
-			\item finger is removed from the screen
-			\item finger moved on the screen
-			\item marker is added to the screen
-			\item marker is removed from the screen
-			\item marker is moved on the screen
-		\end{enumerate}
-		These events also include a TUIOPoint object that contains among other the:
-		\begin{enumerate}
-			\item Location of the finger or marker
-			\item ID of the finger or marker
-		\end{enumerate}
-		Using these events the objects in our game are updated to their locations respective to the game on the screen as described in section \ref{waar wordts dit uitgelegd?}.
+			\subsubsection{TUIO Protocol}
+			\label{sec:tuioprotocol}
+			The TUIO Protocol consists of a series of event-based communication using OSC messages over port 3333. \cite{tuioProtocol}. 
+			Using a JAVA library our program catches these messages and calls an event every time a:
+			\begin{enumerate}
+				\item finger is added to the screen
+				\item finger is removed from the screen
+				\item finger moved on the screen
+				\item marker is added to the screen
+				\item marker is removed from the screen
+				\item marker is moved on the screen
+			\end{enumerate}
+			These events also include a TUIOPoint object that contains among other the:
+			\begin{enumerate}
+				\item Location of the finger or marker
+				\item ID of the finger or marker
+			\end{enumerate}
+			Using these events the objects in our game are updated to their locations respective to the game on the screen as described in section \ref{waar wordts dit uitgelegd?}.
 		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Communication Protocol
