@@ -22,6 +22,8 @@
 % Url.
 \usepackage{url}
 
+\usepackage{adjustbox}
+
 \newcommand{\tab}{\hspace*{1em}}
 
 \begin{document}
@@ -71,7 +73,7 @@ Our hypothesis is: The user experience with the multi-touch table will be more p
 We will start with specifying the game we implemented in section \ref{chap:specification}, both informally and with the  GOMS (Goals Operators Methods Selection) modelling technique. 
 Then we will give an overview of our implementation in section \ref{chap:implementation}, with a focus on the explicit design decisions that led to it.
 After that we will discuss the usability study we performed in section \ref{chap:usabilitystudy} and present the results in section \ref{chap:results}. 
-We finish with a discussion section \ref{chap:discussion}, in which we discuss the results of the usability study and possible future research. 
+We finish with a discussion in section \ref{chap:discussion}, in which we discuss the results of the usability study and possible future research. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Specification
@@ -123,7 +125,7 @@ If all the sheep are collected, bonus points will be assigned based on the time 
 When played with multiple players, they will all get equal score, thus making the game fully cooperative.
 
 \section{GOMS specification}
-
+In this section, we will give a more formal GOMS specification of the game we made for this experiment. We have split the GOMS specification up in two parts, one for the mouse modality and one for the touch modality.
 \subsection{Touchtable}
 Goal: Drive as many sheep as possible in the goal area.
 \\
@@ -310,7 +312,7 @@ Goal: Drive as many sheep as possible in the goal area.
 
 	%%%%% Interaction Between Hardware and Software Components %%%%%%%%%%%%%%%%%%
 	\subsection{Interaction Between Hardware and Software Components}
-	@TODO: Introduction...
+	In this section we will explain the interaction between the software and hardware components of our experiment.
 
 	\subsubsection{reacTIVision}
 	\label{sec:reactivision}
@@ -514,19 +516,21 @@ In this appendix we will give a quantitative estimate of the amount of work done
 Note that our initial intention for the project was to communicate with the multi-touch table using smartphones.
 For this purpose, we had to develop an Android application for the smartphones and set up a server for the Android application to communicate with the multi-touch table.
 Despite the fact that we did not manage to make this work in time, a lot of work has been spent on this.
+\\\\
+\begin{adjustbox}{center}
+	\begin{tabular}{| l | c | c | c | r |} \hline                              
+		\textbf{Time spent working on:}  & Bas Bootsma & Bas Kooiker & Roland Meertens & Thomas Planting \\ \hline
+		Game& 60 & 0 &  65&30\\ \hline
+		Multi-touch table& 0 & 0&11&0 \\ \hline
+		Android application& 0 & 40&0&0 \\ \hline
+		Server &16 & 0 &0&0\\ \hline
+		Usability study&0&8&0&0\\ \hline
+		Report &8 & 10&8&20\\ \hline
+		Meetings/mail &6&6&6&6\\ \hline
+		\textbf{Total}&90&64&90&56\\ \hline
+	\end{tabular}
+\end{adjustbox}
 
-\noindent
- \begin{tabular}{ l c c c r }                               
-  \textbf{Time spent working on:}  & Bas Bootsma & Bas Kooiker & Roland Meertens & Thomas Planting \\
-  Game& 60 & 0 &  65&30\\
-  Multi-touch table& 0 & 0&11&0 \\
-  Android application& 0 & 40&0&0 \\
-  Server &16 & 0 &0&0\\
-  Usability study&0&8&0&0\\
-  Report &8 & 10&8&20\\
-  Meetings/mail &6&6&6&6\\
-  Total&90&64&90&56\\
-\end{tabular}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
