@@ -52,8 +52,8 @@ To help research this, we have set up a comparative experiment between the user 
 For this research, we have implemented a simple puzzle game called "Herdinator". 
 The goal of this game is to herd as many agents (sheep) as possible to a goal area in the middle of the screen.
 The players have two tools at their disposal to influence the movements of the sheep, one to attract the sheep and one to repulse them.
-A detailed specification of the game will be given in Section \ref{chap:specification}.
-The game can be played both on a personal computer and on a multi-touch table we have set up for this project. A description of the multi-touch table is given in Section \ref{HardwareComponents}
+A detailed specification of the game will be given in section~\ref{chap:specification}.
+The game can be played both on a personal computer and on a multi-touch table we have set up for this project. A description of the multi-touch table is given in section~\ref{HardwareComponents}
 When playing on a personal computer, the users will interact with the game with a mouse.
 When playing on our touchtable the users will interact with the game through the touch modality.
 
@@ -64,13 +64,14 @@ They also present some useful analyzing tools.
 Our research focusses on puzzle games, and compares personal computers to touchtables.
 We think more of this kind of research is warranted in an age in which both the popularity of gaming and the use of different ways to interact with computers are growing rapidly.
 Our research question is: Will users prefer to use the touch modality or the mouse? 
-We think it is more intuitive to drag objects by literally touching the ''screen" (the touchtable) than to select them with a mouse and then drag them.
+We think it is more intuitive to drag objects by literally touching the "screen" (the touch-table) than to select them with a mouse and then drag them.
 However, since we will be comparing a multi-touch table we had to set up ourselves with an industrially produced personal computer, there will probably be a difference in quality between the two platforms. If the accuracy of the touchtable is low it will likely be more frustrating than the personal computer.
 
-Our hypothesis is: The user experience with the mult-touch table will be more positive than with the personal computer, unless the accuracy of the multi-touch table is low. \\\\
-We will start with specifying the game we implemented in Section \ref{chap:specification}, both informally and with the  GOMS (Goals Operators Methods Selection) modelling technique. 
-Then we will give an overview of our implementation in Section \ref{chap:implementation}, with a focus on the explicit design decisions that led to it. After that we will discuss the usability study we performed in Section \ref{chap:usabilitystudy} and present the results in Section \ref{chap:results}. 
-We finish with a discussionin Section \ref{chap:discussion}, in which we discuss the results of the usability study and possible future research. 
+Our hypothesis is: The user experience with the multi-touch table will be more positive than with the personal computer, unless the accuracy of the multi-touch table is low. \\\\
+We will start with specifying the game we implemented in section \ref{chap:specification}, both informally and with the  GOMS (Goals Operators Methods Selection) modelling technique. 
+Then we will give an overview of our implementation in section \ref{chap:implementation}, with a focus on the explicit design decisions that led to it.
+After that we will discuss the usability study we performed in section \ref{chap:usabilitystudy} and present the results in section \ref{chap:results}. 
+We finish with a discussion section \ref{chap:discussion}, in which we discuss the results of the usability study and possible future research. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Specification
@@ -102,7 +103,7 @@ The following special actors are in the game: \\
 The following special (moveable) objects are in the game:\\
 \begin{itemize}
 \item
-	Whistlee: This will attract the love sheep "Maggie".
+	Whistle: This will attract the love sheep "Maggie".
 \item
 Cookie: This will attract the dog "Balthazar".\\
 \end{itemize}
@@ -116,7 +117,7 @@ If a sheep is repulsed by the dog, it will have a higher probability to walk awa
 If a sheep is near both the love sheep and the dog, the repulsion from the dog will supersede the attraction by the love sheep.
 If a sheep has reached the goal area, it is no longer affected by the dog and the love sheep, and will not be able to leave the goal area.
 There is a "fence" around the goal area which blocks movement with two openings, one at the bottom and one at the top of the goal area.
-The sheep and the agents can only pass throught those openings. 
+The sheep and the agents can only pass through those openings. 
 The player or players will get a score depending on the number of sheep that were collected when the timer ends.
 If all the sheep are collected, bonus points will be assigned based on the time left.
 When played with multiple players, they will all get equal score, thus making the game fully cooperative.
@@ -174,7 +175,7 @@ Goal: Drive as many sheep as possible in the goal area.
 		\subsubsection{Tabletop}
 		The tabletop consists of a table where we replaced the table top with a glass plate with a layer of tracing paper on top.
 		Underneath the glass plate a huge mirror is placed that reflects the projects image by the beamer. 
-		Besides the mirror there is a small webcam that records everything that happens on the screen and everything that is visibile through the tracing paper. 
+		Besides the mirror there is a small webcam that records everything that happens on the screen and everything that is visible through the tracing paper. 
 
 		\begin{figure}[h!]
 		\caption{The tabletop}
@@ -218,7 +219,7 @@ Goal: Drive as many sheep as possible in the goal area.
 		On itself LWJGL is not very suited to develop games with, however Slick2D adds extra functionality on top of LWJGL, like a game loop, a state switching mechanism, animations, etc.
 		
 		The game itself is divided into several parts, each containing many different objects of which most are not very important nor interesting to discuss.
-		Therefor we will only discuss the core parts, which are the different states, the \emph{GameManager}-object and the \emph{Map}-object to to get reasonable overview of the game.
+		Therefor we will only discuss the core parts, which are the different states, the \emph{GameManager}-object and the \emph{Map}-object to get reasonable overview of the game.
 		
 		\paragraph{States}
 		A small, but useful, feature of Slick2D is that it contains a state switching mechanism.
@@ -252,8 +253,7 @@ Goal: Drive as many sheep as possible in the goal area.
 		Arguably the most important object of the game is the \emph{Map}-object.
 		\emph{Map} is primarily a container-object, holding many other objects, like sheep, dogs, cookies, etc.
 		Furthermore it also contains functionality with which it is possible to perform correct moving and pathfinding behavior.
-		Since \emph{Map} is one of the objects many other objects need to be aware of, it is also available through \emph{GameManager}.		
-
+		Since \emph{Map} is one of the objects many other objects need to be aware of, it is also available through \emph{GameManager}.
 
 	%%%%% Server %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\subsubsection{Server}
@@ -261,27 +261,28 @@ Goal: Drive as many sheep as possible in the goal area.
 	It handles the communication between the Android application and the game.
 	For the server a portable version of Tomcat was used which is started at runtime every time the game starts.
 	On the server we ran a single servlet which would handle all the communication between the server and the Android application.
-	This setup is very flexible, since no one has to have Tomcat installed and configured on their system.
+	This setup is very flexible, since no one needs to have Tomcat installed and configured on their system.
 	Furthermore it allows for a tight coupling between the game and the server application.
 	On the one hand a tight coupling can be seen as a disadvantage since it becomes difficult to separate the server from the game.
 	On the other hand it also saves a lot of time trying to built a suitable interface between the server and the game.
 			
 	Since the server is tightly couple with the game it is able to access all the components of the game through \emph{GameManager}.
 	Using \emph{GameManager} the server is able to add and remove players which connect respectively disconnect themselves.
-	@TODO: ... 
+	Furthermore the server is able to manipulate the selected objects from each player.
+	With this setup it is possible for the game to become instantly aware of changes of the players or of the objects of the players.
 	
 	%%%%% Android Application %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\subsubsection{Android Application}
-	In our experiment the Android application with the mobile phone is used as a tangible object.
+	In our experiment the Android application with a smartphone is used as a tangible object.
 	The Android application is used to communicate with the game via commands send to the server.
 	The Android application consists of three screens, namely a \emph{login}-screen~\ref{fig:android-application-screen1}, a \emph{select object}-screen~\ref{fig:android-application-screen2} and a \emph{use selected object}-screen~\ref{fig:android-application-screen3}.
-	In the \emph{login}-screen the user has to fill in the details of the server and the mark id which is on the back of the mobile phone.
+	In the \emph{login}-screen the user has to fill in the details of the server and the mark id which is on the back of the smartphone
 	If the Android application is able to successfully connect to the server it switches to the \emph{select object}-screen.
 	In the \emph{select object}-screen the user is able to select which object it wants to use.
 	In our case there are only two objects to choose from, namely a whistle and a cookie.
 	Once the user has selected an object the Android application switches to the \emph{use selected object}-screen.
 	In the \emph{use selected object}-screen the user is able to use the object, by pressing it.
-	If the object is used and the mobile phone is placed on the interactive table it will be registered by the game and actors can act accordingly.
+	If the object is used and the smartphone is placed on the interactive table it will be registered by the game and actors can act accordingly.
 	If the user wants to select a different object it can perform a horizontal backwards swipe to return to the \emph{select object}-screen.
 	
 	\begin{figure}[ht]
@@ -314,7 +315,7 @@ Goal: Drive as many sheep as possible in the goal area.
 	\subsubsection{reacTIVision}
 	\label{sec:reactivision}
 	reactTIVision is a software component that is able to detect both finger touches on a screen and specific markers. 
-	The source image (taken from the webcam under the table) is first converted to a black and white image with an adaptive thresholding algoritm. 
+	The source image (taken from the webcam under the table) is first converted to a black and white image with an adaptive thresholding algorithm. 
 	This image is converte	d into black and white regions, which is searched for unique sequences encoded into the fiducial symbols. \cite{reactivision}.
 	At every frame it detects what markers are present and sends the corresponding event as described in section \ref{sec:tuioprotocol}
 
@@ -348,7 +349,7 @@ Goal: Drive as many sheep as possible in the goal area.
 		\item Location of the finger or marker;
 		\item ID of the finger or marker.
 	\end{enumerate}
-	Using these events the objects in our game are updated to their locations respective to the game on the screen as described in section \ref{@TODO: waar wordts dit uitgelegd?}.
+	Using these events the objects in our game are updated to their locations respective to the game on the screen. % Volgens mij nergens: as described in section \ref{@TODO: waar wordts dit uitgelegd?}.
 			
 %%% Communication Protocol %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 \section{Communication Protocol}
@@ -426,20 +427,30 @@ The message for an unsuccessful response is simply: \texttt{\{success:false\}}.
 In this study we will investigate the effect of using user interfaces of different modalities on the user experience.
 This effect will be evaluated on multiple measures: 
 \begin{enumerate}
-\item The subjective user experience
-\item Objective user performance
+	\item The subjective user experience;
+	\item Objective user performance.
 \end{enumerate}
+
 In order to evaluate the user experience, we use an own implementation of the AttrakDiff user interface evaluation framework.
 AttrakDiff divides user experience in four different aspects: 
 \begin{description}
-  \item [Attractiveness] \vline \\ The perceptual quality of a user interface
-  \item [Hedonic quality - Identity] \vline \\ To what extend users can identify with a user interface.
-  \item [Hedonic quality - Stimulation] \vline \\ To what extend the user interface motivates users.
-  \item [Pragmatic quality] \vline \\ The usability of a user interface.
- \end{description} 
+  \item
+		\textbf{Attractiveness}
+		The perceptual quality of a user interface.
+  \item
+		\textbf{Hedonic quality - Identity}
+		To what extend users can identify with a user interface.
+  \item
+		\textbf{Hedonic quality - Stimulation}
+		To what extend the user interface motivates users.
+  \item
+		\textbf{Pragmatic quality}
+		The usability of a user interface.
+\end{description} 
+
 For different kinds of applications, different aspects from this framework will have a higher priority in the design process.
 In most professional software, pragmatic quality will have the highest priority as reliability and performance quality are most important.
-Also the hedonic identity quality is important as users should feel confortable using it.
+Also the hedonic identity quality is important as users should feel comfortable using it.
 In professional design software, as another example, stimulation is a very important aspect.
 In these interfaces, where users are in a creative process, users should always be stimulated as much as possible.
 In games, interfaces which are mainly used for entertainment, the pragmatic quality is of lesser importance if the attractiveness and stimulating quality of the interface is high enough.
@@ -455,14 +466,14 @@ This score is dependent on both the speed and the accuracy of the user.
 
 A total of ten subjects participated in the experiment. We counter-balanced by having half of the participants start the experiment with the touch modality condition and the other half with the mouse modality. Each of the participants played the game using either of the modalities, filled in a questionnaire, played the game with the other modality, and filled in the same questionnaire again. Figure \ref{fig:pairs} shows the results for the rating of the word pairs comparing the two modalities. Figure \ref{fig:scores} shows the same results averaged over the four categories of word pairs. 
 
-These results show that on average, the mouse modality interaction is rated higher on all categories except on hedonic stimulation quality. As mentioned before, in games or other entertainment purposes, this quality is of higher importance than the other qualities. The pairwise ratings show that all the words concerning stimulating quality are rated higher for the touch modality that the mouse modality. Another notable difference is that even though on average the touch modality is rated lower on the hedonic identity aspect, it is rated higher for the word 'brings me closer to people'. Subject had noted that even though the touch table did not work perfectly in terms of finger tracking and detection, it did give the game a more 'open' feeling as it inclined other people to watch along, wheras the mouse modality had a more isolating effect on the user. 
+These results show that on average, the mouse modality interaction is rated higher on all categories except on hedonic stimulation quality. As mentioned before, in games or other entertainment purposes, this quality is of higher importance than the other qualities. The pairwise ratings show that all the words concerning stimulating quality are rated higher for the touch modality that the mouse modality. Another notable difference is that even though on average the touch modality is rated lower on the hedonic identity aspect, it is rated higher for the word 'brings me closer to people'. Subject had noted that even though the touch table did not work perfectly in terms of finger tracking and detection, it did give the game a more 'open' feeling as it inclined other people to watch along, whereas the mouse modality had a more isolating effect on the user. 
 
 Figure \ref{fig:cat_int} shows the average performance scores of the subjects for the two interaction modalities. The average score for the touch modality was significantly lower than the average score of the mouse modality. We suspect that this difference is mainly due to the bad functioning of the touch table. Users had much problems dragging and selecting the objects and lost much of their time with this during the game wheras this was not a problem at all with the mouse interaction.  
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{images/pairs}
-  \caption{The average rating per word pair for the two interface modalities}
+  \caption{The average rating per word pair for the two interface modalities.}
   \label{fig:pairs}
 \end{figure}
 
@@ -475,7 +486,7 @@ Figure \ref{fig:cat_int} shows the average performance scores of the subjects fo
     \includegraphics[width=0.5\textwidth]{images/scores}
    \label{fig:scores}
   }
-  \caption{(a) The average rating per word pair category, per modality and (b) the average score per modality}
+  \caption{(a) The average rating per word pair category, per modality and (b) the average score per modality.}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -485,19 +496,12 @@ Figure \ref{fig:cat_int} shows the average performance scores of the subjects fo
 \label{chap:discussion}
 
 \section{Research Question}
-We have compared the usability of a self-made puzzle game when played on a personal computer and when played on a multi-touch table. For this end, we have performed two usability studies, one for the game on a personal computer and one for on the multi-touch table, and compared the results. Our research question was:\\Will users prefer to use the touch modality or the mouse? \\ \\To which our hypothesis was: \\ \\The user experience with the mult-touch table will be more positive than with the personal computer, unless the accuracy of the multi-touch table is low. \\\\ The results (see Section \ref{chap:results}) are mixed. On average, the mouse modality is rated higher on all categories except hedonic stimulation quality. Moreover, the average game score for the touch modality was significantly lower than for the mouse modality. We think both these results can largely be attributed to the inacuracy of the multi-touch table. It makes sense the performance on the multi-touch table is lower than on the personal computer if the touchtable does not work accurately. During the experiment, we saw people strugling with selecting and dragging objects. This also explains why the touchtable has a lower score of pragmatic quality. We think the fact that the touchtable scores lower on Attractiviness can be explained by the low resolution of the projected image on the touchtable. The projection was not as clear as the screen of the personal computer we ran the mouse modality on. The lower score for the hedonic identity quality on the multi-touch table compared to the personal computer is harder to explain. A possible explanation for this is that the low accuracy of the multi-touch table results in a reduces feeling of control, which results in a reduced ability to identify with the user interface. \\ The one quality on which the touchtable scored higher than the personal computer is Hedonic Stimulation. A possible explanation for this is that the touch modality is more intuitive than the mouse modality. \\ 
+We have compared the usability of a self-made puzzle game when played on a personal computer and when played on a multi-touch table. For this end, we have performed two usability studies, one for the game on a personal computer and one for on the multi-touch table, and compared the results. Our research question was:\\Will users prefer to use the touch modality or the mouse? \\ \\To which our hypothesis was: \\ \\The user experience with the mult-touch table will be more positive than with the personal computer, unless the accuracy of the multi-touch table is low. \\\\ The results (see section \ref{chap:results}) are mixed. On average, the mouse modality is rated higher on all categories except hedonic stimulation quality. Moreover, the average game score for the touch modality was significantly lower than for the mouse modality. We think both these results can largely be attributed to the inaccuracy of the multi-touch table. It makes sense the performance on the multi-touch table is lower than on the personal computer if the touchtable does not work accurately. During the experiment, we saw people struggling with selecting and dragging objects. This also explains why the touchtable has a lower score of pragmatic quality. We think the fact that the touchtable scores lower on Attractiviness can be explained by the low resolution of the projected image on the touchtable. The projection was not as clear as the screen of the personal computer we ran the mouse modality on. The lower score for the hedonic identity quality on the multi-touch table compared to the personal computer is harder to explain. A possible explanation for this is that the low accuracy of the multi-touch table results in a reduces feeling of control, which results in a reduced ability to identify with the user interface. \\ The one quality on which the touchtable scored higher than the personal computer is Hedonic Stimulation. A possible explanation for this is that the touch modality is more intuitive than the mouse modality. \\ 
 
 \section{Future Research}
 There are several possibilities for extending research to our experiment.
 Firstly, it would be interesting to repeat the experiment with test subjects without any experience with a mouse.
 This would provide a better comparison of how intuitive the touch modality is compared to the mouse modality, because most users have a lot of experience with the mouse. This could provide a better answer as to which modality is more intuitive initially. Another possible extension to our research is to repeat it with a more professional, better working multi-touch table. This way we could investigate whether users prefer a personal computer or a multi-touch table without the low accuracy of the touchtable spoiling the experiment. 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Bibliography
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibliographystyle{plain}
-\bibliography{aHCIReport}
-\end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Appendix
@@ -506,17 +510,27 @@ This would provide a better comparison of how intuitive the touch modality is co
 \chapter{Collaboration}
 \label{chap:collaboration}
 
-In this appendix we will give a quantitative estimate of the amound of work done by each member of the group. Note that our initial intention for the project was to communicate with the multi-touch table using smarphones. For this purpose, we had to develop an Android application for the smartphones and set up a server for the Android aplication to communicate with the multi-touch table. Despite the fact that we did not manage to make this work in time, a lot of work has been spent on this.
+In this appendix we will give a quantitative estimate of the amount of work done by each member of the group.
+Note that our initial intention for the project was to communicate with the multi-touch table using smartphones.
+For this purpose, we had to develop an Android application for the smartphones and set up a server for the Android application to communicate with the multi-touch table.
+Despite the fact that we did not manage to make this work in time, a lot of work has been spent on this.
+
 \noindent
- \begin{tabular}{ l  c c c r }
-                                                   
+ \begin{tabular}{ l c c c r }                               
   \textbf{Time spent working on:}  & Bas Bootsma & Bas Kooiker & Roland Meertens & Thomas Planting \\
-  The game& 60 & 0 &  65&30\\
-  The multi-touch table& 0 & 0&11&0 \\
-  The appplication& 0 & 40&0&0 \\
-  The server &16 & 0 &0&0\\
-  The usability study&0&8&0&0\\
-  The report &8 & 10&8&20\\
+  Game& 60 & 0 &  65&30\\
+  Multi-touch table& 0 & 0&11&0 \\
+  Android application& 0 & 40&0&0 \\
+  Server &16 & 0 &0&0\\
+  Usability study&0&8&0&0\\
+  Report &8 & 10&8&20\\
   Meetings/mail &6&6&6&6\\
   Total&90&64&90&56\\
 \end{tabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{plain}
+\bibliography{aHCIReport}
+\end{document}
